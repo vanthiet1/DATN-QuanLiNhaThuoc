@@ -17,8 +17,8 @@ connectDB()
 
 
 // Routes
-// const UserRouter = require('./routers/userRouter')
-// app.use('/api/v1/user',UserRouter)
+const AuthRouter = require('./routers/auth')
+app.use('/api/v1/auth', AuthRouter)
 
 app.get('/', (req, res) => {
     res.send("Welcome To Api");
