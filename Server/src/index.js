@@ -4,16 +4,22 @@ const morgan = require('morgan');
 const cors = require('cors');
 require('dotenv').config();
 const app = express();
+const connectDB = require('./db/connectDB')
 
 
 // Middleware
 app.use(morgan("common"));
 app.use(bodyParser.json());
 app.use(cors());
+connectDB()
+
 
 
 
 // Routes
+// const UserRouter = require('./routers/userRouter')
+// app.use('/api/v1/user',UserRouter)
+
 app.get('/', (req, res) => {
     res.send("Welcome To Api");
 });
