@@ -15,9 +15,10 @@ const userSchema = new mongoose.Schema(
             require: true
         },
         role_id:{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Role',
-            required: true  
+             type:String
+            // type: mongoose.Schema.Types.ObjectId,
+            // ref: 'Role',
+            // required: true  
         },
         emailVerify: {
             type: Boolean,
@@ -28,10 +29,13 @@ const userSchema = new mongoose.Schema(
             type:Number,
         },
         is_active:{
+            type:String,
             enum:['yes' , 'no' , 'pending'],
+            default:"no",
             required:true
         },
         provider:{
+            type: String,
             enum:['google', 'facebook' , 'phone' ,'local'],
             required:true
         },
@@ -39,5 +43,5 @@ const userSchema = new mongoose.Schema(
         timestamps: true,
     }
 )
-const Users = mongoose.model('User', userSchema)
-module.exports = Users
+const UserModel = mongoose.model('User', userSchema)
+module.exports = UserModel
