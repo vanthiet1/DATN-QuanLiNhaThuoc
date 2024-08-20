@@ -19,9 +19,13 @@ connectDB()
 // Routes
 const AuthRouter = require('./routers/auth')
 const UserRouter = require('./routers/user')
+const CartRouter = require('./routers/cart')
+
 
 app.use('/api/v1/auth', AuthRouter)
 app.use('/api/v1/user', UserRouter)
+app.use('/api/v1/cart', CartRouter)
+
 
 
 app.get('/', (req, res) => {
