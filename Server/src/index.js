@@ -7,22 +7,32 @@ const app = express();
 const connectDB = require('./db/connectDB')
 
 
+
 // Middleware
 app.use(morgan("common"));
 app.use(bodyParser.json());
 app.use(cors());
 connectDB()
 
-
-
+app.get('/', (req, res) => {
+    res.send("Welcome To Api");
+});
 
 // Routes
 const AuthRouter = require('./routers/auth')
 app.use('/api/v1/auth', AuthRouter)
 
-app.get('/', (req, res) => {
-    res.send("Welcome To Api");
-});
+
+// -- Role 
+const roleRouter = require('./routers/role');  
+app.use('/api/v1/role', roleRouter);  
+// -- Address
+const addressRouter = require('./routers/address');
+app.use('/api/v1/address', addressRouter);
+// -- Coupon
+const couponRouter = require('./routers/coupon');
+app.use('/api/v1/coupon', couponRouter);
+
 
 // Start server
 const PORT = process.env.PORT || 5000;
