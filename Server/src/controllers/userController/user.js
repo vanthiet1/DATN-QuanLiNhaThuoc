@@ -1,6 +1,6 @@
 const UserModel = require('../../models/userModel/user');
 const User = {
-    GetAllUser: async (req, res) => {
+    getAllUser: async (req, res) => {
         try {
             const User = await UserModel.find()
             res.status(200).json(User)
@@ -8,7 +8,7 @@ const User = {
             res.status(500).json({ message: error.message });
         }
     },
-    GetAnUser: async (req, res) => {
+    getAnUser: async (req, res) => {
         try {
             const { id } = req.params
             if(!id){
@@ -20,7 +20,7 @@ const User = {
             res.status(500).json({ message: error.message });
         }
     },
-    DeleteAnUser: async (req, res) => {
+    deleteAnUser: async (req, res) => {
         try {
             const { id } = req.params
             if(!id){
