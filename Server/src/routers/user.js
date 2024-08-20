@@ -1,9 +1,9 @@
 const User = require('../controllers/userController/user');
 const Router = require('express').Router()
 
-Router.get('/', User.GetAllUser)
-Router.get('/:id', User.GetAnUser)
-Router.delete('/:id', User.DeleteAnUser)
+Router.get('/', User.getAllUser)
+Router.get('/:id', User.getAnUser)
+Router.delete('/:id', User.deleteAnUser)
 
 
 module.exports = Router
