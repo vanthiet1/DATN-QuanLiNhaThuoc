@@ -43,7 +43,8 @@ const RoleController = {
     // Cập nhật Role theo ID
     updateRole: async (req, res) => {
         try {
-            const { id, role_Name } = req.params;
+            const { id } = req.params;
+            const { role_Name } = req.body;
 
             const updatedRole = await RoleModel.findByIdAndUpdate(
                 id,
