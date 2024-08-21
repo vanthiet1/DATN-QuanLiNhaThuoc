@@ -12,7 +12,15 @@ app.use(morgan('common'));
 app.use(bodyParser.json());
 app.use(cors());
 
+
 connectDB();
+
+
+
+app.get('/', (req, res) => {
+    res.send("Welcome To Api");
+});
+
 
 // Routes
 const AuthRouter = require('./routers/auth');
