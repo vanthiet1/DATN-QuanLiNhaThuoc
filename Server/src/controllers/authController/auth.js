@@ -9,7 +9,6 @@ const Auth = {
             if (!req.body.fullname || !req.body.email || !req.body.phone) {
                 return res.status(400).json({ message: "Vui lòng nhập cho đầy đủ" });
             }
-            //    xử lí
             const userExists = await UserModel.findOne({ email });
             if (userExists !== null) {
                 return res.status(400).json({ message: 'Email này đã được đăng ký' });
