@@ -1,4 +1,5 @@
 const UserModel = require('../../models/userModel/user');
+const RoleModel = require('../../models/roleModel/role')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
 const Auth = {
@@ -13,23 +14,9 @@ const Auth = {
             if (userExists !== null) {
                 return res.status(400).json({ message: 'Email này đã được đăng ký' });
             }
-            const role = [
-                {
-                    _id: 1,
-                    name: "admin"
-                },
-                {
-                    _id: 2,
-                    name: "customer"
-                },
-                {
-                    _id: 3,
-                    name: "staff"
-                }
-
-            ]
-            const checkRole = role.find((role) => role.name === "customer")
-
+            const role = await RoleModel.findOne({ role_Name: "customer" });
+          console.log(role);
+          
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(password, salt)
 
@@ -37,7 +24,7 @@ const Auth = {
                 fullname,
                 email,
                 password: hashedPassword,
-                role_id: checkRole._id,
+                role_id: role._id,
                 phone,
                 provider: 'local'
             });
@@ -99,6 +86,32 @@ const Auth = {
             }
         } catch (error) {
             res.status(500).json({ message: 'Đã xảy ra lỗi trong quá trình lấy thông tin người dùng' });
+        }
+    },
+    UpdateRoleUser: async (req,res)=>{
+        try {
+             const  {id} = req.params
+             const {role_id} = req.body
+             const role = await RoleModel.findOne({ _id: role_id });
+             console.log(role);
+             
+             if (!role) {
+                 return res.status(400).json({ message: 'Role không tồn tại' });
+             }
+            const updatedRole = await UserModel.findByIdAndUpdate(
+                id,
+                { role_id:role._id },
+                { new: true }
+            );
+            if (!updatedRole) {
+                return res.status(404).json({ message: 'Không tìm thấy role' });
+            }
+            res.status(200).json({
+                message: 'Chỉnh quyền thành công',
+                updatedRole
+            });
+        } catch (error) {
+            res.status(500).json({ message:error.message });
         }
     }
 
