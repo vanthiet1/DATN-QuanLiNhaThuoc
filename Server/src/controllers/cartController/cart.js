@@ -39,6 +39,26 @@ const User = {
             res.status(500).json({ message: error.message });
         }
     },
-
+    updateCart: async (req,res)=>{
+        try {
+            const { userId, productId, quantity } = req.body;
+            let cart = await CartModel.findOne({ userId });
+            console.log(cart);
+            
+            if(!cart){
+               return res.status(404).json({ message: "Cart not found for this user." });
+            }
+            const productIndex = cart.productList.findIndex(item => item.productId === productId);
+            if(productIndex > -1){
+                cart.productList[productIndex].quantity = quantity;
+                
+                cart.totalPrice = cart.productList.reduce((total, item) => total + item.quantity * item.price, 0);
+                await cart.save();
+            }
+            return res.status(200).json(cart);
+        } catch (error) {
+            res.status(500).json({message:error.message});
+        }
+    }
 }
 module.exports = User

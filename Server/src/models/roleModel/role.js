@@ -6,7 +6,6 @@ const roleSchema = new mongoose.Schema(
             type: String,
             equired: true,
         },
-
     }
 )
 
