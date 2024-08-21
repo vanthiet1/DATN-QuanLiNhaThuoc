@@ -4,6 +4,8 @@ const accessMiddleware = require('../middlewares/accsessUser')
 Router.post('/register', Auth.Register)
 Router.post('/login', Auth.Login)
 Router.get('/access',accessMiddleware , Auth.AccessUser)
+Router.put('/:id', Auth.UpdateRoleUser)
+
 
 
 

@@ -15,10 +15,9 @@ const userSchema = new mongoose.Schema(
             require: true
         },
         role_id:{
-            //  type:String
-            // type: mongoose.Schema.Types.ObjectId,
-            // ref: 'Role',
-            // required: true  
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Role',
+            required: true  
         },
         emailVerify: {
             type: Boolean,
