@@ -7,8 +7,6 @@ const commentController = {
             const { content, user_id, product_id } = req.body;
             const newComment = new Comment({ content, user_id, product_id });
             await newComment.save();
-
-            // Thêm comment vào danh sách comments của product
             await Product.findByIdAndUpdate(product_id, { $push: { comments: newComment._id } });
 
             res.status(201).json({ message: '', comment: newComment });
@@ -28,7 +26,7 @@ const commentController = {
             res.json(comments);
         } catch (error) {
             console.error('', error);
-            res.status(500).json({ error: '' });
+            res.status(500).json({ error: '1' });
         }
     },
 

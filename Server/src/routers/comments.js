@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const commentController = require('../controllers/commentsController/comments');
+const commentController = require('../controllers/commentsController/comments');;
 
 
 router.post("/:id", commentController.addComment);

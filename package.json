@@ -1,0 +1,11 @@
+{
+  "name": "datn-quanlinhathuoc",
+  "version": "1.0.0",
+  "description": "💞️ Chúc Nhóm Thành Công Nhé",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
