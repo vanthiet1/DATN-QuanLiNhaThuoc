@@ -1,5 +1,6 @@
 const Comment = require('../../models/commentsModel/comments');
 
+
 const commentController = {
     addComment: async (req, res) => {
         try {
@@ -13,7 +14,7 @@ const commentController = {
             res.status(201).json({ message: '', comment: newComment });
         } catch (error) {
             console.error('', error);
-            res.status(500).json({ error: '' });
+            res.status(500).json({ error: '404' });
         }
     },
 
