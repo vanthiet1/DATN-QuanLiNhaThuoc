@@ -22,24 +22,17 @@ app.get('/', (req, res) => {
 const AuthRouter = require('./routers/auth')
 const UserRouter = require('./routers/user')
 const CartRouter = require('./routers/cart')
+const RoleRouter = require('./routers/role');  
+const AddressRouter = require('./routers/address');
+const CouponRouter = require('./routers/coupon');
 
 
 app.use('/api/v1/auth', AuthRouter)
 app.use('/api/v1/user', UserRouter)
 app.use('/api/v1/cart', CartRouter)
-
-
-
-
-// -- Role 
-const roleRouter = require('./routers/role');  
-app.use('/api/v1/role', roleRouter);  
-// -- Address
-const addressRouter = require('./routers/address');
-app.use('/api/v1/address', addressRouter);
-// -- Coupon
-const couponRouter = require('./routers/coupon');
-app.use('/api/v1/coupon', couponRouter);
+app.use('/api/v1/role', RoleRouter);  
+app.use('/api/v1/address', AddressRouter);
+app.use('/api/v1/coupon', CouponRouter);
 
 
 // Start server
