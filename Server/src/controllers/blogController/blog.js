@@ -9,7 +9,7 @@ const blogController = {
             }
             res.status(200).json(allBlogs);
         } catch (error) {
-            res.status(500).json({ message: "Lỗi server" });
+            res.status(500).json({ message: "Lỗi" });
         }
     },
     addBlog: async (req, res) => {
