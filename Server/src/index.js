@@ -20,9 +20,9 @@ const ImageRouter = require('./routers/image');
 
 
 app.use('/api/v1/auth', AuthRouter);
-app.use('/api/v1', OrderRouter);
-app.use('/api/v1', OrderDetailRouter);
-app.use('/api/v1',ImageRouter)
+app.use('/api/v1/order', OrderRouter);
+app.use('/api/v1/order-detail', OrderDetailRouter);
+app.use('/api/v1/image',ImageRouter)
 
 app.get('/', (req, res) => {
   res.send('Welcome To Api');
