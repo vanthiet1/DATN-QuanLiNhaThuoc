@@ -9,10 +9,10 @@ const {
 
 const router = express.Router();
 
-router.post('/order-details/add', createOrderDetail);
-router.get('/order-details', getOrderDetails);
-router.get('/order-details/:id', getOrderDetailById);
-router.put('/order-details/:id', updateOrderDetail);
-router.delete('/order-details/:id', deleteOrderDetail);
+router.post('/create', createOrderDetail);
+router.get('/', getOrderDetails);
+router.get('/detail/:id', getOrderDetailById);
+router.put('/edit/:id', updateOrderDetail);
+router.delete('/delete/:id', deleteOrderDetail);
 
 module.exports = router;

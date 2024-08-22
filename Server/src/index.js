@@ -34,9 +34,10 @@ const AddressRouter = require('./routers/address');
 const CouponRouter = require('./routers/coupon');
 
 
-app.use('/api/v1', OrderRouter);
-app.use('/api/v1', OrderDetailRouter);
-app.use('/api/v1',ImageRouter)
+
+app.use('/api/v1/order', OrderRouter);
+app.use('/api/v1/order-detail', OrderDetailRouter);
+app.use('/api/v1/image',ImageRouter)
 app.use('/api/v1/auth', AuthRouter)
 app.use('/api/v1/user', UserRouter)
 app.use('/api/v1/cart', CartRouter)
