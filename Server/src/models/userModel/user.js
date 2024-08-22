@@ -15,10 +15,9 @@ const userSchema = new mongoose.Schema(
             require: true
         },
         role_id:{
-             type:String
-            // type: mongoose.Schema.Types.ObjectId,
-            // ref: 'Role',
-            // required: true  
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Role',
+            required: true  
         },
         emailVerify: {
             type: Boolean,
@@ -29,9 +28,8 @@ const userSchema = new mongoose.Schema(
             type:Number,
         },
         is_active:{
-            type:String,
-            enum:['yes' , 'no' , 'pending'],
-            default:"no",
+            type:Number,
+            default:0,
             required:true
         },
         provider:{
