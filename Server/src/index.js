@@ -34,15 +34,17 @@ const AddressRouter = require('./routers/address');
 const CouponRouter = require('./routers/coupon');
 
 
-app.use('/api/v1', OrderRouter);
-app.use('/api/v1', OrderDetailRouter);
-app.use('/api/v1',ImageRouter)
+
 app.use('/api/v1/auth', AuthRouter)
 app.use('/api/v1/user', UserRouter)
 app.use('/api/v1/cart', CartRouter)
 app.use('/api/v1/role', RoleRouter);  
 app.use('/api/v1/address', AddressRouter);
 app.use('/api/v1/coupon', CouponRouter);
+app.use('/api/v1/order', OrderRouter);
+app.use('/api/v1/order-detail', OrderDetailRouter);
+app.use('/api/v1/image',ImageRouter)
+
 app.get('/', (req, res) => {
   res.send('Welcome To Api');
 });
