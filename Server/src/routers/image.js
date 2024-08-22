@@ -8,10 +8,10 @@ const {
   deleteImage
 } = require('../controllers/imageController/image');
 
-router.post('/image/add', createImage);
-router.get('/images', getImages);
-router.get('/images/:id', getImageById);
-router.put('/images/:id', updateImage);
-router.delete('/images/:id', deleteImage);
+router.post('/create', createImage);
+router.get('/', getImages);
+router.get('/detail/:id', getImageById);
+router.put('/edit/:id', updateImage);
+router.delete('/delete/:id', deleteImage);
 
 module.exports = router;
