@@ -1,11 +1,9 @@
-const OrderDetailsModel = require('../../models/ordersModels/orderDetails');
+const OrderDetailsModel = require('../../models/orderDetailsModel/orderDetails');
 
 const createOrderDetail = async (req, res) => {
   try {
     const { product_id, order_id, price, quantity } = req.body;
-    const orderDetail = new OrderDetailsModel(
-        { product_id, order_id, price, quantity }
-    );
+    const orderDetail = new OrderDetailsModel({ product_id, order_id, price, quantity });
     await orderDetail.save();
     res.status(201).json(orderDetail);
   } catch (error) {

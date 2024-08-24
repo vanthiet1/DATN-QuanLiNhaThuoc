@@ -5,7 +5,7 @@ const {
   getOrderDetailById,
   updateOrderDetail,
   deleteOrderDetail
-} = require('../controllers/orderController/orderDetails');
+} = require('../controllers/orderDetailsController/orderDetails');
 
 const router = express.Router();
 
