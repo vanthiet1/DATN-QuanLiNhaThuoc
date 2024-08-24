@@ -1,4 +1,4 @@
-const OrderDetailsModel = require('../../models/ordersModels/orderDetails');
+const OrderDetailsModel = require('../../models/orderDetailsModel/orderDetails');
 const ProductModel = require('../../models/productModel/product');
 const formatHelper = require('../../utilities/helper/formatHelper');
 const mongoose = require('mongoose');
