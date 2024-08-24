@@ -4,50 +4,59 @@ const morgan = require('morgan');
 const cors = require('cors');
 require('dotenv').config();
 const app = express();
-const connectDB = require('./db/connectDB')
-
+const connectDB = require('./db/connectDB');
 
 
 // Middleware
-app.use(morgan("common"));
+app.use(morgan('common'));
 app.use(bodyParser.json());
 app.use(cors());
-connectDB()
 
-<<<<<<< HEAD
 
-=======
+connectDB();
+
+
+
 app.get('/', (req, res) => {
     res.send("Welcome To Api");
 });
->>>>>>> 31e5009ec98171e3720b2336147e1f207235811b
+
 
 // Routes
-const AuthRouter = require('./routers/auth')
+const AuthRouter = require('./routers/auth');
+const OrderRouter = require('./routers/order');
+const OrderDetailRouter = require('./routers/orderDetails');
+const ImageRouter = require('./routers/image');
 const UserRouter = require('./routers/user')
 const CartRouter = require('./routers/cart')
+const RoleRouter = require('./routers/role');  
+const AddressRouter = require('./routers/address');
+const CouponRouter = require('./routers/coupon');
 
 
+
+
+app.use('/api/v1/order', OrderRouter);
+app.use('/api/v1/order-detail', OrderDetailRouter);
+app.use('/api/v1/image',ImageRouter)
 app.use('/api/v1/auth', AuthRouter)
 app.use('/api/v1/user', UserRouter)
 app.use('/api/v1/cart', CartRouter)
+app.use('/api/v1/role', RoleRouter);  
+app.use('/api/v1/address', AddressRouter);
+app.use('/api/v1/coupon', CouponRouter);
+app.use('/api/v1/order', OrderRouter);
+app.use('/api/v1/order-detail', OrderDetailRouter);
+app.use('/api/v1/image',ImageRouter)
 
 
-
-
-// -- Role 
-const roleRouter = require('./routers/role');  
-app.use('/api/v1/role', roleRouter);  
-// -- Address
-const addressRouter = require('./routers/address');
-app.use('/api/v1/address', addressRouter);
-// -- Coupon
-const couponRouter = require('./routers/coupon');
-app.use('/api/v1/coupon', couponRouter);
+app.get('/', (req, res) => {
+  res.send('Welcome To Api');
+});
 
 
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
