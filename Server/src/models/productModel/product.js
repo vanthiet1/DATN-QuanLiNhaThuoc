@@ -8,7 +8,8 @@ const ProductSchema = new mongoose.Schema(
     },
     sub_category_id: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true
+      required: true,
+      ref: 'subcategories'
     },
     brand_id: {
       type: mongoose.Schema.Types.ObjectId,
