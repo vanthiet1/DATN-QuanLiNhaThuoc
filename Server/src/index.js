@@ -32,6 +32,10 @@ const CategoryRouter = require('./routers/category');
 const SubCategoryRouter = require('./routers/subCategory');
 const BrandRouter = require('./routers/brand');
 const BannerRouter = require('./routers/banner');
+const BlogRouter = require('./routers/blog');
+const CommentRouter = require('./routers/comments');
+
+
 
 app.use('/api/v1/order', OrderRouter);
 app.use('/api/v1/order-details', OrderDetailRouter);
@@ -48,6 +52,10 @@ app.use('/api/v1/subCategory', SubCategoryRouter);
 app.use('/api/v1/product', ProductRouter);
 app.use('/api/v1/brand', BrandRouter);
 app.use('/api/v1/banner', BannerRouter);
+app.use('/api/v1/blog', BlogRouter);
+app.use('/api/v1/comment', CommentRouter);
+
+
 
 // Start server
 const PORT = process.env.PORT || 5000;
