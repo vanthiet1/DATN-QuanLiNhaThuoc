@@ -1,5 +1,7 @@
+const OrderDetailsModel = require('../../models/ordersModels/orderDetails');
 const ProductModel = require('../../models/productModel/product');
 const formatHelper = require('../../utilities/helper/formatHelper');
+const mongoose = require('mongoose');
 
 const ProductController = {
   createProduct: async (req, res) => {
@@ -23,7 +25,6 @@ const ProductController = {
       res.status(500).json({ message: 'Lỗi khi tạo product: ' + error.message });
     }
   },
-
   getAllProducts: async (req, res) => {
     try {
       const productsList = await ProductModel.find({});
@@ -31,68 +32,138 @@ const ProductController = {
         res.status(200).json(productsList);
       }
     } catch (error) {
-      res.status(500).json({ message: 'Lỗi khi lấy danh sách role: ' + error.message });
+      res.status(500).json({ message: 'Lỗi khi lấy danh sách products: ' + error.message });
     }
   },
   getListProductBestSeller: async (req, res) => {
     try {
-      const listIDProductBestOrder = ['66c5de99a9cc4cab134d28f5', '66c5defaa9cc4cab134d28f7'];
-      if (listIDProductBestOrder.length <= 12) {
-        const productsList = await ProductModel.find({}).limit(12);
-        return res.status(200).json(productsList);
-      }
-      const productsList = await ProductModel.find({
-        _id: { $in: listIDProductBestOrder }
-      }).limit(12);
-      return res.status(200).json(productsList);
+      const limitProduct = Number.parseInt(req.query.limit) || 1000;
+      const listProductBestOrder = await OrderDetailsModel.aggregate([
+        {
+          $group: { _id: '$product_id', totalSold: { $sum: 1 } }
+        },
+        { $sort: { totalSold: -1 } },
+        {
+          $lookup: {
+            from: 'products',
+            localField: '_id',
+            foreignField: '_id',
+            as: 'product'
+          }
+        },
+        { $unwind: '$product' }
+      ]).limit(limitProduct);
+      return res.status(200).json(listProductBestOrder);
     } catch (error) {
       res.status(500).json({ message: 'Lỗi khi lấy danh sách sản phẩm bán chạy nhất: ' + error.message });
     }
   },
-  // Lấy thông tin Role theo ID
-  getRoleById: async (req, res) => {
+  getListProductNew: async (req, res) => {
     try {
-      const { id } = req.params;
-      const role = await RoleModel.findById(id);
-      if (!role) {
-        return res.status(404).json({ message: 'Không tìm thấy role' });
-      }
-      res.status(200).json(role);
+      const limitProduct = Number.parseInt(req.query.limit) || 1000;
+      const listProductNew = await ProductModel.find().sort({ createdAt: -1 }).limit(limitProduct);
+      return res.status(200).json(listProductNew);
     } catch (error) {
-      res.status(500).json({ message: 'Lỗi khi lấy role: ' + error.message });
+      res.status(500).json({ message: 'Lỗi khi lấy danh sách sản phẩm mới: ' + error.message });
     }
   },
-
-  // Cập nhật Role theo ID
-  updateRole: async (req, res) => {
+  getListProductRecommend: async (req, res) => {
+    try {
+      const limitProduct = Number.parseInt(req.query.limit) || 1000;
+      const listProductRecommend = await ProductModel.aggregate([{ $sample: { size: limitProduct } }]);
+      return res.status(200).json(listProductRecommend);
+    } catch (error) {
+      res.status(500).json({ message: 'Lỗi khi lấy danh sách sản phẩm gợi ý: ' + error.message });
+    }
+  },
+  getListProductRelative: async (req, res) => {
+    try {
+      const { category } = req.query;
+      const limitProduct = Number.parseInt(req.query.limit) || 1000;
+      const { ObjectId } = mongoose.Types;
+      const fliter = { sub_category_id: new ObjectId(category) };
+      const listProductRelative = await ProductModel.find(fliter).limit(limitProduct);
+      return res.status(200).json(listProductRelative);
+    } catch (error) {
+      res.status(500).json({ message: 'Lỗi khi lấy danh sách sản phẩm liên quan: ' + error.message });
+    }
+  },
+  getProductWithById: async (req, res) => {
     try {
       const { id } = req.params;
-      const { role_Name } = req.body;
-
-      const updatedRole = await RoleModel.findByIdAndUpdate(id, { role_Name }, { new: true });
-      if (!updatedRole) {
-        return res.status(404).json({ message: 'Không tìm thấy role' });
+      const { ObjectId } = mongoose.Types;
+      const convertId = new ObjectId(id);
+      const product = await ProductModel.aggregate([
+        { $match: { _id: convertId } },
+        {
+          $lookup: {
+            from: 'images',
+            localField: '_id',
+            foreignField: 'product_id',
+            as: 'images'
+          }
+        },
+        {
+          $lookup: {
+            from: 'brands',
+            localField: 'brand_id',
+            foreignField: '_id',
+            as: 'brand'
+          }
+        }
+      ]);
+      return res.status(200).json(product);
+    } catch (error) {
+      res.status(500).json({ message: 'Lỗi khi lấy chi tiết sản phẩm: ' + error.message });
+    }
+  },
+  getListProductFilter: async (req, res) => {
+    try {
+      const { category, key, sortField, sortOrder } = req.query;
+      if (!category && !key) {
+        return res.status(404).json({ message: 'không tìm thấy sản phẩm' });
+      }
+      const { ObjectId } = mongoose.Types;
+      const convertId = new ObjectId(category);
+      let sortOptions = {};
+      if (sortField && sortOrder) {
+        sortOptions[sortField] = sortOrder === 'asc' ? 1 : -1;
+      }
+      const listProductFilter = await ProductModel.find({
+        $or: [{ name: new RegExp(key, 'i') }, { sub_category_id: convertId }]
+      }).sort(sortOptions);
+      return res.status(200).json(listProductFilter);
+    } catch (error) {
+      res.status(500).json({ message: 'Lỗi khi tìm kiếm sản phẩm: ' + error.message });
+    }
+  },
+  updateProduct: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const productBody = req.body;
+      const slug = formatHelper.converStringToSlug(productBody.name);
+      const updateProduct = await ProductModel.findByIdAndUpdate(id, { slug, ...productBody }, { new: true });
+      if (!updateProduct) {
+        return res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
       }
       res.status(200).json({
-        message: 'Role đã được cập nhật thành công.',
-        role: updatedRole
+        message: 'sản phẩm đã được cập nhật thành công.',
+        product: updateProduct
       });
     } catch (error) {
-      res.status(500).json({ message: 'Lỗi khi cập nhật role: ' + error.message });
+      res.status(500).json({ message: 'Lỗi khi cập nhật sản phẩm: ' + error.message });
     }
   },
-
-  // Xóa Role theo ID
-  deleteRole: async (req, res) => {
+  deleteProduct: async (req, res) => {
     try {
       const { id } = req.params;
-      const deletedRole = await RoleModel.findByIdAndDelete(id);
-      if (!deletedRole) {
-        return res.status(404).json({ message: 'Không tìm thấy role' });
+      const deleteProduct = await ProductModel.findByIdAndDelete(id);
+      if (!deleteProduct) {
+        return res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
       }
-      res.status(200).json({ message: 'Role đã bị xóa' });
+      res.status(200).json({ message: 'Sản phẩm đã bị xóa' });
     } catch (error) {
-      res.status(500).json({ message: 'Lỗi khi xóa role: ' + error.message });
+      res.status(500).json({ message: 'Lỗi khi xóa sản phẩm: ' + error.message });
     }
   }
 };
