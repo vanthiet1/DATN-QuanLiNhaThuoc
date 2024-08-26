@@ -6,9 +6,11 @@ require('dotenv').config();
 const app = express();
 const connectDB = require('./db/connectDB');
 
+
 // Middleware
 app.use(morgan('common'));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 connectDB();
@@ -35,8 +37,6 @@ const BannerRouter = require('./routers/banner');
 const BlogRouter = require('./routers/blog');
 const CommentRouter = require('./routers/comments');
 
-
-
 app.use('/api/v1/order', OrderRouter);
 app.use('/api/v1/order-details', OrderDetailRouter);
 app.use('/api/v1/image', ImageRouter);
@@ -54,8 +54,6 @@ app.use('/api/v1/brand', BrandRouter);
 app.use('/api/v1/banner', BannerRouter);
 app.use('/api/v1/blog', BlogRouter);
 app.use('/api/v1/comment', CommentRouter);
-
-
 
 // Start server
 const PORT = process.env.PORT || 5000;
