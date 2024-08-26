@@ -12,7 +12,7 @@ const brandController = {
       const newBanner = new BrandModel({ name, origin_country, country_made });
       await newBanner.save();
 
-      res.status(201).json({ message: 'brand created successfully', data: newBanner });
+      res.status(201).json({ message: 'Tạo nhãn hàng thành công', data: newBanner });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -21,7 +21,16 @@ const brandController = {
   getBrand: async (req, res) => {
     try {
       const brand = await BrandModel.find({});
-      res.status(200).json({ data: brand });
+      res.status(200).json( brand);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+  getDetailBrand: async (req, res) => {
+    try {
+      const {id} = req.params
+      const detailBrand = await BrandModel.findById(id);
+      res.status(200).json(detailBrand);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -37,7 +46,7 @@ const brandController = {
         return res.status(404).json({ message: 'brand not found.' });
       }
 
-      res.status(200).json({ message: 'brand deleted successfully', data: deleteBrand });
+      res.status(200).json({ message: 'Xóa thành công', data: deleteBrand });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -49,10 +58,10 @@ const brandController = {
       const updateBrand = await BrandModel.findByIdAndUpdate(id, req.body, { new: true });
 
       if (!updateBrand) {
-        return res.status(404).json({ message: 'Banner not found.' });
+        return res.status(404).json({ message: 'Nhãn hàng không tồn tại' });
       }
 
-      res.status(200).json({ message: 'Banner updated successfully', data: updateBrand });
+      res.status(200).json({ message: 'Cập nhật thành công', data: updateBrand });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
