@@ -1,11 +1,9 @@
-const OrderDetailsModel = require('../../models/ordersModels/orderDetails');
+const OrderDetailsModel = require('../../models/orderDetailsModel/orderDetails');
 
 const createOrderDetail = async (req, res) => {
   try {
     const { product_id, order_id, price, quantity } = req.body;
-    const orderDetail = new OrderDetailsModel(
-        { product_id, order_id, price, quantity }
-    );
+    const orderDetail = new OrderDetailsModel({ product_id, order_id, price, quantity });
     await orderDetail.save();
     res.status(201).json(orderDetail);
   } catch (error) {
@@ -15,7 +13,7 @@ const createOrderDetail = async (req, res) => {
 
 const getOrderDetails = async (req, res) => {
   try {
-    const orderDetails = await OrderDetailsModel.find().lean(); //.populate('product_id order_id');
+    const orderDetails = await OrderDetailsModel.find().lean();
     res.status(200).json(orderDetails);
   } catch (error) {
     res.status(500).json({ message: error.message });

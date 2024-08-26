@@ -11,7 +11,7 @@ const bannerController = {
 
       const newBanner = new BannerModel({ name, url_img });
 
-      await BannerModel.save();
+      await newBanner.save();
 
       res.status(201).json({ message: 'Đã thêm banner thành công', data: newBanner });
     } catch (error) {

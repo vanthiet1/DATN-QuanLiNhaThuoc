@@ -1,28 +1,56 @@
-const OrderDetailsModel = require('../../models/ordersModels/orderDetails');
+const ImagesModel = require('../../models/imageModels/image');
+const OrderDetailsModel = require('../../models/orderDetailsModel/orderDetails');
 const ProductModel = require('../../models/productModel/product');
+const { handleCreateImageUpload } = require('../../services/mediaCloudinary');
 const formatHelper = require('../../utilities/helper/formatHelper');
 const mongoose = require('mongoose');
 
 const ProductController = {
   createProduct: async (req, res) => {
     try {
-      const { imageArr, ...product } = req.body;
-      const slug = formatHelper.converStringToSlug(product.name);
-      const newProduct = new ProductModel({ ...product, slug });
-      // if (imageArr.length > 0 && Array.isArray(imageArr)) {
+      if (!req.files) {
+        return res.status(404).json({
+          message: 'Bạn cần thêm hình ảnh khi tạo sản phẩm'
+        });
+      }
+      const imgFiles = req.files;
+      const urlCloundCreated = [];
+      for (let i = 0; i < imgFiles.length; i++) {
+        const b64 = Buffer.from(imgFiles[i].buffer).toString('base64');
+        let dataURI = 'data:' + imgFiles[i].mimetype + ';base64,' + b64;
 
-      // } else {
-      //   return res.status(404).json({
-      //     message: 'Bạn chưa thêm hình ảnh cho sản phẩm.'
-      //   });
-      // }
-      await newProduct.save();
-      res.status(201).json({
-        message: 'Product mới đã được tạo thành công.',
-        product: newProduct
-      });
+        const imageName = imgFiles[i].originalname.split('.')[0];
+        const urlOptions = {
+          folder: 'nhathuoc/products',
+          public_id: formatHelper.converStringToSlug(imageName)
+        };
+        const secure_url = await handleCreateImageUpload(dataURI, urlOptions);
+        urlCloundCreated.push(secure_url);
+      }
+
+      if (!urlCloundCreated.length) {
+        res.status(500).json({
+          message: 'Hình ảnh sản phẩm chưa được tạo'
+        });
+      }
+
+      if (urlCloundCreated.length > 0) {
+        const { ...product } = req.body;
+        const slug = formatHelper.converStringToSlug(product.name);
+        const newProduct = new ProductModel({ slug, ...product });
+        await newProduct.save();
+
+        for (let i = 0; i < urlCloundCreated.length; i++) {
+          const newImageProduct = new ImagesModel({ product_id: newProduct._id, url_img: urlCloundCreated[i] });
+          await newImageProduct.save();
+        }
+
+        res.status(201).json({
+          message: 'Sản phẩm mới đã được tạo thành công.'
+        });
+      }
     } catch (error) {
-      res.status(500).json({ message: 'Lỗi khi tạo product: ' + error.message });
+      res.status(500).json({ message: 'Lỗi khi tạo sản phẩm: ' + error.message });
     }
   },
   getAllProducts: async (req, res) => {
@@ -32,7 +60,7 @@ const ProductController = {
         res.status(200).json(productsList);
       }
     } catch (error) {
-      res.status(500).json({ message: 'Lỗi khi lấy danh sách products: ' + error.message });
+      res.status(500).json({ message: 'Lỗi khi lấy danh sách sản phẩm: ' + error.message });
     }
   },
   getListProductBestSeller: async (req, res) => {
@@ -93,6 +121,7 @@ const ProductController = {
       const { id } = req.params;
       const { ObjectId } = mongoose.Types;
       const convertId = new ObjectId(id);
+
       const product = await ProductModel.aggregate([
         { $match: { _id: convertId } },
         {
@@ -158,6 +187,11 @@ const ProductController = {
     try {
       const { id } = req.params;
       const deleteProduct = await ProductModel.findByIdAndDelete(id);
+
+      if (deleteProduct) {
+        const deleteImages = await ImagesModel.deleteMany({ product_id: deleteProduct._id });
+        console.log(`${deleteImages.deletedCount} `);
+      }
       if (!deleteProduct) {
         return res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
       }
