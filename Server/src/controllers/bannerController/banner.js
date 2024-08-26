@@ -6,14 +6,14 @@ const bannerController = {
       const { name, url_img } = req.body;
 
       if (!name || !url_img) {
-        return res.status(400).json({ message: 'Name and URL image are required.' });
+        return res.status(400).json({ message: 'Vui lòng nhập đầy đủ thông tin' });
       }
 
       const newBanner = new BannerModel({ name, url_img });
 
       await BannerModel.save();
 
-      res.status(201).json({ message: 'Banner created successfully', data: newBanner });
+      res.status(201).json({ message: 'Đã thêm banner thành công', data: newBanner });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -22,7 +22,7 @@ const bannerController = {
   getBanners: async (req, res) => {
     try {
       const banners = await BannerModel.find({});
-      res.status(200).json({ data: banners });
+      res.status(200).json(banners);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -35,10 +35,10 @@ const bannerController = {
       const deletedBanner = await BannerModel.findByIdAndDelete(id);
 
       if (!deletedBanner) {
-        return res.status(404).json({ message: 'Banner not found.' });
+        return res.status(404).json({ message: 'Không tìm thấy banner để xóa' });
       }
 
-      res.status(200).json({ message: 'Banner deleted successfully', data: deletedBanner });
+      res.status(200).json({ message: 'Banner đã xóa thành công', data: deletedBanner });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -52,10 +52,10 @@ const bannerController = {
       const updatedBanner = await BannerModel.findByIdAndUpdate(id, { name, url_img }, { new: true });
 
       if (!updatedBanner) {
-        return res.status(404).json({ message: 'Banner not found.' });
+        return res.status(404).json({ message: 'Không tìm thấy banner' });
       }
 
-      res.status(200).json({ message: 'Banner updated successfully', data: updatedBanner });
+      res.status(200).json({ message: 'Đã cập nhật thành công', data: updatedBanner });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

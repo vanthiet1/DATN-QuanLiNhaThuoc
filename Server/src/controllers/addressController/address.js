@@ -1,7 +1,6 @@
 const AddressModel = require('../../models/addressModel/address');
 
 const AddressController = {
-    // Tạo mới Address
     createAddress: async (req, res) => {
         const { district, commune, address, user_id, receiver, city, phone } = req.body;
         try {
@@ -24,7 +23,6 @@ const AddressController = {
         }
     },
 
-    // Lấy danh sách các Address
     getAddresses: async (req, res) => {
         try {
             const addresses = await AddressModel.find().populate('user_id');
@@ -34,7 +32,6 @@ const AddressController = {
         }
     },
 
-    // Lấy thông tin Address theo ID
     getAddressById: async (req, res) => {
         try {
             const { id } = req.params;
@@ -44,11 +41,10 @@ const AddressController = {
             }
             res.status(200).json(address);
         } catch (error) {
-            res.status(500).json({ message: 'Lỗi khi lấy địa chỉ: ' + error.message });
+            res.status(500).json({ message: error.message });
         }
     },
 
-    // Cập nhật Address theo ID
     updateAddress: async (req, res) => {
         try {
             const { id } = req.params;
@@ -67,11 +63,10 @@ const AddressController = {
                 address: updatedAddress
             });
         } catch (error) {
-            res.status(500).json({ message: 'Lỗi khi cập nhật địa chỉ: ' + error.message });
+            res.status(500).json({ message: error.message });
         }
     },
 
-    // Xóa Address theo ID
     deleteAddress: async (req, res) => {
         try {
             const { id } = req.params;
@@ -81,7 +76,7 @@ const AddressController = {
             }
             res.status(200).json({ message: 'Địa chỉ đã bị xóa' });
         } catch (error) {
-            res.status(500).json({ message: 'Lỗi khi xóa địa chỉ: ' + error.message });
+            res.status(500).json({ message:error.message });
         }
     }
 };

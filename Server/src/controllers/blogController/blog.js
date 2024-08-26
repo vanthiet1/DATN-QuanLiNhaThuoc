@@ -9,7 +9,7 @@ const blogController = {
             }
             res.status(200).json(allBlogs);
         } catch (error) {
-            res.status(500).json({ message: "Lỗi" });
+            res.status(500).json({ message:error.message  });
         }
     },
     addBlog: async (req, res) => {
@@ -22,7 +22,7 @@ const blogController = {
             await newBlog.save();
             res.status(201).json(newBlog);
         } catch (error) {
-            res.status(500).json({ message: "Lỗi server" });
+            res.status(500).json({ message:error.message  });
         }
     },
     deleteBlog: async (req, res) => {
@@ -34,7 +34,7 @@ const blogController = {
             }
             res.status(200).json({ message: 'Blog đã được xóa thành công' });
         } catch (error) {
-            res.status(500).json({ message: "Lỗi server" });
+            res.status(500).json({ message:error.message  });
         }
     },
     updateBlog: async (req, res) => {
@@ -47,7 +47,7 @@ const blogController = {
             }
             res.status(200).json(updatedBlog);
         } catch (error) {
-            res.status(500).json({ message: "Lỗi server" });
+            res.status(500).json({ message:error.message  });
         }
     }
 }
