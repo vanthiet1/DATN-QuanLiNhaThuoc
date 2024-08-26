@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const CategoryModel = require('../../models/categoryModel/category');
 
 const categoryController = {
@@ -54,11 +55,40 @@ const categoryController = {
           }
         }
       ]);
-      res.status(200).json({ data: categories });
+      res.status(200).json(categories);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
   },
+
+  getDetailCategory: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const detailCategories = await CategoryModel.aggregate([
+        {
+          $match: { _id: new mongoose.Types.ObjectId(id) } 
+        },
+        {
+          $lookup: {
+            from: 'subcategories',
+            localField: '_id',
+            foreignField: 'category_id',
+            as: 'subcategories'
+          }
+        }
+      ]);
+  
+      if (!detailCategories || detailCategories.length === 0) {
+        return res.status(404).json({ message: 'Danh mục không tồn tại' });
+      }
+  
+      res.status(200).json({ detailCategories: detailCategories });
+    } catch (error) {
+      console.error('Error fetching category details:', error);
+      res.status(500).json({ message: error.message });
+    }
+  },
+  
 
   updateCategory: async (req, res) => {
     const { id } = req.params;
