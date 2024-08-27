@@ -37,6 +37,9 @@ const userSchema = new mongoose.Schema(
             enum:['google', 'facebook' , 'phone' ,'local'],
             required:true
         },
+        otpVerify:{type:Number},
+        timeOtp: {type: Date}
+
     },{
         timestamps: true,
     }
