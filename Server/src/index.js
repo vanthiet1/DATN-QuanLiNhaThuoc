@@ -36,6 +36,8 @@ const BrandRouter = require('./routers/brand');
 const BannerRouter = require('./routers/banner');
 const BlogRouter = require('./routers/blog');
 const CommentRouter = require('./routers/comments');
+const VerifyRouter = require('./routers/vertifyEmail');
+
 
 app.use('/api/v1/order', OrderRouter);
 app.use('/api/v1/order-details', OrderDetailRouter);
@@ -54,6 +56,8 @@ app.use('/api/v1/brand', BrandRouter);
 app.use('/api/v1/banner', BannerRouter);
 app.use('/api/v1/blog', BlogRouter);
 app.use('/api/v1/comment', CommentRouter);
+app.use('/api/v1/email', VerifyRouter);
+
 
 // Start server
 const PORT = process.env.PORT || 5000;
