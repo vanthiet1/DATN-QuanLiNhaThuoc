@@ -1,6 +1,6 @@
 require('dotenv').config()
 const nodemailer = require('nodemailer');
-const sendMail = async ({ email, subject, randomCode }) => {
+const sendMail = async ({ email, subject, randomCode  }) => {
 
     let transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
@@ -63,11 +63,7 @@ const sendMail = async ({ email, subject, randomCode }) => {
 </head>
 <body>
     <div class="container">
-        <h1>Xác nhận tài khoản</h1>
-        <p>Chào bạn,</p>
-        <p>Vui lòng nhập mã xác nhận sau vào ứng dụng của bạn:</p>
-        <p class="code">${randomCode}</p>
-        <p class="footer">Nếu bạn không yêu cầu đăng ký tài khoản này, vui lòng bỏ qua email này.</p>
+       ${randomCode}
     </div>
 </body>
 </html>`
