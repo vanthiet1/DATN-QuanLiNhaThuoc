@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt')
 const UserModel = require('../../models/userModel/user');
 const RoleModel = require('../../models/roleModel/role');
 const sendMail = require('../../helpers/sendMail');
+const generateRandomCode = require('../../helpers/randomCode');
 const Auth = {
     Register: async (req, res) => {
         const { fullname, email, password, phone } = req.body;
@@ -43,7 +44,13 @@ const Auth = {
             await sendMail({
                 email: newUser.email,
                 subject: "Xác nhận tài khoản",
-                randomCode: randomCode
+                randomCode: `
+                 <h1>Xác nhận tài khoản của bạn</h1>
+                 <p>Chào bạn,</p>
+                 <p>Vui lòng nhập mã xác nhận sau vào ứng dụng của bạn để xác thực tài khoản:</p>
+                 <p class="code">${randomCode}</p>
+                 <p class="footer">Nếu bạn không yêu cầu đăng ký tài khoản này, vui lòng bỏ qua email này.</p>
+                `
             });
             return res.status(201).json({ message: 'Đăng ký thành công.', data: newUser });
         } catch (error) {
@@ -85,13 +92,57 @@ const Auth = {
             res.status(500).json({ message: error.message });
         }
     },
-    ForgotPassword: async (req, res) => {
+    SendCodeForgotPassword: async (req, res) => {
         try {
             const { email } = req.body;
             const user = await User.findOne({ email });
             if (!user) {
-                return res.status(400).json({ message: "Email chưa đăng ký không thể thực hiện chức năng" });
+                return res.status(400).json({ message: "Tài khoản chưa đăng ký không thể quên mật khẩu" });
             }
+
+            const codeForgotPassword = generateRandomCode(6);
+            const timeOtp = new Date(Date.now() + 1 * 60 * 1000);
+
+            user.otpForgotPass = codeForgotPassword;
+            user.timeOtp = timeOtp;
+            await user.save();
+
+            await sendMail({
+                email: user.email,
+                subject: "Đặt lại mật khẩu của bạn",
+                randomCode: `
+                 <h1>Đặt lại mật khẩu của bạn</h1>
+                 <p>Chào bạn,</p>
+                 <p>Vui lòng nhập mã xác nhận sau vào ứng dụng của bạn để thay đổi mật khẩu:</p>
+                 <p class="code">${codeForgotPassword}</p>
+                 <p class="footer">Nếu bạn không yêu cầu đăng ký tài khoản này, vui lòng bỏ qua email này.</p>
+         `
+            });
+            res.status(200).json({ message: "Vui lòng kiểm tra email", codeForgotPassword });
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+    ForgotPassword: async (req, res) => {
+        try {
+            const { email, newPassword, code } = req.body;
+            const user = await User.findOne({ email });
+            if (!user) {
+                return res.status(400).json({ message: "Tài khoản chưa đăng ký không thể quên mật khẩu" });
+            }
+            if (code !== user.otpForgotPass) {
+                return res.status(400).json({ message: "Mã để thay đổi mật khẩu không chính xác" })
+            }
+            if (Date.now() > user.timeOtp) {
+                return res.status(400).json({ message: "Mã xác nhận đã hết hạn, vui lòng gửi lại" });
+            }
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(newPassword, salt);
+            user.password = hashedPassword;
+            user.otpForgotPass = undefined;
+            user.timeOtp = undefined;
+            await user.save();
+            res.status(200).json({ message: "Đổi mật khẩu thành công" });
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
@@ -184,7 +235,13 @@ const Auth = {
             await sendMail({
                 email: user.email,
                 subject: "Mã xác thực mới",
-                randomCode: `Mã xác thực mới của bạn là: <strong>${newVerificationCode}</strong>`
+                randomCode: `
+                 <h1>Mã mới được cung cấp</h1>
+                 <p>Chào bạn,</p>
+                 <p>Vui lòng nhập mã mới vừa cung cấp để xác thực tài khoản của bạn:</p>
+                 <p class="code">${newVerificationCode}</p>
+                 <p class="footer">Nếu bạn không yêu cầu đăng ký tài khoản này, vui lòng bỏ qua email này.</p>
+                `
             });
 
             await user.save();
