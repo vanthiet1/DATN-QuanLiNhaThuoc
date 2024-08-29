@@ -1,34 +1,59 @@
 const AddressModel = require('../../models/addressModel/address');
-
+const mongoose = require('mongoose')
 const AddressController = {
-    createAddress: async (req, res) => {
-        const { district, commune, address, user_id, receiver, city, phone } = req.body;
+    addAddress: async (req, res) => {
+        const { street, commune, district, city, address, receiver, phone, user_id } = req.body;
+        if (!street || !commune || !district || !city || !address || !receiver || !phone) {
+            return res.status(400).json({ message: 'Cần phải nhập đầy đủ thông tin.' });
+        }
+        if (!mongoose.Types.ObjectId.isValid(user_id)) {
+            return res.status(400).json({ message: 'User không tồn tại' });
+        }
         try {
             const newAddress = new AddressModel({
-                district,
-                commune,
-                address,
+                street,
+                commune, //phường / xã
+                district, // quận / huyện
+                city, // thành phố // tỉnh
+                address, // gộp lại
+                receiver, // người nhận hộ
+                phone,//sdt
                 user_id,
-                receiver,
-                city,
-                phone
+
             });
+
             await newAddress.save();
             res.status(201).json({
                 message: 'Địa chỉ mới đã được tạo thành công.',
                 address: newAddress
             });
         } catch (error) {
-            res.status(500).json({ message: 'Lỗi khi tạo địa chỉ: ' + error.message });
+            res.status(500).json({ message: error.message });
         }
     },
 
-    getAddresses: async (req, res) => {
+    getAddress: async (req, res) => {
         try {
-            const addresses = await AddressModel.find().populate('user_id');
+            const addresses = await AddressModel.find().populate('user_id', 'name');
             res.status(200).json(addresses);
         } catch (error) {
             res.status(500).json({ message: 'Lỗi khi lấy danh sách địa chỉ: ' + error.message });
+        }
+    },
+
+    getAddressByUserId: async (req, res) => {
+        try {
+            const { user_id } = req.params
+            if (!user_id) {
+                return res.status(400).json({ message: 'Thiếu thông tin user' });
+            }
+            const address = await AddressModel.findOne({ user_id: user_id }).populate('user_id');
+            if (!address) {
+                return res.status(404).json({ message: 'Không tìm thấy địa chỉ' });
+            }
+            res.status(200).json(address);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
         }
     },
 
@@ -48,11 +73,22 @@ const AddressController = {
     updateAddress: async (req, res) => {
         try {
             const { id } = req.params;
-            const { district, commune, address, user_id, receiver, city, phone } = req.body;
-
+            const {
+                street,
+                commune, //phường / xã
+                district, // quận / huyện
+                city, // thành phố // tỉnh
+                address, // gộp lại
+                receiver, // người nhận hộ
+                phone,//sdt
+                user_id
+            } = req.body;
+            if (!mongoose.Types.ObjectId.isValid(user_id)) {
+                return res.status(400).json({ message: 'User không tồn tại' });
+            }
             const updatedAddress = await AddressModel.findByIdAndUpdate(
                 id,
-                { district, commune, address, user_id, receiver, city, phone },
+                { district, commune, address, user_id, receiver, city, phone, street },
                 { new: true }
             );
             if (!updatedAddress) {
@@ -74,9 +110,9 @@ const AddressController = {
             if (!deletedAddress) {
                 return res.status(404).json({ message: 'Không tìm thấy địa chỉ' });
             }
-            res.status(200).json({ message: 'Địa chỉ đã bị xóa' });
+            res.status(200).json({ message: 'Xóa địa chỉ thành công' });
         } catch (error) {
-            res.status(500).json({ message:error.message });
+            res.status(500).json({ message: error.message });
         }
     }
 };
