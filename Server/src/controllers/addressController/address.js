@@ -83,9 +83,9 @@ const AddressController = {
                 phone,//sdt
                 user_id
             } = req.body;
-            if (!mongoose.Types.ObjectId.isValid(user_id)) {
-                return res.status(400).json({ message: 'User không tồn tại' });
-            }
+    if (!mongoose.Types.ObjectId.isValid(user_id)) {
+            return res.status(400).json({ message: 'User không tồn tại' });
+        }
             const updatedAddress = await AddressModel.findByIdAndUpdate(
                 id,
                 { district, commune, address, user_id, receiver, city, phone, street },
