@@ -13,7 +13,7 @@ const bannerController = {
 
       await newBanner.save();
 
-      res.status(201).json({ message: 'Đã thêm banner thành công', data: newBanner });
+      res.status(201).json({ message: 'Đã thêm banner thành công',  newBanner });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -30,7 +30,6 @@ const bannerController = {
 
   deleteBanner: async (req, res) => {
     const { id } = req.params;
-
     try {
       const deletedBanner = await BannerModel.findByIdAndDelete(id);
 
@@ -38,7 +37,7 @@ const bannerController = {
         return res.status(404).json({ message: 'Không tìm thấy banner để xóa' });
       }
 
-      res.status(200).json({ message: 'Banner đã xóa thành công', data: deletedBanner });
+      res.status(200).json({ message: 'Banner đã xóa thành công' });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -55,7 +54,7 @@ const bannerController = {
         return res.status(404).json({ message: 'Không tìm thấy banner' });
       }
 
-      res.status(200).json({ message: 'Đã cập nhật thành công', data: updatedBanner });
+      res.status(200).json({ message: 'Đã cập nhật banner thành công' });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
