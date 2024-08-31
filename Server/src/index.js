@@ -6,9 +6,11 @@ require('dotenv').config();
 const app = express();
 const connectDB = require('./db/connectDB');
 
+
 // Middleware
 app.use(morgan('common'));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 connectDB();
@@ -34,7 +36,7 @@ const BrandRouter = require('./routers/brand');
 const BannerRouter = require('./routers/banner');
 const BlogRouter = require('./routers/blog');
 const CommentRouter = require('./routers/comments');
-
+const VerifyRouter = require('./routers/vertifyEmail');
 
 
 app.use('/api/v1/order', OrderRouter);
@@ -46,14 +48,15 @@ app.use('/api/v1/cart', CartRouter)
 app.use('/api/v1/role', RoleRouter);  
 app.use('/api/v1/address', AddressRouter);
 app.use('/api/v1/coupon', CouponRouter);
-app.use('/api/v1/order', OrderRouter);
-app.use('/api/v1/order-detail', OrderDetailRouter);
-app.use('/api/v1/image',ImageRouter)
+app.use('/api/v1/image', ImageRouter);
+app.use('/api/v1/category', CategoryRouter);
+app.use('/api/v1/subCategory', SubCategoryRouter);
+app.use('/api/v1/product', ProductRouter);
+app.use('/api/v1/brand', BrandRouter);
+app.use('/api/v1/banner', BannerRouter);
+app.use('/api/v1/blog', BlogRouter);
+app.use('/api/v1/comment', CommentRouter);
 
-
-app.get('/', (req, res) => {
-  res.send('Welcome To Api');
-});
 
 
 // Start server

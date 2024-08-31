@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const orderSchema = new mongoose.Schema(
   {
     product_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Products', required: true },
-    url_img: { type: String, required: true },
+    url_img: { type: String, required: true }
   },
   { timestamps: true }
 );

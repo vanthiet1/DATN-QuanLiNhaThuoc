@@ -44,9 +44,7 @@ const User = {
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
-    },
-    
-    
+    },  
     getCartByUserId: async (req, res) => {
         try {
             const { userId } = req.params
@@ -65,7 +63,7 @@ const User = {
             if (!id) {
                 return res.status(404).json({ message: "Không tìm thấy giỏ hàng" });
             }
-            const Cart = await CartModel.findByIdAndDelete(id)
+          await CartModel.findByIdAndDelete(id)
             
             res.status(200).json({message:"Đã loại bỏ món hàng này"})
         } catch (error) {
@@ -74,22 +72,30 @@ const User = {
     },
     deleteProductCart: async (req, res) => {
         try {
-            const { id } = req.params;
-            const { userId , productId } = req.body; 
-            let cart = await CartModel.findOne({ userId });
+            const { userId } = req.params; 
+            const { productId } = req.body;
     
-            if (!cart) {
+            let cart = await CartModel.findOne({ userId });
+            
+            if (!cart) { 
                 return res.status(404).json({ message: "Không tìm thấy giỏ hàng" });
             }
     
-            cart.productList = cart.productList.filter(item => item._id.toString() !== id);
-            cart.totalPrice = cart.productList.reduce((total, item) => total + item.quantity * item.price, 0);
+            cart.productList = cart.productList.filter(item => item.productId.toString() !== productId.toString());
+    
+            if (cart.productList.length === 0) {
+                await CartModel.deleteOne({ userId });
+                return res.status(200).json({ message: "Giỏ hàng đã được xóa vì không còn sản phẩm nào" });
+            }
+    
+            cart.totalPrice = cart.productList.reduce((total, item) => {
+                const price = Number(item.price_old) || 0;
+                return total + (item.quantity * price);
+            }, 0);
     
             await cart.save();
-    
             res.status(200).json({ message: "Đã loại bỏ món hàng này", cart });
         } catch (error) {
-            // Xử lý lỗi và trả về thông báo lỗi
             res.status(500).json({ message: error.message });
         }
     },
