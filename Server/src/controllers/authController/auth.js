@@ -9,7 +9,7 @@ const Auth = {
     Register: async (req, res) => {
         const { fullname, email, password, phone } = req.body;
         try {
-            if (!fullname || !email || !phone || !password) {
+            if (!fullname || !email || !password) {
                 return res.status(400).json({ message: "Vui lòng nhập cho đầy đủ" });
             }
 
