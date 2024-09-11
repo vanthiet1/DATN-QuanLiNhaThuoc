@@ -13,8 +13,7 @@ const commentController = {
             await newComment.save();
             res.status(201).json(newComment);
         } catch (error) {
-            console.error('', error);
-            res.status(500).json({ error: '404' });
+            res.status(500).json({ message:error.message });
         }
     },
 
@@ -27,8 +26,7 @@ const commentController = {
             }
             res.json(comments);
         } catch (error) {
-            console.error('', error);
-            res.status(500).json({ error: '1' });
+            res.status(500).json({ message:error.message });
         }
     },
 
@@ -40,8 +38,7 @@ const commentController = {
             }
             res.status(200).json(allComments);
         } catch (error) {
-            console.error('', error);
-            res.status(500).json({ error: '' });
+            res.status(500).json({ message:error.message });
         }
     },
 
@@ -64,8 +61,7 @@ const commentController = {
     
             res.status(200).json({ message: 'Đã xóa bình luận' });
         } catch (error) {
-            console.error('Error deleting comment:', error);
-            res.status(500).json({ error: 'Internal Server Error' });
+            res.status(500).json({ message:error.message });
         }
     },
     

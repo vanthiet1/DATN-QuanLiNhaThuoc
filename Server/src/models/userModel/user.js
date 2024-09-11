@@ -12,7 +12,17 @@ const userSchema = new mongoose.Schema(
         },
         password: {
             type: String,
-            require: true
+            required: function () {
+                return !this.googleId;
+            },
+        },
+        googleId: {
+            type: String,
+            unique: true,
+            sparse: true,
+        },
+        avatar: {
+            type: String,
         },
         role_id: {
             type: mongoose.Schema.Types.ObjectId,
@@ -37,10 +47,9 @@ const userSchema = new mongoose.Schema(
             enum: ['google', 'facebook', 'phone', 'local'],
             required: true
         },
-        otpVerify:{type:Number},
+        otpVerify: { type: Number },
         otpForgotPass: { type: String },
         timeOtp: { type: Date }
-
     }, {
     timestamps: true,
 }

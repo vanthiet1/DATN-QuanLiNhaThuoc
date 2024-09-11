@@ -1,15 +1,15 @@
 const jwt = require('jsonwebtoken');
-const User = require('../../models/userModel/user')
 const bcrypt = require('bcrypt')
 const UserModel = require('../../models/userModel/user');
 const RoleModel = require('../../models/roleModel/role');
 const sendMail = require('../../helpers/sendMail');
 const generateRandomCode = require('../../helpers/randomCode');
+
 const Auth = {
     Register: async (req, res) => {
         const { fullname, email, password, phone } = req.body;
         try {
-            if (!fullname || !email || !phone || !password) {
+            if (!fullname || !email || !password) {
                 return res.status(400).json({ message: "Vui lòng nhập cho đầy đủ" });
             }
 
@@ -75,7 +75,7 @@ const Auth = {
             const accessToken = jwt.sign(
                 { userId: findUser._id },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: '15m' }
+                { expiresIn: '10s' }
             );
 
             const refreshToken = jwt.sign(
@@ -83,11 +83,103 @@ const Auth = {
                 process.env.REFRESH_TOKEN_SECRET,
                 { expiresIn: '7d' }
             );
+            res.cookie("refreshToken", refreshToken, {
+                httpOnly: true,
+                expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+                sameSite: 'Strict',
+                path: '/', 
+            })
+            console.log('Cookies after setting:', req.cookies.refreshToken);
             res.json({
                 message: "Đăng nhập thành công",
-                accessToken,
-                refreshToken
+                accessToken
             });
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+    LoginGoogle: async (req, res) => {
+        const { fullname, email, googleId, avatar, emailVerify } = req.body;
+        try {
+            const role = await RoleModel.findOne({ role_Name: "customer" });
+            if (!role) {
+                return res.status(500).json({ message: 'Role không tồn tại trong hệ thống.' });
+            }
+
+            let user = await UserModel.findOne({ email });
+
+            if (!user) {
+                user = new UserModel({
+                    fullname,
+                    email,
+                    googleId,
+                    avatar,
+                    provider: 'google',
+                    emailVerify,
+                    is_active: 1,
+                    role_id: role._id,
+                });
+                await user.save();
+            } else {
+                if (!user.emailVerify && emailVerify) {
+                    user.emailVerify = true;
+                    await user.save();
+                }
+            }
+            res.status(200).json({ user, message: 'Đăng nhập Google thành công!' });
+        } catch (error) {
+            console.error('Lỗi khi đăng nhập Google:', error);
+            res.status(500).json({ message: error.message });
+        }
+    },
+ refreshToken: async (req, res) => {
+        const { refreshToken } = req.cookies;
+    
+        console.log('Received Cookies:', req.cookies); 
+    
+        if (!refreshToken) {
+            return res.status(401).json({ message: 'Refresh token không tồn tại' });
+        }
+    
+        try {
+            const payload = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    
+            const newAccessToken = jwt.sign(
+                { userId: payload.userId },
+                process.env.ACCESS_TOKEN_SECRET,
+                { expiresIn: '1h' }
+            );
+    
+            res.json({ accessToken: newAccessToken });
+        } catch (error) {
+            console.error('Token Verification Error:', error.message); 
+            res.status(500).json({ message: 'Lỗi xác thực refresh token' });
+        }
+    },
+    VerifyCode: async (req, res) => {
+        try {
+            const { email, code } = req.body;
+            const user = await UserModel.findOne({ email });
+
+            if (!user) {
+                return res.status(404).json({ message: "Người dùng không tồn tại" });
+            }
+
+            if (user.otpVerify !== code) {
+                return res.status(400).json({ message: "Mã xác nhận không chính xác" });
+            }
+            if (user.emailVerify) {
+                return res.status(400).json({ message: "Tài khoản đã được xác thực trước đó" });
+            }
+            if (Date.now() > user.timeOtp) {
+                return res.status(400).json({ message: "Mã xác nhận đã hết hạn, vui lòng gửi lại" });
+            }
+            user.emailVerify = true;
+            user.otpVerify = undefined;
+            user.timeOtp = undefined;
+
+            await user.save();
+            res.status(200).json({ message: "Xác nhận thành công", user });
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
@@ -126,7 +218,7 @@ const Auth = {
     ForgotPassword: async (req, res) => {
         try {
             const { email, newPassword, code } = req.body;
-            const user = await User.findOne({ email });
+            const user = await UserModel.findOne({ email });
             if (!user) {
                 return res.status(400).json({ message: "Tài khoản chưa đăng ký không thể quên mật khẩu" });
             }
@@ -191,38 +283,11 @@ const Auth = {
             res.status(500).json({ message: error.message });
         }
     },
-    VerifyCode: async (req, res) => {
-        try {
-            const { email, code } = req.body;
-            const user = await User.findOne({ email });
 
-            if (!user) {
-                return res.status(404).json({ message: "Người dùng không tồn tại" });
-            }
-
-            if (user.otpVerify !== code) {
-                return res.status(400).json({ message: "Mã xác nhận không chính xác" });
-            }
-            if (user.emailVerify) {
-                return res.status(400).json({ message: "Tài khoản đã được xác thực trước đó" });
-            }
-            if (Date.now() > user.timeOtp) {
-                return res.status(400).json({ message: "Mã xác nhận đã hết hạn, vui lòng gửi lại" });
-            }
-            user.emailVerify = true;
-            user.otpVerify = undefined;
-            user.timeOtp = undefined;
-
-            await user.save();
-            res.status(200).json({ message: "Xác nhận thành công", user });
-        } catch (error) {
-            res.status(500).json({ message: error.message });
-        }
-    },
     ResendVerifyCode: async (req, res) => {
         try {
             const { email } = req.body;
-            const user = await User.findOne({ email });
+            const user = await UserModel.findOne({ email });
             if (!user) {
                 return res.status(404).json({ message: "Người dùng không tồn tại" });
             }
