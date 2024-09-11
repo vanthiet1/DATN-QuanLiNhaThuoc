@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const cors = require('cors');
 require('dotenv').config();
@@ -10,8 +11,12 @@ const connectDB = require('./db/connectDB');
 // Middleware
 app.use(morgan('common'));
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173', 
+  credentials: true 
+}));
 
 connectDB();
 
