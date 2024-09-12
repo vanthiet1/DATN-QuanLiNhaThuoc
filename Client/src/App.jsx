@@ -4,7 +4,7 @@ import Register from "./modules/auth/Register";
 import Login from './modules/auth/Login';
 import { UserContext } from './contexts/UserContext';
 import { useContext } from 'react';
-import handleLogout from './feature/logout';
+import authServices from './services/auth';
 const App = () => {
   const {user} = useContext(UserContext)
   return (
@@ -14,7 +14,7 @@ const App = () => {
       {user && (
          <>
          <span>{user.fullname}</span>
-          <button onClick={handleLogout}>Đăng xuất</button>
+          <button onClick={authServices.logout}>Đăng xuất</button>
          </>
       )}
       <Login></Login>
