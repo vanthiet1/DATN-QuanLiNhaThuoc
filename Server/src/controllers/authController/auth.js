@@ -87,7 +87,7 @@ const Auth = {
                 httpOnly: true,
                 expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
                 sameSite: 'Strict',
-                path: '/', 
+                path: '/',
             })
             console.log('Cookies after setting:', req.cookies.refreshToken);
             res.json({
@@ -132,27 +132,35 @@ const Auth = {
             res.status(500).json({ message: error.message });
         }
     },
- refreshToken: async (req, res) => {
+    RefreshToken: async (req, res) => {
         const { refreshToken } = req.cookies;
-    
-        console.log('Received Cookies:', req.cookies); 
-    
         if (!refreshToken) {
             return res.status(401).json({ message: 'Refresh token không tồn tại' });
         }
-    
         try {
             const payload = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-    
+
             const newAccessToken = jwt.sign(
                 { userId: payload.userId },
                 process.env.ACCESS_TOKEN_SECRET,
                 { expiresIn: '1h' }
             );
-    
+
             res.json({ accessToken: newAccessToken });
         } catch (error) {
-            console.error('Token Verification Error:', error.message); 
+            res.status(500).json({ message: 'Lỗi xác thực refresh token' });
+        }
+    },
+    Logout: async (req, res) => {
+        try {          
+            res.clearCookie('refreshToken', { 
+                path: '/',
+                httpOnly: true,
+                sameSite: 'Strict',
+             });
+            res.status(200).json({ message: 'Đăng xuất thành công' });
+
+        } catch (error) {
             res.status(500).json({ message: 'Lỗi xác thực refresh token' });
         }
     },
@@ -283,7 +291,6 @@ const Auth = {
             res.status(500).json({ message: error.message });
         }
     },
-
     ResendVerifyCode: async (req, res) => {
         try {
             const { email } = req.body;
