@@ -1,16 +1,10 @@
 const Router = require('express').Router();
-const {
-  createImage,
-  getImages,
-  getImageById,
-  updateImage,
-  deleteImage
-} = require('../controllers/imageController/image');
+const ImageController = require('../controllers/imageController/image');
 
-Router.post('/create', createImage);
-Router.get('/', getImages);
-Router.get('/detail/:id', getImageById);
-Router.put('/edit/:id', updateImage);
-Router.delete('/delete/:id', deleteImage);
+Router.post('/create', ImageController.createImage);
+Router.get('/', ImageController.getImages);
+Router.get('/detail/:id', ImageController.getImageById);
+Router.put('/edit/:id', ImageController.updateImage);
+Router.delete('/delete/:id', ImageController.deleteImage);
 
 module.exports = Router;
