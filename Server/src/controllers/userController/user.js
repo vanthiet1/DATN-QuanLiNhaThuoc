@@ -20,6 +20,18 @@ const User = {
             res.status(500).json({ message: error.message });
         }
     },
+    getUserLoginGooogle: async (req, res) => {
+        try {
+            const { googleId } = req.params;
+            const userLoginGoogle = await UserModel.findOne({ googleId: googleId })
+            if (!userLoginGoogle) {
+                return res.status(404).json({ error: "Không tìm thấy user" });
+            }
+            res.json(userLoginGoogle);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
     deleteAnUser: async (req, res) => {
         try {
             const { id } = req.params

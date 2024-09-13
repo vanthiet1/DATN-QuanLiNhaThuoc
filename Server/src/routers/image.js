@@ -1,5 +1,4 @@
-const express = require('express');
-const router = express.Router();
+const Router = require('express').Router();
 const {
   createImage,
   getImages,
@@ -8,10 +7,10 @@ const {
   deleteImage
 } = require('../controllers/imageController/image');
 
-router.post('/create', createImage);
-router.get('/', getImages);
-router.get('/detail/:id', getImageById);
-router.put('/edit/:id', updateImage);
-router.delete('/delete/:id', deleteImage);
+Router.post('/create', createImage);
+Router.get('/', getImages);
+Router.get('/detail/:id', getImageById);
+Router.put('/edit/:id', updateImage);
+Router.delete('/delete/:id', deleteImage);
 
-module.exports = router;
+module.exports = Router;

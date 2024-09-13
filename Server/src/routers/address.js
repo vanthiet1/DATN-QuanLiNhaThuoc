@@ -1,7 +1,5 @@
-const express = require('express');
-const Router = express.Router();
+const Router = require('express').Router()
 const AddressController = require('../controllers/addressController/address');
-
 
 Router.post('/', AddressController.addAddress);
 Router.get('/', AddressController.getAddress);

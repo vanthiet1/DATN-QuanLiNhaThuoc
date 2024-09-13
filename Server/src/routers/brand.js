@@ -1,7 +1,6 @@
-const express = require('express');
+const Router = require('express').Router();
 const brandController = require('../controllers/brandController/brand');
 
-const Router = express.Router();
 
 Router.post('/create', brandController.createBrand);
 Router.get('/', brandController.getBrand);
