@@ -1,7 +1,6 @@
-const express = require('express');
+const Router = require('express').Router();
 const CategoryController = require('../controllers/categoryController/category');
 
-const Router = express.Router();
 
 // Đường dẫn để thêm category
 Router.post('/create', CategoryController.addCategory);
