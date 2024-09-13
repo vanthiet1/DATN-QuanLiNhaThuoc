@@ -1,5 +1,4 @@
-const express = require('express');
-const Router = express.Router();
+const Router = require('express').Router()
 const RoleController = require('../controllers/roleController/role');
 
     

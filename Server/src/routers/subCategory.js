@@ -1,7 +1,5 @@
-const express = require('express');
+const Router = require('express').Router()
 const SubCategoryController = require('../controllers/subCategoryController/subCategory');
-
-const Router = express.Router();
 
 Router.post('/create', SubCategoryController.addSubCategory);
 Router.get('/', SubCategoryController.getSubCategory);

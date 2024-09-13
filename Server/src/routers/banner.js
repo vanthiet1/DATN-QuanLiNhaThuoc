@@ -1,7 +1,6 @@
-const express = require('express');
+const Router = require('express').Router()
 const bannerController = require('../controllers/bannerController/banner');
 
-const Router = express.Router();
 
 Router.post('/create', bannerController.createBanner);
 Router.get('/', bannerController.getBanners);
