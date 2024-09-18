@@ -2,7 +2,7 @@ const CartModel = require('../../models/cartModel/cart');
 const ProductModel = require('../../models/productModel/product');
 
 const User = {
-    addToCart: async (req, res) => {
+    addToCart: async (req,res) => {
         try {
             const { userId, products, totalPrice } = req.body; 
             let cart = await CartModel.findOne({ userId });
@@ -18,15 +18,14 @@ const User = {
             for (const prod of products) {
                 const { productId, quantity } = prod;
                 const product = await ProductModel.findById(productId);
-                
                 if (!product) {
-                    return res.status(404).json({ message: `Product with ID ${productId} not found.` });
+                    return res.status(404).json({ message: `Không tìm thấy sản phẩm` });
                 }
-    
-                const existingProductIndex = cart.productList.findIndex(p => p.productId.toString() === productId);
+                const existingProductIndex = cart.productList.findIndex(product => product.productId.toString() === productId);
     
                 if (existingProductIndex > -1) {
                     cart.productList[existingProductIndex].quantity += quantity;
+                    totalPrice = quantity * totalPrice
                 } else {
                     cart.productList.push({
                         productId,
@@ -36,8 +35,11 @@ const User = {
                     });
                 }
             }
+            cart.totalPrice = cart.productList.reduce(
+                (total, item) => total + item.quantity * item.price,
+                0
+            );
     
-            cart.totalPrice = totalPrice;
             await cart.save();
     
             res.status(200).json(cart);

@@ -68,14 +68,14 @@ const Register = () => {
                             {isLoading ? " Đang" : "Đăng ký"}
                         </button>
                         <span className="block text-center py-2">Hoặc</span>
-                        <button className=" bg-slate-100  py-2 px-4 rounded hover:bg-slate-200 transition duration-300 w-full text-center text-[#333] text-[14px] flex justify-center items-center">
+                        <div className=" bg-slate-100  py-2 px-4 rounded hover:bg-slate-200 transition duration-300 w-full text-center text-[#333] text-[14px] flex justify-center items-center">
                             <img
                                 src="https://img-cache.coccoc.com/image2?i=2&l=84/93650057"
                                 alt="Google logo"
                                 className="w-5 h-5 mr-2"
                             />
                             <span>  Đăng nhập bằng Google</span>
-                        </button>
+                        </div>
                     </form>
                 </div>
             </div>
