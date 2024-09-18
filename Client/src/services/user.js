@@ -8,7 +8,6 @@ const userServices = {
                     Authorization: `Bearer ${google_access_token}`,
                 },
             });
-             console.log(data)
             return data ;
         } catch (error) {
             console.log(error.message);

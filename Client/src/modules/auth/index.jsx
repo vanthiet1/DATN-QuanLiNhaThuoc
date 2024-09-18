@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 import Register from './Register'
-import Login from './Register'
+import Login from './Login'
 import { UserContext } from '../../contexts/UserContext'
 import authServices from '../../services/auth';
 // import cartServices from '../../services/cart';

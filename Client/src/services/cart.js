@@ -10,9 +10,9 @@ const cartServices = {
             console.log(error.message);     
         }
      },
-     getCartByUserId: async ()=>{
+     getCartByUserId: async (requestParams)=>{
         try {
-             const {data} =  await http.get(`/cart/66e01288685b2acb7f3d1a79`)
+             const {data} =  await http.get(`/cart/${requestParams}`)
              console.log(data);
              return data
         } catch (error) {
