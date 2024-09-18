@@ -10,14 +10,24 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-react": "^9.1.0",
     "@hookform/resolvers": "^3.9.0",
     "@react-oauth/google": "^0.12.1",
+    "@reduxjs/toolkit": "^2.2.7",
     "axios": "^1.7.7",
+    "ckeditor5": "^43.1.0",
+    "ckeditor5-premium-features": "^43.1.0",
+    "clsx": "^2.1.1",
+    "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.53.0",
+    "react-paginate": "^8.2.0",
     "react-router-dom": "^6.26.1",
     "react-toastify": "^10.0.5",
+    "swiper": "^11.1.14",
+    "tailwind-merge": "^2.5.2",
     "yup": "^1.4.0"
   },
   "devDependencies": {
