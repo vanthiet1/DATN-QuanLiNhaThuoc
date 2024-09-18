@@ -5,6 +5,7 @@ const http = axios.create({
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json'
+        // 'Content-Type': 'multipart/form-data' 
     },
    withCredentials:true
 })

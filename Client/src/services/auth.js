@@ -41,19 +41,11 @@ const authServices = {
     },
     logout: async () => {
         try {
-            const googleAccessToken = localStorage.getItem('google_access_token');
             const accessToken = localStorage.getItem('access_token');
-
-            if (googleAccessToken) {
-                localStorage.removeItem('google_access_token');
-                return;
-            }
-
-            if (accessToken) {
-                await http.post(`${URL_API.Auth}/logout`);
-                console.log(data)
-                localStorage.removeItem('access_token');
-            }
+            if (!accessToken) return
+             await http.post(`${URL_API.Auth}/logout`);
+            localStorage.removeItem('access_token');
+            window.location.reload()
         } catch (error) {
             console.log(error.message);
         }
