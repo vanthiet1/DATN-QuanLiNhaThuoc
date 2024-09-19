@@ -2,9 +2,9 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import authServices from "../../services/auth";
-import validate from "../../helper/validate/form";
+import formAuthSchema from "../../utils/validations/formAuth";
 const Register = () => {
-    const { register, handleSubmit, formState: { errors }, watch } = useForm({ resolver: yupResolver(validate.register) });
+    const { register, handleSubmit, formState: { errors }, watch } = useForm({ resolver: yupResolver(formAuthSchema.register) });
     const [isLoading, setIsLoading] = useState(false);
     const onSubmit = async (formData) => {
         setIsLoading(true);

@@ -1,13 +1,13 @@
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import authServices from "../../services/auth";
 import { yupResolver } from "@hookform/resolvers/yup";
-import validate from "../../helper/validate/form";
+import formAuthSchema from "../../utils/validations/formAuth";
 import useGoogleLoginHook from "../../hooks/useGoogleLoginHook";
-import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 const Login = () => {
     const {fetchUser} = useContext(UserContext)
-    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(validate.login) });
+    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(formAuthSchema.login) });
     const onSubmit = async (formData) => {
         await authServices.login(
             {
