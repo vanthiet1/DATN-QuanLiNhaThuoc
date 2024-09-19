@@ -17,8 +17,9 @@ const authServices = {
     login: async (requestBody) => {
         try {
             const { data } = await http.post(`${URL_API.Auth}/login`, requestBody)
-            localStorage.setItem("access_token", data.accessToken)
+            tokenService.setAccessToken(data.accessToken);
             showToastSuccess(data.message)
+         
             return data
         } catch (error) {
             showToastError(error.response.data.message);

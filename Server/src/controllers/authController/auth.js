@@ -75,7 +75,7 @@ const Auth = {
             const accessToken = jwt.sign(
                 { userId: findUser._id },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: '30m' }
+                { expiresIn: '10s' }
             );
 
             const refreshToken = jwt.sign(
@@ -127,7 +127,7 @@ const Auth = {
             const accessToken = jwt.sign(
                 { userId: userLoginGoogle._id },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: '30m' }
+                { expiresIn: '10s' }
             );
             const refreshToken = jwt.sign(
                 { userId: userLoginGoogle._id },

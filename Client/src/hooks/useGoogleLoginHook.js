@@ -3,6 +3,7 @@ import { showToastError } from "../configs/toastConfig";
 import userServices from "../services/user";
 import http from "../utils/http";
 import URL_API from "../utils/api";
+import tokenService from "../services/tokenService";
 const useGoogleLoginHook = () => {
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
@@ -17,7 +18,7 @@ const useGoogleLoginHook = () => {
         });
         console.log(data)
         if (!data) return
-        localStorage.setItem("access_token", data?.accessToken)
+        tokenService.setAccessToken( data?.accessToken)
         window.location.reload()
       } catch (error) {
         console.error("Error during Google login:", error);
