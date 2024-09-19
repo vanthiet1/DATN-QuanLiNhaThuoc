@@ -1,5 +1,5 @@
-import http from '../utils/http';
-import URL_API from '../utils/api';
+import http from '../utils/helpers/http';
+import END_POIND_API from '../utils/helpers/endpoind';
 
 const tokenService = {
     getAccessToken: () => localStorage.getItem('access_token'),
@@ -10,7 +10,7 @@ const tokenService = {
 
     refreshToken: async () => {
         try {
-            const { data } = await http.post(`${URL_API.Auth}/refreshToken`);     
+            const { data } = await http.post(`${END_POIND_API.AUTH}/refreshToken`);     
             tokenService.setAccessToken(data?.accessToken);
             return data.accessToken;
         } catch (error) {

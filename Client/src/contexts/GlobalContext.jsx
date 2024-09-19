@@ -8,10 +8,11 @@ const GlobalContextProvider = ({ children }) => {
   return (
     <GlobalContext.Provider
       value={visited}
-      clientId={'1060538151130-fugnan197mqpku6dp2a9vlhnb0vi9l1j.apps.googleusercontent.com'}
     >
-      <GoogleOAuthProvider>
-        <UserProvider>{children}</UserProvider>
+      <GoogleOAuthProvider clientId={'1060538151130-fugnan197mqpku6dp2a9vlhnb0vi9l1j.apps.googleusercontent.com'}>
+        <UserProvider>
+          {children}
+        </UserProvider>
       </GoogleOAuthProvider>
     </GlobalContext.Provider>
   );
