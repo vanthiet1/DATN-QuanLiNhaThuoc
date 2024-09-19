@@ -13,6 +13,5 @@ const userServices = {
             console.log(error.message);
         }
     },
-
 }
 export default userServices
