@@ -1,12 +1,12 @@
-import http from '../utils/http'
+import http from '../utils/helpers/http'
 import { showToastError, showToastSuccess } from '../configs/toastConfig'
-import URL_API from '../utils/api'
-
+import tokenService from './tokenService';
+import END_POIND_API from '../utils/helpers/endpoind';
 
 const authServices = {
     register: async (requestBody) => {
         try {
-            const { data } = await http.post(`${URL_API.Auth}/register`, requestBody)
+            const { data } = await http.post(`${END_POIND_API.AUTH}/register`, requestBody)
             showToastSuccess(data.message)
             return data
         } catch (error) {
@@ -15,8 +15,8 @@ const authServices = {
     },
     login: async (requestBody) => {
         try {
-            const { data } = await http.post(`${URL_API.Auth}/login`, requestBody)
-            localStorage.setItem("access_token", data.accessToken)
+            const { data } = await http.post(`${END_POIND_API.AUTH}/login`, requestBody)
+            tokenService.setAccessToken(data.accessToken)
             showToastSuccess(data.message)
             return data
         } catch (error) {
@@ -29,7 +29,7 @@ const authServices = {
         }
 
         try {
-            const response = await http.get(`${URL_API.Auth}/access`, {
+            const response = await http.get(`${END_POIND_API.AUTH}/access`, {
                 headers: {
                     'Authorization': `Bearer ${access_token}`
                 }
@@ -41,19 +41,11 @@ const authServices = {
     },
     logout: async () => {
         try {
-            const googleAccessToken = localStorage.getItem('google_access_token');
-            const accessToken = localStorage.getItem('access_token');
-
-            if (googleAccessToken) {
-                localStorage.removeItem('google_access_token');
-                return;
-            }
-
-            if (accessToken) {
-                await http.post(`${URL_API.Auth}/logout`);
-                console.log(data)
-                localStorage.removeItem('access_token');
-            }
+            const accessToken = tokenService.getAccessToken()
+            if (!accessToken) return
+             await http.post(`${END_POIND_API.AUTH}/logout`);
+             tokenService.removeAccessToken()
+             window.location.reload()
         } catch (error) {
             console.log(error.message);
         }
@@ -61,35 +53,4 @@ const authServices = {
 
 }
 
-http.interceptors.request.use(async (config) => {
-    const accessToken = localStorage.getItem('access_token');
-    if (accessToken) {
-        config.headers.Authorization = `Bearer ${accessToken}`;
-    }
-
-    return config;
-}, (error) => {
-    return Promise.reject(error);
-});
-
-
-http.interceptors.response.use(response => response, async (error) => {
-    const originalRequest = error.config;
-    if (error.response.status === 401 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-            const { data } = await http.post(`${URL_API.Auth}/refreshToken`);
-            console.log(data);
-
-            const newAccessToken = data.accessToken;
-            localStorage.setItem('access_token', newAccessToken);
-            http.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
-            return http(originalRequest);
-        } catch (refreshError) {
-            console.error('Không thể làm mới token:', refreshError);
-        }
-    }
-
-    return Promise.reject(error);
-});
 export default authServices

@@ -1,23 +1,14 @@
 import { useEffect, useState } from 'react';
 import { createContext } from 'react';
 import authServices from '../services/auth';
-import userServices from '../services/user';
+import tokenService from '../services/tokenService';
 export const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const fetchUser = async () => {
         try {
-            const google_access_token = localStorage.getItem('google_access_token');
-            const access_token = localStorage.getItem('access_token');
-            if (google_access_token) {
-                const { sub: googleId } = await userServices.getAuthLoginGoogle(google_access_token);
-                if (!googleId) return
-                const userLoginGoogle = await userServices.getUserLoginGoogle(googleId);
-                if (!userLoginGoogle) return
-                setUser(userLoginGoogle);
-            }
-
+            const access_token = tokenService.getAccessToken()
             if (access_token) {
                 const userLoginLocal = await authServices.getUserData(access_token);
                 if (!userLoginLocal) return;

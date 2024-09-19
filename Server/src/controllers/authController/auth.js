@@ -105,11 +105,9 @@ const Auth = {
             if (!role) {
                 return res.status(500).json({ message: 'Role không tồn tại trong hệ thống.' });
             }
-
-            let user = await UserModel.findOne({ email });
-
-            if (!user) {
-                user = new UserModel({
+            let userLoginGoogle = await UserModel.findOne({ email });
+            if (!userLoginGoogle) {
+                userLoginGoogle = new UserModel({
                     fullname,
                     email,
                     googleId,
@@ -119,19 +117,38 @@ const Auth = {
                     is_active: 1,
                     role_id: role._id,
                 });
-                await user.save();
+                await userLoginGoogle.save();
             } else {
-                if (!user.emailVerify && emailVerify) {
-                    user.emailVerify = true;
-                    await user.save();
+                if (!userLoginGoogle.emailVerify && emailVerify) {
+                    userLoginGoogle.emailVerify = true;
+                    await userLoginGoogle.save();
                 }
             }
-            res.status(200).json({ user, message: 'Đăng nhập Google thành công!' });
+            const accessToken = jwt.sign(
+                { userId: userLoginGoogle._id },
+                process.env.ACCESS_TOKEN_SECRET,
+                { expiresIn: '10s' }
+            );
+            const refreshToken = jwt.sign(
+                { userId: userLoginGoogle._id },
+                process.env.REFRESH_TOKEN_SECRET,
+                { expiresIn: '7d' }
+            );
+            res.cookie("refreshToken", refreshToken, {
+                httpOnly: true,
+                expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+                sameSite: 'Strict',
+                path: '/',
+            })
+           return res.status(200).json({
+                message: "Đăng nhập thành công",
+                accessToken
+            });
         } catch (error) {
-            console.error('Lỗi khi đăng nhập Google:', error);
             res.status(500).json({ message: error.message });
         }
     },
+    
     RefreshToken: async (req, res) => {
         const { refreshToken } = req.cookies;
         if (!refreshToken) {
