@@ -1,8 +1,8 @@
 import React from 'react';
-import Index from '../../modules/auth/index'
+// import Index from '../../modules/auth/index'
 const HomePage = () => {
   return <div>HomePage
-  <Index></Index>
+  {/* <Index></Index> */}
   </div>;
 };
 
