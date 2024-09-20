@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { cn } from '../../../utils/mergeClasses';
+import {cn} from '../../../utils/helpers/mergeClasses'
 const Input = ({ leftIcon, rightIcon, disabled, addClassNames, ...props }) => {
   return (
     <div className="relative">
@@ -10,9 +10,9 @@ const Input = ({ leftIcon, rightIcon, disabled, addClassNames, ...props }) => {
       )}
       <input
         className={cn(
-          `outline-none pl-5 pr-2 border  ${addClassNames}`
+          `outline-none pl-5 pr-2 border ${addClassNames}`
         )}
-        disabled={disabled}
+        disable={disabled}
         {...props}
       />
       {rightIcon && (

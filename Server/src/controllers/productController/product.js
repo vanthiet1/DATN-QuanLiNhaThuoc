@@ -55,7 +55,16 @@ const ProductController = {
   },
   getAllProducts: async (req, res) => {
     try {
-      const productsList = await ProductModel.find({});
+      const productsList = await ProductModel.aggregate([
+        {
+          $lookup: {
+            from: 'images',
+            localField: '_id',
+            foreignField: 'product_id',
+            as: 'images'
+          }
+        }
+      ]);
       if (productsList) {
         res.status(200).json(productsList);
       }

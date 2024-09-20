@@ -1,9 +1,8 @@
 import { cn } from "../../../utils/mergeClasses";
 
-const CheckBox = ({ children, onChange, checked, disabled, addClassNames, ...props }) => {
+const CheckBox = ({ onChange, checked, disabled, addClassNames, ...props }) => {
     return (
         <div>
-  
                 <input
                     type="checkbox"
                     checked={checked}
@@ -12,8 +11,6 @@ const CheckBox = ({ children, onChange, checked, disabled, addClassNames, ...pro
                     // onChange={(e) => onChange(e.target.checked)} 
                     {...props}
                 />
-                {children}
-       
         </div>
     );
 };

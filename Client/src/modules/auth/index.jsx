@@ -4,6 +4,7 @@ import Login from './Login'
 import { UserContext } from '../../contexts/UserContext'
 import authServices from '../../services/auth';
 // import cartServices from '../../services/cart';
+import Input from '../../components/ui/input/Input'
 
 const index = () => {
     const { user } = useContext(UserContext)
@@ -23,6 +24,7 @@ const index = () => {
                     <button onClick={authServices.logout}>Đăng xuất</button>
                 </>
             )}
+            <Input></Input>
             <Login></Login>
         </div>
     );

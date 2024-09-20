@@ -1,13 +1,12 @@
-import http from '../utils/http'
+import http from '../utils/helpers/http'
 import { showToastError, showToastSuccess } from '../configs/toastConfig'
-import URL_API from '../utils/api'
-import tokenService from './tokenService'
-
+import tokenService from './tokenService';
+import END_POIND_API from '../utils/helpers/endpoind';
 
 const authServices = {
     register: async (requestBody) => {
         try {
-            const { data } = await http.post(`${URL_API.Auth}/register`, requestBody)
+            const { data } = await http.post(`${END_POIND_API.AUTH}/register`, requestBody)
             showToastSuccess(data.message)
             return data
         } catch (error) {
@@ -16,8 +15,8 @@ const authServices = {
     },
     login: async (requestBody) => {
         try {
-            const { data } = await http.post(`${URL_API.Auth}/login`, requestBody)
-            localStorage.setItem("access_token", data.accessToken)
+            const { data } = await http.post(`${END_POIND_API.AUTH}/login`, requestBody)
+            tokenService.setAccessToken(data.accessToken)
             showToastSuccess(data.message)
             return data
         } catch (error) {
@@ -30,7 +29,7 @@ const authServices = {
         }
 
         try {
-            const response = await http.get(`${URL_API.Auth}/access`, {
+            const response = await http.get(`${END_POIND_API.AUTH}/access`, {
                 headers: {
                     'Authorization': `Bearer ${access_token}`
                 }
@@ -40,14 +39,13 @@ const authServices = {
             console.log(error.message);
         }
     },
- 
     logout: async () => {
-        const accessToken = tokenService.getAccessToken()
         try {
+            const accessToken = tokenService.getAccessToken()
             if (!accessToken) return
-            await http.post(`${URL_API.Auth}/logout`);
-            tokenService.removeAccessToken()
-            window.location.reload()
+             await http.post(`${END_POIND_API.AUTH}/logout`);
+             tokenService.removeAccessToken()
+             window.location.reload()
         } catch (error) {
             console.log(error.message);
         }
