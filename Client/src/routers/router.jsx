@@ -17,68 +17,114 @@ const AllProduct = lazy(() => import('../admin/product/AllProduct'));
 const Customer = lazy(() => import('../admin/customer/Customer'));
 const Orders = lazy(() => import('../admin/orders/Orders'));
 
+const TemplateComponent = lazy(() => import('../admin/testComponents/TemplateComponent'));
+
 const router = createBrowserRouter([
   {
     path: '/',
-    element: (
-      <SuspenseWrapper>
-        <LayoutDefault />
-      </SuspenseWrapper>
-    ),
+    element: <LayoutDefault />,
     children: [
       {
         path: PATH_ROUTERS_CLIENT.HOMEPAGE,
-        element: <HomePage />
+        element: (
+          <SuspenseWrapper>
+            <HomePage />
+          </SuspenseWrapper>
+        )
       },
       {
         path: PATH_ROUTERS_CLIENT.PRODUCT_DETAILS,
-        element: <ProductSearch />
+        element: (
+          <SuspenseWrapper>
+            <ProductSearch />
+          </SuspenseWrapper>
+        )
       },
       {
         path: PATH_ROUTERS_CLIENT.CATEGORIES_DETAILS,
-        element: <CategoryDetails />
+        element: (
+          <SuspenseWrapper>
+            <CategoryDetails />
+          </SuspenseWrapper>
+        )
       },
       {
         path: PATH_ROUTERS_CLIENT.CART,
-        element: <Cart />
+        element: (
+          <SuspenseWrapper>
+            <Cart />
+          </SuspenseWrapper>
+        )
       },
       {
         path: PATH_ROUTERS_CLIENT.BLOG_DETAILS,
-        element: <BlogDetails />
+        element: (
+          <SuspenseWrapper>
+            <BlogDetails />
+          </SuspenseWrapper>
+        )
       },
       {
         path: PATH_ROUTERS_CLIENT.PHARMACY_DETAILS,
-        element: <Pharmacy />
+        element: (
+          <SuspenseWrapper>
+            <Pharmacy />
+          </SuspenseWrapper>
+        )
       }
     ]
   },
   {
-    path: '/',
-    element: (
-      <SuspenseWrapper>
-        <LayoutAdmin />
-      </SuspenseWrapper>
-    ),
+    path: '/', // router của admin
+    element: <LayoutAdmin />,
     children: [
       {
         path: PATH_ROUTERS_ADMIN.DASHBOARD,
-        element: <DashBoard />
+        element: (
+          <SuspenseWrapper>
+            <DashBoard />
+          </SuspenseWrapper>
+        )
       },
       {
         path: PATH_ROUTERS_ADMIN.ADD_PRODUCT,
-        element: <AddProduct />
+        element: (
+          <SuspenseWrapper>
+            <AddProduct />
+          </SuspenseWrapper>
+        )
       },
       {
         path: PATH_ROUTERS_ADMIN.ALL_PRODUCT,
-        element: <AllProduct />
+        element: (
+          <SuspenseWrapper>
+            <AllProduct />
+          </SuspenseWrapper>
+        )
       },
       {
         path: PATH_ROUTERS_ADMIN.CUSTOMERS,
-        element: <Customer />
+        element: (
+          <SuspenseWrapper>
+            <Customer />
+          </SuspenseWrapper>
+        )
       },
       {
         path: PATH_ROUTERS_ADMIN.ORDERS,
-        element: <Orders />
+        element: (
+          <SuspenseWrapper>
+            <Orders />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.TEMPLATECOMPONENT,
+        element: (
+          <SuspenseWrapper>
+            <TemplateComponent />
+          </SuspenseWrapper>
+        )
       }
     ]
   }

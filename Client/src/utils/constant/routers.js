@@ -18,7 +18,8 @@ const PATH_ROUTERS_ADMIN = {
   ORDERS: 'admin/orders',
   CATEGORY: 'admin/category',
   CUSTOMERS: 'admin/customers', // sử dụng cho update user
-  SETTINGS: 'admin/settings'
+  SETTINGS: 'admin/settings',
+  TEMPLATECOMPONENT: 'admin/template-component'
 };
 
 export { PATH_ROUTERS_CLIENT, PATH_ROUTERS_ADMIN };
