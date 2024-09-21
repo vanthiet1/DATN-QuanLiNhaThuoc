@@ -1,4 +1,5 @@
 import React from 'react';
+
 const HomeIcon = ({ width, height, addClassNames }) => {
   return (
     <svg
