@@ -1,10 +1,20 @@
 
+import { RouterProvider } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import GlobalContextProvider from './contexts/GlobalContext';
+import router from './routers/router';
+import './index.css';
+import 'react-toastify/dist/ReactToastify.css';
+
 const App = () => {
   return (
-    <div>
-         <h1 className="text-red-500">hello</h1>
-    </div>
+    <>
+      <GlobalContextProvider>
+        <RouterProvider router={router}></RouterProvider>
+        <ToastContainer />
+      </GlobalContextProvider>
+    </>
   );
-};
+}
 
 export default App;

@@ -12,34 +12,47 @@ const userSchema = new mongoose.Schema(
         },
         password: {
             type: String,
-            require: true
+            required: function () {
+                return !this.googleId;
+            },
         },
-        role_id:{
+        googleId: {
+            type: String,
+            unique: true,
+            sparse: true,
+        },
+        avatar: {
+            type: String,
+        },
+        role_id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Role',
-            required: true  
+            required: true
         },
         emailVerify: {
             type: Boolean,
-            default:false,
+            default: false,
             require: true
         },
-        phone:{
-            type:Number,
+        phone: {
+            type: Number,
         },
-        is_active:{
-            type:Number,
-            default:0,
-            required:true
+        is_active: {
+            type: Number,
+            default: 0,
+            required: true
         },
-        provider:{
+        provider: {
             type: String,
-            enum:['google', 'facebook' , 'phone' ,'local'],
-            required:true
+            enum: ['google', 'facebook', 'phone', 'local'],
+            required: true
         },
-    },{
-        timestamps: true,
-    }
+        otpVerify: { type: Number },
+        otpForgotPass: { type: String },
+        timeOtp: { type: Date }
+    }, {
+    timestamps: true,
+}
 )
 const UserModel = mongoose.model('User', userSchema)
 module.exports = UserModel
