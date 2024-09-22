@@ -14,6 +14,29 @@ const Pharmacy = lazy(() => import('../pages/pharmacy/PharmacyDetails'));
 const DashBoard = lazy(() => import('../admin/dashboard/Dashboard'));
 const AddProduct = lazy(() => import('../admin/product/AddProduct'));
 const AllProduct = lazy(() => import('../admin/product/AllProduct'));
+
+const AddCategory = lazy(() => import('../admin/category/AddCategory'));
+const AllCategory = lazy(() => import('../admin/category/AllCategory'));
+
+const AddBrand = lazy(() => import('../admin/brand/AddBrand'));
+const AllBrand = lazy(() => import('../admin/brand/AllBrand'));
+
+const AddCoupon = lazy(() => import('../admin/coupon/AddCoupon'));
+const AllCoupon = lazy(() => import('../admin/coupon/AllCoupon'));
+
+const AddBanner = lazy(() => import('../admin/banner/AddBanner'));
+const AllBanner = lazy(() => import('../admin/banner/AllBanner'));
+
+const AddBlog = lazy(() => import('../admin/blog/AddBlog'));
+const AllBlog = lazy(() => import('../admin/blog/AllBlog'));
+
+const AddPharmacy = lazy(() => import('../admin/pharmacy/AddPharmacy'));
+const AllPharmacy = lazy(() => import('../admin/pharmacy/AllPharmacy'));
+
+const AddRoleUser = lazy(() => import('../admin/user/AddRole'));
+const Messages = lazy(() => import('../admin/messages/Messages'));
+const Transaction = lazy(() => import('../admin/transaction/Transaction'));
+
 const Customer = lazy(() => import('../admin/customer/Customer'));
 const Orders = lazy(() => import('../admin/orders/Orders'));
 
@@ -103,6 +126,102 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: PATH_ROUTERS_ADMIN.ADD_CATEGORY,
+        element: (
+          <SuspenseWrapper>
+            <AddCategory />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.ALL_CATEGORY,
+        element: (
+          <SuspenseWrapper>
+            <AllCategory />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.ADD_BRAND,
+        element: (
+          <SuspenseWrapper>
+            <AddBrand />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.ALL_BRAND,
+        element: (
+          <SuspenseWrapper>
+            <AllBrand />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.ADD_COUPON,
+        element: (
+          <SuspenseWrapper>
+            <AddCoupon />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.ALL_COUPON,
+        element: (
+          <SuspenseWrapper>
+            <AllCoupon />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.ADD_BANNER,
+        element: (
+          <SuspenseWrapper>
+            <AddBanner />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.ADD_PHARMARCY,
+        element: (
+          <SuspenseWrapper>
+            <AddPharmacy />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.ALL_PHARMARCY,
+        element: (
+          <SuspenseWrapper>
+            <AllPharmacy />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.ALL_BANNER,
+        element: (
+          <SuspenseWrapper>
+            <AllBanner />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.ADD_BLOG,
+        element: (
+          <SuspenseWrapper>
+            <AddBlog />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.ALL_BLOG,
+        element: (
+          <SuspenseWrapper>
+            <AllBlog />
+          </SuspenseWrapper>
+        )
+      },
+      {
         path: PATH_ROUTERS_ADMIN.CUSTOMERS,
         element: (
           <SuspenseWrapper>
@@ -111,10 +230,34 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: PATH_ROUTERS_ADMIN.USER,
+        element: (
+          <SuspenseWrapper>
+            <AddRoleUser />
+          </SuspenseWrapper>
+        )
+      },
+      {
         path: PATH_ROUTERS_ADMIN.ORDERS,
         element: (
           <SuspenseWrapper>
             <Orders />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.MESSAGES,
+        element: (
+          <SuspenseWrapper>
+            <Messages />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.TRANSACTION,
+        element: (
+          <SuspenseWrapper>
+            <Transaction />
           </SuspenseWrapper>
         )
       },

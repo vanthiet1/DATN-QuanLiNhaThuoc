@@ -15,9 +15,21 @@ const PATH_ROUTERS_ADMIN = {
   DETAILS_PRODUCT: 'admin/product-details/:slug',
   ADD_CATEGORY: 'admin/add-category',
   ALL_CATEGORY: 'admin/all-category',
+  ADD_BANNER: 'admin/add-banner',
+  ALL_BANNER: 'admin/all-banner',
+  ADD_BLOG: 'admin/add-blog',
+  ALL_BLOG: 'admin/all-blog',
+  ADD_BRAND: 'admin/add-brand',
+  ALL_BRAND: 'admin/all-brand',
+  ADD_COUPON: 'admin/add-coupon',
+  ALL_COUPON: 'admin/all-coupon',
+  ADD_PHARMARCY: 'admin/add-pharmarcy',
+  ALL_PHARMARCY: 'admin/all-pharmarcy',
+  USER: 'admin/user',
   ORDERS: 'admin/orders',
-  CATEGORY: 'admin/category',
-  CUSTOMERS: 'admin/customers', // sử dụng cho update user
+  TRANSACTION: 'admin/transaction',
+  MESSAGES: 'admin/messages',
+  CUSTOMERS: 'admin/customers',
   SETTINGS: 'admin/settings',
   TEMPLATECOMPONENT: 'admin/template-component'
 };
