@@ -63,6 +63,7 @@ const RoleController = {
       res.status(500).json({ message: 'Lỗi khi xóa role: ' + error.message });
     }
   }
+  
 };
 
 module.exports = RoleController;
