@@ -155,6 +155,7 @@ const MenuAdmin = ({ data, isSubMenu = false, addClassNames = '' }) => {
   const [openMenus, setOpenMenus] = useState({});
 
   const handleToggleMenu = (title) => {
+    if (title === false) return;
     setOpenMenus((prevOpenMenus) => ({
       ...prevOpenMenus,
       [title]: !prevOpenMenus[title]
@@ -177,7 +178,7 @@ const MenuAdmin = ({ data, isSubMenu = false, addClassNames = '' }) => {
           const isOpen = openMenus[title];
           if (!subMenu) {
             return (
-              <MenuAdminItem isSubMenu={false} key={index + title}>
+              <MenuAdminItem isSubMenu={false} key={index + title} onClick={() => handleToggleMenu(false)}>
                 <Link to={path} className='transition-colors hover:text-blue-500'>
                   <span className='flex flex-grow'>
                     {icon && icon}
