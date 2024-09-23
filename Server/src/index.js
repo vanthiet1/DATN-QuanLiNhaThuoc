@@ -8,7 +8,7 @@ const {initIo} = require('./socket/socketManager')
 require('dotenv').config();
 const app = express();
 const connectDB = require('./db/connectDB');
-
+const server = http.createServer(app);
 
 // Middleware
 app.use(morgan('common'));
