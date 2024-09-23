@@ -75,7 +75,7 @@ const Auth = {
             const accessToken = jwt.sign(
                 { userId: findUser._id },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: '10s' }
+                { expiresIn: '1h' }
             );
 
             const refreshToken = jwt.sign(
@@ -127,7 +127,7 @@ const Auth = {
             const accessToken = jwt.sign(
                 { userId: userLoginGoogle._id },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: '10s' }
+                { expiresIn: '1h' }
             );
             const refreshToken = jwt.sign(
                 { userId: userLoginGoogle._id },
@@ -148,7 +148,6 @@ const Auth = {
             res.status(500).json({ message: error.message });
         }
     },
-    
     RefreshToken: async (req, res) => {
         const { refreshToken } = req.cookies;
         if (!refreshToken) {
@@ -339,6 +338,8 @@ const Auth = {
             console.error("Lỗi khi gửi lại mã xác thực:", error);
             res.status(500).json({ message: "Đã xảy ra lỗi khi gửi lại mã xác thực" });
         }
-    }
+    },
+
+
 }
 module.exports = Auth
