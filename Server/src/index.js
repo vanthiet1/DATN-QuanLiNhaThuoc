@@ -9,18 +9,18 @@ require('dotenv').config();
 const app = express();
 const connectDB = require('./db/connectDB');
 
-const server = http.createServer(app);
-
 
 // Middleware
 app.use(morgan('common'));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors({
-  origin: 'http://localhost:5173', 
-  credentials: true 
-}));
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+  })
+);
 
 connectDB();
 initIo(server);
@@ -48,10 +48,6 @@ const BannerRouter = require('./routers/banner');
 const BlogRouter = require('./routers/blog');
 const CommentRouter = require('./routers/comments');
 const VerifyRouter = require('./routers/vertifyEmail');
-const MessageRouter = require('./routers/message');
-const StaffRouter = require('./routers/staff');
-
-
 
 
 app.use('/api/v1/order', OrderRouter);
@@ -72,8 +68,7 @@ app.use('/api/v1/banner', BannerRouter);
 app.use('/api/v1/blog', BlogRouter);
 app.use('/api/v1/comment', CommentRouter);
 app.use('/api/v1/email', VerifyRouter);
-app.use('/api/v1/message',MessageRouter);
-app.use('/api/v1/staff',StaffRouter);
+
 
 // Start server
 const PORT = process.env.PORT || 5000;
