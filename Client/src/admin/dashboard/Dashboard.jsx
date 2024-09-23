@@ -1,10 +1,7 @@
 import React from 'react';
-import Test from '../testComponents/test';
+
 const Dashboard = () => {
-  return <div>
-  dashboard
-  <Test></Test>
-  </div>;
+  return <div>dashboard</div>;
 };
 
 export default Dashboard;
