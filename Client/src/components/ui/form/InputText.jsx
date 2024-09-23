@@ -12,6 +12,7 @@ const InputText = forwardRef(({ size, rounded, disabled, addClassNames, refinput
         { 'px-[8px] py-[4px]': size === 's' },
         { 'px-[12px] py-[6px]': size === 'm' },
         { 'px-[20px] py-[8px] text-base': size === 'l' },
+
         { rounded: rounded === 's' },
         { 'rounded-md': rounded === 'm' },
         { 'rounded-lg': rounded === 'l' },
