@@ -13,6 +13,7 @@ const paymentMethodServices = {
       console.log(error.message);
     }
   },
+
   getPaymentMethodById: async (requestParams) => {
     try {
       const { data } = await http.get(`/${END_POIND_API.PAYMENT_METHOD}/${requestParams}`);
@@ -34,6 +35,7 @@ const paymentMethodServices = {
       console.log(error.message);
     }
   },
+  
   updatePaymentMethod: async (requestParams) => {
     try {
       const { data } = await http.delete(`/${END_POIND_API.PAYMENT_METHOD}/${requestParams}`);
