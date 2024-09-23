@@ -8,7 +8,7 @@ const Button = ({ children, outline, size, rounded, leftIcon, rightIcon, disable
   return (
     <button
       className={cn(
-        'font-medium text-xs text-gray-800 disabled:cursor-not-allowed disabled:opacity-70 flex',
+        'font-medium text-xs text-gray-800 disabled:cursor-not-allowed disabled:opacity-70 flex gap-1 items-center',
         { 'border border-slate-300 border-solid ': outline },
         { 'px-1 py-1 text-sm': size === 's' },
         { 'px-[12px] py-[4px] text-base': size === 'm' },
