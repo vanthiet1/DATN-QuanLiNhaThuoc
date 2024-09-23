@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^43.1.0",
     "@ckeditor/ckeditor5-react": "^9.1.0",
     "@hookform/resolvers": "^3.9.0",
     "@react-oauth/google": "^0.12.1",
@@ -18,6 +19,7 @@
     "ckeditor5": "^43.1.0",
     "ckeditor5-premium-features": "^43.1.0",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# dotenv environment variable files
+.env
+.env.test
+.env.production
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -1,4 +1,4 @@
-import { cn } from "../../../utils/mergeClasses";
+import { cn } from "../../../utils/helpers/mergeClasses";
 
 const CheckBox = ({ onChange, checked, disabled, addClassNames, ...props }) => {
     return (
