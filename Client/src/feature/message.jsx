@@ -1,9 +1,9 @@
 import socket from "../configs/socketConfig";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
-import staffServices from "../services/staff";
+import staffServices from "../services/staffService";
 import ChatClient from "./chatClient";
-import messageService from "../services/message";
+import messageService from "../services/messageService";
 import Index from '../modules/auth/index'
 const Message = () => {
     const product = {
