@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import authServices from "../../services/auth";
+import authServices from "../../services/authService";
 import formAuthSchema from "../../utils/validations/formAuth";
 const Register = () => {
     const { register, handleSubmit, formState: { errors }, watch } = useForm({ resolver: yupResolver(formAuthSchema.register) });

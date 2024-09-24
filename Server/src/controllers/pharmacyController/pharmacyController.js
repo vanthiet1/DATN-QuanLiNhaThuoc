@@ -12,7 +12,7 @@ const PharmacyController = {
       const newPharmacy = new PharmacyModel({ name, address, latitude, longitude, phone_number, opening_hours });
       await newPharmacy.save();
 
-      res.status(201).json({ message: 'Đã thêm payment method thành công', newPharmacy });
+      res.status(201).json({ message: 'Đã thêm nhà thuốc thành công', newPharmacy });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -33,10 +33,10 @@ const PharmacyController = {
       const deletePharmacy = await PharmacyModel.findByIdAndDelete(id);
 
       if (!deletePharmacy) {
-        return res.status(404).json({ message: 'Không tìm thấy payment method để xóa' });
+        return res.status(404).json({ message: 'Không tìm thấy nhà thuốc để xóa' });
       }
 
-      res.status(200).json({ message: 'payment method đã xóa thành công' });
+      res.status(200).json({ message: 'nhà thuốc đã xóa thành công' });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -54,10 +54,10 @@ const PharmacyController = {
       );
 
       if (!updatePharmacy) {
-        return res.status(404).json({ message: 'Không tìm thấy payment method' });
+        return res.status(404).json({ message: 'Không tìm thấy nhà thuốc' });
       }
 
-      res.status(200).json({ message: 'Đã cập nhật payment method thành công' });
+      res.status(200).json({ message: 'Đã cập nhật thông tin nhà thuốc thành công' });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

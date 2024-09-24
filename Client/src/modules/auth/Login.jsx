@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import authServices from "../../services/auth";
+import authServices from "../../services/authService";
 import { yupResolver } from "@hookform/resolvers/yup";
 import formAuthSchema from "../../utils/validations/formAuth";
 import useGoogleLoginHook from "../../hooks/useGoogleLoginHook";

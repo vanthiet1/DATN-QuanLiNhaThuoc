@@ -15,6 +15,10 @@ const PATH_ROUTERS_ADMIN = {
   DETAILS_PRODUCT: 'admin/product-details/:slug',
   ADD_CATEGORY: 'admin/add-category',
   ALL_CATEGORY: 'admin/all-category',
+  ORDERS: 'admin/orders',
+  CATEGORY: 'admin/category',
+  CUSTOMERS: 'admin/customers', // sử dụng cho update user
+  SETTINGS: 'admin/settings',
   ADD_BANNER: 'admin/add-banner',
   ALL_BANNER: 'admin/all-banner',
   ADD_BLOG: 'admin/add-blog',
