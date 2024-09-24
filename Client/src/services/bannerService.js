@@ -13,6 +13,7 @@ const bannerServices = {
       console.log(error.message);
     }
   },
+
   getBannerById: async (resquestParrams) => {
     try {
       const { data } = await http.get(`${END_POIND_API.BANNER}/${resquestParrams}`);
@@ -23,6 +24,7 @@ const bannerServices = {
       console.log(error.message);
     }
   },
+
   deleteBannerById: async (resquestParrams) => {
     try {
       const { data } = await http.delete(`/${END_POIND_API.BANNER}/${resquestParrams}`);
@@ -33,6 +35,7 @@ const bannerServices = {
       console.log(error.message);
     }
   },
+  
   updateBanner: async (requestParams) => {
     try {
       const { data } = await http.put(`/${END_POIND_API.BANNER}/${requestParams}`);

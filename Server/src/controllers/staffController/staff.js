@@ -7,7 +7,6 @@ const staffController =  {
             if (!role) {
                 return res.status(500).json({ message: 'Role không tồn tại trong hệ thống.' });
             }
-            console.log(role)
             const staff = await UserModel.find({ role_id: role._id })
             if (!staff) {
                 return res.status(404).json({ error: "Không tìm thấy tài khoản nhân viên nào" });
@@ -17,7 +16,6 @@ const staffController =  {
             res.status(500).json({ message: error.message });
         }
     },
-
     getAnStaff: async(req,res)=>{
         const {id} = req.params
          try {
