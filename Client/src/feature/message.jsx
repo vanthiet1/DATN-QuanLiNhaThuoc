@@ -1,9 +1,9 @@
 import socket from "../configs/socketConfig";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
-import staffServices from "../services/staff";
+import staffServices from "../services/staffService";
 import ChatClient from "./chatClient";
-import messageService from "../services/message";
+import messageService from "../services/messageService";
 import Index from '../modules/auth/index'
 const Message = () => {
     const product = {
@@ -38,10 +38,8 @@ const Message = () => {
     const [isShowStaff, setIsShowStaff] = useState(false);
     const [messages, setMessages] = useState([]);
     const [currentStaffId, setCurrentStaffId] = useState(null);
-  const idStaff = localStorage.getItem('idStaff')
+   const idStaff = localStorage.getItem('idStaff')
   
-
- 
     useEffect(() => {
         const getMessageChat = async () => {
             if (user && idStaff) {
