@@ -1,6 +1,6 @@
 import { useGoogleLogin } from "@react-oauth/google";
 import { showToastError } from "../configs/toastConfig";
-import userServices from "../services/user";
+import userServices from "../services/userService";
 import http from "../utils/helpers/http";
 import END_POIND_API from "../utils/helpers/endpoind";
 import tokenService from "../services/tokenService";
