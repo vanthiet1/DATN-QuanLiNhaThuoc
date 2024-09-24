@@ -38,10 +38,8 @@ const Message = () => {
     const [isShowStaff, setIsShowStaff] = useState(false);
     const [messages, setMessages] = useState([]);
     const [currentStaffId, setCurrentStaffId] = useState(null);
-  const idStaff = localStorage.getItem('idStaff')
+   const idStaff = localStorage.getItem('idStaff')
   
-
- 
     useEffect(() => {
         const getMessageChat = async () => {
             if (user && idStaff) {
