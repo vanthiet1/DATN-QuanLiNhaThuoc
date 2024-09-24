@@ -5,7 +5,7 @@ import { showToastError, showToastSuccess } from '../configs/toastConfig';
 const paymentMethodServices = {
   addPaymentMethod: async (requestBody) => {
     try {
-      const { data } = await http.post(`${END_POIND_API.PAYMENT_METHOD}/create`, requestBody);
+      const { data } = await http.post(`/${END_POIND_API.PAYMENT_METHOD}/create`, requestBody);
       showToastSuccess(data.message || 'Thêm phương thức thanh toán thành công');
       return data;
     } catch (error) {
