@@ -13,9 +13,12 @@ const brandServices = {
       console.log(error.message);
     }
   },
-  getBrand: async (resquestParrams) => {
+
+
+
+  getBrandById: async (requestParams) => {
     try {
-      const { data } = await http.get(`${END_POIND_API.BRAND}/${resquestParrams}`);
+      const { data } = await http.get(`${END_POINT_API.BRAND}/${requestParams}`);
       console.log(data);
       return data;
     } catch (error) {
@@ -23,34 +26,25 @@ const brandServices = {
       console.log(error.message);
     }
   },
-  getDetailBrand: async (resquestParrams) => {
+  
+
+  updateBrand: async (id, requestBody) => {
     try {
-      const { data } = await http.get(`${END_POIND_API.BRAND}/${resquestParrams}`);
-      console.log(data);
+      const { data } = await http.put(`${END_POINT_API.BRAND}/${id}`, requestBody);
+      showToastSuccess(data.message || ' Cập nhật brand thành công!');
       return data;
     } catch (error) {
       showToastError(error.response.data.message);
-      console.log(error.message);
     }
   },
-  deleteBrand: async (resquestParrams) => {
+
+  deleteBrand: async (requestParams) => {
     try {
-      const { data } = await http.delete(`/${END_POIND_API.BRAND}/${resquestParrams}`);
-      showToastSuccess(data.message || 'Xóa brand thành công');
+      const { data } = await http.delete(`${END_POINT_API.BRAND}/${requestParams}`);
+      showToastSuccess(data.message || 'Xóa thành công brand');
       return data;
     } catch (error) {
       showToastError(error.response.data.message);
-      console.log(error.message);
-    }
-  },
-  updateBrand: async (requestParams) => {
-    try {
-      const { data } = await http.put(`/${END_POIND_API.BRAND}/${requestParams}`);
-      showToastSuccess(data.message || 'Cập nhật brand thành công');
-      return data;
-    } catch (error) {
-      showToastError(error.response.data.message);
-      console.log(error.message);
     }
   }
 };

@@ -1,15 +1,26 @@
 import React from 'react';
 
+
 const HomeIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
     <svg
       width={width}
       height={height}
+      fill='none'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      strokeWidth='2'
+      viewBox='0 0 24 24'
+      stroke='currentColor'
+      aria-hidden='true'
+      className={`w-5 h-5 ${addClassNames}`}
+    >
+      <path d='M3 12L12 2m0 0l9 10M12 2v20'
       xmlns='http://www.w3.org/2000/svg'
       viewBox='0 0 24 24'
       fill='currentColor'
       className={addClassNames}
-    >
+    />
       <path d='M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z' />
       <path d='m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z' />
     </svg>
@@ -24,7 +35,7 @@ const OderIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
       fill='currentColor'
       viewBox='0 0 20 20'
       aria-hidden='true'
-      className={`${addClassNames}`}
+      className={`w-5 h-5 ${addClassNames}`}
     >
       <path d='M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z' />
     </svg>
@@ -37,7 +48,7 @@ const ProductIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
       width={width}
       height={height}
       xmlns='http://www.w3.org/2000/svg'
-      className={`${addClassNames}`}
+      className={`w-5 h-5 ${addClassNames}`}
       viewBox='0 0 20 20'
       fill='currentColor'
       aria-hidden='true'
@@ -55,31 +66,35 @@ const CustomerIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
       height={height}
       fill='currentColor'
       viewBox='0 0 20 20'
-      className={`${addClassNames}`}
+      className={`w-5 h-5 ${addClassNames}`}
       aria-hidden='true'
     >
       <path
         fillRule='evenodd'
         d='M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z'
         clipRule='evenodd'
-      ></path>
+      />
     </svg>
   );
 };
+
+
 
 const UserIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   <svg
     width={width}
     height={height}
     xmlns='http://www.w3.org/2000/svg'
-    className={`${addClassNames}`}
+    className={`w-5 h-5 ${addClassNames}`}
     viewBox='0 0 20 20'
     fill='currentColor'
     aria-hidden='true'
   >
-    <path fillRule='evenodd' d='M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z' clipRule='evenodd'></path>
+    <path fill-rule='evenodd' d='M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z' clip-rule='evenodd'></path>
   </svg>;
 };
+
+
 
 const SetIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
@@ -87,11 +102,15 @@ const SetIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
       width={width}
       height={height}
       fill='none'
+      stroke-linecap='round'
+      stroke-linejoin='round'
+      stroke-width='2'
+      viewBox='0 0 24 24'
+      stroke='currentColor'
+      class='w-5 h-5'
       stroklinecap='round'
       stroklinejoin='round'
       strokeWidth='2'
-      viewBox='0 0 24 24'
-      stroke='currentColor'
       className={`${addClassNames}`}
       aria-hidden='true'
     >
@@ -101,17 +120,22 @@ const SetIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   );
 };
 
+
 const LogIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
     <svg
       width={width}
       height={height}
       fill='none'
+      stroke-linecap='round'
+      stroke-linejoin='round'
+      stroke-width='2'
+      viewBox='0 0 24 24'
+      stroke='currentColor'
+      class='w-5 h-5'
       stroklinecap='round'
       stroklinejoin='round'
       strokeWidth='2'
-      viewBox='0 0 20 20'
-      stroke='currentColor'
       className={`${addClassNames}`}
       aria-hidden='true'
     >
@@ -135,6 +159,7 @@ const DarkIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   );
 };
 
+
 const LightIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
     <svg
@@ -154,6 +179,7 @@ const LightIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   );
 };
 
+
 const NotiIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
     <svg
@@ -169,6 +195,7 @@ const NotiIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   );
 };
 
+
 const CashIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
     <svg width={width} height={height} className={`${addClassNames}`} fill='currentColor' viewBox='0 0 20 20'>
@@ -181,6 +208,7 @@ const CashIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   );
 };
 
+
 const ChatIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
     <svg width={width} height={height} className={`${addClassNames}`} fill='currentColor' viewBox='0 0 20 20'>
@@ -192,6 +220,7 @@ const ChatIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
     </svg>
   );
 };
+
 
 const SearchIcons = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
