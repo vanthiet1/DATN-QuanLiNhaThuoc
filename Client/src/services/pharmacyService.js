@@ -14,9 +14,9 @@ const pharmacyServices = {
       console.log(error.message);
     }
   },
-  getPharmacy: async (requestParams) => {
+  getPharmacy: async () => {
     try {
-      const { data } = await http.get(`/${END_POIND_API.PHARMACY}/${requestParams}`);
+      const { data } = await http.get(`${END_POIND_API.PHARMACY}`);
       console.log(data);
       return data;
     } catch (error) {
@@ -25,7 +25,7 @@ const pharmacyServices = {
   },
   deletePharmacy: async (requestParams) => {
     try {
-      const { data } = await http.delete(`/${END_POIND_API.PHARMACY}/${requestParams}`);
+      const { data } = await http.delete(`${END_POIND_API.PHARMACY}/${requestParams}`);
       console.log(data);
       showToastSuccess(data.message || 'Xóa thông tin nhà thuốc thành công!');
       return data;
@@ -36,7 +36,7 @@ const pharmacyServices = {
   },
   updatePharmacy: async (requestParams) => {
     try {
-      const { data } = await http.put(`/${END_POIND_API.PHARMACY}/${requestParams}`);
+      const { data } = await http.put(`${END_POIND_API.PHARMACY}/${requestParams}`);
       showToastSuccess(data.message || 'Cập nhật thông tin nhà thuốc thành công!');
       console.log(data);
       return data;
