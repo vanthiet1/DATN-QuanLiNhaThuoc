@@ -14,7 +14,8 @@
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.14",
     "nodemon": "^3.1.4",
-    "server": "file:"
+    "server": "file:",
+    "socket.io": "^4.8.0"
   },
   "name": "server",
   "version": "1.0.0",

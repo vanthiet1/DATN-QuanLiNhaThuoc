@@ -2,23 +2,29 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
+const http = require('http');
 const cors = require('cors');
+const {initIo} = require('./socket/socketManager')
 require('dotenv').config();
 const app = express();
 const connectDB = require('./db/connectDB');
-
+const server = http.createServer(app);
 
 // Middleware
 app.use(morgan('common'));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors({
-  origin: 'http://localhost:5173', 
-  credentials: true 
-}));
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+  })
+);
 
 connectDB();
+initIo(server);
+
 
 app.get('/', (req, res) => {
   res.send('Welcome To Api');
@@ -66,6 +72,6 @@ app.use('/api/v1/comment', CommentRouter);
 
 // Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

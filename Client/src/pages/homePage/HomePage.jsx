@@ -1,8 +1,9 @@
 import React from 'react';
-import Index from '../../modules/auth/index'
+import Message from '../../feature/message';
 const HomePage = () => {
-  return <div>HomePage
-  <Index></Index>
+  return <div>
+  HomePage
+  <Message></Message>
   </div>;
 };
 
