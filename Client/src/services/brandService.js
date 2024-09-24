@@ -1,17 +1,20 @@
 import http from '../utils/helpers/http';
-import END_POINT_API from '../utils/helpers/endpoint';
+import END_POIND_API from '../utils/helpers/endpoind';
 import { showToastError, showToastSuccess } from '../configs/toastConfig';
 
 const brandServices = {
-  addBrand: async (requestBody) => {
+  createBrand: async (requestBody) => {
     try {
-      const { data } = await http.post(`${END_POINT_API.BRAND}/create`, requestBody);
-      showToastSuccess(data.message);
+      const { data } = await http.post(`${END_POIND_API.BRAND}/create`, requestBody);
+      showToastSuccess(data.message || 'Thêm brand thành công');
       return data;
     } catch (error) {
       showToastError(error.response.data.message);
+      console.log(error.message);
     }
   },
+
+
 
   getBrandById: async (requestParams) => {
     try {
@@ -20,8 +23,10 @@ const brandServices = {
       return data;
     } catch (error) {
       showToastError(error.response.data.message);
+      console.log(error.message);
     }
   },
+  
 
   updateBrand: async (id, requestBody) => {
     try {
