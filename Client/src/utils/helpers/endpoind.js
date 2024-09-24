@@ -1,6 +1,8 @@
 const END_POIND_API = {
   AUTH: '/auth',
   CART: '/cart',
+  MESSAGE: '/message',
+  STAFF: '/staff',
   PRODUCT: '/product',
   ORDER: '/order',
   ORDER_DETAILS: '/order-details',
@@ -17,5 +19,4 @@ const END_POIND_API = {
   PHARMACY: '/pharmacy',
   PAYMENT_METHOD: '/payment-method'
 };
-
 export default END_POIND_API;
