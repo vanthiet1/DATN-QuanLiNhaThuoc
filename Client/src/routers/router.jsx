@@ -1,7 +1,7 @@
+import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { LayoutAdmin, LayoutDefault } from '../components/layouts';
 import { PATH_ROUTERS_ADMIN, PATH_ROUTERS_CLIENT } from '../utils/constant/routers';
-import { lazy } from 'react';
 import SuspenseWrapper from '../components/suspenseWrapper/SuspenseWrapper';
 
 const HomePage = lazy(() => import('../pages/homePage/HomePage'));
@@ -34,9 +34,11 @@ const AddPharmacy = lazy(() => import('../admin/pharmacy/AddPharmacy'));
 const AllPharmacy = lazy(() => import('../admin/pharmacy/AllPharmacy'));
 
 const AddRoleUser = lazy(() => import('../admin/user/AddRole'));
+const ManagementStaff = lazy(()=> import('../admin/user/ManagementStaff'))
+const ManagementUser = lazy(() => import('../admin/user/ManagementUser'));
+
 const Messages = lazy(() => import('../admin/messages/Messages'));
 const Transaction = lazy(() => import('../admin/transaction/Transaction'));
-
 const Customer = lazy(() => import('../admin/customer/Customer'));
 const Orders = lazy(() => import('../admin/orders/Orders'));
 
@@ -230,10 +232,26 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: PATH_ROUTERS_ADMIN.USER,
+        path: PATH_ROUTERS_ADMIN.MANAGER_USER,
         element: (
           <SuspenseWrapper>
-            <AddRoleUser />
+            <ManagementUser/>
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.MANAGER_STAFF,
+        element: (
+          <SuspenseWrapper>
+            <ManagementStaff/>
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.ROLE_USER,
+        element: (
+          <SuspenseWrapper>
+            <AddRoleUser/>
           </SuspenseWrapper>
         )
       },
