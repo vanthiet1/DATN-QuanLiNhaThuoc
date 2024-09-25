@@ -5,7 +5,6 @@ const RoleModel = require('../../models/roleModel/role');
 const sendMail = require('../../helpers/sendMail');
 const generateRandomCode = require('../../helpers/randomCode');
 
-
 const Auth = {
     Register: async (req, res) => {
         const { fullname, email, password, phone } = req.body;

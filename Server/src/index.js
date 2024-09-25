@@ -48,6 +48,8 @@ const BannerRouter = require('./routers/banner');
 const BlogRouter = require('./routers/blog');
 const CommentRouter = require('./routers/comments');
 const VerifyRouter = require('./routers/vertifyEmail');
+const StaffRouter = require('./routers/staff');
+
 
 
 app.use('/api/v1/order', OrderRouter);
@@ -68,6 +70,8 @@ app.use('/api/v1/banner', BannerRouter);
 app.use('/api/v1/blog', BlogRouter);
 app.use('/api/v1/comment', CommentRouter);
 app.use('/api/v1/email', VerifyRouter);
+app.use('/api/v1/staff', StaffRouter);
+
 
 
 // Start server

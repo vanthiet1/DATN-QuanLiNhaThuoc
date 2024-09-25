@@ -1,10 +1,13 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
+import { PATH_ROUTERS_ADMIN, PATH_ROUTERS_CLIENT } from '../../utils/constant/routers';
 import SidebarAdmin from '../sidebars/SidebarAdmin';
 import { InputText } from '../ui/form';
 import AppIcons from '../ui/icon';
 import { Button } from '../ui/button';
 import Image from '../ui/image/Image';
+
+
 
 const HeaderSearch = () => {
   return (
@@ -48,7 +51,7 @@ const LayoutAdmin = () => {
         <Header />
         <div className='h-full overflow-y-auto'>
           <div className='container px-6'>
-            <Outlet></Outlet>
+            <Outlet />
           </div>
         </div>
       </div>

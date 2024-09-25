@@ -1,13 +1,26 @@
 const UserModel = require('../../models/userModel/user');
+const RoleModel = require('../../models/roleModel/role')
 const User = {
     getAllUser: async (req, res) => {
         try {
-            const User = await UserModel.find()
-            res.status(200).json(User)
+            const role = await RoleModel.findOne({ role_Name: "customer" });
+            console.log(role);
+            
+            if (!role) {
+                return res.status(500).json({ message: 'Role không tồn tại trong hệ thống.' });
+            }
+            const user = await UserModel.find({ role_id: role._id })
+            .populate("role_id")
+            
+            if (!user) {
+                return res.status(404).json({ error: "Không tìm thấy tài khoản nhân viên nào" });
+            }
+            res.status(200).json(user)
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
     },
+
     getAnUser: async (req, res) => {
         try {
             const { id } = req.params

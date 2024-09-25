@@ -5,6 +5,8 @@ const staffServices = {
      getAllStaff: async ()=> {
         try {
              const {data} = await http.get(`${END_POIND_API.STAFF}`)
+             console.log(data);
+             
              return data
         } catch (error) {
             console.log(error.message);     
