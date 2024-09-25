@@ -132,7 +132,20 @@ const dataMenu = [
   {
     icon: <AppIcons.UserGroup />,
     title: 'User',
-    path: PATH_ROUTERS_ADMIN.USER
+    subMenu: [
+      {
+        path: PATH_ROUTERS_ADMIN.ROLE_USER,
+        title: 'Role'
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.MANAGER_STAFF,
+        title: 'Manager Staff'
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.MANAGER_USER,
+        title: 'Manager User'
+      }
+    ]
   },
   {
     icon: <AppIcons.NotiIcon />,
