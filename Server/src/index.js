@@ -49,6 +49,8 @@ const BlogRouter = require('./routers/blog');
 const CommentRouter = require('./routers/comments');
 const VerifyRouter = require('./routers/vertifyEmail');
 const StaffRouter = require('./routers/staff');
+const MessageRouter = require('./routers/message');
+
 
 
 
@@ -71,6 +73,9 @@ app.use('/api/v1/blog', BlogRouter);
 app.use('/api/v1/comment', CommentRouter);
 app.use('/api/v1/email', VerifyRouter);
 app.use('/api/v1/staff', StaffRouter);
+app.use('/api/v1/message', MessageRouter);
+
+
 
 
 
