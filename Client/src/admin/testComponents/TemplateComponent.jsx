@@ -2,7 +2,7 @@ import React from 'react';
 import AppIcons from '../../components/ui/icon';
 import Button from '../../components/ui/button/Button';
 import InputText from '../../components/ui/form/InputText';
-import { Textarea } from '../../components/ui/form';
+import { FileInput, Textarea } from '../../components/ui/form';
 // import BreadCrumb from '../../components/breadCrumb/BreadCrumb';
 
 const TemplateComponent = () => {
@@ -26,13 +26,13 @@ const TemplateComponent = () => {
         <h3 className='text-lg capitalize font-semibold mb-4'>Button component</h3>
         <div className='grid gap-3 w-fit'>
           <Button size='s' rounded='s' leftIcon={<AppIcons.NotiIcon />} addClassNames='bg-slate-500 text-white'>
-            size s , rouded s , leftIcon
+            size s , rounded s , leftIcon
           </Button>
           <Button size='m' rounded='m' addClassNames='bg-slate-600 text-white '>
-            size m , rouded m ,
+            size m , rounded m ,
           </Button>
           <Button size='l' rounded='l' addClassNames='bg-slate-700 text-white '>
-            size l , rouded l ,
+            size l , rounded l ,
           </Button>
         </div>
       </div>
@@ -40,9 +40,9 @@ const TemplateComponent = () => {
       <div className='pt-5'>
         <h3 className='text-lg capitalize font-semibold mb-4'>Input component</h3>
         <div className='grid gap-3 w-fit'>
-          <InputText size='s' rounded='s' placeholder='size s , rouded s'></InputText>
-          <InputText size='m' rounded='m' placeholder='size m , rouded m'></InputText>
-          <InputText size='l' rounded='l' placeholder='size l, rouded l'></InputText>
+          <InputText size='s' rounded='s' placeholder='size s , rounded s'></InputText>
+          <InputText size='m' rounded='m' placeholder='size m , rounded m'></InputText>
+          <InputText size='l' rounded='l' placeholder='size l, rounded l'></InputText>
         </div>
       </div>
 
@@ -55,10 +55,18 @@ const TemplateComponent = () => {
         </div>
       </div>
 
+      {/* FileInput component */}
+      <div className='pt-5'>
+        <h3 className='text-lg capitalize font-semibold mb-4'>FileInput component</h3>
+        <div className='grid gap-3'>
+          <FileInput multiple={true} />
+        </div>
+      </div>
+
       {/*icon component */}
       <div className='pt-5'>
         <h3 className='text-lg capitalize font-semibold mb-4'>Icon component</h3>
-        <div className='grid gap-3 grid-cols-7 w-fit text-blue-900'>
+        <div className='grid gap-3 grid-cols-6 w-fit text-blue-900'>
           <div className='flex gap-1 items-center'>
             <AppIcons.HomeIcon />
             <span>HomeIcon</span>
@@ -146,6 +154,30 @@ const TemplateComponent = () => {
           <div className='flex gap-1 items-center'>
             <AppIcons.BanknotesIcon />
             <span>BanknotesIcon</span>
+          </div>
+          <div className='flex gap-1 items-center'>
+            <AppIcons.PlusIcon />
+            <span>PlusIcon</span>
+          </div>
+          <div className='flex gap-1 items-center'>
+            <AppIcons.TrashBinIcon />
+            <span>TrashBinIcon</span>
+          </div>
+          <div className='flex gap-1 items-center'>
+            <AppIcons.X_CloseIcon />
+            <span>X_CloseIcon</span>
+          </div>
+          <div className='flex gap-1 items-center'>
+            <AppIcons.EyeIcon />
+            <span>EyeIcon</span>
+          </div>
+          <div className='flex gap-1 items-center'>
+            <AppIcons.BarsThreeIcon />
+            <span>BarsThreeIcon</span>
+          </div>
+          <div className='flex gap-1 items-center'>
+            <AppIcons.SquaresTwoxTwoIcon />
+            <span>SquaresTwoxTwoIcon</span>
           </div>
         </div>
       </div>
