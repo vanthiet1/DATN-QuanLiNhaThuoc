@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 const HomeIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
     <svg
@@ -15,12 +14,13 @@ const HomeIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
       aria-hidden='true'
       className={`w-5 h-5 ${addClassNames}`}
     >
-      <path d='M3 12L12 2m0 0l9 10M12 2v20'
-      xmlns='http://www.w3.org/2000/svg'
-      viewBox='0 0 24 24'
-      fill='currentColor'
-      className={addClassNames}
-    />
+      <path
+        d='M3 12L12 2m0 0l9 10M12 2v20'
+        xmlns='http://www.w3.org/2000/svg'
+        viewBox='0 0 24 24'
+        fill='currentColor'
+        className={addClassNames}
+      />
       <path d='M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z' />
       <path d='m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z' />
     </svg>
@@ -78,23 +78,24 @@ const CustomerIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   );
 };
 
-
-
 const UserIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
-  <svg
-    width={width}
-    height={height}
-    xmlns='http://www.w3.org/2000/svg'
-    className={`w-5 h-5 ${addClassNames}`}
-    viewBox='0 0 20 20'
-    fill='currentColor'
-    aria-hidden='true'
-  >
-    <path fill-rule='evenodd' d='M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z' clip-rule='evenodd'></path>
-  </svg>;
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='0 0 24 24'
+      fill='currentColor'
+      width={width}
+      height={height}
+      className={`${addClassNames}`}
+    >
+      <path
+        fillRule='evenodd'
+        d='M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z'
+        clipRule='evenodd'
+      />
+    </svg>
+  );
 };
-
-
 
 const SetIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
@@ -102,12 +103,8 @@ const SetIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
       width={width}
       height={height}
       fill='none'
-      stroke-linecap='round'
-      stroke-linejoin='round'
-      stroke-width='2'
       viewBox='0 0 24 24'
       stroke='currentColor'
-      class='w-5 h-5'
       stroklinecap='round'
       stroklinejoin='round'
       strokeWidth='2'
@@ -120,19 +117,14 @@ const SetIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   );
 };
 
-
 const LogIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
     <svg
       width={width}
       height={height}
       fill='none'
-      stroke-linecap='round'
-      stroke-linejoin='round'
-      stroke-width='2'
       viewBox='0 0 24 24'
       stroke='currentColor'
-      class='w-5 h-5'
       stroklinecap='round'
       stroklinejoin='round'
       strokeWidth='2'
@@ -159,7 +151,6 @@ const DarkIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   );
 };
 
-
 const LightIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
     <svg
@@ -179,7 +170,6 @@ const LightIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   );
 };
 
-
 const NotiIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
     <svg
@@ -195,7 +185,6 @@ const NotiIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   );
 };
 
-
 const CashIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
     <svg width={width} height={height} className={`${addClassNames}`} fill='currentColor' viewBox='0 0 20 20'>
@@ -208,7 +197,6 @@ const CashIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   );
 };
 
-
 const ChatIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
     <svg width={width} height={height} className={`${addClassNames}`} fill='currentColor' viewBox='0 0 20 20'>
@@ -220,7 +208,6 @@ const ChatIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
     </svg>
   );
 };
-
 
 const SearchIcons = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
@@ -286,9 +273,9 @@ const PhotoIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
       className={addClassNames}
     >
       <path
-        fill-rule='evenodd'
+        fillRule='evenodd'
         d='M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z'
-        clip-rule='evenodd'
+        clipRule='evenodd'
       />
     </svg>
   );
@@ -404,22 +391,6 @@ const BanknotesIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
     </svg>
   );
 };
-const EmployeeIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={height}
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      className={addClassNames}
-    >
-      <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-    </svg>
-  );
-};
-
-
 
 const icons = {
   HomeIcon,
@@ -443,8 +414,7 @@ const icons = {
   BuildingStorefront,
   GiftIcon,
   BrandIcon,
-  BanknotesIcon,
-  EmployeeIcon
+  BanknotesIcon
 };
 
 export default icons;
