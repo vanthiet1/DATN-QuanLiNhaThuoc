@@ -1,1 +1,2 @@
-export { default as Table } from './Table.jsx';
+export { default as TableManagerAccount } from './TableManagerAccount.jsx';
+export { default as TableRole } from './TableManagerAccount.jsx';

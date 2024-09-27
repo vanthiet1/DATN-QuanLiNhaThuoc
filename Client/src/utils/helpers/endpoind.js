@@ -1,4 +1,5 @@
 const END_POIND_API = {
+  USER:'/user',
   AUTH: '/auth',
   CART: '/cart',
   MESSAGE: '/message',
