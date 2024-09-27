@@ -45,7 +45,7 @@ const roleServices = {
     }
   },
   
-  updateBanner: async (requestParams) => {
+  updateRoleUser: async (requestParams) => {
     try {
       const { data } = await http.put(`/${END_POIND_API.ROLE}/${requestParams}`);
       showToastSuccess(data.message || 'Cập nhật role thành công');
