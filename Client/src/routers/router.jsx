@@ -33,7 +33,8 @@ const AllBlog = lazy(() => import('../admin/blog/AllBlog'));
 const AddPharmacy = lazy(() => import('../admin/pharmacy/AddPharmacy'));
 const AllPharmacy = lazy(() => import('../admin/pharmacy/AllPharmacy'));
 
-const AddRoleUser = lazy(() => import('../admin/user/AddRole'));
+// const AddRoleUser = lazy(() => import('../admin/user/AddRole'));
+const AllRoleUser = lazy(() => import('../admin/role/allRole'))
 const ManagementStaff = lazy(()=> import('../admin/user/ManagementStaff'))
 const ManagementUser = lazy(() => import('../admin/user/ManagementUser'));
 
@@ -251,10 +252,19 @@ const router = createBrowserRouter([
         path: PATH_ROUTERS_ADMIN.ROLE_USER,
         element: (
           <SuspenseWrapper>
-            <AddRoleUser/>
+            <AllRoleUser/>
           </SuspenseWrapper>
         )
       },
+      {
+        path: PATH_ROUTERS_ADMIN.ROLE_USER,
+        element: (
+          <SuspenseWrapper>
+            <AllRoleUser/>
+          </SuspenseWrapper>
+        )
+      },
+      
       {
         path: PATH_ROUTERS_ADMIN.ORDERS,
         element: (
