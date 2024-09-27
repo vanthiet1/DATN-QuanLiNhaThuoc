@@ -392,115 +392,6 @@ const BanknotesIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   );
 };
 
-const PlusIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
-  return (
-    <svg
-      width={width}
-      height={height}
-      xmlns='http://www.w3.org/2000/svg'
-      fill='currentColor'
-      viewBox='0 0 24 24'
-      strokeWidth={1.5}
-      stroke='currentColor'
-      className={addClassNames}
-    >
-      <path strokeLinecap='round' strokeLinejoin='round' d='M12 4.5v15m7.5-7.5h-15' />
-    </svg>
-  );
-};
-
-const TrashBinIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
-  return (
-    <svg fill='currentColor' viewBox='0 0 20 20' className={addClassNames} width={width} height={height}>
-      <path
-        fillRule='evenodd'
-        d='M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z'
-        clipRule='evenodd'
-      ></path>
-    </svg>
-  );
-};
-
-const X_CloseIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
-  return (
-    <svg
-      class='w-4 h-4'
-      fill='currentColor'
-      viewBox='0 0 20 20'
-      aria-hidden='true'
-      className={addClassNames}
-      width={width}
-      height={height}
-    >
-      <path
-        d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z'
-        clip-rule='evenodd'
-        fill-rule='evenodd'
-      ></path>
-    </svg>
-  );
-};
-
-const EyeIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
-  return (
-    <svg
-      xmlns='http://www.w3.org/2000/svg'
-      fill='none'
-      viewBox='0 0 24 24'
-      strokeWidth={1.5}
-      stroke='currentColor'
-      width={width}
-      height={height}
-      className={`${addClassNames}`}
-    >
-      <path
-        strokeLinecap='round'
-        strokeLinejoin='round'
-        d='M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z'
-      />
-      <path strokeLinecap='round' strokeLinejoin='round' d='M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z' />
-    </svg>
-  );
-};
-
-const BarsThreeIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
-  return (
-    <svg
-      xmlns='http://www.w3.org/2000/svg'
-      fill='none'
-      viewBox='0 0 24 24'
-      strokeWidth={1.5}
-      stroke='currentColor'
-      width={width}
-      height={height}
-      className={`${addClassNames}`}
-    >
-      <path strokeLinecap='round' strokeLinejoin='round' d='M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5' />
-    </svg>
-  );
-};
-
-const SquaresTwoxTwoIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
-  return (
-    <svg
-      xmlns='http://www.w3.org/2000/svg'
-      fill='none'
-      viewBox='0 0 24 24'
-      strokeWidth={1.5}
-      stroke='currentColor'
-      width={width}
-      height={height}
-      className={`${addClassNames}`}
-    >
-      <path
-        strokeLinecap='round'
-        strokeLinejoin='round'
-        d='M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z'
-      />
-    </svg>
-  );
-};
-
 const icons = {
   HomeIcon,
   OderIcon,
@@ -523,13 +414,7 @@ const icons = {
   BuildingStorefront,
   GiftIcon,
   BrandIcon,
-  BanknotesIcon,
-  PlusIcon,
-  TrashBinIcon,
-  X_CloseIcon,
-  EyeIcon,
-  BarsThreeIcon,
-  SquaresTwoxTwoIcon
+  BanknotesIcon
 };
 
 export default icons;

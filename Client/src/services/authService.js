@@ -52,7 +52,7 @@ const authServices = {
     },
     handleIsActiveAccount: async (requestParams) => {
         try {
-            const { data } = await http.post(`${END_POIND_API.USER}/AccountStatus/${requestParams}`)
+            const { data } = await http.put(`${END_POIND_API.USER}/AccountStatus/${requestParams}`)
             return data;
         } catch (error) {
             console.log(error);

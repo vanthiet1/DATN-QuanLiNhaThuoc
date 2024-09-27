@@ -45,9 +45,19 @@ const roleServices = {
     }
   },
   
-  updateBanner: async (requestParams) => {
+  updateNameRole: async (requestParams) => {
     try {
       const { data } = await http.put(`/${END_POIND_API.ROLE}/${requestParams}`);
+      showToastSuccess(data.message || 'Cập nhật role thành công');
+      return data;
+    } catch (error) {
+      showToastError(error.response.data.message);
+      console.log(error.message);
+    }
+  },
+  updateRoleUser: async (requestParams,requestBody) => {
+    try {
+      const { data } = await http.put(`/${END_POIND_API.USER}/${END_POIND_API.ROLE}${requestParams}`,requestBody);
       showToastSuccess(data.message || 'Cập nhật role thành công');
       return data;
     } catch (error) {
