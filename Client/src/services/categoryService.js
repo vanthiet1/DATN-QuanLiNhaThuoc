@@ -13,9 +13,9 @@ const categoryServices = {
       console.log(error.message);
     }
   },
-  getCategory: async (resquestParrams) => {
+  getCategory: async () => {
     try {
-      const { data } = await http.get(`${END_POIND_API.CATEGORY}/${resquestParrams}`);
+      const { data } = await http.get(`${END_POIND_API.CATEGORY}`);
       console.log(data);
       return data;
     } catch (error) {

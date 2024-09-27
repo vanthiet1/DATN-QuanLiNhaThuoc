@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 const HomeIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
     <svg
@@ -15,12 +14,13 @@ const HomeIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
       aria-hidden='true'
       className={`w-5 h-5 ${addClassNames}`}
     >
-      <path d='M3 12L12 2m0 0l9 10M12 2v20'
-      xmlns='http://www.w3.org/2000/svg'
-      viewBox='0 0 24 24'
-      fill='currentColor'
-      className={addClassNames}
-    />
+      <path
+        d='M3 12L12 2m0 0l9 10M12 2v20'
+        xmlns='http://www.w3.org/2000/svg'
+        viewBox='0 0 24 24'
+        fill='currentColor'
+        className={addClassNames}
+      />
       <path d='M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z' />
       <path d='m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z' />
     </svg>
@@ -78,23 +78,24 @@ const CustomerIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   );
 };
 
-
-
 const UserIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
-  <svg
-    width={width}
-    height={height}
-    xmlns='http://www.w3.org/2000/svg'
-    className={`w-5 h-5 ${addClassNames}`}
-    viewBox='0 0 20 20'
-    fill='currentColor'
-    aria-hidden='true'
-  >
-    <path fill-rule='evenodd' d='M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z' clip-rule='evenodd'></path>
-  </svg>;
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='0 0 24 24'
+      fill='currentColor'
+      width={width}
+      height={height}
+      className={`${addClassNames}`}
+    >
+      <path
+        fillRule='evenodd'
+        d='M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z'
+        clipRule='evenodd'
+      />
+    </svg>
+  );
 };
-
-
 
 const SetIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
@@ -102,12 +103,8 @@ const SetIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
       width={width}
       height={height}
       fill='none'
-      stroke-linecap='round'
-      stroke-linejoin='round'
-      stroke-width='2'
       viewBox='0 0 24 24'
       stroke='currentColor'
-      class='w-5 h-5'
       stroklinecap='round'
       stroklinejoin='round'
       strokeWidth='2'
@@ -120,19 +117,14 @@ const SetIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   );
 };
 
-
 const LogIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
     <svg
       width={width}
       height={height}
       fill='none'
-      stroke-linecap='round'
-      stroke-linejoin='round'
-      stroke-width='2'
       viewBox='0 0 24 24'
       stroke='currentColor'
-      class='w-5 h-5'
       stroklinecap='round'
       stroklinejoin='round'
       strokeWidth='2'
@@ -159,7 +151,6 @@ const DarkIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   );
 };
 
-
 const LightIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
     <svg
@@ -179,7 +170,6 @@ const LightIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   );
 };
 
-
 const NotiIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
     <svg
@@ -195,7 +185,6 @@ const NotiIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   );
 };
 
-
 const CashIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
     <svg width={width} height={height} className={`${addClassNames}`} fill='currentColor' viewBox='0 0 20 20'>
@@ -208,7 +197,6 @@ const CashIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   );
 };
 
-
 const ChatIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
     <svg width={width} height={height} className={`${addClassNames}`} fill='currentColor' viewBox='0 0 20 20'>
@@ -220,7 +208,6 @@ const ChatIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
     </svg>
   );
 };
-
 
 const SearchIcons = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
@@ -286,9 +273,9 @@ const PhotoIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
       className={addClassNames}
     >
       <path
-        fill-rule='evenodd'
+        fillRule='evenodd'
         d='M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z'
-        clip-rule='evenodd'
+        clipRule='evenodd'
       />
     </svg>
   );
@@ -405,6 +392,115 @@ const BanknotesIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   );
 };
 
+const PlusIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
+  return (
+    <svg
+      width={width}
+      height={height}
+      xmlns='http://www.w3.org/2000/svg'
+      fill='currentColor'
+      viewBox='0 0 24 24'
+      strokeWidth={1.5}
+      stroke='currentColor'
+      className={addClassNames}
+    >
+      <path strokeLinecap='round' strokeLinejoin='round' d='M12 4.5v15m7.5-7.5h-15' />
+    </svg>
+  );
+};
+
+const TrashBinIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
+  return (
+    <svg fill='currentColor' viewBox='0 0 20 20' className={addClassNames} width={width} height={height}>
+      <path
+        fillRule='evenodd'
+        d='M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z'
+        clipRule='evenodd'
+      ></path>
+    </svg>
+  );
+};
+
+const X_CloseIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
+  return (
+    <svg
+      class='w-4 h-4'
+      fill='currentColor'
+      viewBox='0 0 20 20'
+      aria-hidden='true'
+      className={addClassNames}
+      width={width}
+      height={height}
+    >
+      <path
+        d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z'
+        clip-rule='evenodd'
+        fill-rule='evenodd'
+      ></path>
+    </svg>
+  );
+};
+
+const EyeIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      fill='none'
+      viewBox='0 0 24 24'
+      strokeWidth={1.5}
+      stroke='currentColor'
+      width={width}
+      height={height}
+      className={`${addClassNames}`}
+    >
+      <path
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        d='M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z'
+      />
+      <path strokeLinecap='round' strokeLinejoin='round' d='M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z' />
+    </svg>
+  );
+};
+
+const BarsThreeIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      fill='none'
+      viewBox='0 0 24 24'
+      strokeWidth={1.5}
+      stroke='currentColor'
+      width={width}
+      height={height}
+      className={`${addClassNames}`}
+    >
+      <path strokeLinecap='round' strokeLinejoin='round' d='M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5' />
+    </svg>
+  );
+};
+
+const SquaresTwoxTwoIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      fill='none'
+      viewBox='0 0 24 24'
+      strokeWidth={1.5}
+      stroke='currentColor'
+      width={width}
+      height={height}
+      className={`${addClassNames}`}
+    >
+      <path
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        d='M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z'
+      />
+    </svg>
+  );
+};
+
 const icons = {
   HomeIcon,
   OderIcon,
@@ -427,7 +523,13 @@ const icons = {
   BuildingStorefront,
   GiftIcon,
   BrandIcon,
-  BanknotesIcon
+  BanknotesIcon,
+  PlusIcon,
+  TrashBinIcon,
+  X_CloseIcon,
+  EyeIcon,
+  BarsThreeIcon,
+  SquaresTwoxTwoIcon
 };
 
 export default icons;

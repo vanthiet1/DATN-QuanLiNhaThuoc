@@ -2,20 +2,22 @@ const SubCategoryModel = require('../../models/subCategoryModel/subCategory');
 
 const subCategory = {
   addSubCategory: async (req, res) => {
-    const { name, category_id, description } = req.body;
+    const { name, category_id, description, order } = req.body;
+    console.log(req.body);
 
-    if (!name || !category_id) {
-      return res.status(400).json({ message: 'Tên và category_id là bắt buộc.' });
+    if (!name || !category_id || !order || !description) {
+      return res.status(400).json({ message: 'Tên và category_id , order ,description là bắt buộc.' });
     }
 
     try {
       const subCategory = new SubCategoryModel({
         name,
         category_id,
-        description: description || ''
+        description: description,
+        order
       });
 
-      await SubCategoryModel.save();
+      await subCategory.save();
 
       res.status(201).json({ message: 'Danh mục con đã được tạo thành công', data: subCategory });
     } catch (error) {
@@ -58,16 +60,16 @@ const subCategory = {
 
   updateSubCategory: async (req, res) => {
     const { id } = req.params;
-    const { name, category_id, description } = req.body;
+    const { name, category_id, description, order } = req.body;
 
-    if (!name || !category_id) {
-      return res.status(400).json({ message: 'Tên và category_id là bắt buộc.' });
+    if (!name || !category_id || !description || !order) {
+      return res.status(400).json({ message: 'Tên và category_id , description , order là bắt buộc.' });
     }
 
     try {
       const updatedSubCategory = await SubCategoryModel.findByIdAndUpdate(
         id,
-        { name, category_id, description: description || '' },
+        { name, category_id, description: description || '', order },
         { new: true }
       );
 
