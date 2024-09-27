@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const http = require('http');
 const cors = require('cors');
-const { initIo } = require('./socket/socketManager');
+const {initIo} = require('./socket/socketManager')
 require('dotenv').config();
 const app = express();
 const connectDB = require('./db/connectDB');
@@ -24,6 +24,7 @@ app.use(
 
 connectDB();
 initIo(server);
+
 
 app.get('/', (req, res) => {
   res.send('Welcome To Api');
@@ -47,10 +48,13 @@ const BannerRouter = require('./routers/banner');
 const BlogRouter = require('./routers/blog');
 const CommentRouter = require('./routers/comments');
 const VerifyRouter = require('./routers/vertifyEmail');
+const StaffRouter = require('./routers/staff');
+const Pharmacy = require('./routers/pharmacy');
+
 
 
 app.use('/api/v1/order', OrderRouter);
-app.use('/api/v1/order-detail', OrderDetailRouter);
+app.use('/api/v1/order-details', OrderDetailRouter);
 app.use('/api/v1/image', ImageRouter);
 app.use('/api/v1/auth', AuthRouter);
 app.use('/api/v1/user', UserRouter);
@@ -67,6 +71,9 @@ app.use('/api/v1/banner', BannerRouter);
 app.use('/api/v1/blog', BlogRouter);
 app.use('/api/v1/comment', CommentRouter);
 app.use('/api/v1/email', VerifyRouter);
+app.use('/api/v1/staff', StaffRouter);
+app.use('/api/v1/pharmacy', Pharmacy);
+
 
 
 // Start server
