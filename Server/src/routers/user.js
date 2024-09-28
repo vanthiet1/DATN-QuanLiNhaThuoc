@@ -5,6 +5,9 @@ Router.get('/', User.getAllUser)
 Router.get('/google/:googleId', User.getUserLoginGooogle)
 Router.get('/:id', User.getAnUser)
 Router.delete('/:id', User.deleteAnUser)
+Router.put('/role/:id', User.updateRoleUser)
+Router.put('/AccountStatus/:id', User.toggleAccountStatus)
+
 
 
 module.exports = Router

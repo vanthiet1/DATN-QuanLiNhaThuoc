@@ -4,9 +4,7 @@ import END_POIND_API from "../utils/helpers/endpoind";
 const staffServices = {
      getAllStaff: async ()=> {
         try {
-             const {data} = await http.get(`${END_POIND_API.STAFF}`)
-             console.log(data);
-             
+             const {data} = await http.get(`${END_POIND_API.STAFF}`)             
              return data
         } catch (error) {
             console.log(error.message);     
@@ -16,6 +14,15 @@ const staffServices = {
           console.log(idStaff);
           try {
                const {data} = await http.get(`${END_POIND_API.STAFF}/${idStaff}`)
+               return data
+          } catch (error) {
+              console.log(error.message);     
+          }
+       },
+       deleteStaff: async (idStaff)=> {
+          console.log(idStaff);
+          try {
+               const {data} = await http.delete(`${END_POIND_API.STAFF}/${idStaff}`)
                return data
           } catch (error) {
               console.log(error.message);     
