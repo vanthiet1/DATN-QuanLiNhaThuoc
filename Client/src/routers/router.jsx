@@ -33,14 +33,15 @@ const AllBlog = lazy(() => import('../admin/blog/AllBlog'));
 const AddPharmacy = lazy(() => import('../admin/pharmacy/AddPharmacy'));
 const AllPharmacy = lazy(() => import('../admin/pharmacy/AllPharmacy'));
 
-// const AddRoleUser = lazy(() => import('../admin/user/AddRole'));
-const AllRoleUser = lazy(() => import('../admin/role/allRole'))
-const ManagementStaff = lazy(()=> import('../admin/user/ManagementStaff'))
+                                                                 
+const AllRoleUser = lazy(() => import('../admin/role/allRole'));
+const ManagementStaff = lazy(()=> import('../admin/user/ManagementStaff'));
 const ManagementUser = lazy(() => import('../admin/user/ManagementUser'));
+const ManagementCustomer = lazy(() => import('../admin/user/ManagementCustomer'));
+const AddRole = lazy(()=> import('../admin/role/addRole'))
 
 const Messages = lazy(() => import('../admin/messages/Messages'));
 const Transaction = lazy(() => import('../admin/transaction/Transaction'));
-const Customer = lazy(() => import('../admin/customer/Customer'));
 const Orders = lazy(() => import('../admin/orders/Orders'));
 
 const TemplateComponent = lazy(() => import('../admin/testComponents/TemplateComponent'));
@@ -225,10 +226,10 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: PATH_ROUTERS_ADMIN.CUSTOMERS,
+        path: PATH_ROUTERS_ADMIN.MANAGER_CUSTOMER,
         element: (
           <SuspenseWrapper>
-            <Customer />
+            <ManagementCustomer/>
           </SuspenseWrapper>
         )
       },
@@ -249,7 +250,7 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: PATH_ROUTERS_ADMIN.ROLE_USER,
+        path: PATH_ROUTERS_ADMIN.ALL_ROLE_USER,
         element: (
           <SuspenseWrapper>
             <AllRoleUser/>
@@ -257,13 +258,14 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: PATH_ROUTERS_ADMIN.ROLE_USER,
+        path: PATH_ROUTERS_ADMIN.ADD_ROLE_USER,
         element: (
           <SuspenseWrapper>
-            <AllRoleUser/>
+            <AddRole/>
           </SuspenseWrapper>
         )
       },
+  
       
       {
         path: PATH_ROUTERS_ADMIN.ORDERS,

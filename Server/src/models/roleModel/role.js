@@ -4,7 +4,6 @@ const roleSchema = new mongoose.Schema({
   role_Name: {
     type: String,
     equired: true,
-    enum: ['customer', 'staff', 'admin']
   }
 });
 

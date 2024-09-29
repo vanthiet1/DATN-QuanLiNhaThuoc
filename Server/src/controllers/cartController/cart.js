@@ -1,52 +1,62 @@
 const CartModel = require('../../models/cartModel/cart');
 const ProductModel = require('../../models/productModel/product');
-
-const User = {
-    addToCart: async (req,res) => {
+const Cart = {
+    addToCart: async (req, res) => {
         try {
-            const { userId, products, totalPrice } = req.body; 
-            let cart = await CartModel.findOne({ userId });
+            const { userId, products } = req.body;
     
+            let cart = await CartModel.findOne({ userId });
+            
             if (!cart) {
                 cart = new CartModel({
                     userId,
                     productList: [],
-                    totalPrice
+                    totalPrice: 0
                 });
             }
     
             for (const prod of products) {
                 const { productId, quantity } = prod;
                 const product = await ProductModel.findById(productId);
+    
                 if (!product) {
                     return res.status(404).json({ message: `Không tìm thấy sản phẩm` });
                 }
-                const existingProductIndex = cart.productList.findIndex(product => product.productId.toString() === productId);
+    
+                const existingProductIndex = cart.productList.findIndex(
+                    (item) => item.productId.toString() === productId
+                );
     
                 if (existingProductIndex > -1) {
                     cart.productList[existingProductIndex].quantity += quantity;
-                    totalPrice = quantity * totalPrice
                 } else {
                     cart.productList.push({
                         productId,
                         name: product.name,
-                        quantity,
-                        price: product.price_old
+                        quantity: Number(quantity),
+                        price: Number(product.price_old)
                     });
                 }
             }
-            cart.totalPrice = cart.productList.reduce(
-                (total, item) => total + item.quantity * item.price,
-                0
-            );
     
             await cart.save();
     
-            res.status(200).json(cart);
+            const populatedCart = await CartModel.findOne({ userId }).populate('productList.productId');
+    
+            populatedCart.totalPrice = populatedCart.productList.reduce((total, item) => {
+                const itemTotal = Number(item.quantity) * Number(item.productId.price_old); 
+                return total + (isNaN(itemTotal) ? 0 : itemTotal);
+            }, 0);
+    
+            await populatedCart.save();
+    
+            res.status(200).json(populatedCart);
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
-    },  
+    },
+    
+    
     getCartByUserId: async (req, res) => {
         try {
             const { userId } = req.params
@@ -59,6 +69,7 @@ const User = {
             res.status(500).json({ message: error.message });
         }
     },
+    
     deleteCartById: async (req, res) => {
         try {
             const { id } = req.params
@@ -74,12 +85,11 @@ const User = {
     },
     deleteProductCart: async (req, res) => {
         try {
-            const { userId } = req.params; 
+            const { userId } = req.params;
             const { productId } = req.body;
     
             let cart = await CartModel.findOne({ userId });
-            
-            if (!cart) { 
+            if (!cart) {
                 return res.status(404).json({ message: "Không tìm thấy giỏ hàng" });
             }
     
@@ -90,17 +100,23 @@ const User = {
                 return res.status(200).json({ message: "Giỏ hàng đã được xóa vì không còn sản phẩm nào" });
             }
     
-            cart.totalPrice = cart.productList.reduce((total, item) => {
-                const price = Number(item.price_old) || 0;
+            await cart.save();
+    
+            const populatedCart = await CartModel.findOne({ userId }).populate('productList.productId');
+    
+            populatedCart.totalPrice = populatedCart.productList.reduce((total, item) => {
+                const price = Number(item.productId.price_old) || 0; 
                 return total + (item.quantity * price);
             }, 0);
     
-            await cart.save();
-            res.status(200).json({ message: "Đã loại bỏ món hàng này", cart });
+            await populatedCart.save();
+    
+            res.status(200).json({ message: "Đã loại bỏ món hàng này", cart: populatedCart });
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
     },
+    
     updateCart: async (req,res)=>{
         try {
             const { userId, productId, quantity } = req.body;
@@ -121,4 +137,4 @@ const User = {
         }
     }
 }
-module.exports = User
+module.exports = Cart

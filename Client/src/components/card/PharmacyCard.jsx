@@ -20,6 +20,7 @@ const PharmacyCard = ({ pharmacy }) => {
       await pharmacyServices.deletePharmacy(pharmacy._id);
       window.location.reload();
     }
+   
   };
 
   return (

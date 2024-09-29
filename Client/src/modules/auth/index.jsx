@@ -8,24 +8,18 @@ import Input from '../../components/ui/input/Input'
 
 const index = () => {
     const { user } = useContext(UserContext)
-//     const getCartUser = async ()=>{
-//          const res = await cartServices.getCartByUserId()
-//          console.log(res);
-//     }
-//   useEffect(()=>{
-//     getCartUser()
-//   },[])
     return (
         <div>
-            <Register></Register>
-            {user && (
+          {user && (
                 <>
                     <span>{user.fullname}</span>
                     <button onClick={authServices.logout}>Đăng xuất</button>
                 </>
             )}
-            <Input></Input>
-            <Login></Login>
+           <div className="flex gap-2">
+           <Register/>
+           <Login/>
+           </div>
         </div>
     );
 };
