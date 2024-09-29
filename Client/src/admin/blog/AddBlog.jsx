@@ -44,7 +44,9 @@ const FormAddBlog = () => {
               <label htmlFor='' className='font-medium text-sm mb-2'>
                 Blog Image
               </label>
-              <FileInput size='m' rounded='s' placeholder='Type Blog FileInput here' refinput={register('image')} />
+              <InputText size='m' rounded='s' placeholder='Type   Blog title here' refinput={register('image')} />
+
+              {/* <FileInput size='m' rounded='s' placeholder='Type Blog FileInput here' refinput={register('image')} /> */}
               {errors.image && <ErrorMessage messsage={errors.image.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>

@@ -14,11 +14,11 @@ const blogController = {
   },
   addBlog: async (req, res) => {
     try {
-      const { title, image, description, content, user_id } = req.body;
-      if (!title || !image || !description || !user_id || content) {
+      const { content, description, image, title } = req.body;
+      if (!title || !image || !description || !content) {
         return res.status(400).json({ message: 'Vui lòng điền đầy đủ thông tin' });
       }
-      const newBlog = new Blog({ title, image, description, user_id, content });
+      const newBlog = new Blog({ content, description, image, title });
       await newBlog.save();
       res.status(201).json(newBlog);
     } catch (error) {

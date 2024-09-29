@@ -5,7 +5,7 @@ import { showToastError, showToastSuccess } from '../configs/toastConfig';
 const blogServices = {
   addBlog: async (requestBody) => {
     try {
-      const { data } = await http.post(`${END_POIND_API.BLOG}/create`, requestBody);
+      const { data } = await http.post(`${END_POIND_API.BLOG}`, requestBody);
       showToastSuccess(data.message || 'Thêm blog thành công');
       return data;
     } catch (error) {

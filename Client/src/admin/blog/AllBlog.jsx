@@ -74,7 +74,9 @@ const AllBlog = () => {
               {blogData &&
                 blogData.map((blog) => (
                   <tr key={blog._id} className='hover:bg-gray-100'>
-                    <td className='px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900'>{blog.image}</td>
+                    <td className='px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900'>
+                      <img src={blog.image} style={{ width: '100px' }} />
+                    </td>
                     <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{blog.title}</td>
                     <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{blog.description}</td>
 
