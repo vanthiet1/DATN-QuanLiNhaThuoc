@@ -3,21 +3,21 @@ const UserModel = require('../../models/userModel/user')
 const staffController =  {
     getAllStaff: async (req, res) => {
         try {
-            const role = await RoleModel.findOne({ role_Name: "staff" });
+            const role = await RoleModel.findOne({ role_Name: "staff" })
             if (!role) {
                 return res.status(500).json({ message: 'Role không tồn tại trong hệ thống.' });
             }
-            console.log(role)
             const staff = await UserModel.find({ role_id: role._id })
+            .populate('role_id')
+
             if (!staff) {
                 return res.status(404).json({ error: "Không tìm thấy tài khoản nhân viên nào" });
             }
-            res.json(staff);
+            res.status(200).json(staff);
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
     },
-
     getAnStaff: async(req,res)=>{
         const {id} = req.params
          try {

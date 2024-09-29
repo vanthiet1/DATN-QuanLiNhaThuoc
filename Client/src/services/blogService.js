@@ -13,9 +13,9 @@ const blogServices = {
       console.log(error.message);
     }
   },
-  getAllBlogs: async (resquestParrams) => {
+  getAllBlogs: async () => {
     try {
-      const { data } = await http.get(`${END_POIND_API.BLOG}/${resquestParrams}`);
+      const { data } = await http.get(`${END_POIND_API.BLOG}`);
       console.log(data);
       return data;
     } catch (error) {

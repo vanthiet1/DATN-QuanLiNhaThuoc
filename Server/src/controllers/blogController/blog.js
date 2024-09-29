@@ -3,7 +3,7 @@ const Blog = require('../../models/blogModel/blog');
 const blogController = {
   getAllBlogs: async (req, res) => {
     try {
-      const allBlogs = await Blog.find().populate('user_id', 'username email');
+      const allBlogs = await Blog.find();
       if (!allBlogs) {
         return res.status(404).json('Không lấy được dữ liệu');
       }
