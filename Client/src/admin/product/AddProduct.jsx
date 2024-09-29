@@ -10,7 +10,6 @@ import formProductSchema from '../../utils/validations/formProduct';
 import { Button } from '../../components/ui/button';
 import useFetch from '../../hooks/useFetch';
 import productServices from '../../services/productService';
-import { Editor } from '../../components/ui/editor';
 import brandServices from '../../services/brandService';
 import categoryServices from '../../services/categoryService';
 
@@ -82,7 +81,7 @@ const FormAddProduct = () => {
     handleFetchBrandAndSubCate();
   }, []);
 
-  useEffect(() => {}, [isChangeCateSelect, subCategorySelectData]);
+  useEffect(() => { }, [isChangeCateSelect, subCategorySelectData]);
 
   const handleChangeValueSelectCategory = (e) => {
     const value = e.target.value;
