@@ -49,14 +49,31 @@ const CardProductAdmin = ({ product, addClassname, ...props }) => {
           <p className='text-indigo-500 font-semibold my-1 text-sm'>{formatsHelper.currency(price_distcount)}</p>
         </div>
         <div className='flex items-center justify-between py-2 transition-colors'>
-          <Button addClassNames='text-gray-600 w-9 hover:text-blue-500'>
+          <Button
+            addClassNames='text-white bg-blue-500 border-blue-500 hover:bg-blue-600 w-[30px] h-[30px] flex items-center justify-center'
+            rounded='s'
+            outline={true}
+          >
             {<AppIcons.EyeIcon width='20' height='20' />}
           </Button>
           <div className='flex items-center gap-2'>
-            <Button addClassNames={'text-gray-600 hover:text-teal-500'}>
+            <Button
+              addClassNames={
+                'text-gray-600 hover:text-teal-500 hover:border-teal-500 w-[30px] h-[30px] flex items-center justify-center'
+              }
+              rounded='s'
+              outline={true}
+            >
               {<AppIcons.EditIcon width='20' height='20' />}
             </Button>
-            <Button addClassNames={'text-gray-600 hover:text-rose-500'} onClick={() => handleDeleteProduct()}>
+            <Button
+              addClassNames={
+                'text-gray-600 hover:text-rose-500 hover:border-rose-500 w-[30px] h-[30px] flex items-center justify-center'
+              }
+              rounded='s'
+              outline={true}
+              onClick={() => handleDeleteProduct()}
+            >
               {<AppIcons.TrashBinIcon width='20' height='20' />}
             </Button>
           </div>
