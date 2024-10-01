@@ -1,5 +1,6 @@
 import { Button } from '../ui/button';
 import AppIcons from '../../components/ui/icon';
+import PropTypes from 'prop-types';
 
 const DiaLogAlert = ({
   title,
@@ -45,6 +46,17 @@ const DiaLogAlert = ({
       </div>
     </div>
   );
+};
+
+DiaLogAlert.propTypes = {
+  title: PropTypes.node,
+  message: PropTypes.node,
+  iconLeft: PropTypes.node,
+  confirmLabel: PropTypes.string,
+  cancelLabel: PropTypes.string,
+  onConfirm: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired
 };
 
 export default DiaLogAlert;
