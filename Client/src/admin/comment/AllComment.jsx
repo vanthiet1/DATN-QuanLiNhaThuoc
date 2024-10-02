@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '../../components/ui/button';
 import useFetch from '../../hooks/useFetch';
 import formatsHelper from '../../utils/helpers/formats';
-import { useNavigate } from 'react-router-dom';
-import { PATH_ROUTERS_ADMIN } from '../../utils/constant/routers';
 import AppIcons from '../../components/ui/icon';
 import BreadCrumb from '../../components/breadCrumb/BreadCrumb';
 import commetServices from '../../services/commentService';
+import { useConfirmDialog } from '../../components/dialog/ConfirmDialogContext';
 const couponBreadCrumbs = [
   {
     path: `/dashboard`,
@@ -18,11 +17,42 @@ const couponBreadCrumbs = [
   }
 ];
 const AllComment = () => {
-  const { isLoading, isError, responsData: commentData, messsageError } = useFetch(commetServices.getAllComments);
-  console.log(commentData);
+  const {
+    isLoading,
+    isError,
+    responsData: initialCommentData,
+    messsageError
+  } = useFetch(commetServices.getAllComments);
 
-  
+  const [commentData, setCommentData] = useState([]);
+  const confirmDialog = useConfirmDialog();
 
+  useEffect(() => {
+    if (initialCommentData) {
+      setCommentData(initialCommentData);
+    }
+  }, [initialCommentData]);
+
+  const handleDelete = async (id, name) => {
+    try {
+      const result = await confirmDialog({
+        title: 'Xóa Comment',
+        iconLeft: <AppIcons.TrashBinIcon />,
+        message: `Bạn có muốn xóa ${name} không?`,
+        confirmLabel: 'Có, tôi đồng ý',
+        cancelLabel: 'Không, giữ lại'
+      });
+
+      if (result) {
+        await commetServices.deleteComment(id);
+        setCommentData(prevComments =>
+          prevComments.filter(comment => comment._id !== id)
+        );
+      }
+    } catch (error) {
+      console.error('Failed to delete comment:', error);
+    }
+  };
   if (isLoading) {
     return (
       <div className='flex justify-center items-center h-64'>
@@ -34,15 +64,6 @@ const AllComment = () => {
   if (isError) {
     return <div className='text-red-500 text-center'>{messsageError}</div>;
   }
-
-  //   const handleEdit = (id) => {
-  //     console.log('Navigating to edit coupon with ID:', id);
-  //     navigate(`/admin/edit-coupon/${id}`);
-  //   };
-
-  //   const handleDelete = async (id) => {
-  //     await couponServices.deleteCoupon(id);
-  //   };
 
   return (
     <>
@@ -72,34 +93,27 @@ const AllComment = () => {
               </tr>
             </thead>
             <tbody className='bg-white divide-y divide-gray-200'>
-              {commentData && commentData.map((comment) => (
-                <tr key={comment._id} className='hover:bg-gray-100'>
-                  <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>{comment.content}</td>
-                  <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{comment.user_id}</td>
-                  <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{comment.product_id}</td>
-                  <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
-                    {formatsHelper.formatDate(comment.date_create)}
-                  </td>
-                  <td className='px-6 py-4 whitespace-nowrap text-sm flex '>
-                    <Button
-                      size='m'
-                      rounded='m'
-                      addClassNames='bg-blue-600 text-white hover:bg-blue-500 px-3 py-1 rounded-md'
-                      //   onClick={() => handleEdit(comment._id)}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      size='m'
-                      rounded='m'
-                      addClassNames='bg-red-600 text-white hover:bg-red-500 px-3 py-1 rounded-md ml-2'
-                      //   onClick={() => handleDelete(comment._id)}
-                    >
-                      Delete
-                    </Button>
-                  </td>
-                </tr>
-              ))}
+              {commentData &&
+                commentData.map((comment) => (
+                  <tr key={comment._id} className='hover:bg-gray-100'>
+                    <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>{comment.content}</td>
+                    <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{comment.user_id}</td>
+                    <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{comment.product_id}</td>
+                    <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
+                      {formatsHelper.formatDate(comment.date_create)}
+                    </td>
+                    <td className='px-6 py-4 whitespace-nowrap text-sm flex '>
+                      <Button
+                        size='m'
+                        rounded='m'
+                        addClassNames='bg-red-600 text-white hover:bg-red-500 px-3 py-1 rounded-md ml-2'
+                        onClick={() => handleDelete(comment._id, comment.content)}
+                      >
+                        Delete
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
