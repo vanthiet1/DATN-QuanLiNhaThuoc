@@ -1,0 +1,23 @@
+#sider-bar-main::-webkit-scrollbar {
+  background-color: #faf9f9;
+  width: 16px;
+}
+
+#sider-bar-main::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+#sider-bar-main::-webkit-scrollbar-thumb {
+  background-color: #dfdfdf;
+  border: 4px solid transparent;
+  background-clip: content-box;
+}
+
+#sider-bar-main::-webkit-scrollbar-thumb:hover {
+  background-color: #cccccc;
+}
+
+::selection {
+  background-color: #1376af;
+  color: #fff;
+}
