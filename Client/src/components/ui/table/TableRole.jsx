@@ -1,7 +1,6 @@
 import { cn } from "../../../utils/helpers/mergeClasses";
 
-const TableRole = ({ data, addClassNames, titleRow, cols, styleRows, handleDelete }) => {
-  console.log(data);
+const TableRole = ({ data, addClassNames, titleRow, cols, styleRows, handleDetele }) => {
   
   return (
     <table className={cn(`w-full text-left table-auto border-collapse shadow-md bg-white mb-5 rounded-[5px] ${addClassNames}`)}>
@@ -19,7 +18,7 @@ const TableRole = ({ data, addClassNames, titleRow, cols, styleRows, handleDelet
             <td className='p-3 flex gap-1'>
             <span className="p-2 text-green-600 border-b-2 border-slate-400 cursor-pointer">Add</span>
               <span className="p-2 text-blue-600 border-b-2 border-slate-400 cursor-pointer">Edit</span>
-              <span className="p-2 text-red-600 border-b-2 border-slate-400 cursor-pointer flex items-center" onClick={() => handleDelete(role._id)}>
+              <span className="p-2 text-red-600 border-b-2 border-slate-400 cursor-pointer flex items-center" onClick={() => handleDetele(role)}>
                 Delete
               </span>
             </td>
