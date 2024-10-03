@@ -11,7 +11,7 @@ const AddressController = {
         }
         try {
             const newAddress = new AddressModel({
-                street,
+                street, // đường
                 commune, //phường / xã
                 district, // quận / huyện
                 city, // thành phố // tỉnh
@@ -34,7 +34,8 @@ const AddressController = {
 
     getAddress: async (req, res) => {
         try {
-            const addresses = await AddressModel.find().populate('user_id', 'name');
+            const addresses = await AddressModel.find()
+            .populate('user_id');
             res.status(200).json(addresses);
         } catch (error) {
             res.status(500).json({ message: 'Lỗi khi lấy danh sách địa chỉ: ' + error.message });
@@ -47,7 +48,8 @@ const AddressController = {
             if (!user_id) {
                 return res.status(400).json({ message: 'Thiếu thông tin user' });
             }
-            const address = await AddressModel.findOne({ user_id: user_id }).populate('user_id');
+            const address = await AddressModel.findOne({ user_id: user_id })
+            .populate('user_id');
             if (!address) {
                 return res.status(404).json({ message: 'Không tìm thấy địa chỉ' });
             }
@@ -60,7 +62,8 @@ const AddressController = {
     getAddressById: async (req, res) => {
         try {
             const { id } = req.params;
-            const address = await AddressModel.findById(id).populate('user_id');
+            const address = await AddressModel.findById(id)
+            .populate('user_id');
             if (!address) {
                 return res.status(404).json({ message: 'Không tìm thấy địa chỉ' });
             }

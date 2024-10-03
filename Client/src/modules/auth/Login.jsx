@@ -50,8 +50,6 @@ const Login = () => {
                 </label>
                 <InputText
                   refinput={register("email")}
-
-
                   type="email" placeholder="Nhập email của bạn"
                   addClassNames="block w-full px-3 py-1 text-sm focus:outline-none  rounded-md   focus:ring  border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent"
                   name="email"
@@ -85,6 +83,7 @@ const Login = () => {
                 </Button>
                 <hr className="my-10 " />
                 <Button
+                type="button"
                   onClick={login}
                   className="w-full h-11 md:h-12 text-sm inline-flex items-center justify-center my-2 text-gray-700 bg-gray-100 rounded-md cursor-pointer hover:bg-gray-300 duration-150"
                 >

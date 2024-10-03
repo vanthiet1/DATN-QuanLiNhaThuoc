@@ -13,7 +13,6 @@ const allRole = () => {
     const confirmDialog = useConfirmDialog();
 
     const handleDetele = async (role) => {
-        console.log(role);
         
         const result = await confirmDialog({
           title: 'Xóa role',
@@ -28,9 +27,14 @@ const allRole = () => {
         }
        
       };
+      const handleEdit = async (idRole)=>{
+          console.log(idRole);
+          
+      }
     return (
         <div>
             <TableRole
+               handleEdit={handleEdit}
                 titleRow={titleRow}
                 data={roleData}
                 handleDetele={handleDetele}

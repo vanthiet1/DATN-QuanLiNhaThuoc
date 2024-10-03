@@ -40,7 +40,7 @@ const ManagementUser = () => {
     return (
         <div>
             <TableManagerAccount
-                addClassNames={'w-[100%]'}
+                addClassNames={''}
                 roleData={optionsRole}
                 data={userData}
                 titleRow={titleRow}
