@@ -7,11 +7,11 @@ const imgDefault = 'https://www.svgrepo.com/show/508699/landscape-placeholder.sv
 const Image = ({
   src,
   alt,
-  width,
-  height,
-  addClassNames,
+  width = 'auto',
+  height = 'auto',
+  addClassNames = '',
   fallbackSrc = imgDefault,
-  style,
+  style = {},
   lazyLoad = false,
   ...props
 }) => {
@@ -45,14 +45,6 @@ Image.propTypes = {
   style: PropTypes.object,
   lazyLoad: PropTypes.bool,
   fallbackSrc: PropTypes.string
-};
-
-Image.defaultProps = {
-  width: 'auto',
-  height: 'auto',
-  addClassNames: '',
-  style: {},
-  lazyLoad: false
 };
 
 export default Image;

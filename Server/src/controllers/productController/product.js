@@ -55,7 +55,34 @@ const ProductController = {
   },
   getAllProducts: async (req, res) => {
     try {
+      const { page, key, categoryId, sortField, sortOrder } = req.query;
+      const totalItems = await ProductModel.countDocuments();
+      const itemOfPage = 8;
+      const totalNumberPage = Math.ceil(totalItems / itemOfPage);
+      const pageNumber = Number.parseInt(page) || 1;
+
+      const filterConditions = {};
+      if (key) {
+        filterConditions.name = { $regex: key, $options: 'i' };
+      }
+
+      if (categoryId) {
+        const { ObjectId } = mongoose.Types;
+        const convertId = new ObjectId(categoryId);
+        filterConditions.sub_category_id = convertId;
+      }
+
+      let sortOptions = {};
+      if (sortField && sortOrder) {
+        sortOptions[sortField] = sortOrder === 'asc' ? 1 : -1;
+      } else {
+        sortOptions = { createdAt: -1 };
+      }
+
       const productsList = await ProductModel.aggregate([
+        {
+          $match: filterConditions
+        },
         {
           $lookup: {
             from: 'images',
@@ -64,9 +91,13 @@ const ProductController = {
             as: 'images'
           }
         }
-      ]);
+      ])
+        .skip((pageNumber - 1) * itemOfPage)
+        .limit(itemOfPage)
+        .sort(sortOptions);
+
       if (productsList) {
-        res.status(200).json(productsList);
+        res.status(200).json({ totalItems, totalNumberPage, itemOfPage, productsList });
       }
     } catch (error) {
       res.status(500).json({ message: 'Lỗi khi lấy danh sách sản phẩm: ' + error.message });
@@ -158,18 +189,38 @@ const ProductController = {
   getListProductFilter: async (req, res) => {
     try {
       const { category, key, sortField, sortOrder } = req.query;
-      if (!category && !key) {
-        return res.status(404).json({ message: 'không tìm thấy sản phẩm' });
-      }
+      // if (!category && !key) {
+      //   return res.status(404).json({ message: 'không tìm thấy sản phẩm' });
+      // }
       const { ObjectId } = mongoose.Types;
       const convertId = new ObjectId(category);
       let sortOptions = {};
       if (sortField && sortOrder) {
         sortOptions[sortField] = sortOrder === 'asc' ? 1 : -1;
       }
-      const listProductFilter = await ProductModel.find({
-        $or: [{ name: new RegExp(key, 'i') }, { sub_category_id: convertId }]
-      }).sort(sortOptions);
+
+      const filterConditions = {};
+
+      // Thêm điều kiện tìm theo tên sản phẩm nếu có key
+      if (key) {
+        filterConditions.name = { $regex: key, $options: 'i' };
+      }
+      const listProductFilter = await ProductModel.aggregate([
+        {
+          $match: filterConditions
+        },
+        {
+          $lookup: {
+            from: 'images',
+            localField: '_id',
+            foreignField: 'product_id',
+            as: 'images'
+          }
+        },
+        {
+          $sort: sortOptions
+        }
+      ]);
       return res.status(200).json(listProductFilter);
     } catch (error) {
       res.status(500).json({ message: 'Lỗi khi tìm kiếm sản phẩm: ' + error.message });

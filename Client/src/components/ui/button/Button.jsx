@@ -2,7 +2,17 @@ import React from 'react';
 import { cn } from '../../../utils/helpers/mergeClasses';
 import PropTypes from 'prop-types';
 
-const Button = ({ children, outline, size, rounded, leftIcon, rightIcon, disabled, addClassNames, ...props }) => {
+const Button = ({
+  children,
+  outline,
+  size,
+  rounded,
+  leftIcon = null,
+  rightIcon = null,
+  disabled = false,
+  addClassNames = '',
+  ...props
+}) => {
   const IconButton = leftIcon || rightIcon;
 
   return (
@@ -38,13 +48,6 @@ Button.propTypes = {
   outline: PropTypes.bool,
   size: PropTypes.string,
   rounded: PropTypes.string
-};
-
-Button.defaultProps = {
-  leftIcon: null,
-  rightIcon: null,
-  disabled: false,
-  addClassNames: ''
 };
 
 export default Button;

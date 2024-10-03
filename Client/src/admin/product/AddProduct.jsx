@@ -48,7 +48,6 @@ const FormAddProduct = () => {
   } = useForm({ resolver: yupResolver(formProductSchema.product) });
   const [editorLoaded, setEditorLoaded] = useState(false);
   const [dataEditor, setDataEditor] = useState(null);
-  const [isLoadingFetch, setIsLoadingFetch] = useState(false);
   const [brandSelectData, setBrandSelectData] = useState(optionBrandDefault);
   const [categorySelectData, setCategorySelectData] = useState(optionSubCategoryDefault);
   const [isChangeCateSelect, setIsChangeCateSelect] = useState(false);
@@ -60,26 +59,18 @@ const FormAddProduct = () => {
     });
   };
 
+  const cateAndBrandServices = [categoryServices.getCategory, brandServices.getBrand];
+  const { isLoading: isLoadingCateAndBrand, isError, messageError, responsData } = useFetch(cateAndBrandServices);
+
   useEffect(() => {
-    setEditorLoaded(true);
-    const handleFetchBrandAndSubCate = async () => {
-      try {
-        setIsLoadingFetch(true);
-        const [categoryData, brandData] = await Promise.all([categoryServices.getCategory(), brandServices.getBrand()]);
-        setIsLoadingFetch(false);
-        const brandSelectConvert = handleConvertSelect(brandData);
-        const categorySelectConvert = handleConvertSelect(categoryData);
-        console.log(categorySelectConvert);
-        setBrandSelectData(brandSelectConvert);
-        setCategorySelectData(categorySelectConvert);
-      } catch (error) {
-        console.log(error.message);
-      } finally {
-        setIsLoadingFetch(false);
-      }
-    };
-    handleFetchBrandAndSubCate();
-  }, []);
+    if (Array.isArray(responsData) && responsData.length > 0) {
+      const [categoryData, brandData] = responsData;
+      const brandSelectConvert = handleConvertSelect(brandData);
+      const categorySelectConvert = handleConvertSelect(categoryData);
+      setBrandSelectData(brandSelectConvert);
+      setCategorySelectData(categorySelectConvert);
+    }
+  }, [responsData]);
 
   useEffect(() => { }, [isChangeCateSelect, subCategorySelectData]);
 
@@ -202,7 +193,7 @@ const FormAddProduct = () => {
         </div>
         <div className='h-fit rounded-md w-full border border-gray-300 border-solid shadow-sm p-4'>
           <div>
-            {isLoadingFetch ? (
+            {isLoadingCateAndBrand ? (
               'Loading select ...'
             ) : (
               <>
@@ -257,6 +248,8 @@ const FormAddProduct = () => {
                 </div>
               </>
             )}
+
+            {isError && <div>{messageError}</div>}
           </div>
         </div>
       </div>
