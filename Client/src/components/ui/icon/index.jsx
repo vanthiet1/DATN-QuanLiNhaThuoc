@@ -561,7 +561,6 @@ const icons = {
   BarsThreeIcon,
   SquaresTwoxTwoIcon,
   CommentIcon,
-  EditIcon
   EditIcon,
   LocationIcon
 };
