@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const cors = require('cors');
-
 require('dotenv').config();
 const app = express();
 const connectDB = require('./db/connectDB');
@@ -21,6 +20,7 @@ app.use(
 );
 
 connectDB();
+
 
 app.get('/', (req, res) => {
   res.send('Welcome To Api');
@@ -44,8 +44,6 @@ const BannerRouter = require('./routers/banner');
 const BlogRouter = require('./routers/blog');
 const CommentRouter = require('./routers/comments');
 const VerifyRouter = require('./routers/vertifyEmail');
-
-
 const PharmacyRouter = require('./routers/pharmacy');
 
 app.use('/api/v1/order', OrderRouter);
@@ -66,12 +64,7 @@ app.use('/api/v1/banner', BannerRouter);
 app.use('/api/v1/blog', BlogRouter);
 app.use('/api/v1/comment', CommentRouter);
 app.use('/api/v1/email', VerifyRouter);
-
-
-
-
 app.use('/api/v1/pharmacy', PharmacyRouter);
-
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

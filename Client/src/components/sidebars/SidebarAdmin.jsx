@@ -170,8 +170,12 @@ const dataMenu = [
     
     ]
   },
-  
- 
+  {
+    icon: <AppIcons.CommentIcon />,
+    title: 'Comment',
+    path: PATH_ROUTERS_ADMIN.ALL_COMMENT
+  },
+
   {
     icon: <AppIcons.NotiIcon />,
     title: 'Messages',
