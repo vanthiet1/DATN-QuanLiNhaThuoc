@@ -130,6 +130,11 @@ const dataMenu = [
     ]
   },
   {
+    icon: <AppIcons.LocationIcon />,
+    title: 'Adress',
+    path: PATH_ROUTERS_ADMIN.MANAGER_ADDRESS
+  },
+  {
     icon: <AppIcons.UserGroup />,
     title: 'User',
     subMenu: [
@@ -158,13 +163,15 @@ const dataMenu = [
         path: PATH_ROUTERS_ADMIN.ALL_ROLE_USER,
       },
       {
-        icon: <AppIcons.UserGroup />,
+        icon: <AppIcons.PencilSquare />,
         title: 'Add Role',
         path: PATH_ROUTERS_ADMIN.ADD_ROLE_USER,
       },
+    
     ]
   },
   
+ 
   {
     icon: <AppIcons.NotiIcon />,
     title: 'Messages',

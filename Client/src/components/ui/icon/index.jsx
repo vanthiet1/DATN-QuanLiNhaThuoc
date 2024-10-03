@@ -508,6 +508,14 @@ const EditIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
     </svg>
   );
 };
+const LocationIcon = ({ width = '24', height = '24', addClassNames = 'text-[#374151]' }) => {
+  return (
+    <svg fill='currentColor' viewBox='0 0 24 24' className={addClassNames} aria-hidden='true' width={width} height={height}>
+      <path d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 12 7 12s7-6.75 7-12c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'></path>
+    </svg>
+  );
+};
+
 
 const icons = {
   HomeIcon,
@@ -538,7 +546,8 @@ const icons = {
   EyeIcon,
   BarsThreeIcon,
   SquaresTwoxTwoIcon,
-  EditIcon
+  EditIcon,
+  LocationIcon
 };
 
 export default icons;
