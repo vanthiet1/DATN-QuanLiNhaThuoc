@@ -12,10 +12,9 @@ const ErrorMessage = ({ addClassNames = '', messsage = 'Lỗi khi nhập dữ li
 };
 
 ErrorMessage.propTypes = {
-  disable: PropTypes.bool,
   addClassNames: PropTypes.string,
-  size: PropTypes.string,
-  rounded: PropTypes.string
+  messsage: PropTypes.string,
+  children: PropTypes.node
 };
 
 export default ErrorMessage;

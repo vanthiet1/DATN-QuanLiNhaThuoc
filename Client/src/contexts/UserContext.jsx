@@ -6,9 +6,6 @@ export const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null)
-     console.log(user);
-     
-
     const fetchUser = async () => {
         try {
             const access_token = tokenService.getAccessToken()

@@ -18,12 +18,40 @@ const userServices = {
     getAllUser: async () => {
         try {
             const { data } = await http.get(`${END_POIND_API.USER}`)
+            console.log(data);
+            
             return data
         } catch (error) {
             console.log(error);
         }
     },
-    deleteUser: async (requestParams) => {
+    getAllCustomer: async () => {
+        try {
+            const { data } = await http.get(`${END_POIND_API.USER}/customer`)
+            console.log(data);
+            return data
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    getAllStaff: async ()=> {
+        try {
+             const {data} = await http.get(`${END_POIND_API.USER}/staff`)             
+             return data
+        } catch (error) {
+            console.log(error.message);     
+        }
+     },
+     getAnStaff: async (idStaff)=> {
+          console.log(idStaff);
+          try {
+               const {data} = await http.get(`${END_POIND_API.USER}/staff/${idStaff}`)
+               return data
+          } catch (error) {
+              console.log(error.message);     
+          }
+       },
+     deleteUser: async (requestParams) => {
         try {
             const { data } = await http.delete(`${END_POIND_API.USER}/${requestParams}`)
             return data

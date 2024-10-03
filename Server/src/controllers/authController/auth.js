@@ -28,7 +28,7 @@ const Auth = {
 
             const randomCode = Math.floor(100000 + Math.random() * 900000);
 
-            const timeOtp = new Date(Date.now() + 1 * 60 * 1000);
+            const timeOtp = new Date(Date.now() + 3 * 60 * 1000);
             const newUser = new UserModel({
                 fullname,
                 email,
@@ -66,9 +66,13 @@ const Auth = {
 
             const findUser = await UserModel.findOne({ email })
             if (!findUser) {
-                return res.status(400).json({ message: "Tài khoản không tồn tại hoặc chưa được đăng ký" })
+                return res.status(400).json({ message: "Tài khoản chưa được đăng ký" })
+            }
+            if (findUser.provider === "google") {
+                return res.status(400).json({ message: "Tài khoản này  đã đăng nhập bằng google" })
             }
             const isPasswordValid = await bcrypt.compare(password, findUser.password);
+            console.log(isPasswordValid);
             if (!isPasswordValid) {
                 return res.status(401).json({ message: 'Mật khẩu không đúng' });
             }
@@ -140,7 +144,7 @@ const Auth = {
                 sameSite: 'Strict',
                 path: '/',
             })
-           return res.status(200).json({
+            return res.status(200).json({
                 message: "Đăng nhập thành công",
                 accessToken
             });
@@ -168,12 +172,12 @@ const Auth = {
         }
     },
     Logout: async (req, res) => {
-        try {          
-            res.clearCookie('refreshToken', { 
+        try {
+            res.clearCookie('refreshToken', {
                 path: '/',
                 httpOnly: true,
                 sameSite: 'Strict',
-             });
+            });
             res.status(200).json({ message: 'Đăng xuất thành công' });
 
         } catch (error) {
@@ -188,19 +192,27 @@ const Auth = {
             if (!user) {
                 return res.status(404).json({ message: "Người dùng không tồn tại" });
             }
-
+            if (!user.otpVerify) {
+                return res.status(400).json({ message: "Mã của bạn không còn hiệu lực" });
+            }
             if (user.otpVerify !== code) {
                 return res.status(400).json({ message: "Mã xác nhận không chính xác" });
             }
             if (user.emailVerify) {
                 return res.status(400).json({ message: "Tài khoản đã được xác thực trước đó" });
             }
+
             if (Date.now() > user.timeOtp) {
+                user.otpVerify = undefined;
+                user.timeOtp = undefined;
+                user.lastOtpRequestTime = undefined;
+                await user.save();
                 return res.status(400).json({ message: "Mã xác nhận đã hết hạn, vui lòng gửi lại" });
             }
             user.emailVerify = true;
             user.otpVerify = undefined;
             user.timeOtp = undefined;
+            user.lastOtpRequestTime = undefined;
 
             await user.save();
             res.status(200).json({ message: "Xác nhận thành công", user });
@@ -211,16 +223,27 @@ const Auth = {
     SendCodeForgotPassword: async (req, res) => {
         try {
             const { email } = req.body;
-            const user = await User.findOne({ email });
+            const user = await UserModel.findOne({ email });
             if (!user) {
                 return res.status(400).json({ message: "Tài khoản chưa đăng ký không thể quên mật khẩu" });
             }
+            const currentTime = Date.now();
+            const lastOtpRequestTime = user.lastOtpRequestTime || 0;
+            const cooldownPeriod = 3 * 60 * 1000;
 
+            if (currentTime - lastOtpRequestTime < cooldownPeriod) {
+                const remainingTime = Math.ceil((cooldownPeriod - (currentTime - lastOtpRequestTime)) / 1000);
+                return res.status(429).json({ message: `Vui lòng chờ ${remainingTime} giây trước khi yêu cầu lại.` });
+            }
+
+       
             const codeForgotPassword = generateRandomCode(6);
-            const timeOtp = new Date(Date.now() + 1 * 60 * 1000);
+            const timeOtp = new Date(Date.now() + 3 * 60 * 1000);
+
 
             user.otpForgotPass = codeForgotPassword;
             user.timeOtp = timeOtp;
+            user.lastOtpRequestTime = currentTime;
             await user.save();
 
             await sendMail({
@@ -234,7 +257,7 @@ const Auth = {
                  <p class="footer">Nếu bạn không yêu cầu đăng ký tài khoản này, vui lòng bỏ qua email này.</p>
          `
             });
-            res.status(200).json({ message: "Vui lòng kiểm tra email", codeForgotPassword });
+            res.status(200).json({ message: "Đã gửi mã xác nhận vui lòng kiểm tra email", codeForgotPassword });
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
@@ -246,12 +269,20 @@ const Auth = {
             if (!user) {
                 return res.status(400).json({ message: "Tài khoản chưa đăng ký không thể quên mật khẩu" });
             }
-            if (code !== user.otpForgotPass) {
-                return res.status(400).json({ message: "Mã để thay đổi mật khẩu không chính xác" })
+            if (user.provider === "google") {
+                return res.status(400).json({ message: "Tài khoản này đăng nhập bằng google không thể thay đổi mật khẩu" })
             }
             if (Date.now() > user.timeOtp) {
                 return res.status(400).json({ message: "Mã xác nhận đã hết hạn, vui lòng gửi lại" });
             }
+            if(!user.otpForgotPass){
+                return res.status(400).json({ message: "Mã của bạn không còn hiệu lực" })
+            }
+            if (code !== user.otpForgotPass) {
+                return res.status(400).json({ message: "Mã để thay đổi mật khẩu không chính xác" })
+            }
+          
+        
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(newPassword, salt);
             user.password = hashedPassword;
@@ -317,7 +348,7 @@ const Auth = {
             const newVerificationCode = Math.floor(100000 + Math.random() * 900000);
 
             user.otpVerify = newVerificationCode;
-            user.timeOtp = new Date(Date.now() + 1 * 60 * 1000);
+            user.timeOtp = new Date(Date.now() + 3 * 60 * 1000);
             await user.save();
 
             await sendMail({
@@ -339,7 +370,5 @@ const Auth = {
             res.status(500).json({ message: "Đã xảy ra lỗi khi gửi lại mã xác thực" });
         }
     },
-
-
 }
 module.exports = Auth

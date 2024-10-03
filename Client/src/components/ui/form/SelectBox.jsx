@@ -3,7 +3,7 @@ import { cn } from '../../../utils/helpers/mergeClasses';
 import PropTypes from 'prop-types';
 
 const SelectBox = forwardRef(
-  ({ size, rounded, optionData = [], nameSelected = '', disabled, addClassNames, refinput, ...props }, ref) => {
+  ({ size, rounded, optionData = [], nameSelected = '', disabled, addClassNames = '', refinput, ...props }, ref) => {
     return (
       <select
         ref={ref}
@@ -22,7 +22,7 @@ const SelectBox = forwardRef(
         {...props}
         {...refinput}
       >
-        {nameSelected && <option selected>{nameSelected}</option>}
+        {nameSelected && <option defaultValue>{nameSelected}</option>}
         {optionData.map((option, index) => (
           <option value={option.value} key={option.value + index}>
             {option.title}

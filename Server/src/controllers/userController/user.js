@@ -1,7 +1,19 @@
 const UserModel = require('../../models/userModel/user');
 const RoleModel = require('../../models/roleModel/role')
 const User = {
-    getAllUser: async (req, res) => {
+    getAllAccount: async (req, res) => {
+        try {
+            const user = await UserModel.find({})
+                .populate("role_id")
+            if (!user) {
+                return res.status(404).json({ error: "Không tìm thấy tài khoản nhân viên nào" });
+            }
+            res.status(200).json(user)
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+    getAllCustomer: async (req, res) => {
         try {
             const role = await RoleModel.findOne({ role_Name: "customer" });
             console.log(role);
@@ -20,6 +32,42 @@ const User = {
             res.status(500).json({ message: error.message });
         }
     },
+    getAllStaff: async (req, res) => {
+        try {
+            const role = await RoleModel.findOne({ role_Name: "staff" });
+            console.log(role);
+
+            if (!role) {
+                return res.status(500).json({ message: 'Role không tồn tại trong hệ thống.' });
+            }
+            const user = await UserModel.find({ role_id: role._id })
+                .populate("role_id")
+
+            if (!user) {
+                return res.status(404).json({ error: "Không tìm thấy tài khoản nhân viên nào" });
+            }
+            res.status(200).json(user)
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+    getAnStaff: async(req,res)=>{
+        const {id} = req.params
+         try {
+             if(!id){
+                return res.status(400).json({ message:"Không tìm thấy nhân viên này"})
+             }
+             const role = await RoleModel.findOne({ role_Name: "staff" });
+             const staff = await UserModel.findOne({ _id:id })
+             if (!role._id.equals(staff.role_id)) {
+                return res.status(400).json({ message: "Không phải là nhân viên" });
+            }
+             res.json(staff)
+         } catch (error) {
+             res.status(500).json({ message: error.message });
+         }
+    },
+
     getAnUser: async (req, res) => {
         try {
             const { id } = req.params
@@ -71,13 +119,13 @@ const User = {
             if (getUser.is_active === 1) {
                 updatedUser = await UserModel.findByIdAndUpdate(id, { is_active: 0 }, { new: true });
                 actionMessage = 'Đã khóa tài khoản';
-            }else{
+            } else {
                 updatedUser = await UserModel.findByIdAndUpdate(id, { is_active: 1 }, { new: true });
                 actionMessage = 'Đã mở khóa tài khoản';
 
             }
 
-            res.status(200).json({ message:actionMessage  })
+            res.status(200).json({ message: actionMessage })
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
@@ -85,7 +133,7 @@ const User = {
     updateRoleUser: async (req, res) => {
         try {
             const { id } = req.params;
-            const { role_id } = req.body; 
+            const { role_id } = req.body;
             if (!id) {
                 return res.status(400).json({ message: "Không tìm thấy user" });
             }

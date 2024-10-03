@@ -36,8 +36,8 @@ const roleServices = {
 
   deleteRoleById: async (resquestParrams) => {
     try {
-      const { data } = await http.delete(`/${END_POIND_API.ROLE}/${resquestParrams}`);
-      showToastSuccess(data.message || 'Xóa role thành công');
+      const { data } = await http.delete(`${END_POIND_API.ROLE}/${resquestParrams}`);
+      // showToastSuccess(data.message || 'Xóa role thành công');
       return data;
     } catch (error) {
       showToastError(error.response.data.message);
@@ -45,9 +45,22 @@ const roleServices = {
     }
   },
   
-  updateBanner: async (requestParams) => {
+  updateNameRole: async (requestParams,requestBody) => {
     try {
-      const { data } = await http.put(`/${END_POIND_API.ROLE}/${requestParams}`);
+      const { data } = await http.put(`${END_POIND_API.ROLE}/${requestParams}`,requestBody);
+      showToastSuccess(data.message || 'Cập nhật Tên Role thành công');
+      return data;
+    } catch (error) {
+      showToastError(error.response.data.message);
+      console.log(error.message);
+    }
+  },
+
+  updateRoleUser: async (requestParams,requestBody) => {
+    try {
+      const { data } = await http.put(`${END_POIND_API.USER}${END_POIND_API.ROLE}/${requestParams}`,requestBody);
+     console.log(`${END_POIND_API.USER}${END_POIND_API.ROLE}/${requestParams}`,requestBody);
+     
       showToastSuccess(data.message || 'Cập nhật role thành công');
       return data;
     } catch (error) {

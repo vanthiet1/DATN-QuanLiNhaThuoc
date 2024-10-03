@@ -49,7 +49,11 @@ const userSchema = new mongoose.Schema(
         },
         otpVerify: { type: Number },
         otpForgotPass: { type: String },
-        timeOtp: { type: Date }
+        timeOtp: { type: Date },
+        lastOtpRequestTime: { 
+            type: Date,
+            default: null, 
+        },
     }, {
     timestamps: true,
 }

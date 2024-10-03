@@ -1,9 +1,9 @@
 const END_POIND_API = {
   USER:'/user',
+  EMAIL:'/email',
   AUTH: '/auth',
   CART: '/cart',
   MESSAGE: '/message',
-  STAFF: '/staff',
   PRODUCT: '/product',
   ORDER: '/order',
   ORDER_DETAILS: '/order-details',

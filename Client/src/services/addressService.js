@@ -3,6 +3,16 @@ import END_POIND_API from '../utils/helpers/endpoind';
 import { showToastError, showToastSuccess } from '../configs/toastConfig';
 
 const addressServices = {
+  getAllAddress: async () => {
+    try {
+      const { data } = await http.get(`${END_POIND_API.ADDRESS}`);
+      console.log(data);
+      return data;
+    } catch (error) {
+      showToastError(error.response.data.message);
+      console.log(error.message);
+    }
+  },
   addAddress: async (requestBody) => {
     try {
       const { data } = await http.post(`${END_POIND_API.ADDRESS}/create`, requestBody);
