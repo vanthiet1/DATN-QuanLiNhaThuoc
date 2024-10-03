@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '../../components/ui/button';
 import useFetch from '../../hooks/useFetch';
 import formatsHelper from '../../utils/helpers/formats';
-import { useNavigate } from 'react-router-dom';
 import AppIcons from '../../components/ui/icon';
 import BreadCrumb from '../../components/breadCrumb/BreadCrumb';
-import couponServices from '../../services/couponService';
+import commetServices from '../../services/commentService';
 import { useConfirmDialog } from '../../components/dialog/ConfirmDialogContext';
-
 const couponBreadCrumbs = [
   {
     path: `/dashboard`,
@@ -15,46 +13,46 @@ const couponBreadCrumbs = [
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'All Coupon'
+    title: 'All Comment'
   }
 ];
+const AllComment = () => {
+  const {
+    isLoading,
+    isError,
+    responsData: initialCommentData,
+    messsageError
+  } = useFetch(commetServices.getAllComments);
 
-const AllCoupon = () => {
-  const { isLoading, isError, responsData: initialCouponData, messsageError } = useFetch(couponServices.getCoupons);
-
-  const [couponData, setCouponData] = useState([]);
+  const [commentData, setCommentData] = useState([]);
   const confirmDialog = useConfirmDialog();
-  const navigate = useNavigate();
 
   useEffect(() => {
-    if (initialCouponData) {
-      setCouponData(initialCouponData);
+    if (initialCommentData) {
+      setCommentData(initialCommentData);
     }
-  }, [initialCouponData]);
+  }, [initialCommentData]);
 
-  const handleEdit = (id) => {
-    navigate(`/admin/edit-coupon/${id}`);
-  };
-
-  const handleDelete = async (id,name) => {
+  const handleDelete = async (id, name) => {
     try {
       const result = await confirmDialog({
-        title: 'Xóa Coupon',
+        title: 'Xóa Comment',
         iconLeft: <AppIcons.TrashBinIcon />,
-        message: `Bạn có muốn xóa ${name} không ?`,
+        message: `Bạn có muốn xóa ${name} không?`,
         confirmLabel: 'Có, tôi đồng ý',
         cancelLabel: 'Không, giữ lại'
       });
-      if (result) {
-        await couponServices.deleteCoupon(id);
 
-        setCouponData(couponData.filter((coupon) => coupon._id !== id));
+      if (result) {
+        await commetServices.deleteComment(id);
+        setCommentData(prevComments =>
+          prevComments.filter(comment => comment._id !== id)
+        );
       }
     } catch (error) {
-      console.error('Failed to delete coupon:', error);
+      console.error('Failed to delete comment:', error);
     }
   };
-
   if (isLoading) {
     return (
       <div className='flex justify-center items-center h-64'>
@@ -71,23 +69,23 @@ const AllCoupon = () => {
     <>
       <BreadCrumb crumbsData={couponBreadCrumbs} addClassNames='my-3' />
       <div className='max-w-7xl mx-auto p-6 bg-white shadow-md rounded-lg'>
-        <h1 className='text-3xl font-bold mb-6 text-center'>All Coupon</h1>
+        <h1 className='text-3xl font-bold mb-6 text-center'>All Comment</h1>
         <div className='overflow-x-auto'>
           <table className='min-w-full table-auto border-collapse'>
             <thead>
               <tr className='bg-gray-200'>
-                <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>Code</th>
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
-                  Start day
+                  Content
+                </th>
+
+                <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
+                  User ID
                 </th>
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
-                  End day
+                  Product Id
                 </th>
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
-                  Status
-                </th>
-                <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
-                  Discount Value
+                  Date Create
                 </th>
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
                   Actions
@@ -95,42 +93,21 @@ const AllCoupon = () => {
               </tr>
             </thead>
             <tbody className='bg-white divide-y divide-gray-200'>
-              {couponData &&
-                couponData.map((coupon) => (
-                  <tr key={coupon._id} className='hover:bg-gray-100'>
-                    <td className='px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900'>{coupon.code}</td>
+              {commentData &&
+                commentData.map((comment) => (
+                  <tr key={comment._id} className='hover:bg-gray-100'>
+                    <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>{comment.content}</td>
+                    <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{comment.user_id}</td>
+                    <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{comment.product_id}</td>
                     <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
-                      {formatsHelper.formatDate(coupon.start_date)}
-                    </td>
-                    <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
-                      {formatsHelper.formatDate(coupon.end_date)}
-                    </td>
-                    <td className='px-6 py-4'>
-                      <span
-                        className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                          coupon.is_active ? 'bg-green-100 text-green-600 border' : 'bg-red-100 text-red-600 border'
-                        }`}
-                      >
-                        {coupon.is_active ? 'Active' : 'Inactive'}
-                      </span>
-                    </td>
-                    <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
-                      {formatsHelper.currency(coupon.discount_value)}
+                      {formatsHelper.formatDate(comment.date_create)}
                     </td>
                     <td className='px-6 py-4 whitespace-nowrap text-sm flex '>
                       <Button
                         size='m'
                         rounded='m'
-                        addClassNames='bg-blue-600 text-white hover:bg-blue-500 px-3 py-1 rounded-md'
-                        onClick={() => handleEdit(coupon._id)}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        size='m'
-                        rounded='m'
                         addClassNames='bg-red-600 text-white hover:bg-red-500 px-3 py-1 rounded-md ml-2'
-                        onClick={() => handleDelete(coupon._id,coupon.code)}
+                        onClick={() => handleDelete(comment._id, comment.content)}
                       >
                         Delete
                       </Button>
@@ -145,4 +122,4 @@ const AllCoupon = () => {
   );
 };
 
-export default AllCoupon;
+export default AllComment;
