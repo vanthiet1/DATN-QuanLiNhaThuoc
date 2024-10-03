@@ -2,15 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
-const http = require('http');
 const cors = require('cors');
-const { initIo } = require('./socket/socketManager');
+
+
 require('dotenv').config();
 const app = express();
 const connectDB = require('./db/connectDB');
-const server = http.createServer(app);
-
 // Middleware
+require('./configs/cron');
 app.use(morgan('common'));
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -23,7 +22,6 @@ app.use(
 );
 
 connectDB();
-initIo(server);
 
 app.get('/', (req, res) => {
   res.send('Welcome To Api');
@@ -47,7 +45,6 @@ const BannerRouter = require('./routers/banner');
 const BlogRouter = require('./routers/blog');
 const CommentRouter = require('./routers/comments');
 const VerifyRouter = require('./routers/vertifyEmail');
-const MessageRouter = require('./routers/message');
 const PharmacyRouter = require('./routers/pharmacy');
 
 app.use('/api/v1/order', OrderRouter);
@@ -68,11 +65,10 @@ app.use('/api/v1/banner', BannerRouter);
 app.use('/api/v1/blog', BlogRouter);
 app.use('/api/v1/comment', CommentRouter);
 app.use('/api/v1/email', VerifyRouter);
-app.use('/api/v1/message', MessageRouter);
 app.use('/api/v1/pharmacy', PharmacyRouter);
 
 // Start server
 const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
