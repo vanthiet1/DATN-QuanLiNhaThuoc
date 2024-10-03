@@ -179,6 +179,11 @@ const TemplateComponent = () => {
             <AppIcons.SquaresTwoxTwoIcon />
             <span>SquaresTwoxTwoIcon</span>
           </div>
+          <div className='flex gap-1 items-center'>
+            <AppIcons.LocationIcon />
+            <span>Localtion</span>
+          </div>
+          
         </div>
       </div>
 

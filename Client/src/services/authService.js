@@ -50,6 +50,26 @@ const authServices = {
             console.log(error.message);
         }
     },
+    verifyEmail:async(requestBody)=>{
+        try {
+            const { data } = await http.post(`${END_POIND_API.EMAIL}/verify`,requestBody)
+             showToastSuccess(data.message)
+            return data;
+        } catch (error) {
+            console.log(error);
+            showToastError(error.response.data.message)
+        }
+    },
+    ResendVerifyCode:async(requestBody)=>{
+        try {
+            const { data } = await http.post(`${END_POIND_API.EMAIL}/resendVerify`,requestBody)
+             showToastSuccess(data.message)
+            return data;
+        } catch (error) {
+            console.log(error);
+            showToastError(error.response.data.message)
+        }
+    },
     handleIsActiveAccount: async (requestParams) => {
         try {
             const { data } = await http.put(`${END_POIND_API.USER}/AccountStatus/${requestParams}`)
