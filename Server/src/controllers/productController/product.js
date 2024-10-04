@@ -1,7 +1,7 @@
 const ImagesModel = require('../../models/imageModels/image');
 const OrderDetailsModel = require('../../models/orderDetailsModel/orderDetails');
 const ProductModel = require('../../models/productModel/product');
-const { handleCreateImageUpload } = require('../../services/mediaCloudinary');
+const { handleCreateImageUpload, handleDeleteImageUpload } = require('../../services/mediaCloudinary');
 const formatHelper = require('../../utilities/helper/formatHelper');
 const mongoose = require('mongoose');
 
@@ -395,11 +395,18 @@ const ProductController = {
     try {
       const { id } = req.params;
       const deleteProduct = await ProductModel.findByIdAndDelete(id);
+      console.log(deleteProduct);
 
       if (deleteProduct) {
-        const deleteImages = await ImagesModel.deleteMany({ product_id: deleteProduct._id });
-        console.log(`${deleteImages.deletedCount} `);
+        const imageProduct = await ImagesModel.find({ product_id: deleteProduct._id });
+        for (let i = 0; i < imageProduct.length; i++) {
+          const imageUrl = imageProduct[i].url_img;
+          const public_id = imageUrl.substring(imageUrl.lastIndexOf('nhathuoc/products/'), imageUrl.lastIndexOf('.'));
+          await handleDeleteImageUpload(public_id);
+        }
+        await ImagesModel.deleteMany({ product_id: deleteProduct._id });
       }
+
       if (!deleteProduct) {
         return res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
       }
