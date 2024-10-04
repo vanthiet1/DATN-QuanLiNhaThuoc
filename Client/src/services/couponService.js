@@ -13,9 +13,9 @@ const couponServices = {
       console.log(error.message);
     }
   },
-  getCoupons: async (resquestParrams) => {
+  getCoupons: async () => {
     try {
-      const { data } = await http.get(`${END_POIND_API.COUPON}/${resquestParrams}`);
+      const { data } = await http.get(`${END_POIND_API.COUPON}`);
       console.log(data);
       return data;
     } catch (error) {
