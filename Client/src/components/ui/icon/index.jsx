@@ -12,7 +12,7 @@ const HomeIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
       viewBox='0 0 24 24'
       stroke='currentColor'
       aria-hidden='true'
-      className={`w-5 h-5 ${addClassNames}`}
+      className={`${addClassNames}`}
     >
       <path
         d='M3 12L12 2m0 0l9 10M12 2v20'
@@ -30,14 +30,18 @@ const HomeIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
 const OderIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
     <svg
+      xmlns='http://www.w3.org/2000/svg'
       width={width}
       height={height}
+      viewBox='0 0 24 24'
       fill='currentColor'
-      viewBox='0 0 20 20'
-      aria-hidden='true'
-      className={`w-5 h-5 ${addClassNames}`}
+      className={addClassNames}
     >
-      <path d='M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z' />
+      <path
+        fillRule='evenodd'
+        d='M7.5 6v.75H5.513c-.96 0-1.764.724-1.865 1.679l-1.263 12A1.875 1.875 0 0 0 4.25 22.5h15.5a1.875 1.875 0 0 0 1.865-2.071l-1.263-12a1.875 1.875 0 0 0-1.865-1.679H16.5V6a4.5 4.5 0 1 0-9 0ZM12 3a3 3 0 0 0-3 3v.75h6V6a3 3 0 0 0-3-3Zm-3 8.25a3 3 0 1 0 6 0v-.75a.75.75 0 0 1 1.5 0v.75a4.5 4.5 0 1 1-9 0v-.75a.75.75 0 0 1 1.5 0v.75Z'
+        clipRule='evenodd'
+      />
     </svg>
   );
 };
@@ -48,7 +52,7 @@ const ProductIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
       width={width}
       height={height}
       xmlns='http://www.w3.org/2000/svg'
-      className={`w-5 h-5 ${addClassNames}`}
+      className={`${addClassNames}`}
       viewBox='0 0 20 20'
       fill='currentColor'
       aria-hidden='true'
@@ -502,8 +506,35 @@ const SquaresTwoxTwoIcon = ({ width = '24', height = '24', addClassNames = '' })
 
 const EditIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
-    <svg fill='currentColor' viewBox='0 0 20 20' className={addClassNames} aria-hidden='true' width={width} height={height}>
+    <svg
+      fill='currentColor'
+      viewBox='0 0 20 20'
+      className={addClassNames}
+      aria-hidden='true'
+      width={width}
+      height={height}
+    >
       <path d='M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z'></path>
+    </svg>
+  );
+};
+
+const ArrowLeftCircle = ({ width = '24', height = '24', addClassNames = '' }) => {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='0 0 24 24'
+      fill='currentColor'
+      className={addClassNames}
+      aria-hidden='true'
+      width={width}
+      height={height}
+    >
+      <path
+        fillRule='evenodd'
+        d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-4.28 9.22a.75.75 0 0 0 0 1.06l3 3a.75.75 0 1 0 1.06-1.06l-1.72-1.72h5.69a.75.75 0 0 0 0-1.5h-5.69l1.72-1.72a.75.75 0 0 0-1.06-1.06l-3 3Z'
+        clipRule='evenodd'
+      />
     </svg>
   );
 };
@@ -537,7 +568,8 @@ const icons = {
   EyeIcon,
   BarsThreeIcon,
   SquaresTwoxTwoIcon,
-  EditIcon
+  EditIcon,
+  ArrowLeftCircle
 };
 
 export default icons;
