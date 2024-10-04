@@ -37,11 +37,14 @@ const AllPharmacy = lazy(() => import('../admin/pharmacy/AllPharmacy'));
 
                                                                  
 const AllRoleUser = lazy(() => import('../admin/role/allRole'));
+const AddRole = lazy(()=> import('../admin/role/addRole'));
+const EditRole = lazy(() => import('../admin/role/editRole'));
+
 const ManagementStaff = lazy(()=> import('../admin/user/ManagementStaff'));
 const ManagementUser = lazy(() => import('../admin/user/ManagementUser'));
 const ManagementCustomer = lazy(() => import('../admin/user/ManagementCustomer'));
-const AddRole = lazy(()=> import('../admin/role/addRole'))
 
+const ManagementAdress = lazy(() => import('../admin/address/ManagementAdress'))
 const Messages = lazy(() => import('../admin/messages/Messages'));
 const Transaction = lazy(() => import('../admin/transaction/Transaction'));
 const Orders = lazy(() => import('../admin/orders/Orders'));
@@ -252,6 +255,14 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: PATH_ROUTERS_ADMIN.MANAGER_ADDRESS,
+        element: (
+          <SuspenseWrapper>
+            <ManagementAdress/>
+          </SuspenseWrapper>
+        )
+      },
+      {
         path: PATH_ROUTERS_ADMIN.ALL_ROLE_USER,
         element: (
           <SuspenseWrapper>
@@ -267,7 +278,15 @@ const router = createBrowserRouter([
           </SuspenseWrapper>
         )
       },
-  
+      {
+        path: PATH_ROUTERS_ADMIN.EDIT_ROLE_USER,
+        element: (
+          <SuspenseWrapper>
+            <EditRole/>
+          </SuspenseWrapper>
+        )
+      },
+      
       
       {
         path: PATH_ROUTERS_ADMIN.ORDERS,

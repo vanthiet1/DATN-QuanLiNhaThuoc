@@ -13,7 +13,22 @@ const formAuthSchema = {
     confirmPassword: Yup.string()
     .required('Vui lòng nhập xác nhận mật khẩu.')
     .oneOf([Yup.ref('password'), null], 'Mật khẩu xác nhận không khớp.')
-  })
+  }),
+
+  forgotPassword: Yup.object().shape({
+    email: Yup.string().required('Không được để email trống.').email('Email không hợp lệ.'),
+  }),
+
+  newPassword: Yup.object().shape({
+    email: Yup.string().required('Không được để email trống.').email('Email không hợp lệ.'),
+    newPassword: Yup.string().required('Không được để password trống.'),
+    code: Yup.string().required('Không được để mã xác thực trống.')
+  }),
+
+  verifyEmail: Yup.object().shape({
+    email: Yup.string().required('Không được để email trống.').email('Email không hợp lệ.'),
+    code: Yup.string().required('Không được để mã xác thực trống.')
+  }),
 };
 
 export default formAuthSchema;
