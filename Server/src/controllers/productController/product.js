@@ -7,10 +7,33 @@ const mongoose = require('mongoose');
 
 const ProductController = {
   createProduct: async (req, res) => {
+    console.log(req.body);
     try {
-      if (!req.files) {
+      const {
+        name,
+        sub_category_id,
+        brand_id,
+        description,
+        description_short,
+        price_old,
+        price_distcount,
+        percent_price,
+        stock
+      } = req.body;
+      if (
+        !req.files ||
+        !name ||
+        !sub_category_id ||
+        !brand_id ||
+        !description ||
+        !description_short ||
+        !price_old ||
+        !price_distcount ||
+        !percent_price ||
+        !stock
+      ) {
         return res.status(404).json({
-          message: 'Bạn cần thêm hình ảnh khi tạo sản phẩm'
+          message: 'Bạn cần nhập đầy đủ thông tin các trường'
         });
       }
       const imgFiles = req.files;
@@ -36,7 +59,16 @@ const ProductController = {
 
       if (urlCloundCreated.length > 0) {
         const { ...product } = req.body;
-        const slug = formatHelper.converStringToSlug(product.name);
+        let slug = formatHelper.converStringToSlug(product.name);
+
+        let existsSlug = await ProductModel.exists({ slug });
+        let count = 1;
+        while (existsSlug) {
+          slug = `${slug}-${count}`;
+          existsSlug = await ProductModel.exists({ slug });
+          count++;
+        }
+
         const newProduct = new ProductModel({ slug, ...product });
         await newProduct.save();
 
@@ -105,7 +137,7 @@ const ProductController = {
   },
   getListProductBestSeller: async (req, res) => {
     try {
-      const limitProduct = Number.parseInt(req.query.limit) || 1000;
+      const limitProduct = Number.parseInt(req.query.limit) || 8;
       const listProductBestOrder = await OrderDetailsModel.aggregate([
         {
           $group: { _id: '$product_id', totalSold: { $sum: 1 } }
@@ -128,8 +160,17 @@ const ProductController = {
   },
   getListProductNew: async (req, res) => {
     try {
-      const limitProduct = Number.parseInt(req.query.limit) || 1000;
-      const listProductNew = await ProductModel.find().sort({ createdAt: -1 }).limit(limitProduct);
+      const limitProduct = Number.parseInt(req.query.limit) || 8;
+      const listProductNew = await ProductModel.aggregate([
+        {
+          $lookup: {
+            from: 'images',
+            localField: '_id',
+            foreignField: 'product_id',
+            as: 'images'
+          }
+        }
+      ]).limit(limitProduct);
       return res.status(200).json(listProductNew);
     } catch (error) {
       res.status(500).json({ message: 'Lỗi khi lấy danh sách sản phẩm mới: ' + error.message });
@@ -137,8 +178,24 @@ const ProductController = {
   },
   getListProductRecommend: async (req, res) => {
     try {
-      const limitProduct = Number.parseInt(req.query.limit) || 1000;
-      const listProductRecommend = await ProductModel.aggregate([{ $sample: { size: limitProduct } }]);
+      const limitProduct = Number.parseInt(req.query.limit) || 8;
+      const queryKey = req.query.key || '';
+      const listProductRecommend = await ProductModel.aggregate([
+        {
+          $match: {
+            name: { $regex: queryKey, $options: 'i' }
+          }
+        },
+        { $sample: { size: limitProduct } },
+        {
+          $lookup: {
+            from: 'images',
+            localField: '_id',
+            foreignField: 'product_id',
+            as: 'images'
+          }
+        }
+      ]);
       return res.status(200).json(listProductRecommend);
     } catch (error) {
       res.status(500).json({ message: 'Lỗi khi lấy danh sách sản phẩm gợi ý: ' + error.message });
@@ -146,11 +203,25 @@ const ProductController = {
   },
   getListProductRelative: async (req, res) => {
     try {
-      const { category } = req.query;
-      const limitProduct = Number.parseInt(req.query.limit) || 1000;
+      const { category_id } = req.query;
+      const limitProduct = Number.parseInt(req.query.limit) || 8;
       const { ObjectId } = mongoose.Types;
-      const fliter = { sub_category_id: new ObjectId(category) };
-      const listProductRelative = await ProductModel.find(fliter).limit(limitProduct);
+      const listProductRelative = await ProductModel.aggregate([
+        {
+          $match: {
+            sub_category_id: new ObjectId(category_id)
+          }
+        },
+        {
+          $lookup: {
+            from: 'images',
+            localField: '_id',
+            foreignField: 'product_id',
+            as: 'images'
+          }
+        }
+      ]).limit(limitProduct);
+
       return res.status(200).json(listProductRelative);
     } catch (error) {
       res.status(500).json({ message: 'Lỗi khi lấy danh sách sản phẩm liên quan: ' + error.message });
@@ -182,6 +253,35 @@ const ProductController = {
         }
       ]);
       return res.status(200).json(product);
+    } catch (error) {
+      res.status(500).json({ message: 'Lỗi khi lấy chi tiết sản phẩm: ' + error.message });
+    }
+  },
+  getProductWithBySlug: async (req, res) => {
+    try {
+      const { slug } = req.params;
+      if (slug) {
+        const product = await ProductModel.aggregate([
+          { $match: { slug: slug } },
+          {
+            $lookup: {
+              from: 'images',
+              localField: '_id',
+              foreignField: 'product_id',
+              as: 'images'
+            }
+          },
+          {
+            $lookup: {
+              from: 'brands',
+              localField: 'brand_id',
+              foreignField: '_id',
+              as: 'brand'
+            }
+          }
+        ]);
+        return res.status(200).json(product);
+      }
     } catch (error) {
       res.status(500).json({ message: 'Lỗi khi lấy chi tiết sản phẩm: ' + error.message });
     }
@@ -230,15 +330,63 @@ const ProductController = {
     try {
       const { id } = req.params;
       const productBody = req.body;
-      const slug = formatHelper.converStringToSlug(productBody.name);
-      const updateProduct = await ProductModel.findByIdAndUpdate(id, { slug, ...productBody }, { new: true });
-      if (!updateProduct) {
-        return res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
+      const imgFiles = req.files;
+      const urlCloundCreated = [];
+      for (let i = 0; i < imgFiles.length; i++) {
+        const b64 = Buffer.from(imgFiles[i].buffer).toString('base64');
+        let dataURI = 'data:' + imgFiles[i].mimetype + ';base64,' + b64;
+
+        const imageName = imgFiles[i].originalname.split('.')[0];
+        const urlOptions = {
+          folder: 'nhathuoc/products',
+          public_id: formatHelper.converStringToSlug(imageName)
+        };
+        const secure_url = await handleCreateImageUpload(dataURI, urlOptions);
+        urlCloundCreated.push(secure_url);
       }
-      res.status(200).json({
-        message: 'sản phẩm đã được cập nhật thành công.',
-        product: updateProduct
-      });
+
+      if (!urlCloundCreated.length) {
+        res.status(500).json({
+          message: 'Hình ảnh sản phẩm chưa được tạo'
+        });
+      }
+
+      if (urlCloundCreated.length > 0) {
+        const { ...product } = req.body;
+        let slug = formatHelper.converStringToSlug(product.name);
+
+        let existsSlug = await ProductModel.exists({ slug });
+        let count = 1;
+        while (existsSlug) {
+          slug = `${slug}-${count}`;
+          existsSlug = await ProductModel.exists({ slug });
+          count++;
+        }
+
+        const updateProduct = await ProductModel.findByIdAndUpdate(id, { slug, ...productBody }, { new: true });
+
+        if (!updateProduct) {
+          return res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
+        }
+
+        await updateProduct.save();
+
+        for (let i = 0; i < urlCloundCreated.length; i++) {
+          const updateImage = await ImagesModel.findOne(
+            {
+              product_id: updateProduct._id
+            },
+            { url_img: urlCloundCreated[i] },
+            { new: true }
+          );
+          await updateImage.save();
+        }
+
+        res.status(200).json({
+          message: 'sản phẩm đã được cập nhật thành công.',
+          product: updateProduct
+        });
+      }
     } catch (error) {
       res.status(500).json({ message: 'Lỗi khi cập nhật sản phẩm: ' + error.message });
     }
