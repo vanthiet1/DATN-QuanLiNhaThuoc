@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import SectionWrapper from '../../components/sectionWrapper/SectionWrapper';
 import BreadCrumb from '../../components/breadCrumb/BreadCrumb';
 import { PATH_ROUTERS_ADMIN } from '../../utils/constant/routers';
@@ -8,10 +8,9 @@ import useFetch from '../../hooks/useFetch';
 import productServices from '../../services/productService';
 import CardProductAdmin from '../../components/card/CardProductAdmin';
 import PaginatedItems from '../../components/paginate/Paginate';
-import { Image } from '../../components/ui/image';
-import formatsHelper from '../../utils/helpers/formats';
 import { useConfirmDialog } from '../../components/dialog/ConfirmDialogContext';
 import subCategoryServices from '../../services/subCategoryService';
+import TableProduct from './components/TableProduct';
 
 const productBreadCrumbs = [
   {
@@ -28,17 +27,12 @@ export const ProductAdminContext = createContext({});
 
 const ProductAdminContextProvider = ({ children }) => {
   const [isShowProductWithGird, setIsShowProductWithGrid] = useState(true);
-  const [isActionDeleteToggle, setIsActionDeleteToggle] = useState(false);
   const [numberPage, setNumeberPage] = useState(1);
   const [isActionDeleteProduct, setIsActionDeleteProduct] = useState(false);
   const [productQuery, setProductQuery] = useState('');
 
   const handleToggleShowProduct = () => {
     setIsShowProductWithGrid(!isShowProductWithGird);
-  };
-
-  const handleRunAfterDeleteProductItem = () => {
-    setIsActionDeleteToggle(!isActionDeleteToggle);
   };
 
   const handleChangeNumberPage = (number) => {
@@ -89,7 +83,6 @@ const ProductAdminContextProvider = ({ children }) => {
         handleToggleShowProduct,
         isShowProductWithGird,
         productData,
-        handleRunAfterDeleteProductItem,
         handleChangeNumberPage,
         isLoading,
         handleDeleteProduct,
@@ -108,6 +101,13 @@ const ProductHeaderBar = () => {
   const [sortOption, setsortOption] = useState('');
 
   const { responsData: subCagegoryData } = useFetch(subCategoryServices.getSubCategory);
+
+  const filterOptions = [
+    { value: 'sortField=price_distcount&sortOrder=asc', title: 'Low to High' },
+    { value: 'sortField=price_distcount&sortOrder=desc', title: 'High to Low' },
+    { value: 'sortField=stock&sortOrder=asc', title: 'Low to Low stock' },
+    { value: 'sortField=stock&sortOrder=desc', title: 'High to Low stock' }
+  ];
 
   return (
     <div className='min-w-0 rounded-lg shadow-xs overflow-hidden bg-white mt-5 mb-5 shadow-md'>
@@ -140,19 +140,22 @@ const ProductHeaderBar = () => {
               className=' border border-gray-300 text-gray-600 text-base rounded block w-full py-1 px-2 focus:outline-none'
             >
               <option value=''>Sort by</option>
-              <option value='sortField=price_distcount&sortOrder=asc'>Low to High</option>
-              <option value='sortField=price_distcount&sortOrder=desc'>High to Low</option>
-              <option value='sortField=stock&sortOrder=asc'>Low to Low stock</option>
-              <option value='sortField=stock&sortOrder=desc'>High to Low stock</option>
+              {filterOptions.map((filter) => {
+                return (
+                  <option value={filter.value} key={filter.value}>
+                    {filter.title}
+                  </option>
+                );
+              })}
             </select>
             <Button
               onClick={() => handleFilterProduct(searchValue, categoryId, sortOption)}
               leftIcon={<AppIcons.SearchIcons />}
-              addClassNames={'bg-slate-700 text-white'}
+              addClassNames={'bg-slate-500 hover:bg-slate-600 text-white'}
               size='m'
               rounded='s'
             >
-              search
+              Search
             </Button>
           </div>
           <div>
@@ -169,11 +172,10 @@ const ProductHeaderBar = () => {
 const ProducShowWrapper = () => {
   const { isLoading, productData, isShowProductWithGird, handleChangeNumberPage, handleDeleteProduct } =
     useContext(ProductAdminContext);
-  console.log(productData);
 
   return (
     <div className='show-product-wrapper'>
-      {isLoading && <div>Loadding ...</div>}
+      {isLoading && <div>loadding ...</div>}
       {isShowProductWithGird ? (
         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
           {productData &&
@@ -183,63 +185,7 @@ const ProducShowWrapper = () => {
         </div>
       ) : (
         <div>
-          <table className='min-w-full table-auto border-collapse'>
-            <thead>
-              <tr className='bg-gray-200'>
-                <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>
-                  Image
-                </th>
-                <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>Name</th>
-                <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>
-                  price_distcount
-                </th>
-                <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className='bg-white divide-y divide-gray-200'>
-              {productData &&
-                productData.productsList.map((product) => {
-                  const { name, price_distcount, _id, images } = product;
-                  return (
-                    <tr key={_id} className='hover:bg-gray-100'>
-                      <td className='px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-700'>
-                        <Image src={images[0].url_img} addClassNames='w-[50px] h-[50px] object-contain'></Image>
-                      </td>
-                      <td className='px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-700'>{name}</td>
-                      <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
-                        {formatsHelper.currency(price_distcount)}
-                      </td>
-                      <td className='px-6 py-4 whitespace-nowrap text-sm flex '>
-                        <Button
-                          size='m'
-                          rounded='s'
-                          addClassNames='bg-teal-500 text-white hover:bg-teal-600 px-3 py-1 rounded-md'
-                        >
-                          <AppIcons.EyeIcon width='20' height='20' />
-                        </Button>
-                        <Button
-                          size='m'
-                          rounded='s'
-                          addClassNames='bg-blue-500 text-white hover:bg-blue-600 px-3 py-1 rounded-md ml-2'
-                        >
-                          <AppIcons.EditIcon width='20' height='20' />
-                        </Button>
-                        <Button
-                          size='m'
-                          rounded='s'
-                          addClassNames='bg-rose-500 text-white hover:bg-rose-600 px-3 py-1 rounded-md ml-2'
-                          onClick={() => handleDeleteProduct(product)}
-                        >
-                          <AppIcons.TrashBinIcon width='20' height='20' />
-                        </Button>
-                      </td>
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </table>
+          <TableProduct productData={productData} />
         </div>
       )}
       <div>
