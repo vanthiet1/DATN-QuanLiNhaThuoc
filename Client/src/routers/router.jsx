@@ -14,6 +14,7 @@ const Pharmacy = lazy(() => import('../pages/pharmacy/PharmacyDetails'));
 const DashBoard = lazy(() => import('../admin/dashboard/Dashboard'));
 const AddProduct = lazy(() => import('../admin/product/AddProduct'));
 const AllProduct = lazy(() => import('../admin/product/AllProduct'));
+const EditProduct = lazy(() => import('../admin/product/EditProduct'));
 
 const AddCategory = lazy(() => import('../admin/category/AddCategory'));
 const AllCategory = lazy(() => import('../admin/category/AllCategory'));
@@ -33,12 +34,11 @@ const AllBlog = lazy(() => import('../admin/blog/AllBlog'));
 const AddPharmacy = lazy(() => import('../admin/pharmacy/AddPharmacy'));
 const AllPharmacy = lazy(() => import('../admin/pharmacy/AllPharmacy'));
 
-                                                                 
 const AllRoleUser = lazy(() => import('../admin/role/allRole'));
-const ManagementStaff = lazy(()=> import('../admin/user/ManagementStaff'));
+const ManagementStaff = lazy(() => import('../admin/user/ManagementStaff'));
 const ManagementUser = lazy(() => import('../admin/user/ManagementUser'));
 const ManagementCustomer = lazy(() => import('../admin/user/ManagementCustomer'));
-const AddRole = lazy(()=> import('../admin/role/addRole'))
+const AddRole = lazy(() => import('../admin/role/addRole'));
 
 const Messages = lazy(() => import('../admin/messages/Messages'));
 const Transaction = lazy(() => import('../admin/transaction/Transaction'));
@@ -126,6 +126,14 @@ const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <AllProduct />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.EDIT_PRODUCT,
+        element: (
+          <SuspenseWrapper>
+            <EditProduct />
           </SuspenseWrapper>
         )
       },
@@ -229,7 +237,7 @@ const router = createBrowserRouter([
         path: PATH_ROUTERS_ADMIN.MANAGER_CUSTOMER,
         element: (
           <SuspenseWrapper>
-            <ManagementCustomer/>
+            <ManagementCustomer />
           </SuspenseWrapper>
         )
       },
@@ -237,7 +245,7 @@ const router = createBrowserRouter([
         path: PATH_ROUTERS_ADMIN.MANAGER_USER,
         element: (
           <SuspenseWrapper>
-            <ManagementUser/>
+            <ManagementUser />
           </SuspenseWrapper>
         )
       },
@@ -245,7 +253,7 @@ const router = createBrowserRouter([
         path: PATH_ROUTERS_ADMIN.MANAGER_STAFF,
         element: (
           <SuspenseWrapper>
-            <ManagementStaff/>
+            <ManagementStaff />
           </SuspenseWrapper>
         )
       },
@@ -253,7 +261,7 @@ const router = createBrowserRouter([
         path: PATH_ROUTERS_ADMIN.ALL_ROLE_USER,
         element: (
           <SuspenseWrapper>
-            <AllRoleUser/>
+            <AllRoleUser />
           </SuspenseWrapper>
         )
       },
@@ -261,12 +269,11 @@ const router = createBrowserRouter([
         path: PATH_ROUTERS_ADMIN.ADD_ROLE_USER,
         element: (
           <SuspenseWrapper>
-            <AddRole/>
+            <AddRole />
           </SuspenseWrapper>
         )
       },
-  
-      
+
       {
         path: PATH_ROUTERS_ADMIN.ORDERS,
         element: (
