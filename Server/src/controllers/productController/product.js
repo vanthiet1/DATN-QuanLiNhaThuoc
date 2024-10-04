@@ -7,7 +7,6 @@ const mongoose = require('mongoose');
 
 const ProductController = {
   createProduct: async (req, res) => {
-    console.log(req.body);
     try {
       const {
         name,
@@ -330,63 +329,80 @@ const ProductController = {
     try {
       const { id } = req.params;
       const productBody = req.body;
-      const imgFiles = req.files;
+      const imgFiles = req.files || [];
       const urlCloundCreated = [];
-      for (let i = 0; i < imgFiles.length; i++) {
-        const b64 = Buffer.from(imgFiles[i].buffer).toString('base64');
-        let dataURI = 'data:' + imgFiles[i].mimetype + ';base64,' + b64;
 
-        const imageName = imgFiles[i].originalname.split('.')[0];
-        const urlOptions = {
-          folder: 'nhathuoc/products',
-          public_id: formatHelper.converStringToSlug(imageName)
-        };
-        const secure_url = await handleCreateImageUpload(dataURI, urlOptions);
-        urlCloundCreated.push(secure_url);
+      // const oldImages = await ImagesModel.find({ product_id: id });
+
+      // if (oldImages && oldImages.length > 0) {
+      //   for (let i = 0; i < oldImages.length; i++) {
+      //     const imageUrl = oldImages[0].url_img;
+      //     const public_id = imageUrl.substring(imageUrl.lastIndexOf('nhathuoc/products/'), imageUrl.lastIndexOf('.'));
+      //     await handleDeleteImageUpload(public_id);
+      //   }
+      // }
+
+      if (imgFiles.length > 0) {
+        for (let i = 0; i < imgFiles.length; i++) {
+          try {
+            const b64 = Buffer.from(imgFiles[i].buffer).toString('base64');
+            let dataURI = 'data:' + imgFiles[i].mimetype + ';base64,' + b64;
+
+            const imageName = imgFiles[i].originalname.split('.')[0];
+            const urlOptions = {
+              folder: 'nhathuoc/products',
+              public_id: formatHelper.converStringToSlug(imageName)
+            };
+            const secure_url = await handleCreateImageUpload(dataURI, urlOptions);
+            urlCloundCreated.push(secure_url);
+          } catch (error) {
+            return res
+              .status(500)
+              .json({ message: `Image upload failed for ${imgFiles[i].originalname}: ${error.message}` });
+          }
+        }
       }
 
-      if (!urlCloundCreated.length) {
-        res.status(500).json({
-          message: 'Hình ảnh sản phẩm chưa được tạo'
-        });
+      if (!urlCloundCreated.length && imgFiles.length > 0) {
+        return res.status(500).json({ message: 'Hình ảnh sản phẩm chưa được tạo' });
+      }
+
+      let slug = formatHelper.converStringToSlug(productBody.name);
+      let existsSlug = await ProductModel.exists({ slug });
+      let count = 1;
+      while (existsSlug) {
+        slug = `${slug}-${count}`;
+        existsSlug = await ProductModel.exists({ slug });
+        count++;
+      }
+
+      const updatedProduct = await ProductModel.findByIdAndUpdate(id, { slug, ...productBody }, { new: true });
+
+      if (!updatedProduct) {
+        return res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
       }
 
       if (urlCloundCreated.length > 0) {
-        const { ...product } = req.body;
-        let slug = formatHelper.converStringToSlug(product.name);
-
-        let existsSlug = await ProductModel.exists({ slug });
-        let count = 1;
-        while (existsSlug) {
-          slug = `${slug}-${count}`;
-          existsSlug = await ProductModel.exists({ slug });
-          count++;
-        }
-
-        const updateProduct = await ProductModel.findByIdAndUpdate(id, { slug, ...productBody }, { new: true });
-
-        if (!updateProduct) {
-          return res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
-        }
-
-        await updateProduct.save();
-
         for (let i = 0; i < urlCloundCreated.length; i++) {
-          const updateImage = await ImagesModel.findOne(
-            {
-              product_id: updateProduct._id
-            },
-            { url_img: urlCloundCreated[i] },
-            { new: true }
-          );
-          await updateImage.save();
+          try {
+            const updatedImage = await ImagesModel.findOneAndUpdate(
+              { product_id: updatedProduct._id },
+              { url_img: urlCloundCreated[i] },
+              { new: true }
+            );
+            if (updatedImage) {
+              await updatedImage.save();
+            }
+          } catch (error) {
+            console.error(`Error updating image for product ${updatedProduct._id}: ${error.message}`);
+          }
         }
-
-        res.status(200).json({
-          message: 'sản phẩm đã được cập nhật thành công.',
-          product: updateProduct
-        });
       }
+
+      return res.status(200).json({
+        message: 'Sản phẩm đã được cập nhật thành công.',
+        product: updatedProduct
+      });
     } catch (error) {
       res.status(500).json({ message: 'Lỗi khi cập nhật sản phẩm: ' + error.message });
     }
@@ -395,7 +411,6 @@ const ProductController = {
     try {
       const { id } = req.params;
       const deleteProduct = await ProductModel.findByIdAndDelete(id);
-      console.log(deleteProduct);
 
       if (deleteProduct) {
         const imageProduct = await ImagesModel.find({ product_id: deleteProduct._id });

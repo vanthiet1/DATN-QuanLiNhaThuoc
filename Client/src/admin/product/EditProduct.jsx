@@ -16,23 +16,12 @@ import Editor from '../../components/ui/editor/Editor';
 import { useParams } from 'react-router-dom';
 import { DiaLog } from '../../components/dialog';
 import { SpinnerLoading } from '../../components/ui/loaders';
-
-const optionSubCategoryDefault = [
-  {
-    title: 'Thuốc',
-    value: '66c2a08a860ea2d7f7413476'
-  }
-];
-
-const optionBrandDefault = [
-  {
-    title: 'yki',
-    value: '66c89fdaa4ef9971831b5e6a'
-  }
-];
+import { useNavigate } from 'react-router-dom';
 
 const FormEditProduct = () => {
-  const { productData, isLoading } = useContext(FormEditProductContext);
+  const { productData } = useContext(FormEditProductContext);
+  console.log(productData);
+  const navigate = useNavigate();
 
   const {
     handleSubmit,
@@ -45,8 +34,8 @@ const FormEditProduct = () => {
   useEffect(() => {
     if (productData) {
       setValue('name', productData[0].name);
+      // setValue('sub_category_id', productData[0].sub_category_id);
       setValue('brand_id', productData[0].brand_id);
-      setValue('description', productData[0].description);
       setValue('description_short', productData[0].description_short);
       setValue('percent_price', productData[0].percent_price);
       setValue('price_distcount', productData[0].price_distcount);
@@ -56,9 +45,23 @@ const FormEditProduct = () => {
     }
   }, [productData, setValue]);
 
+  const optionSubCategoryDefault = [
+    {
+      title: 'Thuốc',
+      value: '66c2a08a860ea2d7f7413476'
+    }
+  ];
+
+  const optionBrandDefault = [
+    {
+      title: 'yki',
+      value: '66c89fdaa4ef9971831b5e6a'
+    }
+  ];
+
   const [brandSelectData, setBrandSelectData] = useState(optionBrandDefault);
   const [categorySelectData, setCategorySelectData] = useState(optionSubCategoryDefault);
-  const [isChangeCateSelect, setIsChangeCateSelect] = useState(false);
+  const [isChangeCateSelect, setIsChangeCateSelect] = useState(true);
   const [subCategorySelectData, setsubCategorySelectData] = useState([]);
   const [descriptionValue, setDescriptionValue] = useState('');
   const [isLoadingUpdateProduct, setIsLoadingUpdateProduct] = useState('idle');
@@ -111,7 +114,8 @@ const FormEditProduct = () => {
     await productServices.updateProduct(productData[0]._id, formData);
     reset();
     setIsLoadingUpdateProduct(false);
-    setDescriptionValue();
+    setDescriptionValue('');
+    navigate(`/${PATH_ROUTERS_ADMIN.ALL_PRODUCT}`);
   };
 
   return (
@@ -197,7 +201,12 @@ const FormEditProduct = () => {
               <label htmlFor='' className='font-medium text-sm mb-2'>
                 Full description
               </label>
-              <Editor name='description' editorLoaded={true} onChange={setDescriptionValue}></Editor>
+              <Editor
+                name='description'
+                value={productData ? productData[0].description : ''}
+                editorLoaded={true}
+                onChange={setDescriptionValue}
+              ></Editor>
               {descriptionValue && (
                 <div className='font-normal mt-2 w-full p-2 text-sm text-gray-800 border border-slate-300 border-solid '>
                   {descriptionValue}
