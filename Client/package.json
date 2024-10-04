@@ -20,6 +20,7 @@
     "ckeditor5-premium-features": "^43.1.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "datn": "file:",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

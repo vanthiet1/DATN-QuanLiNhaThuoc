@@ -36,6 +36,11 @@ const FormAddCoupon = () => {
   } = useForm({ resolver: yupResolver(formProductSchema.coupon) });
 
   const handleCreate = async (data) => {
+       console.log(data);
+       if(!data){
+        return;
+       }
+       
     await couponServices.createCoupon(data);
     reset();
     setCouponCode('');
