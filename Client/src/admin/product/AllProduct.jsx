@@ -170,8 +170,7 @@ const ProductHeaderBar = () => {
 };
 
 const ProducShowWrapper = () => {
-  const { isLoading, productData, isShowProductWithGird, handleChangeNumberPage, handleDeleteProduct } =
-    useContext(ProductAdminContext);
+  const { isLoading, productData, isShowProductWithGird, handleChangeNumberPage } = useContext(ProductAdminContext);
 
   return (
     <div className='show-product-wrapper'>

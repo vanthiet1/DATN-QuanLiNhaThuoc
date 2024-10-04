@@ -115,7 +115,7 @@ const FormAddProduct = () => {
               <label htmlFor='' className='font-medium text-sm mb-2'>
                 Product Image
               </label>
-              <FileInput refinput={register('productImg')} size='m' rounded='s'></FileInput>
+              <FileInput refinput={register('productImg')} size='m' rounded='s' multiple={true}></FileInput>
               {errors.productImg && <ErrorMessage messsage={errors.productImg.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
