@@ -1,7 +1,7 @@
 const converStringToSlug = (str) => {
   return String(str)
     .normalize('NFKD')
-    .replace(/đ/g, 'd')
+    .replace(/đ|Đ/g, 'd')
     .replace(/[\u0300-\u036f]/g, '')
     .trim()
     .toLowerCase()

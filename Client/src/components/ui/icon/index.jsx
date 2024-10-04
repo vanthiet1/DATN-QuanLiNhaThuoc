@@ -424,7 +424,6 @@ const TrashBinIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
 const X_CloseIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
     <svg
-      class='w-4 h-4'
       fill='currentColor'
       viewBox='0 0 20 20'
       aria-hidden='true'
@@ -434,8 +433,8 @@ const X_CloseIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
     >
       <path
         d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z'
-        clip-rule='evenodd'
-        fill-rule='evenodd'
+        clipRule='evenodd'
+        fillRule='evenodd'
       ></path>
     </svg>
   );
@@ -518,7 +517,7 @@ const CommentIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
 
 const EditIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
-    <svg fill='currentColor' viewBox='0 0 20 20' class={addClassNames} aria-hidden='true' width={width} height={height}>
+    <svg fill='currentColor' viewBox='0 0 20 20' className={addClassNames} aria-hidden='true' width={width} height={height}>
       <path d='M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z'></path>
     </svg>
   );
@@ -562,7 +561,6 @@ const icons = {
   BarsThreeIcon,
   SquaresTwoxTwoIcon,
   CommentIcon,
-  EditIcon
   EditIcon,
   LocationIcon
 };

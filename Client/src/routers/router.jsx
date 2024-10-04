@@ -25,6 +25,7 @@ const AllComment = lazy(() => import('../admin/comment/AllComment'));
 
 const AddCoupon = lazy(() => import('../admin/coupon/AddCoupon'));
 const AllCoupon = lazy(() => import('../admin/coupon/AllCoupon'));
+const EditCoupon = lazy(() => import('../admin/coupon/EditCoupon'));
 
 const AddBanner = lazy(() => import('../admin/banner/AddBanner'));
 const AllBanner = lazy(() => import('../admin/banner/AllBanner'));
@@ -179,6 +180,14 @@ const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <AllCoupon />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.EDIT_COUPON,
+        element: (
+          <SuspenseWrapper>
+            <EditCoupon />
           </SuspenseWrapper>
         )
       },
