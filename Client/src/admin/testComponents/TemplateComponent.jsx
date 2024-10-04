@@ -179,6 +179,14 @@ const TemplateComponent = () => {
             <AppIcons.SquaresTwoxTwoIcon />
             <span>SquaresTwoxTwoIcon</span>
           </div>
+          <div className='flex gap-1 items-center'>
+            <AppIcons.EditIcon />
+            <span>EditIcon</span>
+          </div>
+          <div className='flex gap-1 items-center'>
+            <AppIcons.ArrowLeftCircle />
+            <span>ArrowLeftCircle</span>
+          </div>
         </div>
       </div>
 
