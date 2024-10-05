@@ -152,8 +152,8 @@ const dataMenu = [
       }
     ]
   },
-    
-   {
+
+  {
     icon: <AppIcons.UserGroup />,
     title: 'Role',
     subMenu: [
@@ -167,7 +167,7 @@ const dataMenu = [
         title: 'Add Role',
         path: PATH_ROUTERS_ADMIN.ADD_ROLE_USER,
       },
-    
+
     ]
   },
 
@@ -188,7 +188,7 @@ const dataMenu = [
     path: PATH_ROUTERS_ADMIN.TRANSACTION
   },
   {
-    icon: <AppIcons.ArrowLeftCircle />,
+    // icon: <AppIcons.ArrowLeftCircle />,
     title: 'HomePage',
     path: PATH_ROUTERS_CLIENT.HOMEPAGE
   },
