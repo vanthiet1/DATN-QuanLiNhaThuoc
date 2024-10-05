@@ -16,18 +16,18 @@ const productServices = {
       showToastError(error.message);
     }
   },
-  getAllProducts: async () => {
+  getAllProducts: async (requestParams) => {
     try {
-      const { data } = await http.get(`${END_POIND_API.PRODUCT}`);
+      const { data } = await http.get(`${END_POIND_API.PRODUCT}${requestParams}`);
       console.log(data);
       return data;
     } catch (error) {
       console.log(error.message);
     }
   },
-  getListProductBestSeller: async (requestParams) => {
+  getListProductBestSeller: async () => {
     try {
-      const { data } = await http.get(`${END_POIND_API.PRODUCT}/best-seller/${requestParams}`);
+      const { data } = await http.get(`${END_POIND_API.PRODUCT}/best-seller`);
       console.log(data);
       return data;
     } catch (error) {
@@ -36,7 +36,7 @@ const productServices = {
   },
   getListProductNew: async (requestParams) => {
     try {
-      const { data } = await http.get(`${END_POIND_API.PRODUCT}/new/${requestParams}`);
+      const { data } = await http.get(`${END_POIND_API.PRODUCT}/new`);
       console.log(data);
       return data;
     } catch (error) {
@@ -45,7 +45,7 @@ const productServices = {
   },
   getListProductRecommend: async (requestParams) => {
     try {
-      const { data } = await http.get(`${END_POIND_API.PRODUCT}/recommend/${requestParams}`);
+      const { data } = await http.get(`${END_POIND_API.PRODUCT}/recommend`);
       console.log(data);
       return data;
     } catch (error) {
@@ -54,7 +54,7 @@ const productServices = {
   },
   getListProductRelative: async (requestParams) => {
     try {
-      const { data } = await http.get(`${END_POIND_API.PRODUCT}/related/${requestParams}`);
+      const { data } = await http.get(`${END_POIND_API.PRODUCT}/related`);
       console.log(data);
       return data;
     } catch (error) {
@@ -72,16 +72,19 @@ const productServices = {
   },
   getListProductFilter: async (requestParams) => {
     try {
-      const { data } = await http.get(`${END_POIND_API.PRODUCT}/filter/${requestParams}`);
+      console.log(requestParams);
+      const { data } = await http.get(`${END_POIND_API.PRODUCT}/filter?${requestParams}`);
       console.log(data);
       return data;
     } catch (error) {
       console.log(error.message);
     }
   },
-  updateProduct: async (requestParams) => {
+  updateProduct: async (requestParams, requestBody) => {
     try {
-      const { data } = await http.put(`${END_POIND_API.PRODUCT}/${requestParams}`);
+      const { data } = await http.put(`${END_POIND_API.PRODUCT}/${requestParams}`, requestBody, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
       console.log(data);
       showToastSuccess(data.message || 'Cập nhật sản phẩm thành công!');
       return data;
@@ -95,6 +98,15 @@ const productServices = {
       const { data } = await http.delete(`${END_POIND_API.PRODUCT}/${requestParams}`);
       showToastSuccess(data.message || 'Xóa sản phẩm thành công!');
       console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error.message);
+      showToastError(error.message);
+    }
+  },
+  getProductWithBySlug: async (requestParams) => {
+    try {
+      const { data } = await http.get(`${END_POIND_API.PRODUCT}/${requestParams}`);
       return data;
     } catch (error) {
       console.log(error.message);

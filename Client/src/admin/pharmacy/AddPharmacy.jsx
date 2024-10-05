@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { PATH_ROUTERS_ADMIN } from '../../utils/constant/routers';
@@ -10,6 +10,7 @@ import AppIcons from '../../components/ui/icon';
 import { Button } from '../../components/ui/button';
 import { ErrorMessage, InputText } from '../../components/ui/form';
 import pharmacyServices from '../../services/pharmacyService';
+import provinceServices from '../../services/provinceService';
 
 const pharamcyBreadCrumbs = [
   {
@@ -29,9 +30,56 @@ const FormAddPharmacy = () => {
     reset,
     formState: { errors }
   } = useForm({ resolver: yupResolver(formPharmacySchema.pharmacy) });
+  const [provinces, setProvinces] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [wards, setWards] = useState([]);
+
+  const [selectedProvice, setSelectedProvince] = useState('');
+  const [selectedDistrict, setSelectedDistrict] = useState('');
+  const [stateAddress, setStateAddress] = useState({});
+
+  useEffect(() => {
+    const handleGetProvinces = async () => {
+      const responsiveData = await provinceServices.getInforProvices();
+      setProvinces(responsiveData);
+    };
+    handleGetProvinces();
+  }, []);
+
+  useEffect(() => {
+    const handleGetDistricts = async () => {
+      const responsiveData = await provinceServices.getInforDistricts(selectedProvice);
+      setDistricts(responsiveData);
+    };
+    handleGetDistricts();
+  }, [selectedProvice]);
+
+  useEffect(() => {
+    const handleGetwards = async () => {
+      const responsiveData = await provinceServices.getInforWards(selectedDistrict);
+      setWards(responsiveData);
+    };
+    handleGetwards();
+  }, [selectedDistrict]);
+
+  const handleChangeValueWard = async (value) => {
+    const responsiveData = await provinceServices.getInforDetails(value);
+    if (responsiveData) {
+      const { latitude, longitude, full_name } = responsiveData;
+      setStateAddress({ latitude, longitude, full_name });
+    }
+  };
 
   const handleCreateProduct = async (data) => {
-    await pharmacyServices.createPharmacy(data);
+    const { street, ...restData } = data;
+
+    const pharamacyData = {
+      ...restData,
+      latitude: stateAddress.latitude,
+      longitude: stateAddress.longitude,
+      address: street + ', ' + stateAddress.full_name
+    };
+    await pharmacyServices.createPharmacy(pharamacyData);
     reset();
   };
 
@@ -44,39 +92,77 @@ const FormAddPharmacy = () => {
               <label htmlFor='' className='font-medium text-sm mb-2'>
                 Pharmacy Name
               </label>
-              <InputText size='m' rounded='s' placeholder='Type pharmacy name here' refinput={register('name')} />
+              <InputText size='m' rounded='s' placeholder='Bình An Dược' refinput={register('name')} />
               {errors.name && <ErrorMessage messsage={errors.name.message}></ErrorMessage>}
             </div>
-            <div className='flex flex-col text-gray-700 mb-4'>
-              <label htmlFor='' className='font-medium text-sm mb-2'>
-                Pharmacy address
-              </label>
-              <InputText
-                size='m'
-                rounded='s'
-                placeholder='Enter pharmacy address old here'
-                refinput={register('address')}
-              />
-              {errors.address && <ErrorMessage messsage={errors.address.message}></ErrorMessage>}
+            <div className='grid md:grid-cols-3 grid-cols-1 gap-3'>
+              <div className='flex flex-col text-gray-700 mb-4'>
+                <label htmlFor='' className='font-medium text-sm mb-2'>
+                  Tỉnh Thành
+                </label>
+                <select
+                  onChange={(e) => setSelectedProvince(e.target.value)}
+                  id='province'
+                  className='border  border-gray-300 text-gray-600 text-base rounded block w-full py-1 px-2 focus:outline-none'
+                >
+                  <option value=''>-- Chọn Tỉnh/Thành phố --</option>
+                  {provinces.length > 0 &&
+                    provinces.map((province) => {
+                      return (
+                        <option value={province.id} key={province.id}>
+                          {province.full_name}
+                        </option>
+                      );
+                    })}
+                </select>
+              </div>
+              <div className='flex flex-col text-gray-700 mb-4'>
+                <label htmlFor='' className='font-medium text-sm mb-2'>
+                  Huyện
+                </label>
+                <select
+                  onChange={(e) => setSelectedDistrict(e.target.value)}
+                  disabled={!selectedProvice}
+                  className=' border  border-gray-300 text-gray-600 text-base rounded block w-full py-1 px-2 focus:outline-none'
+                >
+                  <option value=''>-- Chọn Quận/Huyện --</option>
+                  {districts.length > 0 &&
+                    districts.map((district) => {
+                      return (
+                        <option value={district.id} key={district.id}>
+                          {district.full_name}
+                        </option>
+                      );
+                    })}
+                </select>
+              </div>
+              <div className='flex flex-col text-gray-700 mb-4'>
+                <label htmlFor='' className='font-medium text-sm mb-2'>
+                  Thị Xã
+                </label>
+                <select
+                  onChange={(e) => handleChangeValueWard(e.target.value)}
+                  disabled={!selectedDistrict}
+                  className='  border  border-gray-300 text-gray-600 text-base rounded block w-full py-1 px-2 focus:outline-none'
+                >
+                  <option value=''>-- Chọn Phường/Xã --</option>
+                  {wards.length > 0 &&
+                    wards.map((ward) => {
+                      return (
+                        <option value={ward.id} key={ward.id}>
+                          {ward.full_name}
+                        </option>
+                      );
+                    })}
+                </select>
+              </div>
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Pharmacy latitude
+                Pharmacy street
               </label>
-              <InputText
-                size='m'
-                rounded='s'
-                placeholder='Enter Pharmacy latitude here'
-                refinput={register('latitude')}
-              />
-              {errors.latitude && <ErrorMessage messsage={errors.latitude.message}></ErrorMessage>}
-            </div>
-            <div className='flex flex-col text-gray-700 mb-4'>
-              <label htmlFor='' className='font-medium text-sm mb-2'>
-                Pharmacy longitude
-              </label>
-              <InputText size='m' rounded='s' placeholder='Enter pharmacy longitude' refinput={register('longitude')} />
-              {errors.longitude && <ErrorMessage messsage={errors.longitude.message}></ErrorMessage>}
+              <InputText size='m' rounded='s' placeholder='Enter pharmacy street here' refinput={register('street')} />
+              {errors.street && <ErrorMessage messsage={errors.street.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>

@@ -12,7 +12,7 @@ const HomeIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
       viewBox='0 0 24 24'
       stroke='currentColor'
       aria-hidden='true'
-      className={`w-5 h-5 ${addClassNames}`}
+      className={`${addClassNames}`}
     >
       <path
         d='M3 12L12 2m0 0l9 10M12 2v20'
@@ -30,14 +30,18 @@ const HomeIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
 const OderIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
     <svg
+      xmlns='http://www.w3.org/2000/svg'
       width={width}
       height={height}
+      viewBox='0 0 24 24'
       fill='currentColor'
-      viewBox='0 0 20 20'
-      aria-hidden='true'
-      className={`w-5 h-5 ${addClassNames}`}
+      className={addClassNames}
     >
-      <path d='M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z' />
+      <path
+        fillRule='evenodd'
+        d='M7.5 6v.75H5.513c-.96 0-1.764.724-1.865 1.679l-1.263 12A1.875 1.875 0 0 0 4.25 22.5h15.5a1.875 1.875 0 0 0 1.865-2.071l-1.263-12a1.875 1.875 0 0 0-1.865-1.679H16.5V6a4.5 4.5 0 1 0-9 0ZM12 3a3 3 0 0 0-3 3v.75h6V6a3 3 0 0 0-3-3Zm-3 8.25a3 3 0 1 0 6 0v-.75a.75.75 0 0 1 1.5 0v.75a4.5 4.5 0 1 1-9 0v-.75a.75.75 0 0 1 1.5 0v.75Z'
+        clipRule='evenodd'
+      />
     </svg>
   );
 };
@@ -48,7 +52,7 @@ const ProductIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
       width={width}
       height={height}
       xmlns='http://www.w3.org/2000/svg'
-      className={`w-5 h-5 ${addClassNames}`}
+      className={`${addClassNames}`}
       viewBox='0 0 20 20'
       fill='currentColor'
       aria-hidden='true'
@@ -424,7 +428,6 @@ const TrashBinIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
 const X_CloseIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
     <svg
-      class='w-4 h-4'
       fill='currentColor'
       viewBox='0 0 20 20'
       aria-hidden='true'
@@ -434,8 +437,8 @@ const X_CloseIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
     >
       <path
         d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z'
-        clip-rule='evenodd'
-        fill-rule='evenodd'
+        clipRule='evenodd'
+        fillRule='evenodd'
       ></path>
     </svg>
   );
@@ -501,10 +504,66 @@ const SquaresTwoxTwoIcon = ({ width = '24', height = '24', addClassNames = '' })
   );
 };
 
+const CommentIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='0 0 512 512'
+      fill='currentColor'
+      width={width}
+      height={height}
+      className={`${addClassNames}`}
+    >
+      <path d='M123.6 391.3c12.9-9.4 29.6-11.8 44.6-6.4c26.5 9.6 56.2 15.1 87.8 15.1c124.7 0 208-80.5 208-160s-83.3-160-208-160S48 160.5 48 240c0 32 12.4 62.8 35.7 89.2c8.6 9.7 12.8 22.5 11.8 35.5c-1.4 18.1-5.7 34.7-11.3 49.4c17-7.9 31.1-16.7 39.4-22.7zM21.2 431.9c1.8-2.7 3.5-5.4 5.1-8.1c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208s-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6c-15.1 6.6-32.3 12.6-50.1 16.1c-.8 .2-1.6 .3-2.4 .5c-4.4 .8-8.7 1.5-13.2 1.9c-.2 0-.5 .1-.7 .1c-5.1 .5-10.2 .8-15.3 .8c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4c4.1-4.2 7.8-8.7 11.3-13.5c1.7-2.3 3.3-4.6 4.8-6.9l.3-.5z' />
+    </svg>
+  );
+};
+
 const EditIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
-    <svg fill='currentColor' viewBox='0 0 20 20' class={addClassNames} aria-hidden='true' width={width} height={height}>
+    <svg
+      fill='currentColor'
+      viewBox='0 0 20 20'
+      className={addClassNames}
+      aria-hidden='true'
+      width={width}
+      height={height}
+    >
       <path d='M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z'></path>
+    </svg>
+  );
+};
+const LocationIcon = ({ width = '24', height = '24', addClassNames = 'text-[#374151]' }) => {
+  return (
+    <svg
+      fill='currentColor'
+      viewBox='0 0 24 24'
+      className={addClassNames}
+      aria-hidden='true'
+      width={width}
+      height={height}
+    >
+      <path d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 12 7 12s7-6.75 7-12c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'></path>
+    </svg>
+  );
+};
+
+const ArrowLeftCircle = ({ width = '24', height = '24', addClassNames = '' }) => {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='0 0 24 24'
+      fill='currentColor'
+      className={addClassNames}
+      aria-hidden='true'
+      width={width}
+      height={height}
+    >
+      <path
+        fillRule='evenodd'
+        d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-4.28 9.22a.75.75 0 0 0 0 1.06l3 3a.75.75 0 1 0 1.06-1.06l-1.72-1.72h5.69a.75.75 0 0 0 0-1.5h-5.69l1.72-1.72a.75.75 0 0 0-1.06-1.06l-3 3Z'
+        clipRule='evenodd'
+      />
     </svg>
   );
 };
@@ -538,7 +597,10 @@ const icons = {
   EyeIcon,
   BarsThreeIcon,
   SquaresTwoxTwoIcon,
-  EditIcon
+  ArrowLeftCircle,
+  CommentIcon,
+  EditIcon,
+  LocationIcon
 };
 
 export default icons;

@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '../../components/ui/button';
 import useFetch from '../../hooks/useFetch';
 import formatsHelper from '../../utils/helpers/formats';
 import { useNavigate } from 'react-router-dom';
-import { PATH_ROUTERS_ADMIN } from '../../utils/constant/routers';
 import AppIcons from '../../components/ui/icon';
 import BreadCrumb from '../../components/breadCrumb/BreadCrumb';
 import couponServices from '../../services/couponService';
+import { useConfirmDialog } from '../../components/dialog/ConfirmDialogContext';
+
 const couponBreadCrumbs = [
   {
     path: `/dashboard`,
@@ -17,11 +18,42 @@ const couponBreadCrumbs = [
     title: 'All Coupon'
   }
 ];
-const AllCoupon = () => {
-  const { isLoading, isError, responsData: couponData, messsageError } = useFetch(couponServices.getCoupons);
-  console.log(couponData);
 
+const AllCoupon = () => {
+  const { isLoading, isError, responsData: initialCouponData, messsageError } = useFetch(couponServices.getCoupons);
+
+  const [couponData, setCouponData] = useState([]);
+  const confirmDialog = useConfirmDialog();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (initialCouponData) {
+      setCouponData(initialCouponData);
+    }
+  }, [initialCouponData]);
+
+  const handleEdit = (id) => {
+    navigate(`/admin/edit-coupon/${id}`);
+  };
+
+  const handleDelete = async (id, name) => {
+    try {
+      const result = await confirmDialog({
+        title: 'Xóa Coupon',
+        iconLeft: <AppIcons.TrashBinIcon />,
+        message: `Bạn có muốn xóa ${name} không ?`,
+        confirmLabel: 'Có, tôi đồng ý',
+        cancelLabel: 'Không, giữ lại'
+      });
+      if (result) {
+        await couponServices.deleteCoupon(id);
+
+        setCouponData(couponData.filter((coupon) => coupon._id !== id));
+      }
+    } catch (error) {
+      console.error('Failed to delete coupon:', error);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -35,15 +67,6 @@ const AllCoupon = () => {
     return <div className='text-red-500 text-center'>{messsageError}</div>;
   }
 
-  const handleEdit = (id) => {
-    console.log('Navigating to edit coupon with ID:', id);
-    navigate(`/admin/edit-coupon/${id}`);
-  };
-
-  const handleDelete = async (id) => {
-    await couponServices.deleteCoupon(id);
-  };
-
   return (
     <>
       <BreadCrumb crumbsData={couponBreadCrumbs} addClassNames='my-3' />
@@ -55,15 +78,17 @@ const AllCoupon = () => {
               <tr className='bg-gray-200'>
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>Code</th>
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
-                  Is active
-                </th>
-                <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
                   Start day
                 </th>
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
-                  discount Value
+                  End day
                 </th>
-                <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>Date</th>
+                <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
+                  Status
+                </th>
+                <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
+                  Discount Value
+                </th>
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
                   Actions
                 </th>
@@ -80,7 +105,7 @@ const AllCoupon = () => {
                     <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
                       {formatsHelper.formatDate(coupon.end_date)}
                     </td>
-                    <td className='mr-4'>
+                    <td className='px-6 py-4'>
                       <span
                         className={`px-3 py-1 rounded-full text-sm font-semibold ${
                           coupon.is_active ? 'bg-green-100 text-green-600 border' : 'bg-red-100 text-red-600 border'
@@ -105,7 +130,7 @@ const AllCoupon = () => {
                         size='m'
                         rounded='m'
                         addClassNames='bg-red-600 text-white hover:bg-red-500 px-3 py-1 rounded-md ml-2'
-                        onClick={() => handleDelete(coupon._id)}
+                        onClick={() => handleDelete(coupon._id, coupon.code)}
                       >
                         Delete
                       </Button>

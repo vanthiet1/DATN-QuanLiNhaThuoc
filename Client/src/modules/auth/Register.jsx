@@ -10,13 +10,6 @@ const Register = () => {
     const { register, handleSubmit, formState: { errors }, watch } = useForm({ resolver: yupResolver(formAuthSchema.register) });
     const [isLoading, setIsLoading] = useState(false);
     const onSubmit = async (formData) => {
-        console.log(formData.fullname);
-        console.log(formData.email);
-        console.log(formData.password);
-        console.log(formData.confirmPassword);
-
-
-
         setIsLoading(true);
         const reponse = await authServices.register(
             {
@@ -26,8 +19,6 @@ const Register = () => {
                 provider: "local",
             }
         );
-        console.log(reponse);
-
         if (!reponse) {
             return
         }
@@ -122,11 +113,11 @@ const Register = () => {
                                 )}
                                 <Button
                                     type="submit"
-                                    addClassNames="w-full mt-4 h-12 px-4 py-2 text-sm text-white bg-blue-500 rounded-lg hover:bg-blue-700 focus:ring focus:ring-purple-300 flex justify-center"
+                                    addClassNames="w-full mt-6 h-12 px-4 py-2 text-sm text-white bg-blue-500 rounded-lg hover:bg-blue-700 focus:ring focus:ring-purple-300 flex justify-center"
                                 >
                                     {isLoading ? " Đang" : "Đăng ký"}
                                 </Button>
-                                <hr className="my-10 " />
+                                <hr className="my-7 " />
                                 <Button
                                      type="button"
                                     onClick={login}

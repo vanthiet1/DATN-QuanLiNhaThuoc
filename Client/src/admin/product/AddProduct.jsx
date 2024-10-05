@@ -12,6 +12,9 @@ import useFetch from '../../hooks/useFetch';
 import productServices from '../../services/productService';
 import brandServices from '../../services/brandService';
 import categoryServices from '../../services/categoryService';
+import Editor from '../../components/ui/editor/Editor';
+import { SpinnerLoading } from '../../components/ui/loaders';
+import DiaLog from '../../components/dialog/DiaLog';
 
 const productBreadCrumbs = [
   {
@@ -43,16 +46,14 @@ const FormAddProduct = () => {
     handleSubmit,
     register,
     reset,
-    control,
     formState: { errors }
   } = useForm({ resolver: yupResolver(formProductSchema.product) });
-  const [editorLoaded, setEditorLoaded] = useState(false);
-  const [dataEditor, setDataEditor] = useState(null);
-  const [isLoadingFetch, setIsLoadingFetch] = useState(false);
   const [brandSelectData, setBrandSelectData] = useState(optionBrandDefault);
   const [categorySelectData, setCategorySelectData] = useState(optionSubCategoryDefault);
   const [isChangeCateSelect, setIsChangeCateSelect] = useState(false);
   const [subCategorySelectData, setsubCategorySelectData] = useState([]);
+  const [descriptionValue, setDescriptionValue] = useState('');
+  const [isLoadingCreateProduct, setIsLoadingCreateProduct] = useState('idle');
 
   const handleConvertSelect = (arr) => {
     return arr.map((item) => {
@@ -60,28 +61,20 @@ const FormAddProduct = () => {
     });
   };
 
-  useEffect(() => {
-    setEditorLoaded(true);
-    const handleFetchBrandAndSubCate = async () => {
-      try {
-        setIsLoadingFetch(true);
-        const [categoryData, brandData] = await Promise.all([categoryServices.getCategory(), brandServices.getBrand()]);
-        setIsLoadingFetch(false);
-        const brandSelectConvert = handleConvertSelect(brandData);
-        const categorySelectConvert = handleConvertSelect(categoryData);
-        console.log(categorySelectConvert);
-        setBrandSelectData(brandSelectConvert);
-        setCategorySelectData(categorySelectConvert);
-      } catch (error) {
-        console.log(error.message);
-      } finally {
-        setIsLoadingFetch(false);
-      }
-    };
-    handleFetchBrandAndSubCate();
-  }, []);
+  const cateAndBrandServices = [categoryServices.getCategory, brandServices.getBrand];
+  const { isLoading: isLoadingCateAndBrand, isError, messageError, responsData } = useFetch(cateAndBrandServices);
 
-  useEffect(() => { }, [isChangeCateSelect, subCategorySelectData]);
+  useEffect(() => {
+    if (Array.isArray(responsData) && responsData.length > 0) {
+      const [categoryData, brandData] = responsData;
+      const brandSelectConvert = handleConvertSelect(brandData);
+      const categorySelectConvert = handleConvertSelect(categoryData);
+      setBrandSelectData(brandSelectConvert);
+      setCategorySelectData(categorySelectConvert);
+    }
+  }, [responsData]);
+
+  useEffect(() => {}, [isChangeCateSelect, subCategorySelectData]);
 
   const handleChangeValueSelectCategory = (e) => {
     const value = e.target.value;
@@ -102,8 +95,15 @@ const FormAddProduct = () => {
     for (const key in productRest) {
       formData.append(key, productRest[key]);
     }
+    if (descriptionValue !== '') {
+      formData.append('description', descriptionValue);
+    }
+
+    setIsLoadingCreateProduct(true);
     await productServices.createProduct(formData);
     reset();
+    setIsLoadingCreateProduct(false);
+    setDescriptionValue();
   };
 
   return (
@@ -115,7 +115,7 @@ const FormAddProduct = () => {
               <label htmlFor='' className='font-medium text-sm mb-2'>
                 Product Image
               </label>
-              <FileInput refinput={register('productImg')} size='m' rounded='s'></FileInput>
+              <FileInput refinput={register('productImg')} size='m' rounded='s' multiple={true}></FileInput>
               {errors.productImg && <ErrorMessage messsage={errors.productImg.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
@@ -167,7 +167,7 @@ const FormAddProduct = () => {
               </label>
 
               <Textarea
-                placeholder='Enter product short desscription here'
+                placeholder='Enter product short description here'
                 rounded='s'
                 refinput={register('description_short')}
               />
@@ -190,19 +190,19 @@ const FormAddProduct = () => {
                 Full description
               </label>
 
-              <Textarea
-                placeholder='Enter product Full desscription here'
-                rounded='s'
-                rows='7'
-                refinput={register('description')}
-              />
-              {errors.description && <ErrorMessage messsage={errors.description.message}></ErrorMessage>}
+              {/* <Textarea placeholder='Enter product description here' rounded='s' refinput={register('description')} /> */}
+              <Editor name='description' editorLoaded={true} onChange={setDescriptionValue}></Editor>
+              {descriptionValue && (
+                <div className='font-normal mt-2 w-full p-2 text-sm text-gray-800 border border-slate-300 border-solid '>
+                  {descriptionValue}
+                </div>
+              )}
             </div>
           </div>
         </div>
         <div className='h-fit rounded-md w-full border border-gray-300 border-solid shadow-sm p-4'>
           <div>
-            {isLoadingFetch ? (
+            {isLoadingCateAndBrand ? (
               'Loading select ...'
             ) : (
               <>
@@ -257,6 +257,8 @@ const FormAddProduct = () => {
                 </div>
               </>
             )}
+
+            {isError && <div>{messageError}</div>}
           </div>
         </div>
       </div>
@@ -268,6 +270,12 @@ const FormAddProduct = () => {
       >
         Create
       </Button>
+      <DiaLog isOpen={isLoadingCreateProduct !== 'idle' && isLoadingCreateProduct}>
+        <div className='flex items-center justify-center flex-col'>
+          <SpinnerLoading size='30' />
+          <div className='text-gray-600 mt-2'>Đang trong quá trình tạo sản phẩm</div>
+        </div>
+      </DiaLog>
     </form>
   );
 };

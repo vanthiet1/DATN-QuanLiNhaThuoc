@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { PATH_ROUTERS_ADMIN } from '../../utils/constant/routers';
+import { PATH_ROUTERS_ADMIN, PATH_ROUTERS_CLIENT } from '../../utils/constant/routers';
 import AppIcons from '../../components/ui/icon';
 import { cn } from '../../utils/helpers/mergeClasses';
 import Button from '../ui/button/Button';
@@ -130,10 +130,14 @@ const dataMenu = [
     ]
   },
   {
+    icon: <AppIcons.LocationIcon />,
+    title: 'Adress',
+    path: PATH_ROUTERS_ADMIN.MANAGER_ADDRESS
+  },
+  {
     icon: <AppIcons.UserGroup />,
     title: 'User',
     subMenu: [
-   
       {
         path: PATH_ROUTERS_ADMIN.MANAGER_STAFF,
         title: 'Manager Staff'
@@ -148,7 +152,8 @@ const dataMenu = [
       }
     ]
   },
-  {
+    
+   {
     icon: <AppIcons.UserGroup />,
     title: 'Role',
     subMenu: [
@@ -158,15 +163,22 @@ const dataMenu = [
         path: PATH_ROUTERS_ADMIN.ALL_ROLE_USER,
       },
       {
-        icon: <AppIcons.UserGroup />,
+        icon: <AppIcons.PencilSquare />,
         title: 'Add Role',
         path: PATH_ROUTERS_ADMIN.ADD_ROLE_USER,
       },
+    
     ]
   },
-  
+
   {
-    icon: <AppIcons.NotiIcon />,
+    icon: <AppIcons.CommentIcon />,
+    title: 'Comment',
+    path: PATH_ROUTERS_ADMIN.ALL_COMMENT
+  },
+
+  {
+    icon: <AppIcons.ChatIcon />,
     title: 'Messages',
     path: PATH_ROUTERS_ADMIN.MESSAGES
   },
@@ -174,6 +186,11 @@ const dataMenu = [
     icon: <AppIcons.BanknotesIcon />,
     title: 'Transaction',
     path: PATH_ROUTERS_ADMIN.TRANSACTION
+  },
+  {
+    icon: <AppIcons.ArrowLeftCircle />,
+    title: 'HomePage',
+    path: PATH_ROUTERS_CLIENT.HOMEPAGE
   },
   {
     icon: <AppIcons.SetIcon />,
@@ -221,7 +238,7 @@ const MenuAdmin = ({ data, isSubMenu = false, addClassNames = '' }) => {
           } else {
             return (
               <MenuAdminItem isSubMenu={true} key={index + title} onClick={() => handleToggleMenu(title)}>
-                <Button addClassNames='text-[18px] font-medium text-gray-700 flex cursor-pointer w-full'>
+                <Button addClassNames='text-base font-medium text-gray-700 flex cursor-pointer w-full'>
                   <span className='flex flex-grow'>
                     {icon && icon}
                     <span className='ml-4'>{title}</span>
@@ -247,11 +264,11 @@ const MenuAdmin = ({ data, isSubMenu = false, addClassNames = '' }) => {
 
 const SidebarAdmin = () => {
   return (
-    <aside className='w-[270px] hidden lg:block overflow-y-auto'>
+    <aside className='w-[270px] hidden lg:block overflow-y-auto' id='sider-bar-main'>
       <h1 className='p-4 font-bold text-lg'>
         <Link to={PATH_ROUTERS_ADMIN.DASHBOARD}>Bình An Dược</Link>
       </h1>
-      <div className='p-4 mt-10' id='menu-admin-wrapper'>
+      <div className='p-4 mt-4' id='menu-admin-wrapper'>
         <MenuAdmin data={dataMenu} />
       </div>
     </aside>

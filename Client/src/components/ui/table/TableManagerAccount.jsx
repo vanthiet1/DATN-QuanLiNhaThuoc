@@ -19,19 +19,19 @@ const Table = ({ data, addClassNames, titleRow, cols, styleRows, handleDelete, h
                             <img src={data?.avatar || "https://res.cloudinary.com/dz93cdipw/image/upload/v1713866997/Book-Store/Avatar/kwuemqemetzsp4jw21mt.webp"} className='w-8 h-8 object-cover mr-2 rounded-full' alt="Client" />
                             {data?.fullname}
                         </td>
-                        <td className='p-3'>{data?.email}</td>
-                        <td className='p-3'>{data?.provider}</td>
-                        <td className='p-3'>
+                        <td className='p-2'>{data?.email}</td>
+                        <td className='p-2'>{data?.provider}</td>
+                        <td className='p-2'>
                             <span className={`inline-flex px-2 text-xs font-medium leading-5 rounded-full 
-                        ${data?.emailVerify === false ? 'px-3 py-1 w-max rounded-full text-orange-700 bg-red-500 dark:text-white' :
+                        ${data?.emailVerify === false ? 'px-2 py-1 w-max rounded-full text-orange-700 bg-red-500 dark:text-white' :
                                     data.emailVerify === true ? 'px-3 py-1 rounded-full dark:bg-green-700 text-white' : ""}`}>
                                 {data?.emailVerify ? "Đã kích hoạt" : "Chưa kích hoạt"}
                             </span>
                         </td>
-                        <td className='p-3'>{data?.is_active === 1 ? "Đang sử dụng" : "Vô hiệu hóa"}</td>
-                        <td className='p-3'>{formatsHelper.formatDate(data?.createdAt)}</td>
-                        <td className='p-3'>{data?.role_id?.role_Name}</td>
-                        <td className='p-3 flex gap-1'>
+                        <td className='p-2'>{data?.is_active === 1 ? "Đang sử dụng" : "Vô hiệu hóa"}</td>
+                        <td className='p-2'>{formatsHelper.formatDate(data?.createdAt)}</td>
+                        <td className='p-2'>{data?.role_id?.role_Name}</td>
+                        <td className='p-2 flex gap-1'>
                             <SelectBox
                                 onChange={(e) => handleUpdateRoleAccount(data._id, e.target.value)}
                                 optionData={roleData}
@@ -50,7 +50,6 @@ const Table = ({ data, addClassNames, titleRow, cols, styleRows, handleDelete, h
                 ))}
             </tbody>
         </table>
-
     )
 }
 

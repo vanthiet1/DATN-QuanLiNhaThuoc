@@ -179,20 +179,18 @@ const TemplateComponent = () => {
             <AppIcons.SquaresTwoxTwoIcon />
             <span>SquaresTwoxTwoIcon</span>
           </div>
+          <div className='flex gap-1 items-center'>
+            <AppIcons.EditIcon />
+            <span>EditIcon</span>
+          </div>
+          <div className='flex gap-1 items-center'>
+            <AppIcons.ArrowLeftCircle />
+            <span>ArrowLeftCircle</span>
+          </div>
+          <AppIcons.LocationIcon />
+          <span>Localtion</span>
         </div>
       </div>
-
-      {/*breadCrumb component */}
-      {/* <div className='pt-5'>
-        <h3 className='text-lg capitalize font-semibold mb-4'>BreadCrumb component</h3>
-        <div className='grid gap-3 w-fit'>
-          <BreadCrumb>
-            <a href=''>Home</a>
-            <a href=''>product</a>
-            <p>khẩu trang y tế</p>
-          </BreadCrumb>
-        </div>
-      </div> */}
     </div>
   );
 };
