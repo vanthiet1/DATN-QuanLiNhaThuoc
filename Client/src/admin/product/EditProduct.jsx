@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import SectionWrapper from '../../components/sectionWrapper/SectionWrapper';
 import BreadCrumb from '../../components/breadCrumb/BreadCrumb';
 import { PATH_ROUTERS_ADMIN } from '../../utils/constant/routers';
@@ -13,47 +13,58 @@ import productServices from '../../services/productService';
 import brandServices from '../../services/brandService';
 import categoryServices from '../../services/categoryService';
 import Editor from '../../components/ui/editor/Editor';
+import { useParams } from 'react-router-dom';
+import { DiaLog } from '../../components/dialog';
 import { SpinnerLoading } from '../../components/ui/loaders';
-import DiaLog from '../../components/dialog/DiaLog';
+import { useNavigate } from 'react-router-dom';
 
-const productBreadCrumbs = [
-  {
-    path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
-    icon: <AppIcons.HomeIcon width='16' height='16' />
-  },
-  {
-    title: 'Add product'
-  }
-];
+const FormEditProduct = () => {
+  const { productData } = useContext(FormEditProductContext);
+  console.log(productData);
+  const navigate = useNavigate();
 
-const optionSubCategoryDefault = [
-  {
-    title: 'Thuốc',
-    value: '66c2a08a860ea2d7f7413476'
-  }
-];
-
-const optionBrandDefault = [
-  {
-    title: 'yki',
-    value: '66c89fdaa4ef9971831b5e6a'
-  }
-];
-
-const FormAddProduct = () => {
   const {
     handleSubmit,
     register,
     reset,
+    setValue,
     formState: { errors }
   } = useForm({ resolver: yupResolver(formProductSchema.product) });
+
+  useEffect(() => {
+    if (productData) {
+      setValue('name', productData[0].name);
+      // setValue('sub_category_id', productData[0].sub_category_id);
+      setValue('brand_id', productData[0].brand_id);
+      setValue('description_short', productData[0].description_short);
+      setValue('percent_price', productData[0].percent_price);
+      setValue('price_distcount', productData[0].price_distcount);
+      setValue('price_old', productData[0].price_old);
+      setValue('stock', productData[0].stock);
+      setValue('productImg', productData[0].images);
+    }
+  }, [productData, setValue]);
+
+  const optionSubCategoryDefault = [
+    {
+      title: 'Thuốc',
+      value: '66c2a08a860ea2d7f7413476'
+    }
+  ];
+
+  const optionBrandDefault = [
+    {
+      title: 'yki',
+      value: '66c89fdaa4ef9971831b5e6a'
+    }
+  ];
+
   const [brandSelectData, setBrandSelectData] = useState(optionBrandDefault);
   const [categorySelectData, setCategorySelectData] = useState(optionSubCategoryDefault);
-  const [isChangeCateSelect, setIsChangeCateSelect] = useState(false);
+  const [isChangeCateSelect, setIsChangeCateSelect] = useState(true);
   const [subCategorySelectData, setsubCategorySelectData] = useState([]);
   const [descriptionValue, setDescriptionValue] = useState('');
-  const [isLoadingCreateProduct, setIsLoadingCreateProduct] = useState('idle');
+  const [isLoadingUpdateProduct, setIsLoadingUpdateProduct] = useState('idle');
 
   const handleConvertSelect = (arr) => {
     return arr.map((item) => {
@@ -85,7 +96,7 @@ const FormAddProduct = () => {
     setIsChangeCateSelect(true);
   };
 
-  const handleCreateProduct = async (data) => {
+  const handleUpdateProduct = async (data) => {
     const { productImg, ...productRest } = data;
     const formData = new FormData();
     Array.from(productImg).forEach((file) => {
@@ -99,15 +110,16 @@ const FormAddProduct = () => {
       formData.append('description', descriptionValue);
     }
 
-    setIsLoadingCreateProduct(true);
-    await productServices.createProduct(formData);
+    setIsLoadingUpdateProduct(true);
+    await productServices.updateProduct(productData[0]._id, formData);
     reset();
-    setIsLoadingCreateProduct(false);
-    setDescriptionValue();
+    setIsLoadingUpdateProduct(false);
+    setDescriptionValue('');
+    navigate(`/${PATH_ROUTERS_ADMIN.ALL_PRODUCT}`);
   };
 
   return (
-    <form onSubmit={handleSubmit(handleCreateProduct)} encType='multipart/form-data'>
+    <form onSubmit={handleSubmit(handleUpdateProduct)} encType='multipart/form-data'>
       <div className='grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
         <div className='md:col-span-2 rounded-md w-full border border-gray-300 border-solid shadow-sm p-4'>
           <div>
@@ -115,7 +127,7 @@ const FormAddProduct = () => {
               <label htmlFor='' className='font-medium text-sm mb-2'>
                 Product Image
               </label>
-              <FileInput refinput={register('productImg')} size='m' rounded='s' multiple={true}></FileInput>
+              <FileInput refinput={register('productImg')} size='m' rounded='s'></FileInput>
               {errors.productImg && <ErrorMessage messsage={errors.productImg.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
@@ -189,9 +201,12 @@ const FormAddProduct = () => {
               <label htmlFor='' className='font-medium text-sm mb-2'>
                 Full description
               </label>
-
-              {/* <Textarea placeholder='Enter product description here' rounded='s' refinput={register('description')} /> */}
-              <Editor name='description' editorLoaded={true} onChange={setDescriptionValue}></Editor>
+              <Editor
+                name='description'
+                value={productData ? productData[0].description : ''}
+                editorLoaded={true}
+                onChange={setDescriptionValue}
+              ></Editor>
               {descriptionValue && (
                 <div className='font-normal mt-2 w-full p-2 text-sm text-gray-800 border border-slate-300 border-solid '>
                   {descriptionValue}
@@ -270,25 +285,58 @@ const FormAddProduct = () => {
       >
         Create
       </Button>
-      <DiaLog isOpen={isLoadingCreateProduct !== 'idle' && isLoadingCreateProduct}>
+      <DiaLog isOpen={isLoadingUpdateProduct !== 'idle' && isLoadingUpdateProduct}>
         <div className='flex items-center justify-center flex-col'>
           <SpinnerLoading size='30' />
-          <div className='text-gray-600 mt-2'>Đang trong quá trình tạo sản phẩm</div>
+          <div className='text-gray-600 mt-2'>Đang trong quá trình cập nhật sản phẩm</div>
         </div>
       </DiaLog>
     </form>
   );
 };
 
-const AddProduct = () => {
+const FormEditProductContext = createContext();
+
+const FormEditProductContextProvider = ({ children }) => {
+  const { slug } = useParams();
+
+  const { isLoading, responsData: productData } = useFetch(() => productServices.getProductWithBySlug(slug), {}, [
+    slug
+  ]);
+
+  const productEditBreadCrumbs = [
+    {
+      path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
+      title: 'Dashboard',
+      icon: <AppIcons.HomeIcon width='16' height='16' />
+    },
+    {
+      path: `/${PATH_ROUTERS_ADMIN.ALL_PRODUCT}`,
+      title: 'All product'
+    },
+    {
+      title: productData ? productData[0].name : ''
+    }
+  ];
+
+  return (
+    <FormEditProductContext.Provider value={{ isLoading, productData }}>
+      <BreadCrumb crumbsData={productEditBreadCrumbs}></BreadCrumb>
+      {children}
+    </FormEditProductContext.Provider>
+  );
+};
+
+const EditProduct = () => {
   return (
     <div>
-      <SectionWrapper title='add product' addClassNames={{ wrapper: 'mt-2' }}>
-        <BreadCrumb crumbsData={productBreadCrumbs}></BreadCrumb>
-        <FormAddProduct />
+      <SectionWrapper title='Edit product' addClassNames={{ wrapper: 'mt-2' }}>
+        <FormEditProductContextProvider>
+          <FormEditProduct />
+        </FormEditProductContextProvider>
       </SectionWrapper>
     </div>
   );
 };
 
-export default AddProduct;
+export default EditProduct;

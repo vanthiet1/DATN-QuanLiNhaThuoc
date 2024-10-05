@@ -80,9 +80,11 @@ const productServices = {
       console.log(error.message);
     }
   },
-  updateProduct: async (requestParams) => {
+  updateProduct: async (requestParams, requestBody) => {
     try {
-      const { data } = await http.put(`${END_POIND_API.PRODUCT}/${requestParams}`);
+      const { data } = await http.put(`${END_POIND_API.PRODUCT}/${requestParams}`, requestBody, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
       console.log(data);
       showToastSuccess(data.message || 'Cập nhật sản phẩm thành công!');
       return data;
@@ -96,6 +98,15 @@ const productServices = {
       const { data } = await http.delete(`${END_POIND_API.PRODUCT}/${requestParams}`);
       showToastSuccess(data.message || 'Xóa sản phẩm thành công!');
       console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error.message);
+      showToastError(error.message);
+    }
+  },
+  getProductWithBySlug: async (requestParams) => {
+    try {
+      const { data } = await http.get(`${END_POIND_API.PRODUCT}/${requestParams}`);
       return data;
     } catch (error) {
       console.log(error.message);

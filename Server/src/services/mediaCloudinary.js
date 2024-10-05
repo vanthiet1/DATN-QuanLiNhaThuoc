@@ -18,6 +18,17 @@ const handleCreateImageUpload = async (pathImage, options = {}) => {
   }
 };
 
+const handleDeleteImageUpload = async (pathImage) => {
+  try {
+    const result = await cloudinary.uploader.destroy(pathImage);
+    console.log(result);
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 module.exports = {
-  handleCreateImageUpload
+  handleCreateImageUpload,
+  handleDeleteImageUpload
 };
