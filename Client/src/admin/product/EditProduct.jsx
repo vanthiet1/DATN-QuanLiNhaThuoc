@@ -15,7 +15,7 @@ import categoryServices from '../../services/categoryService';
 import Editor from '../../components/ui/editor/Editor';
 import { useParams } from 'react-router-dom';
 import { DiaLog } from '../../components/dialog';
-import { SpinnerLoading } from '../../components/ui/loaders';
+import { ProcessLoading, SpinnerLoading } from '../../components/ui/loaders';
 import { useNavigate } from 'react-router-dom';
 
 const FormEditProduct = () => {
@@ -285,12 +285,10 @@ const FormEditProduct = () => {
       >
         Create
       </Button>
-      <DiaLog isOpen={isLoadingUpdateProduct !== 'idle' && isLoadingUpdateProduct}>
-        <div className='flex items-center justify-center flex-col'>
-          <SpinnerLoading size='30' />
-          <div className='text-gray-600 mt-2'>Đang trong quá trình cập nhật sản phẩm</div>
-        </div>
-      </DiaLog>
+      <ProcessLoading
+        isLoading={isLoadingUpdateProduct}
+        message='Đang trong quá trình cập nhật sản phẩm'
+      ></ProcessLoading>
     </form>
   );
 };
