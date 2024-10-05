@@ -5,7 +5,9 @@ import { showToastError, showToastSuccess } from '../configs/toastConfig';
 const bannerServices = {
   addBanner: async (requestBody) => {
     try {
-      const { data } = await http.post(`${END_POIND_API.BANNER}/create`, requestBody);
+      const { data } = await http.post(`${END_POIND_API.BANNER}/create`, requestBody, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
       showToastSuccess(data.message || 'Thêm banner thành công');
       return data;
     } catch (error) {
@@ -35,7 +37,7 @@ const bannerServices = {
       console.log(error.message);
     }
   },
-  
+
   updateBanner: async (requestParams) => {
     try {
       const { data } = await http.put(`/${END_POIND_API.BANNER}/${requestParams}`);

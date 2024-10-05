@@ -1,19 +1,39 @@
 const BannerModel = require('../../models/bannerModel/banner');
+const { handleCreateImageUpload } = require('../../services/mediaCloudinary');
+const formatHelper = require('../../utilities/helper/formatHelper');
 
 const bannerController = {
   createBanner: async (req, res) => {
     try {
-      const { name, url_img } = req.body;
+      const { name } = req.body;
+      const imgFile = req.file;
 
-      if (!name || !url_img) {
+      if (!name || !imgFile) {
         return res.status(400).json({ message: 'Vui lòng nhập đầy đủ thông tin' });
       }
 
-      const newBanner = new BannerModel({ name, url_img });
+      let urlCloundCreated = '';
 
-      await newBanner.save();
+      if (imgFile) {
+        const b64 = Buffer.from(imgFile.buffer).toString('base64');
+        let dataURI = 'data:' + imgFile.mimetype + ';base64,' + b64;
 
-      res.status(201).json({ message: 'Đã thêm banner thành công',  newBanner });
+        const imageName = imgFile.originalname.split('.')[0];
+        const urlOptions = {
+          folder: 'nhathuoc/banners',
+          public_id: formatHelper.converStringToSlug(imageName)
+        };
+        const secure_url = await handleCreateImageUpload(dataURI, urlOptions);
+        urlCloundCreated = secure_url;
+        console.log(urlCloundCreated);
+      }
+
+      if (urlCloundCreated) {
+        const newBanner = new BannerModel({ name, url_img: urlCloundCreated });
+        await newBanner.save();
+
+        res.status(201).json({ message: 'Đã thêm banner thành công', newBanner });
+      }
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
