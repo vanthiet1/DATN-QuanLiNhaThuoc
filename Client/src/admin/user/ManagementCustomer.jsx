@@ -3,12 +3,12 @@ import { TableManagerAccount } from '../../components/ui/table/index.js';
 import userServices from '../../services/userService.js';
 import authServices from '../../services/authService.js';
 import useFetch from '../../hooks/useFetch.js';
-import { handleDelete , handleIsActiveAccount , handleUpdateRoleAccount  } from './handle.js';
+import { handleDelete,handleIsActiveAccount , handleUpdateRoleAccount } from './handle.js';
 import { useConfirmDialog } from "../../components/dialog/ConfirmDialogContext"; 
 import roleServices from '../../services/roleService.js';
-
-const ManagementUser = () => {
+const ManagementCustomer = () => {
     const confirmDialog = useConfirmDialog();
+
     const titleRow = [
         "Full name",
         "Email",
@@ -19,37 +19,35 @@ const ManagementUser = () => {
         "Role",
         "Action"
     ];
-    const { responsData: initialUserData } = useFetch(userServices.getAllUser);
+    
+    const { isLoading, isError, messsageError, responsData: initialCustomerData } = useFetch(userServices.getAllCustomer);
     const { responsData: initialRoleData } = useFetch(roleServices.getAllRole);
-    const [userData, setUserData] = useState([]);
+    
+    const [customerData, setCustomerData] = useState([]);
     const [roleData, setRoleData] = useState([]);
-
     useEffect(() => {
-        if (initialUserData && initialRoleData ) {
-            setUserData(initialUserData);
+        if (initialCustomerData && initialRoleData) {
+            setCustomerData(initialCustomerData);
             setRoleData(initialRoleData)
         }
-    }, [initialUserData,initialRoleData]);
-
-   const optionsRole = roleData.map(role => ({
-    value: role._id,
-    title: role.role_Name
-  }));
-  console.log(optionsRole);
-  
+    }, [initialCustomerData]);
+    const optionsRole = roleData.map(role => ({
+        value: role._id,
+        title: role.role_Name
+      }));
     return (
         <div>
             <TableManagerAccount
-                addClassNames={'w-[100%]'}
                 roleData={optionsRole}
-                data={userData}
+                addClassNames={'w-[100%]'}
+                data={customerData}
                 titleRow={titleRow}
-                handleDelete={(id) => handleDelete(id, userData, setUserData, userServices.deleteUser,confirmDialog)}
-                handleIsActiveAccount={(id) => handleIsActiveAccount(id, userServices.getAllUser, setUserData, authServices.handleIsActiveAccount)}
+                handleDelete={(id) => handleDelete(id, customerData, setCustomerData, userServices.deleteUser ,  confirmDialog)}
+                handleIsActiveAccount={(id) => handleIsActiveAccount(id, userServices.getAllStaff, setCustomerData, authServices.handleIsActiveAccount)}  
                 handleUpdateRoleAccount={(idUser, idRole) => handleUpdateRoleAccount(idUser, idRole, roleServices.updateRoleUser)}
             />
         </div>
     );
 };
 
-export default ManagementUser;
+export default ManagementCustomer;

@@ -141,14 +141,30 @@ const dataMenu = [
       {
         path: PATH_ROUTERS_ADMIN.MANAGER_USER,
         title: 'Manager User'
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.MANAGER_CUSTOMER,
+        title: 'Manager Customer'
       }
     ]
   },
   {
     icon: <AppIcons.UserGroup />,
     title: 'Role',
-    path: PATH_ROUTERS_ADMIN.ROLE_USER,
+    subMenu: [
+      {
+        icon: <AppIcons.UserGroup />,
+        title: 'All Role',
+        path: PATH_ROUTERS_ADMIN.ALL_ROLE_USER,
+      },
+      {
+        icon: <AppIcons.UserGroup />,
+        title: 'Add Role',
+        path: PATH_ROUTERS_ADMIN.ADD_ROLE_USER,
+      },
+    ]
   },
+  
   {
     icon: <AppIcons.NotiIcon />,
     title: 'Messages',

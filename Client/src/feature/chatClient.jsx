@@ -1,6 +1,6 @@
 import formatsHelper from '../utils/helpers/formats';
-import Button from '../components/ui/button';
-const chatClient = ({ staff, userLogin, messages }) => {
+import { Button } from '../components/ui/button';
+const chatClient = ({ staff, messages }) => {
   console.log(messages);
 
   return (
@@ -8,11 +8,7 @@ const chatClient = ({ staff, userLogin, messages }) => {
       <div className='w-[100%] h-[500px]  bg-[#272729] relative  flex flex-col max-md:w-[100%]'>
         <div className='border-b-[1px] pb-3 mb-5 flex items-center gap-2 p-3'>
           <div className='max-md:w-[100px]'>
-            <img
-              className='max-md:w-[100%]  w-[70px] rounded-[50px]'
-              src='https://res.cloudinary.com/dddz1buyw/image/upload/v1724658353/nhathuoc/products/img0698-1.jpg'
-              alt=''
-            />
+            <img className='max-md:w-[100%]  w-[70px] rounded-[50px]' src={staff?.avatar} alt='' />
           </div>
           <div>
             <span className='text-[#fff] font-bold block pt-3'>
@@ -31,18 +27,12 @@ const chatClient = ({ staff, userLogin, messages }) => {
             {messages.map((msg, index) => (
               <div
                 key={index}
-                className={`flex flex-col mb-2 ${msg.fromUserId === userLogin?._id ? 'items-end' : 'items-start'}`}
+                className={`flex flex-col mb-2 ${msg.fromUserId === msg?.toUserId ? 'items-end' : 'items-start'}`}
               >
                 <span className='text-[#fff] pb-1'>{formatsHelper.FormatDateAndTime(msg.timestamp)}</span>
                 <div className={`p-3 rounded-lg w-max flex items-center gap-3 text-white max-w-xs break-words`}>
                   <div>
                     <span>{msg?.message}</span>
-                    {msg?.productId && msg.productId.images && msg.productId.images.length > 0 && (
-                      <>
-                        <span>{msg.productId.name}</span>
-                        <img src={msg.productId.images[0].url_img} alt={msg.productId.name} />
-                      </>
-                    )}
                   </div>
                 </div>
               </div>

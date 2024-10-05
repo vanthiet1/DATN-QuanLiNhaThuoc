@@ -4,33 +4,10 @@ import { UserContext } from "../contexts/UserContext";
 import staffServices from "../services/staffService";
 import ChatClient from "./chatClient";
 import messageService from "../services/messageService";
-import Index from '../modules/auth/index'
+import { showToastError } from "../configs/toastConfig";
+import productServices from "../services/productService";
+import useFetch from "../hooks/useFetch";
 const Message = () => {
-    const product = {
-        _id: "66cc32b6c19d0ff1c809fc85",
-        name: "mặt nạ mát xa  Mon Aug 26 2024 14:45:44 GMT+0700 (Indochina Time)",
-        sub_category_id: "66c5ceb897c2e7b952aa6899",
-        brand_id: "66c5ceb897c2e7b952aa6899",
-        description: "San pham tot",
-        description_short: "San pham tot",
-        price_old: 100000,
-        price_distcount: 90000,
-        percent_price: 0,
-        stock: 100,
-        slug: "mat-na-mat-xa-mon-aug-26-2024-144544-gmt0700-indochina-time",
-        images: [
-            {
-                product_id: "66cc32b6c19d0ff1c809fc85",
-                url_img: "https://res.cloudinary.com/dddz1buyw/image/upload/v1724658353/nhathuoc/products/img0698-1.jpg",
-            },
-            {
-                product_id: "66cc32b6c19d0ff1c809fc85",
-                url_img: "https://res.cloudinary.com/dddz1buyw/image/upload/v1724658357/nhathuoc/products/img0709-2.jpg",
-            }
-        ]
-    };
-    
-
     const { user } = useContext(UserContext);
     const [inputMessage, setInputMessage] = useState("Tôi cần biết thêm");
     const [staff, setStaff] = useState([]);
@@ -38,21 +15,24 @@ const Message = () => {
     const [isShowStaff, setIsShowStaff] = useState(false);
     const [messages, setMessages] = useState([]);
     const [currentStaffId, setCurrentStaffId] = useState(null);
-   const idStaff = localStorage.getItem('idStaff')
-  
+    const idStaff = localStorage.getItem('idStaff')
+
+    const { responsData: product, isLoading, isError, messsageError } = useFetch(() => productServices.getProductWithById("66f179a695700d7bfd2ddf61"))
+
+
     useEffect(() => {
         const getMessageChat = async () => {
             if (user && idStaff) {
                 const dataMessage = await messageService.getMessage({
                     fromUserId: user?._id,
-                    toUserId: idStaff,
+                    toUserId: idStaff ? idStaff : staffSelectedChat,
                 })
                 if (dataMessage) setMessages(dataMessage);
             }
         }
         getMessageChat()
-    }, [user,idStaff])
- 
+    }, [user, idStaff])
+
     useEffect(() => {
         const getAllStaff = async () => {
             const data = await staffServices.getAllStaff();
@@ -70,7 +50,7 @@ const Message = () => {
         };
         getAnStaff();
     }, [idStaff]);
-  
+
     useEffect(() => {
         const handleReceiveMessage = (messageData) => {
             setMessages((prevMessages) => [...prevMessages, messageData]);
@@ -111,33 +91,40 @@ const Message = () => {
 
 
     const handleSendMessage = (staff) => {
-        if(!staff) return
+        if (!staff || !user) return showToastError("Vui lòng đăng nhập để tiếp tục")
         if (currentStaffId === staff._id) {
-        console.log("Bạn đã chọn nhân viên này rồi.");
-        return;
-    }
-    setCurrentStaffId(staff._id);
-        localStorage.setItem('idStaff',staff._id)
+            console.log("Bạn đã chọn nhân viên này rồi.");
+            return;
+        }
+        setCurrentStaffId(staff._id);
+        localStorage.setItem('idStaff', staff._id)
         const messageData = {
             fromUserId: user?._id,
             toUserId: staff._id,
             message: inputMessage,
             timestamp: new Date().toISOString()
         };
-        if (product?._id) {
-            messageData.productId = product;
+        if (product[0]?._id) {
+            messageData.productId = product[0]._id;
         }
         socket.emit('sendMessage', messageData);
         setMessages((prevMessages) => [...prevMessages, messageData]);
         setInputMessage("");
     };
+    console.log(messages);
 
     return (
         <div>
             <h1>Đây là chi tiết sản phẩm</h1>
             <div className="shadow p-2">
-                <span>{product.name}</span>
-                <img className="w-[200px]" src={product?.images[0].url_img} alt="" />
+                {product && product[0] && (
+                    <>
+                        <span>{product[0]?.name}</span>
+                        <img className="w-[200px]" src={product[0]?.images[0]?.url_img} alt="" />
+                    </>
+                )}
+
+
                 <button className="bg-blue-500 text-[#fff] w-full">Mua</button>
             </div>
 
@@ -149,7 +136,7 @@ const Message = () => {
                     {staff && staff.map((staff) => (
                         <div key={staff._id}>
                             <span className="block">{staff.fullname}</span>
-                          
+
                             <button
                                 onClick={() => {
                                     handleSendMessage(staff)
@@ -163,9 +150,8 @@ const Message = () => {
                 </>
             )}
             <div className="fixed z-10 top-[20%] right-0">
-                <ChatClient staff={staffSelectedChat} messages={messages} userLogin={user} />
+                <ChatClient staff={staffSelectedChat} messages={messages}  />
             </div>
-            
         </div>
     );
 };
