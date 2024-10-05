@@ -3,36 +3,23 @@ import Button from '../ui/button/Button';
 import formatsHelper from '../../utils/helpers/formats';
 import { Image } from '../ui/image';
 import AppIcons from '../../components/ui/icon';
-import productServices from '../../services/productService';
-import { useConfirmDialog } from '../dialog/ConfirmDialogContext';
 import { ProductAdminContext } from '../../admin/product/AllProduct';
+import { useNavigate } from 'react-router-dom';
 
 const imageSrcDefault =
   'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyODggMTgwIiB3aWR0aD0iMjg4IiBoZWlnaHQ9IjE4MCI+CiAgPHJlY3Qgd2lkdGg9IjI4OCIgaGVpZ2h0PSIxODAiIGZpbGw9IiNEQURBREFGRiI+PC9yZWN0PgogIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ibW9ub3NwYWNlIiBmb250LXNpemU9IjI2cHgiIGZpbGw9IiM0MDQwNDRGRiI+Tm8gSW1hZ2U8L3RleHQ+ICAgCjwvc3ZnPg==';
 
-const CardProductAdmin = ({ product, addClassname, ...props }) => {
-  const confirmDialog = useConfirmDialog();
+const CardProductAdmin = ({ product, addClassname }) => {
+  const { name, price_old, price_distcount, images, slug } = product;
+  const { handleDeleteProduct } = useContext(ProductAdminContext);
+  const navigate = useNavigate();
 
-  const { name, price_old, price_distcount, _id, images } = product;
-  const { handleRunAfterDeleteProductItem } = useContext(ProductAdminContext);
-
-  const handleDeleteProduct = async () => {
-    const result = await confirmDialog({
-      title: 'Xóa sản phẩm',
-      iconLeft: <AppIcons.TrashBinIcon />,
-      message: `Bạn có muốn xóa ${name} không ?`,
-      confirmLabel: 'Có, tôi đồng ý',
-      cancelLabel: 'Không, giữ lại'
-    });
-
-    if (result) {
-      await productServices.deleteProduct(_id);
-      handleRunAfterDeleteProductItem();
-    }
+  const handleSwitchToEditProduct = () => {
+    navigate(`/admin/edit-product/${slug}`);
   };
 
   return (
-    <div className='card-product border border-solid border-gray-200 rounded overflow-hidden'>
+    <div className={`card-product border border-solid border-gray-200 rounded overflow-hidden ${addClassname}`}>
       <Image
         src={images[0]?.url_img}
         alt={name}
@@ -63,6 +50,7 @@ const CardProductAdmin = ({ product, addClassname, ...props }) => {
               }
               rounded='s'
               outline={true}
+              onClick={() => handleSwitchToEditProduct()}
             >
               {<AppIcons.EditIcon width='20' height='20' />}
             </Button>
@@ -72,7 +60,7 @@ const CardProductAdmin = ({ product, addClassname, ...props }) => {
               }
               rounded='s'
               outline={true}
-              onClick={() => handleDeleteProduct()}
+              onClick={() => handleDeleteProduct(product)}
             >
               {<AppIcons.TrashBinIcon width='20' height='20' />}
             </Button>
