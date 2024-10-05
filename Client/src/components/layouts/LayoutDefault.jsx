@@ -1,6 +1,7 @@
 import { Link, Outlet } from 'react-router-dom';
 import { PATH_ROUTERS_ADMIN, PATH_ROUTERS_CLIENT } from '../../utils/constant/routers';
-
+import Header from './Header';
+import Navigation from './Navigation';
 const LayoutDefault = () => {
   return (
     <div>
@@ -48,6 +49,9 @@ const LayoutDefault = () => {
           Admin page
         </Link>
       </header>
+
+      <Header/>
+      <Navigation/>
       <div className='w-full flex items-center min-h-[500px] justify-center'>
         <Outlet />
       </div>
