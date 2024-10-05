@@ -14,8 +14,6 @@ const couponServices = {
       console.log(error.message);
     }
   },
-
-  // Get All Coupons
   getCoupons: async () => {
     try {
       const { data } = await http.get(`${END_POIND_API.COUPON}`);
