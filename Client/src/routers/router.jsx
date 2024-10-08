@@ -39,14 +39,14 @@ const AllRoleUser = lazy(() => import('../admin/role/allRole'));
 const ManagementStaff = lazy(() => import('../admin/user/ManagementStaff'));
 const ManagementUser = lazy(() => import('../admin/user/ManagementUser'));
 const ManagementCustomer = lazy(() => import('../admin/user/ManagementCustomer'));
-const AddRole = lazy(()=> import('../admin/role/addRole'));
+const AddRole = lazy(() => import('../admin/role/addRole'));
 const EditRole = lazy(() => import('../admin/role/editRole'));
-
 
 const ManagementAdress = lazy(() => import('../admin/address/ManagementAdress'));
 const Messages = lazy(() => import('../admin/messages/Messages'));
 const Transaction = lazy(() => import('../admin/transaction/Transaction'));
 const Orders = lazy(() => import('../admin/orders/Orders'));
+const OrderDetails = lazy(() => import('../admin/orders/OrderDetails'));
 
 const TemplateComponent = lazy(() => import('../admin/testComponents/TemplateComponent'));
 
@@ -314,6 +314,14 @@ const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <TemplateComponent />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.ORDER_DETAILS,
+        element: (
+          <SuspenseWrapper>
+            <OrderDetails />
           </SuspenseWrapper>
         )
       }

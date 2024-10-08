@@ -42,7 +42,8 @@ const PATH_ROUTERS_ADMIN = {
   MESSAGES: 'admin/messages',
   CUSTOMERS: 'admin/customers',
   SETTINGS: 'admin/settings',
-  TEMPLATECOMPONENT: 'admin/template-component'
+  TEMPLATECOMPONENT: 'admin/template-component',
+  ORDER_DETAILS: 'admin/orders/:id'
 };
 
 export { PATH_ROUTERS_CLIENT, PATH_ROUTERS_ADMIN };

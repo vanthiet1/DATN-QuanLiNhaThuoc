@@ -86,9 +86,9 @@ const ProductController = {
   },
   getAllProducts: async (req, res) => {
     try {
-      const { page, key, categoryId, sortField, sortOrder } = req.query;
+      const { page, key, limit, categoryId, sortField, sortOrder } = req.query;
       const totalItems = await ProductModel.countDocuments();
-      const itemOfPage = 8;
+      const itemOfPage = Number.parseInt(limit) || 8;
       const totalNumberPage = Math.ceil(totalItems / itemOfPage);
       const pageNumber = Number.parseInt(page) || 1;
 
