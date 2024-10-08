@@ -187,8 +187,14 @@ const TemplateComponent = () => {
             <AppIcons.ArrowLeftCircle />
             <span>ArrowLeftCircle</span>
           </div>
-          <AppIcons.LocationIcon />
-          <span>Localtion</span>
+          <div className='flex gap-1 items-center'>
+            <AppIcons.LocationIcon />
+            <span>Localtion</span>
+          </div>
+          <div className='flex gap-1 items-center'>
+            <AppIcons.PrinterIcon />
+            <span>PrinterIcon</span>
+          </div>
         </div>
       </div>
     </div>

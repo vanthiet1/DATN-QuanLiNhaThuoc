@@ -19,12 +19,18 @@ const EditProduct = lazy(() => import('../admin/product/EditProduct'));
 
 const AddCategory = lazy(() => import('../admin/category/AddCategory'));
 const AllCategory = lazy(() => import('../admin/category/AllCategory'));
+const EditCategory = lazy(() => import('../admin/category/EditCategory'));
+const EditSubCategory = lazy(() => import('../admin/category/EditSubCategory'));
 
 const AddBrand = lazy(() => import('../admin/brand/AddBrand'));
 const AllBrand = lazy(() => import('../admin/brand/AllBrand'));
+const EditBrand = lazy(() => import('../admin/brand/EditBrand'));
+
+const AllComment = lazy(() => import('../admin/comment/AllComment'));
 
 const AddCoupon = lazy(() => import('../admin/coupon/AddCoupon'));
 const AllCoupon = lazy(() => import('../admin/coupon/AllCoupon'));
+const EditCoupon = lazy(() => import('../admin/coupon/EditCoupon'));
 
 const AddBanner = lazy(() => import('../admin/banner/AddBanner'));
 const AllBanner = lazy(() => import('../admin/banner/AllBanner'));
@@ -40,13 +46,15 @@ const AllRoleUser = lazy(() => import('../admin/role/allRole'));
 const ManagementStaff = lazy(() => import('../admin/user/ManagementStaff'));
 const ManagementUser = lazy(() => import('../admin/user/ManagementUser'));
 const ManagementCustomer = lazy(() => import('../admin/user/ManagementCustomer'));
-const AddRole = lazy(()=> import('../admin/role/addRole'));
 
+const AddRole = lazy(() => import('../admin/role/addRole'));
+const EditRole = lazy(() => import('../admin/role/editRole'));
 
 const ManagementAdress = lazy(() => import('../admin/address/ManagementAdress'));
 const Messages = lazy(() => import('../admin/messages/Messages'));
 const Transaction = lazy(() => import('../admin/transaction/Transaction'));
 const Orders = lazy(() => import('../admin/orders/Orders'));
+const OrderDetails = lazy(() => import('../admin/orders/OrderDetails'));
 
 const TemplateComponent = lazy(() => import('../admin/testComponents/TemplateComponent'));
 
@@ -158,6 +166,22 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: PATH_ROUTERS_ADMIN.EDIT_CATEGORY,
+        element: (
+          <SuspenseWrapper>
+            <EditCategory />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.EDIT_SUBCATEGORY,
+        element: (
+          <SuspenseWrapper>
+            <EditSubCategory />
+          </SuspenseWrapper>
+        )
+      },
+      {
         path: PATH_ROUTERS_ADMIN.ADD_BRAND,
         element: (
           <SuspenseWrapper>
@@ -174,6 +198,14 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: PATH_ROUTERS_ADMIN.EDIT_BRAND,
+        element: (
+          <SuspenseWrapper>
+            <EditBrand />
+          </SuspenseWrapper>
+        )
+      },
+      {
         path: PATH_ROUTERS_ADMIN.ADD_COUPON,
         element: (
           <SuspenseWrapper>
@@ -186,6 +218,14 @@ const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <AllCoupon />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.EDIT_COUPON,
+        element: (
+          <SuspenseWrapper>
+            <EditCoupon />
           </SuspenseWrapper>
         )
       },
@@ -302,6 +342,14 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: PATH_ROUTERS_ADMIN.ALL_COMMENT,
+        element: (
+          <SuspenseWrapper>
+            <AllComment />
+          </SuspenseWrapper>
+        )
+      },
+      {
         path: PATH_ROUTERS_ADMIN.TRANSACTION,
         element: (
           <SuspenseWrapper>
@@ -314,6 +362,14 @@ const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <TemplateComponent />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.ORDER_DETAILS,
+        element: (
+          <SuspenseWrapper>
+            <OrderDetails />
           </SuspenseWrapper>
         )
       }

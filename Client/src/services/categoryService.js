@@ -29,23 +29,23 @@ const categoryServices = {
       console.log(data);
       return data;
     } catch (error) {
-      showToastError(error.response.data.message);
+     
       console.log(error.message);
     }
   },
   deleteCategory: async (resquestParrams) => {
     try {
-      const { data } = await http.delete(`/${END_POIND_API.CATEGORY}/${resquestParrams}`);
-      showToastSuccess(data.message || 'Xóa category thành công');
+      const { data } = await http.delete(`${END_POIND_API.CATEGORY}/${resquestParrams}`);
+      showToastSuccess('Xóa danh mục thành công');
       return data;
     } catch (error) {
       showToastError(error.response.data.message);
       console.log(error.message);
     }
   },
-  updateCategory: async (requestParams) => {
+  updateCategory: async (requestParams,requestBody) => {
     try {
-      const { data } = await http.put(`/${END_POIND_API.CATEGORY}/${requestParams}`);
+      const { data } = await http.put(`${END_POIND_API.CATEGORY}/${requestParams}`,requestBody);
       showToastSuccess(data.message || 'Cập nhật category thành công');
       return data;
     } catch (error) {

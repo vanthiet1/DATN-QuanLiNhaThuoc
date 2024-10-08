@@ -13,8 +13,7 @@ import productServices from '../../services/productService';
 import brandServices from '../../services/brandService';
 import categoryServices from '../../services/categoryService';
 import Editor from '../../components/ui/editor/Editor';
-import { SpinnerLoading } from '../../components/ui/loaders';
-import DiaLog from '../../components/dialog/DiaLog';
+import { ProcessLoading } from '../../components/ui/loaders';
 
 const productBreadCrumbs = [
   {
@@ -95,6 +94,7 @@ const FormAddProduct = () => {
     for (const key in productRest) {
       formData.append(key, productRest[key]);
     }
+
     if (descriptionValue !== '') {
       formData.append('description', descriptionValue);
     }
@@ -189,8 +189,6 @@ const FormAddProduct = () => {
               <label htmlFor='' className='font-medium text-sm mb-2'>
                 Full description
               </label>
-
-              {/* <Textarea placeholder='Enter product description here' rounded='s' refinput={register('description')} /> */}
               <Editor name='description' editorLoaded={true} onChange={setDescriptionValue}></Editor>
               {descriptionValue && (
                 <div className='font-normal mt-2 w-full p-2 text-sm text-gray-800 border border-slate-300 border-solid '>
@@ -270,12 +268,7 @@ const FormAddProduct = () => {
       >
         Create
       </Button>
-      <DiaLog isOpen={isLoadingCreateProduct !== 'idle' && isLoadingCreateProduct}>
-        <div className='flex items-center justify-center flex-col'>
-          <SpinnerLoading size='30' />
-          <div className='text-gray-600 mt-2'>Đang trong quá trình tạo sản phẩm</div>
-        </div>
-      </DiaLog>
+      <ProcessLoading isLoading={isLoadingCreateProduct} message='Đang trong quá trình tạo sản phẩm'></ProcessLoading>
     </form>
   );
 };
