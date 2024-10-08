@@ -94,9 +94,9 @@ const categoryController = {
     const { id } = req.params;
     const { name, description, position } = req.body;
 
-    if (!name || !description) {
-      return res.status(400).json({ message: 'Cần phải nhập tên và mô tả.' });
-    }
+    // if (!name || !description) {
+    //   return res.status(400).json({ message: 'Cần phải nhập tên và mô tả.' });
+    // }
 
     try {
       const updatedCategory = await CategoryModel.findByIdAndUpdate(id, { name, description, position }, { new: true });

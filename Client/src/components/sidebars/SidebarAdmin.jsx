@@ -189,7 +189,7 @@ const dataMenu = [
     path: PATH_ROUTERS_ADMIN.TRANSACTION
   },
   {
-    icon: <AppIcons.ArrowLeftCircle />,
+    // icon: <AppIcons.ArrowLeftCircle />,
     title: 'HomePage',
     path: PATH_ROUTERS_CLIENT.HOMEPAGE
   },
