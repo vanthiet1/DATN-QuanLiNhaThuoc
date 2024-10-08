@@ -18,9 +18,12 @@ const EditProduct = lazy(() => import('../admin/product/EditProduct'));
 
 const AddCategory = lazy(() => import('../admin/category/AddCategory'));
 const AllCategory = lazy(() => import('../admin/category/AllCategory'));
+const EditCategory = lazy(() => import('../admin/category/EditCategory'));
+const EditSubCategory = lazy(() => import('../admin/category/EditSubCategory'));
 
 const AddBrand = lazy(() => import('../admin/brand/AddBrand'));
 const AllBrand = lazy(() => import('../admin/brand/AllBrand'));
+const EditBrand = lazy(() => import('../admin/brand/EditBrand'));
 
 const AllComment = lazy(() => import('../admin/comment/AllComment'));
 
@@ -161,6 +164,22 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: PATH_ROUTERS_ADMIN.EDIT_CATEGORY,
+        element: (
+          <SuspenseWrapper>
+            <EditCategory />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.EDIT_SUBCATEGORY,
+        element: (
+          <SuspenseWrapper>
+            <EditSubCategory />
+          </SuspenseWrapper>
+        )
+      },
+      {
         path: PATH_ROUTERS_ADMIN.ADD_BRAND,
         element: (
           <SuspenseWrapper>
@@ -173,6 +192,14 @@ const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <AllBrand />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.EDIT_BRAND,
+        element: (
+          <SuspenseWrapper>
+            <EditBrand />
           </SuspenseWrapper>
         )
       },

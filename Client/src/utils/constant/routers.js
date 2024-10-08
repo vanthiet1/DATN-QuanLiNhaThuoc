@@ -16,6 +16,8 @@ const PATH_ROUTERS_ADMIN = {
   DETAILS_PRODUCT: 'admin/product-details/:slug',
   ADD_CATEGORY: 'admin/add-category',
   ALL_CATEGORY: 'admin/all-category',
+  EDIT_CATEGORY: 'admin/edit-category/:id',
+  EDIT_SUBCATEGORY: 'admin/edit-subcategory/:id',
   ORDERS: 'admin/orders',
   CATEGORY: 'admin/category',
   CUSTOMERS: 'admin/customers', // sử dụng cho update user
@@ -26,6 +28,7 @@ const PATH_ROUTERS_ADMIN = {
   ALL_BLOG: 'admin/all-blog',
   ADD_BRAND: 'admin/add-brand',
   ALL_BRAND: 'admin/all-brand',
+  EDIT_BRAND: 'admin/edit-brand/:id',
   ADD_COUPON: 'admin/add-coupon',
   ALL_COUPON: 'admin/all-coupon',
   EDIT_COUPON: 'admin/edit-coupon/:id',
