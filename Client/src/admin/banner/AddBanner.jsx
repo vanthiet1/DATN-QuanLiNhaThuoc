@@ -8,7 +8,9 @@ import BreadCrumb from '../../components/breadCrumb/BreadCrumb';
 import AppIcons from '../../components/ui/icon';
 import { ErrorMessage, InputText, FileInput } from '../../components/ui/form';
 import { Button } from '../../components/ui/button';
+import bannerServices from '../../services/bannerService';
 import { useState } from 'react';
+import { ProcessLoading } from '../../components/ui/loaders';
 
 const couponBreadCrumbs = [
   {
@@ -22,6 +24,7 @@ const couponBreadCrumbs = [
 ];
 
 const FormAddBanner = () => {
+  const [isLoadingCreateBanner, setIsLoadingCreateBanner] = useState('idle');
   const {
     handleSubmit,
     register,
@@ -29,16 +32,15 @@ const FormAddBanner = () => {
     formState: { errors }
   } = useForm({ resolver: yupResolver(formBannerSchema.bannerHero) });
 
-  const [name, setName] = useState('');
-  const [selectedFile, setSelectedFile] = useState(null);
-
   const handleCreate = async (data) => {
+    const { bannerImg, name } = data;
+    const formData = new FormData();
+    formData.append('bannerImg', bannerImg[0]);
+    formData.append('name', name);
+    setIsLoadingCreateBanner(true);
+    await bannerServices.addBanner(formData);
+    setIsLoadingCreateBanner(false);
     reset();
-  };
-
-  const handleChangeValueImg = (e) => {
-    setSelectedFile(e.target.files[0]);
-    console.log(selectedFile)
   };
 
   return (
@@ -57,8 +59,8 @@ const FormAddBanner = () => {
               <label htmlFor='' className='font-medium text-sm mb-2'>
                 Banner url img
               </label>
-              <FileInput onChange={(e) => handleChangeValueImg(e)}></FileInput>
-              {errors.url_img && <ErrorMessage messsage={errors.url_img.message}></ErrorMessage>}
+              <FileInput refinput={register('bannerImg')} size='m' rounded='s'></FileInput>
+              {errors.bannerImg && <ErrorMessage messsage={errors.bannerImg.message}></ErrorMessage>}
             </div>
           </div>
         </div>
@@ -71,6 +73,7 @@ const FormAddBanner = () => {
       >
         Create
       </Button>
+      <ProcessLoading isLoading={isLoadingCreateBanner} message='Đang trong quá trình tải banner' />
     </form>
   );
 };

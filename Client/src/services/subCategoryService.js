@@ -23,19 +23,29 @@ const subCategoryServices = {
       console.log(error.message);
     }
   },
+  getOneSubCategory: async (requestParams) => {
+    try {
+      const { data } = await http.get(`${END_POIND_API.SUB_CATEGORY}/${requestParams}`);
+      // console.log(data.data); // api trả về có {data} nên phải data.data
+      return data.data;
+    } catch (error) {
+      showToastError(error.response.data.message);
+      console.log(error.message);
+    }
+  },
   deleteSubCategory: async (resquestParrams) => {
     try {
-      const { data } = await http.delete(`/${END_POIND_API.SUB_CATEGORY}/${resquestParrams}`);
-      showToastSuccess(data.message || 'Xóa category thành công');
+      const { data } = await http.delete(`${END_POIND_API.SUB_CATEGORY}/${resquestParrams}`);
+      showToastSuccess(data.message || 'Xóa sub category thành công');
       return data;
     } catch (error) {
       showToastError(error.response.data.message);
       console.log(error.message);
     }
   },
-  updateSubCategory: async (requestParams) => {
+  updateSubCategory: async (requestParams,requestBody) => {
     try {
-      const { data } = await http.put(`/${END_POIND_API.SUB_CATEGORY}/${requestParams}`);
+      const { data } = await http.put(`${END_POIND_API.SUB_CATEGORY}/${requestParams}`,requestBody);
       showToastSuccess(data.message || 'Cập nhật category thành công');
       return data;
     } catch (error) {

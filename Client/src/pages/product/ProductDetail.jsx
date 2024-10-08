@@ -32,7 +32,7 @@ const ProductDetail = () => {
             <AppIcons.ArrowRight />
             <h1 className="text-[#6d6d6d] cursor-pointer">{product[0]?.name}</h1>
           </div>
-          <div className="flex pt-4 gap-3 bg-[#FFFFFF] shadow p-10 rounded-[5px] mb-5">
+          <div className="flex pt-4 gap-5 bg-[#FFFFFF] shadow p-10 rounded-[5px] mb-5">
             <div>
               <div className="w-[300px]">
                 <img className="w-full" src={product[0]?.images[0]?.url_img
@@ -53,7 +53,8 @@ const ProductDetail = () => {
               <h1 className="font-bold text-[30px]">{product[0]?.name}</h1>
               <div className="flex gap-3 pb-2">
                 <span className="block font-semibold">Danh mục:</span>
-                {product[0]?.sub_category.map((subCate) => (
+            
+                { product[0].sub_category.length < 0 &&  product[0]?.sub_category.map((subCate) => (
                   <div>
                     {subCate ? (
                       <span >{subCate?.name}</span>
@@ -62,10 +63,11 @@ const ProductDetail = () => {
                     )}
                   </div>
                 ))}
+           
               </div>
               <div className="flex gap-3 pb-2">
                 <span className="block font-semibold">Công dụng:</span>
-                <span className="max-w-[800px]">{product[0]?.description_short}</span>
+                <span className="max-w-[600px]">{product[0]?.description_short}</span>
               </div>
               <div className="flex gap-3 pb-2">
                 <span className="block font-semibold">Thương hiệu:</span>
@@ -111,7 +113,6 @@ const ProductDetail = () => {
               </div>
           
             </div>
-         
           </div>
           <div className=" pt-4 gap-3 bg-[#FFFFFF] shadow p-10 rounded-[5px]">
                  <h1 className="font-bold text-[25px] pb-4">Thông tin sản phẩm</h1>

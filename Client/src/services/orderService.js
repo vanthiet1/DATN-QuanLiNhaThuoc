@@ -15,7 +15,7 @@ const orderServices = {
   },
   getAllOrders: async (resquestParrams) => {
     try {
-      const { data } = await http.get(`${END_POIND_API.ORDER}/${resquestParrams}`);
+      const { data } = await http.get(`${END_POIND_API.ORDER}${resquestParrams}`);
       console.log(data);
       return data;
     } catch (error) {
@@ -27,7 +27,7 @@ const orderServices = {
     try {
       const { data } = await http.get(`${END_POIND_API.ORDER}/${resquestParrams}`);
       console.log(data);
-      return data;
+      return data[0];
     } catch (error) {
       showToastError(error.response.data.message);
       console.log(error.message);

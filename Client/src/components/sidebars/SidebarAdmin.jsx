@@ -4,6 +4,8 @@ import { PATH_ROUTERS_ADMIN, PATH_ROUTERS_CLIENT } from '../../utils/constant/ro
 import AppIcons from '../../components/ui/icon';
 import { cn } from '../../utils/helpers/mergeClasses';
 import Button from '../ui/button/Button';
+import LogoImage from '../../assets/images/logo/Asset 7.png';
+import Image from '../ui/image/Image';
 
 const MenuAdminItem = ({ children, isSubMenu = false, addClassNames = '', ...props }) => {
   return (
@@ -160,14 +162,19 @@ const dataMenu = [
       {
         icon: <AppIcons.UserGroup />,
         title: 'All Role',
-        path: PATH_ROUTERS_ADMIN.ALL_ROLE_USER,
+        path: PATH_ROUTERS_ADMIN.ALL_ROLE_USER
       },
       {
         icon: <AppIcons.PencilSquare />,
         title: 'Add Role',
+<<<<<<< HEAD
         path: PATH_ROUTERS_ADMIN.ADD_ROLE_USER,
       },
 
+=======
+        path: PATH_ROUTERS_ADMIN.ADD_ROLE_USER
+      }
+>>>>>>> 03c4e5dc6f2b02ab9e9aad0d5744ca115999fe6b
     ]
   },
 
@@ -266,9 +273,11 @@ const SidebarAdmin = () => {
   return (
     <aside className='w-[270px] hidden lg:block overflow-y-auto' id='sider-bar-main'>
       <h1 className='p-4 font-bold text-lg'>
-        <Link to={PATH_ROUTERS_ADMIN.DASHBOARD}>Bình An Dược</Link>
+        <Link to={PATH_ROUTERS_ADMIN.DASHBOARD}>
+          <Image src={LogoImage}></Image>
+        </Link>
       </h1>
-      <div className='p-4 mt-4' id='menu-admin-wrapper'>
+      <div className='p-4' id='menu-admin-wrapper'>
         <MenuAdmin data={dataMenu} />
       </div>
     </aside>
