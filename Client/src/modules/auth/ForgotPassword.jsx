@@ -1,13 +1,16 @@
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState , useContext } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { InputText } from "../../components/ui/form";
 import { Button } from "../../components/ui/button";
 import formAuthSchema from "../../utils/validations/formAuth";
 import forgotPasswordServices from "../../services/forgotPasswordService";
-
+import Logo from '../../assets/images/logo/logo.png'
+import { SpinnerLoading } from "../../components/ui/loaders";
+import { ToggleFormContext } from "../../contexts/ToggleFormContext";
 const ForgotPassword = () => {
   const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(formAuthSchema.forgotPassword) });
+  const {setDialogState} = useContext(ToggleFormContext)
   const [isLoading, setIsLoading] = useState(false); 
   const onSubmit = async (formData) => {
     if (!formData) return;
@@ -18,30 +21,26 @@ const ForgotPassword = () => {
       return; 
     }
     setIsLoading(false); 
+     setDialogState({isOpen:true,type:'newPassword'})
   };
 
+
   return (
-    <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800">
+    <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden  rounded-lg ">
       <div className="flex flex-col overflow-y-auto md:flex-row">
-        <div className="h-32 md:h-auto md:w-1/2">
-          <img
-            aria-hidden="true"
-            className="object-cover w-full h-full dark:hidden"
-            src="/static/media/login-office.c7786a89.jpeg"
-            alt="Office"
-          />
-          <img
-            aria-hidden="true"
-            className="hidden object-cover w-full h-full dark:block"
-            src="https://mernshop-admin.vercel.app/static/media/login-office.c7786a89.jpeg"
-            alt="Office"
-          />
-        </div>
-        <main className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
+      <div className=" md:h-auto md:w-[70%] flex justify-center items-center max-md:mb-5">
+            <img
+              aria-hidden="true"
+              className=" w-full h-[220px] dark:block max-md:h-[130px]"
+              src={Logo}
+              alt="Office"
+            />
+          </div>
+        <main className="flex items-center justify-center p-3 sm:p-1 md:w-1/2">
           <div className="w-full">
-            <h1 className="mb-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">Quên mật khẩu</h1>
+            <h1 className="mb-6 text-2xl font-semibold text-[#2563eb] ">Quên mật khẩu</h1>
             <form action="" onSubmit={handleSubmit(onSubmit)}>
-              <label className="block text-sm text-gray-700 dark:text-gray-400 font-medium pb-2">
+              <label className="block text-sm text-gray-800 font-semibold pb-2">
                 Email
               </label>
               <InputText
@@ -52,7 +51,7 @@ const ForgotPassword = () => {
                 name="email"
               />
               {errors.email && (
-                <p className="text-red-500 text-sm">
+                <p className="text-red-500 text-sm p-1">
                   {errors.email.message}
                 </p>
               )}
@@ -62,7 +61,7 @@ const ForgotPassword = () => {
                 addClassNames="w-full mt-4 h-12 px-4 py-2 text-sm text-white bg-blue-500 rounded-lg hover:bg-blue-700 focus:ring focus:ring-purple-300 flex justify-center"
                 type="submit"
               >
-                {isLoading ? "Đang..." : "Gửi mã xác nhận"} 
+                {isLoading ? <SpinnerLoading size="30" color='#fff' /> : "Gửi mã xác nhận"} 
               </Button>
             </form>
           </div>

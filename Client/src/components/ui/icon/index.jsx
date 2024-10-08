@@ -547,6 +547,11 @@ const LocationIcon = ({ width = '24', height = '24', addClassNames = 'text-[#374
     </svg>
   );
 };
+const ArrowDown = ({ width = '24', height = '24', addClassNames = '' }) => {
+  return (
+    <svg className={addClassNames} width={width} height={height} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M7.293 9.293a1 1 0 0 1 1.414 0L12 12.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414Z" fill="#000000"></path></svg>
+  );
+};
 
 const ArrowLeftCircle = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
@@ -567,6 +572,26 @@ const ArrowLeftCircle = ({ width = '24', height = '24', addClassNames = '' }) =>
     </svg>
   );
 };
+const ArrowRight = ({ width = '24', height = '24', addClassNames = '' }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor" 
+      strokeWidth="2"
+      strokeLinecap="round" 
+      strokeLinejoin="round" 
+      className={`icon-arrow ${addClassNames}`} 
+      width={width}
+      height={height}
+    >
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  );
+};
+
+
 
 const PrinterIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
@@ -621,6 +646,10 @@ const icons = {
   CommentIcon,
   EditIcon,
   LocationIcon,
+  ArrowDown,
+  ArrowRight,
+  PrinterIcon,
+  ArrowRight,
   PrinterIcon
 };
 

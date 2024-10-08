@@ -4,7 +4,7 @@ import { PATH_ROUTERS_ADMIN, PATH_ROUTERS_CLIENT } from '../../utils/constant/ro
 import AppIcons from '../../components/ui/icon';
 import { cn } from '../../utils/helpers/mergeClasses';
 import Button from '../ui/button/Button';
-import LogoImage from '../../assets/images/logo/Asset 7.png';
+import LogoImage from '../../assets/images/logo/logo1.png';
 import Image from '../ui/image/Image';
 
 const MenuAdminItem = ({ children, isSubMenu = false, addClassNames = '', ...props }) => {
@@ -167,8 +167,10 @@ const dataMenu = [
       {
         icon: <AppIcons.PencilSquare />,
         title: 'Add Role',
-        path: PATH_ROUTERS_ADMIN.ADD_ROLE_USER
-      }
+        path: PATH_ROUTERS_ADMIN.ADD_ROLE_USER,
+      },
+
+       
     ]
   },
 

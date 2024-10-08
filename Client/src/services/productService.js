@@ -112,7 +112,17 @@ const productServices = {
       console.log(error.message);
       showToastError(error.message);
     }
-  }
+  },
+  
+  getProductWithCategory: async (requestParams) => {
+    try {
+      const { data } = await http.get(`/category${END_POIND_API.PRODUCT}/${requestParams}`);
+      return data;
+    } catch (error) {
+      console.log(error.message);
+      showToastError(error.message);
+    }
+  },
 };
 
 export default productServices;

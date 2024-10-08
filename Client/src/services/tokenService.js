@@ -6,6 +6,12 @@ const tokenService = {
 
     setAccessToken: (token) => localStorage.setItem('access_token', token),
 
+    setDisposableEmail: (email) => localStorage.setItem('disposable_email', email),
+
+    getDisposableEmail: () => localStorage.getItem('disposable_email'),
+
+    removeDisposableEmail: () => localStorage.removeItem('disposable_email'),
+
     removeAccessToken: () => localStorage.removeItem('access_token'),
 
     refreshToken: async () => {
