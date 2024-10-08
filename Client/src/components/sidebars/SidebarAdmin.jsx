@@ -151,7 +151,7 @@ const dataMenu = [
   },
 
   {
-    icon: <AppIcons.UserGroup />,
+    icon: <AppIcons.UserIcon />,
     title: 'Role',
     subMenu: [
       {
