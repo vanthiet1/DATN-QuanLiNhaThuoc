@@ -4,7 +4,8 @@ const PaymentMethodSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true
+      required: true,
+      enum: ['thanh toán khi nhận hàng', 'thanh toán qua online momo', 'thanh toán qua online Vnpay']
     },
     image: {
       type: String,
