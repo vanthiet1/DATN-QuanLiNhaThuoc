@@ -132,11 +132,6 @@ const dataMenu = [
     ]
   },
   {
-    icon: <AppIcons.LocationIcon />,
-    title: 'Adress',
-    path: PATH_ROUTERS_ADMIN.MANAGER_ADDRESS
-  },
-  {
     icon: <AppIcons.UserGroup />,
     title: 'User',
     subMenu: [
@@ -167,10 +162,8 @@ const dataMenu = [
       {
         icon: <AppIcons.PencilSquare />,
         title: 'Add Role',
-        path: PATH_ROUTERS_ADMIN.ADD_ROLE_USER,
-      },
-
-       
+        path: PATH_ROUTERS_ADMIN.ADD_ROLE_USER
+      }
     ]
   },
 
@@ -191,9 +184,14 @@ const dataMenu = [
     path: PATH_ROUTERS_ADMIN.TRANSACTION
   },
   {
-    // icon: <AppIcons.ArrowLeftCircle />,
+    icon: <AppIcons.ArrowLeftCircle />,
     title: 'HomePage',
     path: PATH_ROUTERS_CLIENT.HOMEPAGE
+  },
+  {
+    icon: <AppIcons.LocationIcon />,
+    title: 'Adress',
+    path: PATH_ROUTERS_ADMIN.MANAGER_ADDRESS
   },
   {
     icon: <AppIcons.SetIcon />,
