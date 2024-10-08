@@ -533,7 +533,7 @@ const EditIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
     </svg>
   );
 };
-const LocationIcon = ({ width = '24', height = '24', addClassNames = 'text-[#374151]' }) => {
+const LocationIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
     <svg
       fill='currentColor'
