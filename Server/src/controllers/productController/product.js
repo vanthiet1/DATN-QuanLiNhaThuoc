@@ -277,8 +277,16 @@ const ProductController = {
               foreignField: '_id',
               as: 'brand'
             }
+          },
+          {
+            $lookup: {
+              from: 'subcategories', 
+              localField: 'sub_category_id',  
+              foreignField: '_id', 
+              as: 'sub_category'
+            }
           }
-        ]);
+        ])
         return res.status(200).json(product);
       }
     } catch (error) {

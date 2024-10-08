@@ -3,6 +3,14 @@ import END_POIND_API from '../utils/helpers/endpoind';
 import { showToastError, showToastSuccess } from '../configs/toastConfig';
 
 const bannerServices = {
+  getAllBanner: async () => {
+    try {
+      const { data } = await http.get(`${END_POIND_API.BANNER}`);
+      return data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
   addBanner: async (requestBody) => {
     try {
       const { data } = await http.post(`${END_POIND_API.BANNER}/create`, requestBody);
