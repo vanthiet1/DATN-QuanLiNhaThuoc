@@ -6,6 +6,7 @@ import SuspenseWrapper from '../components/suspenseWrapper/SuspenseWrapper';
 
 const HomePage = lazy(() => import('../pages/homePage/HomePage'));
 const ProductSearch = lazy(() => import('../pages/productSearch/ProductSearch'));
+const ProductDetail = lazy(() => import('../pages/product/ProductDetail'))
 const CategoryDetails = lazy(() => import('../pages/category/CategoryDetails'));
 const Cart = lazy(() => import('../pages/cart/Cart'));
 const BlogDetails = lazy(() => import('../pages/blog/BlogDetails'));
@@ -40,7 +41,6 @@ const ManagementStaff = lazy(() => import('../admin/user/ManagementStaff'));
 const ManagementUser = lazy(() => import('../admin/user/ManagementUser'));
 const ManagementCustomer = lazy(() => import('../admin/user/ManagementCustomer'));
 const AddRole = lazy(()=> import('../admin/role/addRole'));
-const EditRole = lazy(() => import('../admin/role/editRole'));
 
 
 const ManagementAdress = lazy(() => import('../admin/address/ManagementAdress'));
@@ -67,7 +67,7 @@ const router = createBrowserRouter([
         path: PATH_ROUTERS_CLIENT.PRODUCT_DETAILS,
         element: (
           <SuspenseWrapper>
-            <ProductSearch />
+            <ProductDetail />
           </SuspenseWrapper>
         )
       },
