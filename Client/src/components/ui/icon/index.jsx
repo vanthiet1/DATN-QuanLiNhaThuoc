@@ -649,9 +649,12 @@ const icons = {
 <<<<<<< HEAD
   ArrowDown,
   ArrowRight
-=======
   PrinterIcon
 >>>>>>> 03c4e5dc6f2b02ab9e9aad0d5744ca115999fe6b
+=======
+  ArrowRight,
+  PrinterIcon
+>>>>>>> a9bce055a762f40998302f046e706009b5e288d4
 };
 
 export default icons;

@@ -47,11 +47,17 @@ const ManagementStaff = lazy(() => import('../admin/user/ManagementStaff'));
 const ManagementUser = lazy(() => import('../admin/user/ManagementUser'));
 const ManagementCustomer = lazy(() => import('../admin/user/ManagementCustomer'));
 <<<<<<< HEAD
+<<<<<<< HEAD
 const AddRole = lazy(()=> import('../admin/role/addRole'));
 =======
 const AddRole = lazy(() => import('../admin/role/addRole'));
 const EditRole = lazy(() => import('../admin/role/editRole'));
 >>>>>>> 03c4e5dc6f2b02ab9e9aad0d5744ca115999fe6b
+=======
+
+const AddRole = lazy(() => import('../admin/role/addRole'));
+const EditRole = lazy(() => import('../admin/role/editRole'));
+>>>>>>> a9bce055a762f40998302f046e706009b5e288d4
 
 const ManagementAdress = lazy(() => import('../admin/address/ManagementAdress'));
 const Messages = lazy(() => import('../admin/messages/Messages'));
