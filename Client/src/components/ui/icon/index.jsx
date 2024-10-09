@@ -649,8 +649,6 @@ const icons = {
   ArrowDown,
   ArrowRight,
   PrinterIcon,
-  ArrowRight,
-  PrinterIcon
 };
 
 export default icons;
