@@ -24,3 +24,6 @@ export const getResultStatus = (status) => {
       return ORDER_STATUS[status];
   }
 };
+
+export const DATE_TYPE_IS_YEAR_TO_DATE = 'yyyy-MM-dd';
+export const DATE_TYPE_IS_DATE_TO_YEAR = 'dd-MM-yyyy';
