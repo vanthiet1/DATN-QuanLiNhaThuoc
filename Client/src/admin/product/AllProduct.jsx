@@ -188,7 +188,7 @@ const ProducShowWrapper = () => {
         </div>
       )}
       <div>
-        {productData && (
+        {productData && productData.productsList.length > 0 && (
           <PaginatedItems totalNumberPage={productData.totalNumberPage} setNumberPage={handleChangeNumberPage} />
         )}
       </div>

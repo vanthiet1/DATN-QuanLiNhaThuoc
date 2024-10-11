@@ -3,7 +3,7 @@ import SectionWrapper from '../../components/sectionWrapper/SectionWrapper';
 import BreadCrumb from '../../components/breadCrumb/BreadCrumb';
 import { PATH_ROUTERS_ADMIN } from '../../utils/constant/routers';
 import AppIcons from '../../components/ui/icon';
-import { ErrorMessage, FileInput, InputText, SelectBox, Textarea } from '../../components/ui/form';
+import { ErrorMessage, FileInput, InputDate, InputText, SelectBox, Textarea } from '../../components/ui/form';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import formProductSchema from '../../utils/validations/formProduct';
@@ -103,7 +103,7 @@ const FormAddProduct = () => {
     await productServices.createProduct(formData);
     reset();
     setIsLoadingCreateProduct(false);
-    setDescriptionValue();
+    setDescriptionValue('');
   };
 
   return (
@@ -160,6 +160,22 @@ const FormAddProduct = () => {
                 refinput={register('percent_price')}
               />
               {errors.percent_price && <ErrorMessage messsage={errors.percent_price.message}></ErrorMessage>}
+            </div>
+            <div className='grid grid-cols-2 gap-4'>
+              <div className='flex flex-col text-gray-700 mb-4'>
+                <label htmlFor='' className='font-medium text-sm mb-2'>
+                  Production date
+                </label>
+                <InputDate size='m' rounded='s' refinput={register('production_date')} />
+                {errors.production_date && <ErrorMessage messsage={errors.production_date.message}></ErrorMessage>}
+              </div>
+              <div className='flex flex-col text-gray-700 mb-4'>
+                <label htmlFor='' className='font-medium text-sm mb-2'>
+                  Expiration date
+                </label>
+                <InputDate size='m' rounded='s' refinput={register('expiration_date')} />
+                {errors.expiration_date && <ErrorMessage messsage={errors.expiration_date.message}></ErrorMessage>}
+              </div>
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
