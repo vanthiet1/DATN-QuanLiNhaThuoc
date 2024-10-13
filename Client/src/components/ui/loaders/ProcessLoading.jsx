@@ -13,8 +13,8 @@ const ProcessLoading = ({ isLoading = 'idle', message = '' }) => {
   );
 };
 
-ProcessLoading.prototype = {
-  isLoading: PropTypes.oneOf('idle', true, false)
+ProcessLoading.propTypes = {
+  isLoading: PropTypes.oneOf(['idle', true, false])
 };
 
 export default ProcessLoading;
