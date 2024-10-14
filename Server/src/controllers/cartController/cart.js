@@ -5,11 +5,18 @@ const Cart = {
         try {
             const { userId, products } = req.body;
     
+            if (!userId) {
+                return res.status(400).json({ message: "userId không được để trống." });
+            }
+            if (!products || products.length === 0) {
+                return res.status(400).json({ message: "Phải có ít nhất một sản phẩm trong giỏ hàng." });
+            }
+    
             let cart = await CartModel.findOne({ userId });
-            
+    
             if (!cart) {
                 cart = new CartModel({
-                    userId,
+                    userId, // Thêm userId
                     productList: [],
                     totalPrice: 0
                 });
@@ -27,40 +34,48 @@ const Cart = {
                     (item) => item.productId.toString() === productId
                 );
     
+                const price = Number(product.price_old);
+                const totalPriceProduct = price * Number(quantity); 
+    
                 if (existingProductIndex > -1) {
                     cart.productList[existingProductIndex].quantity += quantity;
+                    cart.productList[existingProductIndex].totalPriceProduct =
+                        cart.productList[existingProductIndex].quantity * price;
                 } else {
                     cart.productList.push({
                         productId,
                         name: product.name,
                         quantity: Number(quantity),
-                        price: Number(product.price_old)
+                        price: Number(product.price_old),
+                        totalPriceProduct: totalPriceProduct, 
                     });
                 }
             }
     
             await cart.save();
     
-            const populatedCart = await CartModel.findOne({ userId }).populate('productList.productId');
-    
-            populatedCart.totalPrice = populatedCart.productList.reduce((total, item) => {
-                const itemTotal = Number(item.quantity) * Number(item.productId.price_old); 
-                return total + (isNaN(itemTotal) ? 0 : itemTotal);
+            cart.totalPrice = cart.productList.reduce((total, item) => {
+                return total + (item.totalPriceProduct || 0); 
             }, 0);
     
-            await populatedCart.save();
+            await cart.save();
     
-            res.status(200).json(populatedCart);
+            res.status(201).json({message:"Thêm sản phẩm vào giỏ hàng thành công",cart});
         } catch (error) {
+            console.error("Lỗi trong addToCart:", error);
             res.status(500).json({ message: error.message });
         }
     },
+    
+    
     
     
     getCartByUserId: async (req, res) => {
         try {
             const { userId } = req.params
             const Cart = await CartModel.find({ userId })
+            .populate('productList.productId');
+             
             if (!Cart) {
                 return res.status(404).json({ message: "Giỏ hàng của người dùng nãy rỗng" });
             }
