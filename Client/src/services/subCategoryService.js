@@ -16,20 +16,24 @@ const subCategoryServices = {
   getSubCategory: async () => {
     try {
       const { data } = await http.get(`${END_POIND_API.SUB_CATEGORY}`);
-      // console.log(data.data); // api trả về có {data} nên phải data.data
-      return data.data;
+      return data;
     } catch (error) {
-      showToastError(error.response.data.message);
       console.log(error.message);
     }
   },
   getOneSubCategory: async (requestParams) => {
     try {
       const { data } = await http.get(`${END_POIND_API.SUB_CATEGORY}/${requestParams}`);
-      // console.log(data.data); // api trả về có {data} nên phải data.data
-      return data.data;
+      return data;
     } catch (error) {
-      showToastError(error.response.data.message);
+      console.log(error.message);
+    }
+  },
+  getProductBySubCategory: async (requestParams) => {
+    try {
+      const { data } = await http.get(`${END_POIND_API.SUB_CATEGORY}/${END_POIND_API.PRODUCT}/${requestParams}`);      
+      return data;
+    } catch (error) {
       console.log(error.message);
     }
   },

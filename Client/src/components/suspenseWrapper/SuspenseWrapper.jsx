@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-
+import { SpinnerLoading } from '../ui/loaders';
 const ErrorFallback = ({ error, resetErrorBoundary }) => (
   <div>
     <p>Something went wrong:</p>
@@ -10,7 +10,9 @@ const ErrorFallback = ({ error, resetErrorBoundary }) => (
 );
 
 const Loading = () => {
-  return <div className='loading-spinner'>Loading...</div>;
+  return <div className='loading-spinner'>
+    <SpinnerLoading />
+  </div>;
 };
 
 const SuspenseWrapper = ({ children }) => {

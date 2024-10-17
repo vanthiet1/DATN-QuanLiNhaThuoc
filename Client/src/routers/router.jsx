@@ -8,6 +8,7 @@ const HomePage = lazy(() => import('../pages/homePage/HomePage'));
 const ProductSearch = lazy(() => import('../pages/productSearch/ProductSearch'));
 const ProductDetail = lazy(() => import('../pages/product/ProductDetail'))
 const CategoryDetails = lazy(() => import('../pages/category/CategoryDetails'));
+const SubcategoryDetails = lazy(() => import('../pages/category/SubCategoryDetail'));
 const Cart = lazy(() => import('../pages/cart/Cart'));
 const BlogDetails = lazy(() => import('../pages/blog/BlogDetails'));
 const Pharmacy = lazy(() => import('../pages/pharmacy/PharmacyDetails'));
@@ -84,6 +85,14 @@ const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <CategoryDetails />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_CLIENT.SUBCATEGORIES_DETAILS,
+        element: (
+          <SuspenseWrapper>
+            <SubcategoryDetails />
           </SuspenseWrapper>
         )
       },

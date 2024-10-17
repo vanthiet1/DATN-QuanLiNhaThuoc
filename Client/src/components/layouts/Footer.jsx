@@ -119,9 +119,6 @@ const Footer = () => {
                 </a>
               </div>
             </div>
-
-
-
             <h1 className="font-bold mb-3 mt-9">Tải Ứng Dụng Trên Điện Thoại</h1>
             <div className="flex space-x-2">
               <img src={logoAppStore} alt="App Store" className="w-[120px] h-auto cursor-pointer" />
@@ -130,7 +127,7 @@ const Footer = () => {
 
             <h1 className="font-bold mb-3 mt-9">Chứng Nhận Bởi</h1>
             <div className="flex space-x-2">
-              <img src="" alt="App Store" className="w-[120px] h-auto cursor-pointer" />              
+              <img src={logoCongthuong} alt="App Store" className="w-[120px] h-auto cursor-pointer" />              
             </div>
           </div>
         </div>

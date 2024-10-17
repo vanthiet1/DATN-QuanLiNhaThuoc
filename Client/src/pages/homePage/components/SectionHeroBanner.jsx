@@ -2,7 +2,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import bannerServices from "../../../services/bannerService";
 import useFetch from '../../../hooks/useFetch';
 import SpinnerLoading from "../../../components/ui/loaders/SpinnerLoading";
-import sliderConfig from "../../../configs/sliderConfig";
+import { sliderConfigBanner } from '../../../configs/sliderConfig';
 import 'swiper/css';
 import 'swiper/css/pagination';
 const SectionHeroBanner = () => {
@@ -13,7 +13,7 @@ const SectionHeroBanner = () => {
     return (
         <div className="flex  w-[1400px] h-auto m-auto items-center gap-2 ">
             <Swiper
-                {...sliderConfig}
+                {...sliderConfigBanner}
                 className="mySwiper rounded-[5px]"
             >
                 {initialBannerData && initialBannerData.map((banner, index) => (

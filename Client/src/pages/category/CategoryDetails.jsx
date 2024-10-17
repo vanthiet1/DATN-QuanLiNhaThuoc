@@ -7,10 +7,10 @@ import CardProduct from '../../components/card/CardProduct';
 import formatsHelper from '../../utils/helpers/formats';
 const CategoryDetails = () => {
   const { id } = useParams();
-  console.log(id);
 
   const [categoriesProduct, setCategoriesProduct] = useState([]);
   const { responsData, isLoading } = useFetch(() => productServices.getProductWithCategory(id), {}, [id]);
+  
 
   useEffect(() => {
     if (!isLoading && responsData) {
@@ -22,17 +22,17 @@ const CategoryDetails = () => {
 
   if (isLoading) return (
     <div className="flex justify-center pt-[50px]">
-      <SpinnerLoading />
+      <SpinnerLoading/>
     </div>
   );
 
   return (
     <div>
          <div className="grid grid-cols-4 gap-5">
-        {categoriesProduct.length > 0 ? (
+             {categoriesProduct.length > 0 ? (
           categoriesProduct && categoriesProduct.map(product => (
             <CardProduct
-              image={ product?.images[0]?.url_img}
+              image={product?.images[0]?.url_img}
               name={product?.name}
               description_short={product?.description_short}
               priceNew={formatsHelper.currency(product?.price_distcount)}
@@ -40,9 +40,9 @@ const CategoryDetails = () => {
               detail={`/product/${product?.slug}`}
             />
           ))) : (
-         <div className='ml-[200px] w-full'>
-           <p className='pt-5'>Không có sản phẩm nào trong danh mục này.</p>
-         </div>
+            <div className="col-span-4 flex items-center justify-center w-full h-full">
+      <p className="pt-5 text-center">Tạm thời chưa có</p>
+    </div>
         )}
       </div>
     </div>

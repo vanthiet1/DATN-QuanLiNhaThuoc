@@ -5,7 +5,7 @@ Router.post('/', CartController.addToCart)
 Router.get('/:userId', CartController.getCartByUserId)
 Router.delete('/:id', CartController.deleteCartById)
 Router.put('/updateCart', CartController.updateCart)
-Router.delete('/product/:userId', CartController.deleteProductCart)
+Router.delete('/product/:userId/:productId', CartController.deleteProductCart)
 
 
 module.exports = Router;

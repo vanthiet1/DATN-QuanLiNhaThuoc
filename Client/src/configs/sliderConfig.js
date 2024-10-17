@@ -1,7 +1,7 @@
 import { Pagination, Autoplay, Navigation } from 'swiper/modules';
 
-const sliderConfig = {
-  modules: [Pagination, Autoplay, Navigation], 
+const sliderConfigBanner = {
+  modules: [ Autoplay, Navigation], 
   pagination: { clickable: true },
   spaceBetween: 50,
   slidesPerView: 1,
@@ -10,6 +10,19 @@ const sliderConfig = {
     disableOnInteraction: false,
   },
   loop: true, 
+  
 };
-
-export default sliderConfig;
+const sliderConfigProduct = {
+  modules: [Pagination, Autoplay, Navigation], 
+  spaceBetween: 50,
+  slidesPerView: 4,
+  autoplay: {
+    delay: 3000,
+    disableOnInteraction: false,
+  },
+  loop: true, 
+};
+export {
+  sliderConfigBanner,
+  sliderConfigProduct
+} 

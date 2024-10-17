@@ -67,7 +67,7 @@ const Register = () => {
                                     refinput={register("fullname")}
                                     type="text" placeholder="Nhập tên của bạn"
                                     addClassNames="block w-full px-3 py-1 text-sm focus:outline-none  rounded-md   focus:ring  border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent"
-                                    name="email"
+                                    name="fullname"
                                 />
                                 {errors.fullname && (
                                     <p className="text-red-500 text-sm">

@@ -3,6 +3,7 @@ const PATH_ROUTERS_CLIENT = {
   PRODUCT_SEARCH: 'product/search/',
   PRODUCT_DETAILS: 'product/:slug',
   CATEGORIES_DETAILS: 'danh-muc/:id',
+  SUBCATEGORIES_DETAILS: 'danh-muc/san-pham-danh-muc/:id',
   PHARMACY_DETAILS: 'nha-thuoc/:id',
   BLOG_DETAILS: 'bai-viet/:id',
   CART: 'gio-hang'

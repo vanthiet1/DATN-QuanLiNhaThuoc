@@ -1,13 +1,18 @@
 import { Button } from "../ui/button";
 import AppIcons from '../../components/ui/icon/index'
 import { Link } from "react-router-dom";
-const CardProduct = ({ image, name, priceNew, priceOld, detail ,description_short }) => {
+const CardProduct = ({ image, name, priceNew, priceOld, detail, description_short }) => {
     return (
         <div className="w-full shadow-2xl rounded-[10px] grid grid-rows-[auto,1fr]">
             <Link to={`${detail}`}>
-                <img className="w-full rounded-tl-[10px] rounded-tr-[10px] h-[250px]" src={image} alt="" />
+                <img
+                    className="w-full rounded-tl-[10px] rounded-tr-[10px] h-[300px] object-cover transform transition-transform duration-300 hover:scale-90"
+                    src={image}
+                    alt=""
+                />
+
                 <div className="p-3 grid grid-rows-[auto,1fr,auto]">
-                    <span>{name}</span>
+                    <span className=" truncate">{name}</span>
                     <p className="truncate">{description_short}</p>
                     <div className="flex gap-2 py-3">
                         <span className="block">{priceNew}</span>
@@ -22,7 +27,7 @@ const CardProduct = ({ image, name, priceNew, priceOld, detail ,description_shor
                 </Button>
             </div>
         </div>
-      
+
     );
 };
 

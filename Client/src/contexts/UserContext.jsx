@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { createContext } from 'react';
 import authServices from '../services/authService';
 import tokenService from '../services/tokenService';
+import { CartContext } from './CartContext';
 
 export const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
+    const {getProductCart} = useContext(CartContext)
     const [user, setUser] = useState(null); 
 
     const fetchUser = async () => {
@@ -15,6 +17,7 @@ const UserProvider = ({ children }) => {
                 const userLoginLocal = await authServices.getUserData(access_token);
                 if (userLoginLocal) {
                     setUser(userLoginLocal);
+                    getProductCart(userLoginLocal?._id)
                 } else {
                     tokenService.removeAccessToken();
                     setUser(null);

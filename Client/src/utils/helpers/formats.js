@@ -17,7 +17,11 @@ const formatsHelper = {
 
  FormatDateAndTime: (timestamp) => {
     return format(new Date(timestamp), ' HH:mm');
-  }
+  },
 
+  formatISODate: (isoString) => {
+    const date = new Date(isoString);
+    return format(date, 'dd-MM-yyyy HH:mm:ss'); 
+  }
 };
 export default formatsHelper;

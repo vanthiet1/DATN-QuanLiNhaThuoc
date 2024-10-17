@@ -21,6 +21,7 @@ const Login = () => {
         password: formData.password,
       }
     );
+     
     if(!data) return;
      setDialogState({ isOpen: false, type: '' })
      tokenService.removeDisposableEmail()
