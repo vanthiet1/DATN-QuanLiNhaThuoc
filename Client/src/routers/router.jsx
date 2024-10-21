@@ -1,8 +1,13 @@
 import { lazy } from 'react';
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { LayoutAdmin, LayoutDefault } from '../components/layouts';
 import { PATH_ROUTERS_ADMIN, PATH_ROUTERS_CLIENT } from '../utils/constant/routers';
 import SuspenseWrapper from '../components/suspenseWrapper/SuspenseWrapper';
+
+import PersonalInfo from '../pages/account/childAccount/personalInfo/PersonalInfo';
+import AccountSecurity from '../pages/account/childAccount/accountSecurity/AccountSecurity';
+import YourOrders from '../pages/account/childAccount/yourOrders/YourOrders';
+import AccountRemoval from '../pages/account/childAccount/accountRemoval/AccountRemoval';
 
 const HomePage = lazy(() => import('../pages/homePage/HomePage'));
 const ProductSearch = lazy(() => import('../pages/productSearch/ProductSearch'));
@@ -11,6 +16,8 @@ const CategoryDetails = lazy(() => import('../pages/category/CategoryDetails'));
 const Cart = lazy(() => import('../pages/cart/Cart'));
 const BlogDetails = lazy(() => import('../pages/blog/BlogDetails'));
 const Pharmacy = lazy(() => import('../pages/pharmacy/PharmacyDetails'));
+const AccoutUser = lazy(() => import('../pages/account/AccoutUser'));
+
 
 const DashBoard = lazy(() => import('../admin/dashboard/Dashboard'));
 const AddProduct = lazy(() => import('../admin/product/AddProduct'));
@@ -110,7 +117,58 @@ const router = createBrowserRouter([
             <Pharmacy />
           </SuspenseWrapper>
         )
+      },
+      {
+        path: PATH_ROUTERS_CLIENT.ACCOUNT.BASE, 
+        element: (
+          <SuspenseWrapper>
+            <AccoutUser />
+          </SuspenseWrapper>
+        ),
+        children: [
+          {
+            index: false,  
+            path: '', 
+            element: <Navigate to={PATH_ROUTERS_CLIENT.ACCOUNT.PERSONAL_INFO} replace />, 
+          },
+          {
+            path: PATH_ROUTERS_CLIENT.ACCOUNT.PERSONAL_INFO, 
+            element: (
+              <SuspenseWrapper>
+                <PersonalInfo />
+              </SuspenseWrapper>
+            ),
+          },
+          {
+            path: PATH_ROUTERS_CLIENT.ACCOUNT.SECURITY, 
+            element: (
+              <SuspenseWrapper>
+                <AccountSecurity />
+              </SuspenseWrapper>
+            ),
+          },
+          {
+            path: PATH_ROUTERS_CLIENT.ACCOUNT.ORDERS,
+            element: (
+              <SuspenseWrapper>
+                <YourOrders />
+              </SuspenseWrapper>
+            ),
+          },
+
+          {
+            path: PATH_ROUTERS_CLIENT.ACCOUNT.ACCOUNT_REMOVAL,
+            element: (
+              <SuspenseWrapper>
+                <AccountRemoval />
+              </SuspenseWrapper>
+            ),
+          },
+        ],
       }
+      
+     
+      
     ]
   },
   {
@@ -374,7 +432,12 @@ const router = createBrowserRouter([
         )
       }
     ]
-  }
+  },
+
+
+
+ 
+ 
 ]);
 
 export default router;

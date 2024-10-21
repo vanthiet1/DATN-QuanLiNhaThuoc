@@ -5,7 +5,14 @@ const PATH_ROUTERS_CLIENT = {
   CATEGORIES_DETAILS: 'danh-muc/:id',
   PHARMACY_DETAILS: 'nha-thuoc/:id',
   BLOG_DETAILS: 'bai-viet/:id',
-  CART: 'gio-hang'
+  CART: 'gio-hang',
+  ACCOUNT: {
+    BASE: 'tai-khoan',
+    PERSONAL_INFO: 'thong-tin-ca-nhan', 
+    SECURITY: 'tai-khoan-bao-mat',
+    ORDERS: 'don-hang-cua-ban', 
+    ACCOUNT_REMOVAL:'xoa-tai-khoan'
+  },
 };
 
 const PATH_ROUTERS_ADMIN = {
@@ -48,5 +55,6 @@ const PATH_ROUTERS_ADMIN = {
   TEMPLATECOMPONENT: 'admin/template-component',
   ORDER_DETAILS: 'admin/orders/:id'
 };
+
 
 export { PATH_ROUTERS_CLIENT, PATH_ROUTERS_ADMIN };

@@ -43,10 +43,13 @@ const Header = () => {
                                                 <div className='  w-[250px] bg-[#fff] shadow p-3 rounded-[5px] '>
                                                     <span className='block'>Xin chào</span>
                                                     <span className='block font-bold'>{user?.fullname}</span>
+                                                    <Link to={'/tai-khoan'}>
                                                     <div className="flex mt-3 items-center gap-2 cursor-pointer pb-1 group hover:text-[#2563EB] duration-200">
-                                                        <span><AppIcons.UserIcon addClassNames='' /></span>
-                                                        <span>Thông tin tài khoản</span>
+                                                       <span><AppIcons.UserIcon addClassNames='' /></span>
+                                                       <span>Thông tin tài khoản</span>
                                                     </div>
+                                                    </Link>
+
                                                     <div className="flex mt-3 items-center gap-2 cursor-pointer pb-1 group hover:text-[#2563EB] duration-200">
                                                         <span><AppIcons.OderIcon addClassNames='' /></span>
                                                         <span>Đơn hàng xử lí</span>

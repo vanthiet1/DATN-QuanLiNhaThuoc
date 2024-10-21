@@ -613,6 +613,90 @@ const PrinterIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   );
 };
 
+
+const UserIconOutline = ({ width = '24', height = '24', addClassNames = '' }) => {
+  return (
+    
+<svg  xmlns='http://www.w3.org/2000/svg'
+      viewBox='0 0 24 24'
+      fill='none'
+      stroke-width="1.5"
+      stroke="currentColor" 
+      className={addClassNames}
+      aria-hidden='true'
+      width={width}
+      height={height}>
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+</svg>
+
+
+  );
+};
+
+
+const ShoppingCartIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"   className={addClassNames}
+    aria-hidden='true'
+    width={width}
+    height={height}
+stroke-width="1.5" stroke="currentColor" class="size-6" >
+<path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+</svg>
+
+
+  );
+};
+
+
+const QueueListIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={addClassNames}
+      aria-hidden='true'
+      width={width}
+      height={height}>
+  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 0 1 0 3.75H5.625a1.875 1.875 0 0 1 0-3.75Z" />
+</svg>
+
+  );
+};
+const ClipboardIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"    className={addClassNames}
+      aria-hidden='true'
+      width={width}
+      height={height}>
+  <path strokeLinecap="round" strokeLinejoin="round" d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0 1 18 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3 1.5 1.5 3-3.75" />
+</svg>
+
+   
+
+  );
+};
+
+const ChatBubbleIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"  className={addClassNames}
+      aria-hidden='true'
+      width={width}
+      height={height}>
+  <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+</svg>
+
+  );
+};
+
+const WarningIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
+  return (
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#FFD700" class="size-6" className={addClassNames}
+      aria-hidden='true'
+      width={width}
+      height={height}>
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+</svg>
+
+  );
+};
 const icons = {
   HomeIcon,
   OderIcon,
@@ -650,7 +734,13 @@ const icons = {
   ArrowRight,
   PrinterIcon,
   ArrowRight,
-  PrinterIcon
+  PrinterIcon,
+  UserIconOutline,
+  ShoppingCartIcon,
+  QueueListIcon,
+  ClipboardIcon,
+  ChatBubbleIcon,
+  WarningIcon
 };
 
 export default icons;
