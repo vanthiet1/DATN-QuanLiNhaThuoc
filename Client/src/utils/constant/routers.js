@@ -40,6 +40,7 @@ const PATH_ROUTERS_ADMIN = {
   MANAGER_CUSTOMER: 'admin/manager-customer',
   ALL_ROLE_USER: 'admin/all-role',
   ADD_ROLE_USER: 'admin/add-role',
+  EDIT_ROLE_USER: 'admin/edit-role/:id',
   ORDERS: 'admin/orders',
   TRANSACTION: 'admin/transaction',
   MESSAGES: 'admin/messages',

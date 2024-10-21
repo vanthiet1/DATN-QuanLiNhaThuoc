@@ -9,6 +9,7 @@ import ForgotPassword from '../../modules/auth/ForgotPassword';
 import NewPassword from '../../modules/auth/NewPassword';
 import VerifyEmail from '../../modules/auth/VerifyEmail';
 import { ToggleFormContext } from '../../contexts/ToggleFormContext';
+import Footer from './Footer';
 const LayoutDefault = () => {
   const  {dialogState , handleCloseDialog} = useContext(ToggleFormContext)
   return (
@@ -27,6 +28,7 @@ const LayoutDefault = () => {
         {dialogState.type === 'newPassword' && <NewPassword/>}
         {dialogState.type === 'verifyEmail' && <VerifyEmail /> }
       </DiaLog>
+      <Footer />
     </div>
   );
 };

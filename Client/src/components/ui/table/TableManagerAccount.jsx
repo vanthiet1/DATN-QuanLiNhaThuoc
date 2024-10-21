@@ -1,56 +1,112 @@
-import { cn } from "../../../utils/helpers/mergeClasses"
-import formatsHelper from "../../../utils/helpers/formats";
-import SelectBox from "../form/SelectBox";
-const Table = ({ data, addClassNames, titleRow, cols, styleRows, handleDelete, handleIsActiveAccount, roleData, handleUpdateRoleAccount }) => {
+import { cn } from '../../../utils/helpers/mergeClasses';
+import formatsHelper from '../../../utils/helpers/formats';
+import SelectBox from '../form/SelectBox';
+import AppIcons from '../../../components/ui/icon';
+import { PATH_ROUTERS_ADMIN } from '../../../utils/constant/routers';
+import BreadCrumb from '../../breadCrumb/BreadCrumb';
+import { Button } from '../button';
 
-    return (
-        <table className={cn(`w-full text-left table-auto border-collapse shadow-md bg-white mb-5 rounded-[5px] ${addClassNames}`)}>
-            <thead>
-                <tr className={cn(`border-b rounded-[5px] border-gray-300 text-white ${styleRows}`)}>
-                    {titleRow && titleRow.map((title, index) => (
-                        <th key={index} className='p-3 w-max font-normal3 dark:text-[#333] '>{title}</th>
-                    ))}
-                </tr>
+const roleBreadCrumbs = [
+  {
+    path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
+    title: 'Dashboard',
+    icon: <AppIcons.HomeIcon width='16' height='16' />
+  },
+  {
+    title: 'Manager User'
+  }
+];
+
+const Table = ({ data, addClassNames, handleDelete, handleIsActiveAccount, roleData, handleUpdateRoleAccount }) => {
+  return (
+    <>
+      <BreadCrumb crumbsData={roleBreadCrumbs} addClassNames='my-3' />
+      <div className='max-w-7xl mx-auto p-6 bg-white shadow-md rounded-lg'>
+        <div className='overflow-x-auto'>
+          <table className='min-w-full table-auto border-collapse'>
+            <thead className='w-full'>
+              <tr className='bg-gray-200 w-full'>
+                <th className='w-1/6 px-4 py-3 text-left text-xs font-medium uppercase'>Full Name</th>
+                <th className='w-1/6 px-4 py-3 text-left text-xs font-medium uppercase'>Email</th>
+                <th className='w-1/6 px-4 py-3 text-left text-xs font-medium uppercase'>Provider</th>
+                <th className='w-1/6 px-4 py-3 text-left text-xs font-medium uppercase'>Email Verified</th>
+                <th className='w-1/12 px-4 py-3 text-left text-xs font-medium uppercase'>Status</th>
+                <th className='w-1/6 px-4 py-3 text-left text-xs font-medium uppercase'>Created</th>
+                <th className='w-1/6 px-4 py-3 text-left text-xs font-medium uppercase'>Role</th>
+                <th className='w-1/6 px-4 py-3 text-left text-xs font-medium uppercase'>Actions</th>
+              </tr>
             </thead>
-            <tbody>
-                {data && data.map((data) => (
-                    <tr key={data._id} className='border-b border-gray-300 hover:bg-gray-50'>
-                        <td className='flex items-center p-3 h-[100px]'>
-                            <img src={data?.avatar || "https://res.cloudinary.com/dz93cdipw/image/upload/v1713866997/Book-Store/Avatar/kwuemqemetzsp4jw21mt.webp"} className='w-8 h-8 object-cover mr-2 rounded-full' alt="Client" />
-                            {data?.fullname}
-                        </td>
-                        <td className='p-2'>{data?.email}</td>
-                        <td className='p-2'>{data?.provider}</td>
-                        <td className='p-2'>
-                            <span className={`inline-flex px-2 text-xs font-medium leading-5 rounded-full 
-                        ${data?.emailVerify === false ? 'px-2 py-1 w-max rounded-full text-orange-700 bg-red-500 dark:text-white' :
-                                    data.emailVerify === true ? 'px-3 py-1 rounded-full dark:bg-green-700 text-white' : ""}`}>
-                                {data?.emailVerify ? "Đã kích hoạt" : "Chưa kích hoạt"}
-                            </span>
-                        </td>
-                        <td className='p-2'>{data?.is_active === 1 ? "Đang sử dụng" : "Vô hiệu hóa"}</td>
-                        <td className='p-2'>{formatsHelper.formatDate(data?.createdAt)}</td>
-                        <td className='p-2'>{data?.role_id?.role_Name}</td>
-                        <td className='p-2 flex gap-1'>
-                            <SelectBox
-                                onChange={(e) => handleUpdateRoleAccount(data._id, e.target.value)}
-                                optionData={roleData}
-                                size="m"
-                                rounded="m"
-                                defaultValue={data.role_id ? data.role_id?._id : ''}
-                            />
-                            <span className="p-2 text-red-600 border-b-2 border-slate-400 cursor-pointer flex items-center" onClick={() => handleDelete(data._id)}>
-                                Delete
-                            </span>
-                            <span className="p-2 text-[#333] border-b-2 border-slate-400 cursor-pointer" onClick={() => handleIsActiveAccount(data._id)}>
-                                {data?.is_active === 1 ? "Block" : "Open"}
-                            </span>
-                        </td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
-    )
-}
+            <tbody className='bg-white divide-y divide-gray-200 '>
+              {data?.map((item) => (
+                <tr key={item._id} className='hover:bg-gray-100 px-6'>
+                  <td className='flex items-center p-4'>
+                    <img
+                      src={
+                        item?.avatar ||
+                        'https://res.cloudinary.com/dz93cdipw/image/upload/v1713866997/Book-Store/Avatar/kwuemqemetzsp4jw21mt.webp'
+                      }
+                      className='w-10 h-10 object-cover rounded-full mr-3'
+                      alt='Avatar'
+                    />
+                    <span className='text-sm font-medium text-gray-800'>{item?.fullname}</span>
+                  </td>
+                  <td className='p-4 truncate text-sm text-gray-600'>{item?.email}</td>
+                  <td className='p-4 truncate text-sm text-gray-600'>{item?.provider}</td>
+                  <td className='p-4'>
+                    <span
+                      className={`inline-flex px-3 py-1 text-xs font-medium rounded-full text-center w-24 justify-center
+                      ${item?.emailVerify ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}
+                    >
+                      {item?.emailVerify ? 'Verified' : 'Not Verified'}
+                    </span>
+                  </td>
+                  <td className='p-4'>
+                    <span
+                      className={`inline-block px-3 py-1 text-xs font-medium rounded-full 
+                      ${item?.is_active === 1 ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}
+                    >
+                      {item?.is_active === 1 ? 'Active' : 'Inactive'}
+                    </span>
+                  </td>
+                  <td className='p-4 text-sm text-gray-600'>{formatsHelper.formatDate(item?.createdAt)}</td>
+                  <td className='p-4 truncate text-sm text-gray-600'>{item?.role_id?.role_Name}</td>
+                  <td className='p-4 flex gap-2'>
+                    <SelectBox
+                      onChange={(e) => handleUpdateRoleAccount(item._id, e.target.value)}
+                      optionData={roleData}
+                      size='m'
+                      rounded='m'
+                      defaultValue={item?.role_id?._id || ''}
+                    />
+                    <Button
+                      size='m'
+                      rounded='s'
+                      addClassNames='bg-rose-500 text-white hover:bg-rose-600 px-3 py-1 rounded-md ml-2'
+                      onClick={() => handleDelete(item._id)}
+                    >
+                      <AppIcons.TrashBinIcon width='20' height='20' />
+                    </Button>
 
-export default Table
+                    <Button
+                      size='s'
+                      className={`px-3 py-1 rounded-md ${
+                        item?.is_active === 1
+                          ? 'border border-red-500 text-red-500 hover:bg-red-500 hover:text-white' // Nút "Block"
+                          : 'border border-green-500 text-green-500 hover:bg-green-500 hover:text-white' // Nút "Unblock"
+                      }`}
+                      onClick={() => handleIsActiveAccount(item._id)}
+                    >
+                      {item?.is_active === 1 ? 'Block' : 'Unblock'}
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Table;

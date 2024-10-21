@@ -121,36 +121,39 @@ const AllCategory = () => {
                   <p className='text-lg font-bold'>{cate.name}</p>
                 </div>
                 <div className='flex items-center gap-2'>
+                  
+                  
                   <Button
-                    rounded='s'
-                    outline={true}
-                    addClassNames='text-white bg-blue-500 border-blue-500 hover:bg-blue-600 w-[30px] h-[30px] flex items-center justify-center'
-                    onClick={() => handleToggleSubcategory(cate._id)}
-                  >
+                  onClick={() => handleToggleSubcategory(cate._id)}
+                      size='m'
+                      rounded='s'
+                      addClassNames='bg-teal-500 text-white hover:bg-teal-600 px-3 py-1 rounded-md'
+                    >
                     {openSubcategories[cate._id] ? (
                       <AppIcons.X_CloseIcon width='20' height='20' />
                     ) : (
                       <AppIcons.EyeIcon width='20' height='20' />
                     )}
-                  </Button>
-                  <Button
-                    rounded='s'
-                    outline={true}
-                    addClassNames='text-gray-600 hover:text-teal-500 hover:border-teal-500 w-[30px] h-[30px] flex items-center justify-center'
-                    onClick={() => {
-                      handleEdit(cate._id);
-                    }}
-                  >
-                    {<AppIcons.EditIcon width='20' height='20' />}
-                  </Button>
-                  <Button
-                    rounded='s'
-                    outline={true}
-                    addClassNames='text-gray-600 hover:text-rose-500 hover:border-rose-500 w-[30px] h-[30px] flex items-center justify-center'
-                    onClick={() => handleDelete(cate._id, cate.name)}
-                  >
-                    {<AppIcons.TrashBinIcon width='20' height='20' />}
-                  </Button>
+                    </Button>
+                    <Button
+                      size='m'
+                      rounded='s'
+                      addClassNames='bg-blue-500 text-white hover:bg-blue-600 px-3 py-1 rounded-md ml-2'
+                      onClick={() => {
+                        handleEdit(cate._id);
+                      }}
+                    >
+                      <AppIcons.EditIcon width='20' height='20' />
+                    </Button>
+                    <Button
+                      size='m'
+                      rounded='s'
+                      addClassNames='bg-rose-500 text-white hover:bg-rose-600 px-3 py-1 rounded-md ml-2'
+                      onClick={() => handleDelete(cate._id, cate.name)}
+                    >
+                      <AppIcons.TrashBinIcon width='20' height='20' />
+                    </Button>
+                  
                 </div>
               </div>
 

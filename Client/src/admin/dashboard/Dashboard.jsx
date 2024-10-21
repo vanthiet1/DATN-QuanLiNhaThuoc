@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { DiaLog } from '../../components/dialog';
 import { Button } from '../../components/ui/button';
 import { InputText } from '../../components/ui/form';
+import Chart from '../../components/ui/chart/Chart';
 
 const ContentLoginExample = () => {
   return (
@@ -41,6 +42,7 @@ const Dashboard = () => {
 
   return (
     <div>
+    <Chart />
       <Button onClick={() => handleOpenModal()} size='m' rounded='s' addClassNames='bg-slate-500 text-white m-5'>
         Click modal
       </Button>

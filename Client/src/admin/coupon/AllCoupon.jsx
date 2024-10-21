@@ -36,7 +36,7 @@ const AllCoupon = () => {
     navigate(`/admin/edit-coupon/${id}`);
   };
 
-  const handleDelete = async (id,name) => {
+  const handleDelete = async (id, name) => {
     try {
       const result = await confirmDialog({
         title: 'Xóa Coupon',
@@ -71,7 +71,6 @@ const AllCoupon = () => {
     <>
       <BreadCrumb crumbsData={couponBreadCrumbs} addClassNames='my-3' />
       <div className='max-w-7xl mx-auto p-6 bg-white shadow-md rounded-lg'>
-        <h1 className='text-3xl font-bold mb-6 text-center'>All Coupon</h1>
         <div className='overflow-x-auto'>
           <table className='min-w-full table-auto border-collapse'>
             <thead>
@@ -107,8 +106,8 @@ const AllCoupon = () => {
                     </td>
                     <td className='px-6 py-4'>
                       <span
-                        className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                          coupon.is_active ? 'bg-green-100 text-green-600 border' : 'bg-red-100 text-red-600 border'
+                        className={`px-3 py-1 rounded-full text-xs  ${
+                          coupon.is_active ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
                         }`}
                       >
                         {coupon.is_active ? 'Active' : 'Inactive'}
@@ -120,19 +119,21 @@ const AllCoupon = () => {
                     <td className='px-6 py-4 whitespace-nowrap text-sm flex '>
                       <Button
                         size='m'
-                        rounded='m'
-                        addClassNames='bg-blue-600 text-white hover:bg-blue-500 px-3 py-1 rounded-md'
-                        onClick={() => handleEdit(coupon._id)}
+                        rounded='s'
+                        addClassNames='bg-blue-500 text-white hover:bg-blue-600 px-3 py-1 rounded-md ml-2'
+                        onClick={() => {
+                          handleEdit(coupon._id);
+                        }}
                       >
-                        Edit
+                        <AppIcons.EditIcon width='20' height='20' />
                       </Button>
                       <Button
                         size='m'
-                        rounded='m'
-                        addClassNames='bg-red-600 text-white hover:bg-red-500 px-3 py-1 rounded-md ml-2'
-                        onClick={() => handleDelete(coupon._id,coupon.code)}
+                        rounded='s'
+                        addClassNames='bg-rose-500 text-white hover:bg-rose-600 px-3 py-1 rounded-md ml-2'
+                        onClick={() => handleDelete(coupon._id, coupon.name)}
                       >
-                        Delete
+                        <AppIcons.TrashBinIcon width='20' height='20' />
                       </Button>
                     </td>
                   </tr>

@@ -39,19 +39,21 @@ function BrandCard({ brand }) {
       <td className='px-6 py-4 whitespace-nowrap text-sm flex '>
         <Button
           size='m'
-          rounded='m'
-          addClassNames='bg-blue-600 text-white hover:bg-blue-500 px-3 py-1 rounded-md'
-          onClick={() => handleEdit(_id)}
+          rounded='s'
+          addClassNames='bg-blue-500 text-white hover:bg-blue-600 px-3 py-1 rounded-md ml-2'
+          onClick={() => {
+            handleEdit(_id);
+          }}
         >
-          Edit
+          <AppIcons.EditIcon width='20' height='20' />
         </Button>
         <Button
           size='m'
-          rounded='m'
-          addClassNames='bg-red-600 text-white hover:bg-red-500 px-3 py-1 rounded-md ml-2'
+          rounded='s'
+          addClassNames='bg-rose-500 text-white hover:bg-rose-600 px-3 py-1 rounded-md ml-2'
           onClick={() => handleDetele(name)}
         >
-          Delete
+          <AppIcons.TrashBinIcon width='20' height='20' />
         </Button>
       </td>
     </tr>

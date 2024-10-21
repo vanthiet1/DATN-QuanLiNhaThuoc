@@ -326,6 +326,14 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: PATH_ROUTERS_ADMIN.EDIT_ROLE_USER,
+        element: (
+          <SuspenseWrapper>
+            <EditRole />
+          </SuspenseWrapper>
+        )
+      },
+      {
         path: PATH_ROUTERS_ADMIN.ORDERS,
         element: (
           <SuspenseWrapper>
