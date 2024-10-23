@@ -7,8 +7,6 @@ import AppIcons from '../ui/icon';
 import { Button } from '../ui/button';
 import Image from '../ui/image/Image';
 
-
-
 const HeaderSearch = () => {
   return (
     <div

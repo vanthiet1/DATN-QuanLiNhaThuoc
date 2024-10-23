@@ -7,45 +7,45 @@ import useGoogleLoginHook from "../../hooks/useGoogleLoginHook";
 import { UserContext } from "../../contexts/UserContext";
 import { InputText } from "../../components/ui/form";
 import { Button } from "../../components/ui/button";
+import Logo from '../../assets/images/logo/logo.png'
+import { ToggleFormContext } from "../../contexts/ToggleFormContext";
+import tokenService from "../../services/tokenService";
 const Login = () => {
   const { fetchUser } = useContext(UserContext)
+  const {handleOpenDialog,setDialogState} = useContext(ToggleFormContext)
   const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(formAuthSchema.login) });
   const onSubmit = async (formData) => {
-    await authServices.login(
+   const data = await authServices.login(
       {
         email: formData.email,
         password: formData.password,
       }
     );
+    if(!data) return;
+     setDialogState({ isOpen: false, type: '' })
+     tokenService.removeDisposableEmail()
     await fetchUser()
   };
-
-
   const login = useGoogleLoginHook()
+  
 
   return (
     <>
-      <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800">
+      <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-[#FEFEFE] rounded-lg ">
         <div className="flex flex-col overflow-y-auto md:flex-row">
-          <div className="h-32 md:h-auto md:w-1/2">
+          <div className=" md:h-auto md:w-[70%] flex justify-center items-center max-md:mb-5">
             <img
               aria-hidden="true"
-              className="object-cover w-full h-full dark:hidden"
-              src="/static/media/login-office.c7786a89.jpeg"
-              alt="Office"
-            />
-            <img
-              aria-hidden="true"
-              className="hidden object-cover w-full h-full dark:block"
-              src="https://mernshop-admin.vercel.app/static/media/login-office.c7786a89.jpeg"
+              className=" w-full h-[220px] dark:block max-md:h-[130px]"
+              src={Logo}
               alt="Office"
             />
           </div>
-          <main className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
+          <main className="flex items-center justify-center p-3 sm:p-1 md:w-1/2">
             <div className="w-full">
-              <h1 className="mb-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">Đăng nhập</h1>
+              <h1 className="mb-6 text-2xl font-semibold text-[#2563eb] ">Đăng nhập</h1>
               <form action="" onSubmit={handleSubmit(onSubmit)}>
-                <label className="block text-sm text-gray-700 dark:text-gray-400 font-medium pb-2">
+                <label className="block text-sm text-gray-800 font-semibold pb-2">
                   Email
                 </label>
                 <InputText
@@ -55,12 +55,12 @@ const Login = () => {
                   name="email"
                 />
                 {errors.email && (
-                  <p className="text-red-500 text-sm">
+                  <p className="text-red-500 text-sm pt-2">
                     {errors.email.message}
                   </p>
                 )}
                 <div className="mt-6"></div>
-                <label className="block text-sm text-gray-700 dark:text-gray-400 font-medium pb-2">
+                <label className="block text-sm text-gray-800 font-semibold  pb-2">
                   Mật khẩu
                 </label>
                 <InputText
@@ -71,7 +71,7 @@ const Login = () => {
                   placeholder="***************"
                 />
                 {errors.password && (
-                  <p className="text-red-500 text-sm">
+                  <p className="text-red-500 text-sm pt-2">
                     {errors.password.message}
                   </p>
                 )}
@@ -81,7 +81,7 @@ const Login = () => {
                 >
                  Đăng nhập
                 </Button>
-                <hr className="my-10 " />
+                <hr className="my-6" />
                 <Button
                 type="button"
                   onClick={login}
@@ -95,16 +95,12 @@ const Login = () => {
                   <span className="ml-2">Đăng nhập với google</span>
                 </Button>
               </form>
-              <p className="mt-4">
-                <a className="text-sm font-medium text-blue-500  hover:underline" href="/forgot-password">
+                <p onClick={()=>setDialogState({ isOpen: true, type: 'forgotPassword' })} className="mt-4 text-sm cursor-pointer font-medium text-blue-500  hover:underline" >
                   Quên mật khẩu
-                </a>
-              </p>
-              <p className="mt-1">
-                <a className="text-sm font-medium text-blue-500  hover:underline" href="/signup">
+                </p>
+                <p onClick={() => handleOpenDialog('register')} className="mt-1 cursor-pointer text-sm font-medium text-blue-500  hover:underline">
                   Tạo tài khoản
-                </a>
-              </p>
+                </p>
             </div>
           </main>
         </div>

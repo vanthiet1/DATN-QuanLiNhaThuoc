@@ -9,4 +9,8 @@ Router.get('/:id', CategoryController.getDetailCategory);
 Router.delete('/:id', CategoryController.deleteCategory);
 Router.put('/:id', CategoryController.updateCategory);
 
+Router.get('/product/:id', CategoryController.getProductWithCategory);
+
+
+
 module.exports = Router;

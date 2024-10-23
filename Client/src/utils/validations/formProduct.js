@@ -5,7 +5,6 @@ const formProductSchema = {
     name: Yup.string().required('Không được để name trống.').max(300),
     sub_category_id: Yup.string().required('Không được để sub_category_id trống.'),
     brand_id: Yup.string().required('Không được để brand_id trống.'),
-    description: Yup.string().required('Không được để description trống.'),
     description_short: Yup.string().required('Không được để description_short trống.'),
     price_distcount: Yup.number().required('Không được để mật khẩu trống.'),
     price_old: Yup.number().required('Không được để price_old trống.'),

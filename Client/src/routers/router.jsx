@@ -1,28 +1,43 @@
 import { lazy } from 'react';
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { LayoutAdmin, LayoutDefault } from '../components/layouts';
 import { PATH_ROUTERS_ADMIN, PATH_ROUTERS_CLIENT } from '../utils/constant/routers';
 import SuspenseWrapper from '../components/suspenseWrapper/SuspenseWrapper';
 
+import PersonalInfo from '../pages/account/childAccount/personalInfo/PersonalInfo';
+import AccountSecurity from '../pages/account/childAccount/accountSecurity/AccountSecurity';
+import YourOrders from '../pages/account/childAccount/yourOrders/YourOrders';
+import AccountRemoval from '../pages/account/childAccount/accountRemoval/AccountRemoval';
+
 const HomePage = lazy(() => import('../pages/homePage/HomePage'));
 const ProductSearch = lazy(() => import('../pages/productSearch/ProductSearch'));
+const ProductDetail = lazy(() => import('../pages/product/ProductDetail'))
 const CategoryDetails = lazy(() => import('../pages/category/CategoryDetails'));
 const Cart = lazy(() => import('../pages/cart/Cart'));
 const BlogDetails = lazy(() => import('../pages/blog/BlogDetails'));
 const Pharmacy = lazy(() => import('../pages/pharmacy/PharmacyDetails'));
+const AccoutUser = lazy(() => import('../pages/account/AccoutUser'));
+
 
 const DashBoard = lazy(() => import('../admin/dashboard/Dashboard'));
 const AddProduct = lazy(() => import('../admin/product/AddProduct'));
 const AllProduct = lazy(() => import('../admin/product/AllProduct'));
+const EditProduct = lazy(() => import('../admin/product/EditProduct'));
 
 const AddCategory = lazy(() => import('../admin/category/AddCategory'));
 const AllCategory = lazy(() => import('../admin/category/AllCategory'));
+const EditCategory = lazy(() => import('../admin/category/EditCategory'));
+const EditSubCategory = lazy(() => import('../admin/category/EditSubCategory'));
 
 const AddBrand = lazy(() => import('../admin/brand/AddBrand'));
 const AllBrand = lazy(() => import('../admin/brand/AllBrand'));
+const EditBrand = lazy(() => import('../admin/brand/EditBrand'));
+
+const AllComment = lazy(() => import('../admin/comment/AllComment'));
 
 const AddCoupon = lazy(() => import('../admin/coupon/AddCoupon'));
 const AllCoupon = lazy(() => import('../admin/coupon/AllCoupon'));
+const EditCoupon = lazy(() => import('../admin/coupon/EditCoupon'));
 
 const AddBanner = lazy(() => import('../admin/banner/AddBanner'));
 const AllBanner = lazy(() => import('../admin/banner/AllBanner'));
@@ -33,19 +48,20 @@ const AllBlog = lazy(() => import('../admin/blog/AllBlog'));
 const AddPharmacy = lazy(() => import('../admin/pharmacy/AddPharmacy'));
 const AllPharmacy = lazy(() => import('../admin/pharmacy/AllPharmacy'));
 
-                                                                 
 const AllRoleUser = lazy(() => import('../admin/role/allRole'));
-const AddRole = lazy(()=> import('../admin/role/addRole'));
-const EditRole = lazy(() => import('../admin/role/editRole'));
 
-const ManagementStaff = lazy(()=> import('../admin/user/ManagementStaff'));
+const ManagementStaff = lazy(() => import('../admin/user/ManagementStaff'));
 const ManagementUser = lazy(() => import('../admin/user/ManagementUser'));
 const ManagementCustomer = lazy(() => import('../admin/user/ManagementCustomer'));
 
-const ManagementAdress = lazy(() => import('../admin/address/ManagementAdress'))
+const AddRole = lazy(() => import('../admin/role/addRole'));
+const EditRole = lazy(() => import('../admin/role/editRole'));
+
+const ManagementAdress = lazy(() => import('../admin/address/ManagementAdress'));
 const Messages = lazy(() => import('../admin/messages/Messages'));
 const Transaction = lazy(() => import('../admin/transaction/Transaction'));
 const Orders = lazy(() => import('../admin/orders/Orders'));
+const OrderDetails = lazy(() => import('../admin/orders/OrderDetails'));
 
 const TemplateComponent = lazy(() => import('../admin/testComponents/TemplateComponent'));
 
@@ -66,7 +82,7 @@ const router = createBrowserRouter([
         path: PATH_ROUTERS_CLIENT.PRODUCT_DETAILS,
         element: (
           <SuspenseWrapper>
-            <ProductSearch />
+            <ProductDetail />
           </SuspenseWrapper>
         )
       },
@@ -101,7 +117,58 @@ const router = createBrowserRouter([
             <Pharmacy />
           </SuspenseWrapper>
         )
+      },
+      {
+        path: PATH_ROUTERS_CLIENT.ACCOUNT.BASE, 
+        element: (
+          <SuspenseWrapper>
+            <AccoutUser />
+          </SuspenseWrapper>
+        ),
+        children: [
+          {
+            index: false,  
+            path: '', 
+            element: <Navigate to={PATH_ROUTERS_CLIENT.ACCOUNT.PERSONAL_INFO} replace />, 
+          },
+          {
+            path: PATH_ROUTERS_CLIENT.ACCOUNT.PERSONAL_INFO, 
+            element: (
+              <SuspenseWrapper>
+                <PersonalInfo />
+              </SuspenseWrapper>
+            ),
+          },
+          {
+            path: PATH_ROUTERS_CLIENT.ACCOUNT.SECURITY, 
+            element: (
+              <SuspenseWrapper>
+                <AccountSecurity />
+              </SuspenseWrapper>
+            ),
+          },
+          {
+            path: PATH_ROUTERS_CLIENT.ACCOUNT.ORDERS,
+            element: (
+              <SuspenseWrapper>
+                <YourOrders />
+              </SuspenseWrapper>
+            ),
+          },
+
+          {
+            path: PATH_ROUTERS_CLIENT.ACCOUNT.ACCOUNT_REMOVAL,
+            element: (
+              <SuspenseWrapper>
+                <AccountRemoval />
+              </SuspenseWrapper>
+            ),
+          },
+        ],
       }
+      
+     
+      
     ]
   },
   {
@@ -133,6 +200,14 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: PATH_ROUTERS_ADMIN.EDIT_PRODUCT,
+        element: (
+          <SuspenseWrapper>
+            <EditProduct />
+          </SuspenseWrapper>
+        )
+      },
+      {
         path: PATH_ROUTERS_ADMIN.ADD_CATEGORY,
         element: (
           <SuspenseWrapper>
@@ -145,6 +220,22 @@ const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <AllCategory />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.EDIT_CATEGORY,
+        element: (
+          <SuspenseWrapper>
+            <EditCategory />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.EDIT_SUBCATEGORY,
+        element: (
+          <SuspenseWrapper>
+            <EditSubCategory />
           </SuspenseWrapper>
         )
       },
@@ -165,6 +256,14 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: PATH_ROUTERS_ADMIN.EDIT_BRAND,
+        element: (
+          <SuspenseWrapper>
+            <EditBrand />
+          </SuspenseWrapper>
+        )
+      },
+      {
         path: PATH_ROUTERS_ADMIN.ADD_COUPON,
         element: (
           <SuspenseWrapper>
@@ -177,6 +276,14 @@ const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <AllCoupon />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.EDIT_COUPON,
+        element: (
+          <SuspenseWrapper>
+            <EditCoupon />
           </SuspenseWrapper>
         )
       },
@@ -232,7 +339,7 @@ const router = createBrowserRouter([
         path: PATH_ROUTERS_ADMIN.MANAGER_CUSTOMER,
         element: (
           <SuspenseWrapper>
-            <ManagementCustomer/>
+            <ManagementCustomer />
           </SuspenseWrapper>
         )
       },
@@ -240,7 +347,7 @@ const router = createBrowserRouter([
         path: PATH_ROUTERS_ADMIN.MANAGER_USER,
         element: (
           <SuspenseWrapper>
-            <ManagementUser/>
+            <ManagementUser />
           </SuspenseWrapper>
         )
       },
@@ -248,7 +355,7 @@ const router = createBrowserRouter([
         path: PATH_ROUTERS_ADMIN.MANAGER_STAFF,
         element: (
           <SuspenseWrapper>
-            <ManagementStaff/>
+            <ManagementStaff />
           </SuspenseWrapper>
         )
       },
@@ -256,7 +363,7 @@ const router = createBrowserRouter([
         path: PATH_ROUTERS_ADMIN.MANAGER_ADDRESS,
         element: (
           <SuspenseWrapper>
-            <ManagementAdress/>
+            <ManagementAdress />
           </SuspenseWrapper>
         )
       },
@@ -264,7 +371,7 @@ const router = createBrowserRouter([
         path: PATH_ROUTERS_ADMIN.ALL_ROLE_USER,
         element: (
           <SuspenseWrapper>
-            <AllRoleUser/>
+            <AllRoleUser />
           </SuspenseWrapper>
         )
       },
@@ -272,20 +379,10 @@ const router = createBrowserRouter([
         path: PATH_ROUTERS_ADMIN.ADD_ROLE_USER,
         element: (
           <SuspenseWrapper>
-            <AddRole/>
+            <AddRole />
           </SuspenseWrapper>
         )
       },
-      {
-        path: PATH_ROUTERS_ADMIN.EDIT_ROLE_USER,
-        element: (
-          <SuspenseWrapper>
-            <EditRole/>
-          </SuspenseWrapper>
-        )
-      },
-      
-      
       {
         path: PATH_ROUTERS_ADMIN.ORDERS,
         element: (
@@ -299,6 +396,14 @@ const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <Messages />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.ALL_COMMENT,
+        element: (
+          <SuspenseWrapper>
+            <AllComment />
           </SuspenseWrapper>
         )
       },
@@ -317,9 +422,22 @@ const router = createBrowserRouter([
             <TemplateComponent />
           </SuspenseWrapper>
         )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.ORDER_DETAILS,
+        element: (
+          <SuspenseWrapper>
+            <OrderDetails />
+          </SuspenseWrapper>
+        )
       }
     ]
-  }
+  },
+
+
+
+ 
+ 
 ]);
 
 export default router;

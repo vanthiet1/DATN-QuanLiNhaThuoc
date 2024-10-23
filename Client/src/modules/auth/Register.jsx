@@ -1,17 +1,24 @@
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import authServices from "../../services/authService";
 import formAuthSchema from "../../utils/validations/formAuth";
 import { InputText } from "../../components/ui/form";
 import { Button } from "../../components/ui/button";
 import useGoogleLoginHook from "../../hooks/useGoogleLoginHook";
+import Logo from '../../assets/images/logo/logo.png'
+import { SpinnerLoading } from "../../components/ui/loaders";
+import { ToggleFormContext } from "../../contexts/ToggleFormContext";
+import tokenService from "../../services/tokenService";
 const Register = () => {
     const { register, handleSubmit, formState: { errors }, watch } = useForm({ resolver: yupResolver(formAuthSchema.register) });
+    const { setDialogState } = useContext(ToggleFormContext)
     const [isLoading, setIsLoading] = useState(false);
+    const [disabled, setDisabed] = useState(false)
     const onSubmit = async (formData) => {
         setIsLoading(true);
-        const reponse = await authServices.register(
+        setDisabed(true)
+        const data = await authServices.register(
             {
                 fullname: formData.fullname,
                 email: formData.email,
@@ -19,10 +26,19 @@ const Register = () => {
                 provider: "local",
             }
         );
-        if (!reponse) {
+        if (!data) {
+            setTimeout(() => {
+                setIsLoading(false);
+                setDisabed(false)
+            }, 1000)
             return
         }
+        setDialogState({ isOpen: true, type: "verifyEmail" })
+
         setIsLoading(false);
+        setDisabed(false)
+         tokenService.setDisposableEmail(formData.email)
+        //   
     };
     const login = useGoogleLoginHook()
 
@@ -30,28 +46,21 @@ const Register = () => {
     return (
         <>
 
-            <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800">
+            <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-[#FEFEFE] rounded-lg">
                 <div className="flex flex-col overflow-y-auto md:flex-row">
-                    <div className="h-32 md:h-auto md:w-1/2">
+                    <div className=" md:h-auto md:w-[70%] flex justify-center items-center max-md:mb-5">
                         <img
                             aria-hidden="true"
-                            className="object-cover w-full h-full dark:hidden"
-                            src="/static/media/login-office.c7786a89.jpeg"
-                            alt="Office"
-                        />
-                        <img
-                            aria-hidden="true"
-                            className="hidden object-cover w-full h-full dark:block"
-                            src="https://mernshop-admin.vercel.app/static/media/login-office.c7786a89.jpeg"
+                            className=" w-full h-[220px] dark:block max-md:h-[130px]"
+                            src={Logo}
                             alt="Office"
                         />
                     </div>
-                    <main className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
+                    <main className="flex items-center justify-center p-3 sm:p-1 md:w-1/2">
                         <div className="w-full">
-                            <h1 className="mb-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">Đăng ký</h1>
+                            <h1 className="mb-3 text-2xl font-semibold text-[#2563eb]">Đăng ký</h1>
                             <form action="" onSubmit={handleSubmit(onSubmit)}>
-                           
-                                <label className="block text-sm text-gray-700 dark:text-gray-400 font-medium pb-2">
+                                <label className="block text-sm text-gray-800 font-semibold pb-2">
                                     Tên người dùng
                                 </label>
                                 <InputText
@@ -60,13 +69,13 @@ const Register = () => {
                                     addClassNames="block w-full px-3 py-1 text-sm focus:outline-none  rounded-md   focus:ring  border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent"
                                     name="email"
                                 />
-                                 {errors.fullname && (
+                                {errors.fullname && (
                                     <p className="text-red-500 text-sm">
                                         {errors.fullname.message}
                                     </p>
                                 )}
-                                  <div className="mt-3"></div>
-                                <label className="block text-sm text-gray-700 dark:text-gray-400 font-medium pb-2">
+                                <div className="mt-3"></div>
+                                <label className="block text-sm text-gray-800 font-semibold pb-2">
                                     Email
                                 </label>
                                 <InputText
@@ -81,7 +90,7 @@ const Register = () => {
                                     </p>
                                 )}
                                 <div className="mt-3"></div>
-                                <label className="block text-sm text-gray-700 dark:text-gray-400 font-medium pb-2">
+                                <label className="block text-sm text-gray-800 font-semibold pb-2">
                                     Mật khẩu
                                 </label>
                                 <InputText
@@ -97,7 +106,7 @@ const Register = () => {
                                     </p>
                                 )}
                                 <div className="mt-3"></div>
-                                <label className="block text-sm text-gray-700 dark:text-gray-400 font-medium pb-2">
+                                <label className="block text-sm text-gray-800 font-semibold pb-2">
                                     Xác nhận lại mật khẩu
                                 </label>
                                 <InputText
@@ -105,21 +114,22 @@ const Register = () => {
                                         register("confirmPassword")
 
                                     }
-                                    className="block w-full border-2 border-slate-200 mb-2  p-2 rounded-[5px] text-[16px] outline-none" type="password" placeholder="Xác nhận lại mật khẩu" />
+                                    className="block px-3 py-1 text-sm   rounded-md   focus:ring  border h-12  focus:outline-none  w-full bg-gray-100 border-transparent" type="password" placeholder="Xác nhận lại mật khẩu" />
                                 {errors.confirmPassword && (
                                     <p className="text-red-500 text-sm">
                                         {errors.confirmPassword.message}
                                     </p>
                                 )}
                                 <Button
+                                    disabled={disabled || isLoading}
                                     type="submit"
                                     addClassNames="w-full mt-6 h-12 px-4 py-2 text-sm text-white bg-blue-500 rounded-lg hover:bg-blue-700 focus:ring focus:ring-purple-300 flex justify-center"
                                 >
-                                    {isLoading ? " Đang" : "Đăng ký"}
+                                    {isLoading ? <SpinnerLoading size="30" color='#fff' /> : "Đăng ký"}
                                 </Button>
-                                <hr className="my-7 " />
+                                <hr className="my-2 " />
                                 <Button
-                                     type="button"
+                                    type="button"
                                     onClick={login}
                                     className="w-full h-11 md:h-12 text-sm inline-flex items-center justify-center my-2 text-gray-700 bg-gray-100 rounded-md cursor-pointer hover:bg-gray-300 duration-150"
                                 >
@@ -131,11 +141,15 @@ const Register = () => {
                                     <span className="ml-2">Đăng nhập với google</span>
                                 </Button>
                             </form>
-                            <p className="mt-4">
-                                <a className="text-sm font-medium text-blue-500  hover:underline" href="/forgot-password">
-                                    Quên mật khẩu
-                                </a>
+
+                            <p onClick={() => setDialogState({ isOpen: true, type: 'forgotPassword' })} className=" cursor-pointer text-sm font-medium text-blue-500  hover:underline">
+                                Quên mật khẩu
                             </p>
+                            <p onClick={() => setDialogState({ isOpen: true, type: "verifyEmail" })
+                            } className=" cursor-pointer text-sm font-medium text-blue-500  hover:underline">
+                                Xác thực tài khoản
+                            </p>
+
 
                         </div>
                     </main>

@@ -28,7 +28,7 @@ const Auth = {
 
             const randomCode = Math.floor(100000 + Math.random() * 900000);
 
-            const timeOtp = new Date(Date.now() + 3 * 60 * 1000);
+            const timeOtp = new Date(Date.now() + 5 * 60 * 1000);
             const newUser = new UserModel({
                 fullname,
                 email,
@@ -238,7 +238,7 @@ const Auth = {
 
        
             const codeForgotPassword = generateRandomCode(6);
-            const timeOtp = new Date(Date.now() + 3 * 60 * 1000);
+            const timeOtp = new Date(Date.now() + 5 * 60 * 1000);
 
 
             user.otpForgotPass = codeForgotPassword;
@@ -348,7 +348,7 @@ const Auth = {
             const newVerificationCode = Math.floor(100000 + Math.random() * 900000);
 
             user.otpVerify = newVerificationCode;
-            user.timeOtp = new Date(Date.now() + 3 * 60 * 1000);
+            user.timeOtp = new Date(Date.now() + 5 * 60 * 1000);
             await user.save();
 
             await sendMail({

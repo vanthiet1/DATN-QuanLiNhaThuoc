@@ -58,6 +58,27 @@ const subCategory = {
     }
   },
 
+  getOneSubCategory: async (req, res) => {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ message: 'Cần phải có ID để tìm danh mục con.' });
+    }
+
+    try {
+      const subCategory = await SubCategoryModel.findById(id).populate('category_id', 'name');
+
+      if (!subCategory) {
+        return res.status(404).json({ message: 'Không tìm thấy danh mục con.' });
+      }
+
+      res.status(200).json({ data: subCategory });
+    } catch (error) {
+      console.error('Lỗi khi tải danh mục con:', error);
+      res.status(500).json({ message: 'Đã xảy ra lỗi khi tải danh mục con', error: error.message });
+    }
+  },
+
   updateSubCategory: async (req, res) => {
     const { id } = req.params;
     const { name, category_id, description, order } = req.body;

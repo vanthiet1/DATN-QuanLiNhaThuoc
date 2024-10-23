@@ -10,7 +10,7 @@ const categorySchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    position: {
+    order: {
       type: Number,
       default: 0
     }

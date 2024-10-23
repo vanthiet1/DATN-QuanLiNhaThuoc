@@ -1,4 +1,4 @@
-const Router = require('express').Router()
+const Router = require('express').Router();
 const ProductController = require('../controllers/productController/product');
 const upload = require('../middlewares/uploadMiddleware');
 
@@ -10,7 +10,8 @@ Router.get('/recommend', ProductController.getListProductRecommend);
 Router.get('/related', ProductController.getListProductRelative);
 Router.get('/details/:id', ProductController.getProductWithById);
 Router.get('/filter', ProductController.getListProductFilter);
-Router.put('/:id', ProductController.updateProduct);
+Router.put('/:id', upload.array('productImg', 6), ProductController.updateProduct);
 Router.delete('/:id', ProductController.deleteProduct);
+Router.get('/:slug', ProductController.getProductWithBySlug);
 
 module.exports = Router;

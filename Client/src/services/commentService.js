@@ -1,6 +1,6 @@
 import http from '../utils/helpers/http';
 import END_POIND_API from '../utils/helpers/endpoind';
-import { showToastError } from '../configs/toastConfig';
+import { showToastError, showToastSuccess } from '../configs/toastConfig';
 
 const commetServices = {
   addComment: async (requestBody) => {
@@ -22,9 +22,9 @@ const commetServices = {
       console.log(error.message);
     }
   },
-  getAllComments: async (resquestParrams) => {
+  getAllComments: async () => {
     try {
-      const { data } = await http.get(`${END_POIND_API.COMMENT}/${resquestParrams}`);
+      const { data } = await http.get(`${END_POIND_API.COMMENT}`);
       console.log(data);
       return data;
     } catch (error) {
@@ -34,7 +34,7 @@ const commetServices = {
   },
   updateComment: async (resquestParrams) => {
     try {
-      const { data } = await http.put(`/${END_POIND_API.COMMENT}/${resquestParrams}`);
+      const { data } = await http.put(`${END_POIND_API.COMMENT}/${resquestParrams}`);
       return data;
     } catch (error) {
       showToastError(error.response.data.message);
@@ -43,11 +43,12 @@ const commetServices = {
   },
   deleteComment: async (requestParams) => {
     try {
-      const { data } = await http.delete(`/${END_POIND_API.COMMENT}/${requestParams}`);
+      const { data } = await http.delete(`${END_POIND_API.COMMENT}/${requestParams}`);
+      showToastSuccess(data.message || 'Xoá comment thành công');
       return data;
     } catch (error) {
-      showToastError(error.response.data.message);
-      console.log(error.message);
+      showToastError(error.response?.data?.message || 'Lỗi khi xoá comment');
+      console.log(error);
     }
   }
 };
