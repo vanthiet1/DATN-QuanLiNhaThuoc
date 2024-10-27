@@ -667,7 +667,6 @@ const PrinterIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   
 };
 
-<<<<<<< HEAD
 
 const ShoppingCartIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
@@ -782,10 +781,6 @@ const TimeIcon = ({ width = '24', height = '24', addClassNames = '' }) => (
   </svg>
 );
 
-
-
-
-=======
 const CkeckIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
     <svg
@@ -806,7 +801,6 @@ const CkeckIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   );
 };
 
->>>>>>> 8ac3b2a5dd387556fda7502a0875d4466340b860
 const icons = {
   HomeIcon,
   OderIcon,
@@ -843,7 +837,6 @@ const icons = {
   ArrowDown,
   ArrowRight,
   PrinterIcon,
-<<<<<<< HEAD
   AddToCartSuccsessIcon,
   ShoppingCartIcon,
   QueueListIcon,
@@ -852,10 +845,10 @@ const icons = {
   ClipboardIcon,
   UserIconOutline,
   ShieldIcon,
-  TimeIcon
-=======
+  TimeIcon,
+  CkeckIcon,
+  TimeIcon,
   CkeckIcon
->>>>>>> 8ac3b2a5dd387556fda7502a0875d4466340b860
 };
 
 export default icons;

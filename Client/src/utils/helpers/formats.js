@@ -18,14 +18,11 @@ const formatsHelper = {
 
   FormatDateAndTime: (timestamp) => {
     return format(new Date(timestamp), ' HH:mm');
-<<<<<<< HEAD
   },
 
   formatISODate: (isoString) => {
     const date = new Date(isoString);
     return format(date, 'dd-MM-yyyy HH:mm:ss'); 
-=======
->>>>>>> 8ac3b2a5dd387556fda7502a0875d4466340b860
   }
 };
 export default formatsHelper;

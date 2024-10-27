@@ -40,5 +40,5 @@ const CardProduct = ({ products, handleAddToCart }) => {
             </div>
         </div>
     );
-
+  }
 export default CardProduct;

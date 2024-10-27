@@ -45,15 +45,11 @@ const BlogRouter = require('./routers/blog');
 const CommentRouter = require('./routers/comments');
 const VerifyRouter = require('./routers/vertifyEmail');
 const PharmacyRouter = require('./routers/pharmacy');
-<<<<<<< HEAD
 const SearchRouter = require('./routers/search');
-
-=======
 const PaymentMethodRouter = require('./routers/paymentMethod');
 const VnpayRouter = require('./routers/vnpay');
 const TransactionRouter = require('./routers/transaction');
 const ReportRouter = require('./routers/report');
->>>>>>> 8ac3b2a5dd387556fda7502a0875d4466340b860
 
 app.use('/api/v1/order', OrderRouter);
 app.use('/api/v1/order-details', OrderDetailRouter);
@@ -74,14 +70,11 @@ app.use('/api/v1/blog', BlogRouter);
 app.use('/api/v1/comment', CommentRouter);
 app.use('/api/v1/email', VerifyRouter);
 app.use('/api/v1/pharmacy', PharmacyRouter);
-<<<<<<< HEAD
 app.use('/api/v1/search', SearchRouter);
-=======
 app.use('/api/v1/payment-method', PaymentMethodRouter);
 app.use('/api/v1/vnpay', VnpayRouter);
 app.use('/api/v1/transactions', TransactionRouter);
 app.use('/api/v1/report', ReportRouter);
->>>>>>> 8ac3b2a5dd387556fda7502a0875d4466340b860
 
 // Start server
 const PORT = process.env.PORT || 5000;
