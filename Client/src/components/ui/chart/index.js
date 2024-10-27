@@ -1,1 +1,2 @@
-export { default as Chart } from './Chart.jsx';
+export { default as ChartBar } from './ChartBar.jsx';
+export { default as ChartPie } from './ChartPie.jsx';

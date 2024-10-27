@@ -132,11 +132,6 @@ const dataMenu = [
     ]
   },
   {
-    icon: <AppIcons.LocationIcon />,
-    title: 'Adress',
-    path: PATH_ROUTERS_ADMIN.MANAGER_ADDRESS
-  },
-  {
     icon: <AppIcons.UserGroup />,
     title: 'User',
     subMenu: [
@@ -156,7 +151,7 @@ const dataMenu = [
   },
 
   {
-    icon: <AppIcons.UserGroup />,
+    icon: <AppIcons.UserIcon />,
     title: 'Role',
     subMenu: [
       {
@@ -167,10 +162,8 @@ const dataMenu = [
       {
         icon: <AppIcons.PencilSquare />,
         title: 'Add Role',
-        path: PATH_ROUTERS_ADMIN.ADD_ROLE_USER,
-      },
-
-       
+        path: PATH_ROUTERS_ADMIN.ADD_ROLE_USER
+      }
     ]
   },
 
@@ -191,9 +184,14 @@ const dataMenu = [
     path: PATH_ROUTERS_ADMIN.TRANSACTION
   },
   {
-    // icon: <AppIcons.ArrowLeftCircle />,
+    icon: <AppIcons.ArrowLeftCircle />,
     title: 'HomePage',
     path: PATH_ROUTERS_CLIENT.HOMEPAGE
+  },
+  {
+    icon: <AppIcons.LocationIcon />,
+    title: 'Adress',
+    path: PATH_ROUTERS_ADMIN.MANAGER_ADDRESS
   },
   {
     icon: <AppIcons.SetIcon />,
@@ -270,7 +268,7 @@ const SidebarAdmin = () => {
     <aside className='w-[270px] hidden lg:block overflow-y-auto' id='sider-bar-main'>
       <h1 className='p-4 font-bold text-lg'>
         <Link to={PATH_ROUTERS_ADMIN.DASHBOARD}>
-          <Image src={LogoImage}></Image>
+          <Image src={LogoImage} alt='img-logo'></Image>
         </Link>
       </h1>
       <div className='p-4' id='menu-admin-wrapper'>

@@ -30,6 +30,15 @@ const CouponController = {
     }
   },
 
+  getCouponsActive: async (req, res) => {
+    try {
+      const coupons = await CouponModel.find({ is_active: true });
+      res.status(200).json(coupons);
+    } catch (error) {
+      res.status(500).json({ message: 'Lỗi khi lấy danh sách coupon: ' + error.message });
+    }
+  },
+
   getCouponById: async (req, res) => {
     try {
       const { id } = req.params;

@@ -13,6 +13,10 @@ const TableProduct = ({ productData }) => {
     navigate(`/admin/edit-product/${slug}`);
   };
 
+  const handleSwitchToProductDetailsAdmin = (slug) => {
+    navigate(`/admin/product-details/${slug}`);
+  };
+
   const { handleDeleteProduct } = useContext(ProductAdminContext);
 
   return (
@@ -24,13 +28,15 @@ const TableProduct = ({ productData }) => {
           <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>
             price_distcount
           </th>
+          <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>status</th>
+          <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>stock</th>
           <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>Actions</th>
         </tr>
       </thead>
       <tbody className='bg-white divide-y divide-gray-200'>
         {productData &&
           productData.productsList.map((product) => {
-            const { name, price_distcount, _id, images, slug } = product;
+            const { name, price_distcount, _id, images, stock, slug } = product;
             return (
               <tr key={_id} className='hover:bg-gray-100'>
                 <td className='px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-700'>
@@ -40,11 +46,16 @@ const TableProduct = ({ productData }) => {
                 <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
                   {formatsHelper.currency(price_distcount)}
                 </td>
+                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
+                  {stock > 0 ? 'Còn hàng' : 'Hết hàng'}
+                </td>
+                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{stock}</td>
                 <td className='px-6 py-4 whitespace-nowrap text-sm flex '>
                   <Button
                     size='m'
                     rounded='s'
                     addClassNames='bg-teal-500 text-white hover:bg-teal-600 px-3 py-1 rounded-md'
+                    onClick={() => handleSwitchToProductDetailsAdmin(slug)}
                   >
                     <AppIcons.EyeIcon width='20' height='20' />
                   </Button>

@@ -16,6 +16,7 @@
     "@react-oauth/google": "^0.12.1",
     "@reduxjs/toolkit": "^2.2.7",
     "axios": "^1.7.7",
+    "chart.js": "^4.4.5",
     "ckeditor5": "^43.1.0",
     "ckeditor5-premium-features": "^43.1.0",
     "clsx": "^2.1.1",
@@ -25,6 +26,7 @@
     "jspdf-autotable": "^3.8.3",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.3.1",
     "react-dropzone": "^14.2.3",
     "react-error-boundary": "^4.0.13",
@@ -36,6 +38,7 @@
     "react-toastify": "^10.0.5",
     "swiper": "^11.1.14",
     "tailwind-merge": "^2.5.2",
+    "xlsx": "^0.18.5",
     "yup": "^1.4.0"
   },
   "devDependencies": {
