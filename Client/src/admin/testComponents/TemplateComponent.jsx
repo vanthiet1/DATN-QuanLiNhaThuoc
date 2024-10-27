@@ -195,6 +195,10 @@ const TemplateComponent = () => {
             <AppIcons.PrinterIcon />
             <span>PrinterIcon</span>
           </div>
+          <div className='flex gap-1 items-center'>
+            <AppIcons.CkeckIcon />
+            <span>CkeckIcon</span>
+          </div>
         </div>
       </div>
     </div>

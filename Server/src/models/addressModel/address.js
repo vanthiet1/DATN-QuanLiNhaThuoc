@@ -9,7 +9,11 @@ const addressSchema = new mongoose.Schema({
     type: String,
     require: true
   },
-  commune: {
+  province: {
+    type: String,
+    require: true
+  },
+  ward: {
     type: String,
     require: true
   },
@@ -23,10 +27,6 @@ const addressSchema = new mongoose.Schema({
     ref: 'User'
   },
   receiver: {
-    type: String,
-    require: true
-  },
-  city: {
     type: String,
     require: true
   },

@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { cn } from '../../../utils/helpers/mergeClasses';
 
-const InputRadio = forwardRef(({ disabled, inputRef, addClassNames, ...props }, ref) => {
+const InputRadio = forwardRef(({ disabled, refinput, addClassNames, ...props }, ref) => {
   return (
     <input
       type='radio'
@@ -11,7 +11,7 @@ const InputRadio = forwardRef(({ disabled, inputRef, addClassNames, ...props }, 
       )}
       ref={ref}
       disabled={disabled}
-      {...inputRef}
+      {...refinput}
       {...props}
     ></input>
   );

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { cn } from '../../../utils/helpers/mergeClasses';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const imgDefault = 'https://www.svgrepo.com/show/508699/landscape-placeholder.svg';
 
@@ -21,18 +21,24 @@ const Image = ({
     setImageSrc(fallbackSrc);
   };
 
+  useEffect(() => {
+    setImageSrc(src);
+  }, [src]);
+
   return (
-    <img
-      onError={handleErrorImg}
-      src={imageSrc}
-      alt={alt}
-      width={width}
-      height={height}
-      className={cn('object-fill block', addClassNames)}
-      style={style}
-      loading={lazyLoad ? 'lazy' : 'eager'}
-      {...props}
-    />
+    <>
+      <img
+        onError={handleErrorImg}
+        src={imageSrc}
+        alt={alt}
+        width={width}
+        height={height}
+        className={cn('object-fill block', addClassNames)}
+        style={style}
+        loading={lazyLoad ? 'lazy' : 'eager'}
+        {...props}
+      />
+    </>
   );
 };
 

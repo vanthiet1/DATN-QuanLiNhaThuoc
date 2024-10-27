@@ -6,6 +6,4 @@ Router.post("/:id", commentController.addComment);
 Router.get("/:id", commentController.getCommentsByProductId);
 Router.delete("/:id", commentController.deleteComment);
 Router.put("/:id", commentController.updateComment);
-
-
 module.exports = Router;

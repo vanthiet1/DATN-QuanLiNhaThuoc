@@ -1,4 +1,6 @@
 const SubCategoryModel = require('../../models/subCategoryModel/subCategory');
+const ProductModel = require('../../models/productModel/product');
+const ImageProduct = require('../../models/imageModels/image');
 
 const subCategory = {
   addSubCategory: async (req, res) => {
@@ -51,7 +53,7 @@ const subCategory = {
   getSubCategory: async (req, res) => {
     try {
       const subCategories = await SubCategoryModel.find({}).populate('category_id', 'name');
-      res.status(200).json({ data: subCategories });
+      res.status(200).json(subCategories);
     } catch (error) {
       console.error('Lỗi khi tải các danh mục con:', error);
       res.status(500).json({ message: 'Đã xảy ra lỗi khi tải các danh mục con', error: error.message });
@@ -72,7 +74,7 @@ const subCategory = {
         return res.status(404).json({ message: 'Không tìm thấy danh mục con.' });
       }
 
-      res.status(200).json({ data: subCategory });
+      res.status(200).json(subCategory);
     } catch (error) {
       console.error('Lỗi khi tải danh mục con:', error);
       res.status(500).json({ message: 'Đã xảy ra lỗi khi tải danh mục con', error: error.message });
@@ -103,7 +105,25 @@ const subCategory = {
       console.error('Lỗi khi cập nhật danh mục con:', error);
       res.status(500).json({ message: 'Đã xảy ra lỗi khi cập nhật danh mục con', error: error.message });
     }
-  }
+  },
+
+  getProductBySubCategory: async (req, res) => {
+    try {
+      const {id} = req.params
+      const subCategories = await ProductModel.find({sub_category_id:id})
+      const productsWithImages = await Promise.all(subCategories.map(async (product) => {
+        const images = await ImageProduct.find({ product_id: product._id });
+        return {
+            ...product.toObject(), 
+            images: images 
+        };
+    }));
+      res.status(200).json(productsWithImages);
+    } catch (error) {
+      console.error('Lỗi khi tải các danh mục con:', error);
+      res.status(500).json({ message: 'Đã xảy ra lỗi khi tải các danh mục con', error: error.message });
+    }
+  },
 };
 
 module.exports = subCategory;

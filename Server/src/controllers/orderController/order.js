@@ -9,11 +9,11 @@ const OrderController = {
   createOrder: async (req, res) => {
     try {
       // dữ liệu gửi lên
-      // address , coupon_id, productCartList, user , product, payment method , transactions
+      // address , coupon_id, productCartList, user , product, payment method , transactions, prescriptionImage
       const { address, productCart, payment_method_id, coupon_id, order_date, sale_type } = req.body;
       const { street, district, commune, address: address_, receiver, city, phone, note } = address;
 
-      const user_id = '66fd52f76f405e9671989ace';
+      const user_id = '670740947937a56191ec601c';
       const { ObjectId } = mongoose.Types;
       const user_id_convert = new ObjectId(user_id);
       const payment_method_id_convert = new ObjectId(payment_method_id);
@@ -115,8 +115,7 @@ const OrderController = {
         // kiểm tra productCart;
         if (productCart.productList.length > 0 && Array.isArray(productCart.productList)) {
           productCart.productList.forEach((productItem) => {
-            const { productId, quantity } = productItem;
-            const price = 1000000;
+            const { productId, quantity, price } = productItem;
             handleSaveOrderDetails({ product_id: productId, quantity, price });
           });
         }
@@ -177,7 +176,8 @@ const OrderController = {
         { $unwind: '$address' },
         {
           $match: filterConditions
-        }
+        },
+        { $sort: { createdAt: -1 } }
       ])
         .skip((pageNumber - 1) * itemOfPage)
         .limit(itemOfPage);
@@ -253,9 +253,13 @@ const OrderController = {
   },
   updateOrder: async (req, res) => {
     const { id } = req.params;
-    const { status, payment_method } = req.body;
+    const { status } = req.body;
     try {
-      const order = await OrderModel.findByIdAndUpdate(id, { status, payment_method }, { new: true });
+      if (status == 4) {
+        const order = await OrderModel.findByIdAndUpdate(id, { status, isPay: true }, { new: true });
+        return res.status(200).json(order);
+      }
+      const order = await OrderModel.findByIdAndUpdate(id, { status }, { new: true });
       if (!order) return res.status(404).json({ message: 'Không tìm thấy đơn hàng' });
       res.status(200).json(order);
     } catch (error) {

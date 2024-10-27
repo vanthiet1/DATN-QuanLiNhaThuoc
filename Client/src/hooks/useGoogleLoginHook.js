@@ -17,7 +17,7 @@ const useGoogleLoginHook = () => {
           emailVerify: authLoginGoogle?.email_verified
         });
         if (!data) return
-        tokenService.setAccessToken( data?.accessToken)
+        tokenService.setAccessToken(data?.accessToken)
         window.location.reload()
       } catch (error) {
         console.error("Error during Google login:", error);

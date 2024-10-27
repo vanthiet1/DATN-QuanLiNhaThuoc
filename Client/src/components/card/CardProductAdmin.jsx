@@ -18,6 +18,10 @@ const CardProductAdmin = ({ product, addClassname }) => {
     navigate(`/admin/edit-product/${slug}`);
   };
 
+  const handleSwitchToProductDetailsAdmin = () => {
+    navigate(`/admin/product-details/${slug}`);
+  };
+
   return (
     <div className={`card-product border border-solid border-gray-200 rounded overflow-hidden ${addClassname}`}>
       <Image
@@ -28,7 +32,7 @@ const CardProductAdmin = ({ product, addClassname }) => {
         addClassNames={'h-[180px] w-full object-fill'}
       ></Image>
       <div className='card-product-hover:bg-gray-500 p-2'>
-        <h3 className='font-semibold leading-tight text-gray-700 line-clamp-2 mt-2 my-3'>{name}</h3>
+        <h3 className='font-semibold leading-tight min-h-[40px] text-gray-700 line-clamp-2 mt-2 my-3'>{name}</h3>
         <div className='flex'>
           {price_old > 0 && (
             <p className='text-gray-400 my-1 line-through text-sm mr-4'>{formatsHelper.currency(price_old)}</p>
@@ -40,8 +44,9 @@ const CardProductAdmin = ({ product, addClassname }) => {
             addClassNames='text-white bg-blue-500 border-blue-500 hover:bg-blue-600 w-[30px] h-[30px] flex items-center justify-center'
             rounded='s'
             outline={true}
+            onClick={() => handleSwitchToProductDetailsAdmin()}
           >
-            {<AppIcons.EyeIcon width='20' height='20' />}
+            <AppIcons.EyeIcon width='20' height='20' />
           </Button>
           <div className='flex items-center gap-2'>
             <Button

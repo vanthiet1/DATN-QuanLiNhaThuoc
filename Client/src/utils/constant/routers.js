@@ -1,13 +1,18 @@
+// tai-khoan
+// li-su-don-hang
+// chinh-sach-bao-hanh
+// chinh-sach-thanh-toan
+// don-hang-dan-xu-ly
+
 const PATH_ROUTERS_CLIENT = {
   HOMEPAGE: '/',
-  PRODUCT_SEARCH: 'product/search/',
+  PRODUCT_SEARCH: 'product/search',
   PRODUCT_DETAILS: 'product/:slug',
   CATEGORIES_DETAILS: 'danh-muc/:id',
+  SUBCATEGORIES_DETAILS: 'danh-muc/san-pham-danh-muc/:id',
   PHARMACY_DETAILS: 'nha-thuoc/:id',
   BLOG_DETAILS: 'bai-viet/:id',
-  CART: 'gio-hang',
-  ABOUT:'gioi-thieu',
-  CONTACT:'lien-he'
+  CART: 'gio-hang'
 };
 
 const PATH_ROUTERS_ADMIN = {
@@ -22,7 +27,7 @@ const PATH_ROUTERS_ADMIN = {
   EDIT_SUBCATEGORY: 'admin/edit-subcategory/:id',
   ORDERS: 'admin/orders',
   CATEGORY: 'admin/category',
-  CUSTOMERS: 'admin/customers', // sử dụng cho update user
+  CUSTOMERS: 'admin/customers',
   SETTINGS: 'admin/settings',
   ADD_BANNER: 'admin/add-banner',
   ALL_BANNER: 'admin/all-banner',
@@ -49,7 +54,8 @@ const PATH_ROUTERS_ADMIN = {
   CUSTOMERS: 'admin/customers',
   SETTINGS: 'admin/settings',
   TEMPLATECOMPONENT: 'admin/template-component',
-  ORDER_DETAILS: 'admin/orders/:id'
+  ORDER_DETAILS: 'admin/orders/:id',
+  ORDER_SALE_OFF: 'admin/order-from-pharmacy'
 };
 
 export { PATH_ROUTERS_CLIENT, PATH_ROUTERS_ADMIN };

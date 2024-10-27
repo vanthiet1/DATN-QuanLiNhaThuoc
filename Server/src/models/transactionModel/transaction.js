@@ -9,24 +9,48 @@ const transactionSchema = new mongoose.Schema(
     },
     transaction_id: {
       type: String,
-      required: true
+      required: true,
+      unique: true
     },
     amount: {
       type: Number,
-      required: true
+      required: true,
+      validate: {
+        validator: function (value) {
+          return value >= 0;
+        },
+        message: 'Amount cannot be negative.'
+      }
+    },
+    currency: {
+      type: String,
+      enum: ['VND', 'USD', 'EUR', 'GBP'],
+      default: 'VND'
     },
     status: {
-      type: Number,
+      type: String,
       required: true
     },
-    payment_methods_id: {
+    transaction_type: {
+      type: String,
+      enum: ['payment', 'refund', 'adjustment'],
+      required: true
+    },
+    payment_method_id: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: 'Payment_methods'
+    },
+    response_code: {
+      type: String,
+      required: true
+    },
+    description: {
+      type: String
     }
   },
   { timestamps: true }
 );
 
-const TransactionModel = mongoose.model('transaction', transactionSchema);
+const TransactionModel = mongoose.model('Transaction', transactionSchema);
 module.exports = TransactionModel;

@@ -7,8 +7,6 @@ import AppIcons from '../ui/icon';
 import { Button } from '../ui/button';
 import Image from '../ui/image/Image';
 
-
-
 const HeaderSearch = () => {
   return (
     <div
@@ -24,14 +22,17 @@ const HeaderSearch = () => {
 const Header = () => {
   const avatarTestUrl = 'https://i.pravatar.cc/300';
   return (
-    <header className='flex-1 bg-white border-b border-gray-300 py-4 shadow-md'>
+    <header className='flex-1 bg-white border-b border-gray-300 py-4 shadow-md relative'>
       <div className='container flex items-center justify-between px-6'>
         <HeaderSearch />
-        <div className='flex items-center gap-5'>
-          <Button addClassNames='text-blue-600'>
-            <AppIcons.DarkIcon />
-          </Button>
-          <Button addClassNames='text-blue-600'>
+        <div className='flex items-center gap-5 transition-colors'>
+          <Link
+            className='text-gray-700 flex items-center text-sm hover:text-blue-700 hover:underline'
+            to={PATH_ROUTERS_ADMIN.ORDER_SALE_OFF}
+          >
+            <AppIcons.OderIcon width='14' height='14' /> <span className='ml-2'>Mua hàng tại quầy</span>
+          </Link>
+          <Button addClassNames='text-gray-700 hover:text-blue-700'>
             <AppIcons.NotiIcon />
           </Button>
           <Button>

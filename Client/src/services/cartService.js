@@ -4,17 +4,16 @@ import { showToastError,showToastSuccess } from "../configs/toastConfig";
 const cartServices = {
   addToCart: async (requestBody) => {
     try {
-      const { data } = await http.post(`${END_POIND_API.CART}`, requestBody);
+      const { data } = await http.get(`${END_POIND_API.CART}`, requestBody);
       console.log(data);
       return data;
     } catch (error) {
-      console.log(error.message);
-      
+      console.error("Lỗi khi thêm vào giỏ hàng:", error.response?.status, error.response?.data);
     }
   },
   getCartByUserId: async (requestParams) => {
     try {
-      const { data } = await http.get(`${END_POIND_API.CART}/${requestParams}`);
+      const { data } = await http.get(`/${END_POIND_API.CART}/${requestParams}`);
       console.log(data);
       return data;
     } catch (error) {
@@ -30,9 +29,9 @@ const cartServices = {
       console.log(error.message);
     }
   },
-  deleteProductCartByUserId: async (requestParams) => {
+  deleteProductCartByUserId: async (userId,productId) => {
     try {
-      const { data } = await http.delete(`${END_POIND_API.CART}/product/${requestParams}`);
+      const { data } = await http.delete(`/${END_POIND_API.CART}/product/${requestParams}`);
       console.log(data);
       return data;
     } catch (error) {

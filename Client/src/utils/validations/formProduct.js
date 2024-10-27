@@ -10,6 +10,12 @@ const formProductSchema = {
     price_old: Yup.number().required('Không được để price_old trống.'),
     percent_price: Yup.number().required('Không được để percent_price trống.'),
     stock: Yup.number().required('Không được để stock trống.'),
+    production_date: Yup.date()
+      .nullable()
+      .transform((value, originalValue) => (originalValue === '' ? null : value)),
+    expiration_date: Yup.date()
+      .nullable()
+      .transform((value, originalValue) => (originalValue === '' ? null : value)),
     productImg: Yup.mixed()
       .test('required', 'Không được để productImg trống.', (value) => {
         return value && value.length > 0;

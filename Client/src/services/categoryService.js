@@ -16,7 +16,6 @@ const categoryServices = {
   getCategory: async () => {
     try {
       const { data } = await http.get(`${END_POIND_API.CATEGORY}`);
-      console.log(data);
       return data;
     } catch (error) {
       showToastError(error.response.data.message);
