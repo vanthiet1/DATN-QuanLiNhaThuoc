@@ -6,12 +6,14 @@
 
 const PATH_ROUTERS_CLIENT = {
   HOMEPAGE: '/',
-  PRODUCT_SEARCH: 'product/search/',
+  PRODUCT_SEARCH: 'product/search',
   PRODUCT_DETAILS: 'product/:slug',
   CATEGORIES_DETAILS: 'danh-muc/:id',
+  SUBCATEGORIES_DETAILS: 'danh-muc/san-pham-danh-muc/:id',
   PHARMACY_DETAILS: 'nha-thuoc/:id',
   BLOG_DETAILS: 'bai-viet/:id',
-  CART: 'gio-hang'
+  CART: 'gio-hang',
+  ACCOUNT: 'tai-khoan'
 };
 
 const PATH_ROUTERS_ADMIN = {

@@ -9,7 +9,6 @@ const addressServices = {
       console.log(data);
       return data;
     } catch (error) {
-      showToastError(error.response.data.message);
       console.log(error.message);
     }
   },
@@ -29,17 +28,15 @@ const addressServices = {
       console.log(data);
       return data;
     } catch (error) {
-      showToastError(error.response.data.message);
       console.log(error.message);
     }
   },
   getAddressByUserId: async (resquestParrams) => {
     try {
-      const { data } = await http.get(`${END_POIND_API.ADDRESS}/${resquestParrams}`);
+      const { data } = await http.get(`${END_POIND_API.ADDRESS}/detail/${resquestParrams}`);
       console.log(data);
       return data;
     } catch (error) {
-      showToastError(error.response.data.message);
       console.log(error.message);
     }
   },
@@ -63,6 +60,16 @@ const addressServices = {
       console.log(error.message);
     }
   },
+  updateAddressUser: async (resquestParrams ,requestBody) => {
+    try {
+      const { data } = await http.put(`${END_POIND_API.ADDRESS}${END_POIND_API.USER}/${resquestParrams}`,requestBody);
+      showToastSuccess(data.message || 'Cập nhật address thành công');
+      return data;
+    } catch (error) {
+      showToastError(error.response.data.message);
+      console.log(error.message);
+    }
+  },
   updateAddress: async (requestParams) => {
     try {
       const { data } = await http.put(`/${END_POIND_API.ADDRESS}/${requestParams}`);
@@ -72,7 +79,9 @@ const addressServices = {
       showToastError(error.response.data.message);
       console.log(error.message);
     }
-  }
+  },
+
+ 
 };
 
 export default addressServices;

@@ -12,7 +12,7 @@ const DiaLog = ({ isOpen, onClose, children }) => {
       <Portal wrapperElementID='dialog-modal-root'>
         <div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50' onClick={onClose}>
           <div
-            className='relative bg-white rounded-lg shadow-lg max-w-[50%] w-full p-6'
+            className='relative bg-white rounded-lg shadow-lg max-md:max-w-[100%] max-w-[50%] w-full p-6'
             onClick={(e) => e.stopPropagation()}
           >
             <Button addClassNames='absolute top-3 right-3 text-gray-500 hover:text-gray-800' onClick={onClose}>

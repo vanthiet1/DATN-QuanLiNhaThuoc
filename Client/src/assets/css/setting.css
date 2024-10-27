@@ -24,3 +24,13 @@
   background-color: #1376af;
   color: #fff;
 }
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.gallery{
+  display: flex;
+  gap: 10px;
+}
+

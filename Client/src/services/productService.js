@@ -16,10 +16,17 @@ const productServices = {
       showToastError(error.message);
     }
   },
+  getAllDataProducts: async () => {
+    try {
+      const { data } = await http.get(`${END_POIND_API.PRODUCT}/all`);
+      return data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
   getAllProducts: async (requestParams) => {
     try {
       const { data } = await http.get(`${END_POIND_API.PRODUCT}${requestParams}`);
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error.message);
@@ -28,7 +35,6 @@ const productServices = {
   getListProductBestSeller: async () => {
     try {
       const { data } = await http.get(`${END_POIND_API.PRODUCT}/best-seller`);
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error.message);
@@ -37,7 +43,6 @@ const productServices = {
   getListProductNew: async (requestParams) => {
     try {
       const { data } = await http.get(`${END_POIND_API.PRODUCT}/new`);
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error.message);
@@ -72,9 +77,7 @@ const productServices = {
   },
   getListProductFilter: async (requestParams) => {
     try {
-      console.log(requestParams);
       const { data } = await http.get(`${END_POIND_API.PRODUCT}/filter?${requestParams}`);
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error.message);
@@ -110,17 +113,14 @@ const productServices = {
       return data;
     } catch (error) {
       console.log(error.message);
-      showToastError(error.message);
     }
   },
-  
   getProductWithCategory: async (requestParams) => {
     try {
       const { data } = await http.get(`/category${END_POIND_API.PRODUCT}/${requestParams}`);
       return data;
     } catch (error) {
       console.log(error.message);
-      showToastError(error.message);
     }
   },
 };

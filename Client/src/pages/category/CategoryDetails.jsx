@@ -1,52 +1,69 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import useFetch from '../../hooks/useFetch';
 import productServices from '../../services/productService';
 import { SpinnerLoading } from '../../components/ui/loaders';
 import CardProduct from '../../components/card/CardProduct';
-import formatsHelper from '../../utils/helpers/formats';
-const CategoryDetails = () => {
-  const { id } = useParams();
-  console.log(id);
+import { HandleCartContext } from '../../contexts/HandleCartContext';
+import { UserContext } from '../../contexts/UserContext';
+import TitleCategory from './components/TitleCategory';
+import categoryServices from '../../services/categoryService';
+import useSrcollTop from '../../hooks/useSrcollTop';
 
+const CategoryDetails = () => {
+  useSrcollTop()
+  const { id } = useParams();
+  const { user } = useContext(UserContext);
   const [categoriesProduct, setCategoriesProduct] = useState([]);
-  const { responsData, isLoading } = useFetch(() => productServices.getProductWithCategory(id), {}, [id]);
+  const [category, setCategory] = useState({});
+  const { handleAddToCart } = useContext(HandleCartContext);
+
+  const { responsData: productData, isLoading: isProductLoading } = 
+    useFetch(() => productServices.getProductWithCategory(id), {}, [id]);
+
+  const { responsData: allCategories } = useFetch(categoryServices.getCategory);
 
   useEffect(() => {
-    if (!isLoading && responsData) {
-      const products = responsData.flatMap(subcategory => subcategory.products);
+    if (productData) {
+      const products = productData.flatMap(subcategory => subcategory.products);
       setCategoriesProduct(products);
     }
-  }, [isLoading, responsData]);
-  console.log(categoriesProduct);
+  }, [productData]);
 
-  if (isLoading) return (
-    <div className="flex justify-center pt-[50px]">
-      <SpinnerLoading />
-    </div>
-  );
+  useEffect(() => {
+    const foundCategory = allCategories?.find(categories => categories._id === id);
+    if (foundCategory) setCategory(foundCategory);
+  }, [id, allCategories]);
 
   return (
     <div>
-         <div className="grid grid-cols-4 gap-5">
-        {categoriesProduct.length > 0 ? (
-          categoriesProduct && categoriesProduct.map(product => (
-            <CardProduct
-              image={ product?.images[0]?.url_img}
-              name={product?.name}
-              description_short={product?.description_short}
-              priceNew={formatsHelper.currency(product?.price_distcount)}
-              priceOld={formatsHelper.currency(product?.price_old)}
-              detail={`/product/${product?.slug}`}
-            />
-          ))) : (
-         <div className='ml-[200px] w-full'>
-           <p className='pt-5'>Không có sản phẩm nào trong danh mục này.</p>
-         </div>
-        )}
+      <div className="flex justify-start pb-5">
+        <TitleCategory nameCategory={category?.name || 'Danh mục'} />
       </div>
+
+      {isProductLoading ? (
+        <div className="flex justify-center pt-[50px]">
+          <SpinnerLoading />
+        </div>
+      ) : (
+        <div className="grid grid-cols-4 gap-5">
+          {categoriesProduct.length > 0 ? (
+            categoriesProduct.map(product => (
+              <CardProduct
+                key={product._id}
+                products={product}
+                handleAddToCart={() => handleAddToCart(product._id, user?._id)}
+              />
+            ))
+          ) : (
+            <div className="col-span-4 flex items-center justify-center w-full h-full">
+              <p className="pt-5 text-center">Tạm thời chưa có</p>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default CategoryDetails;

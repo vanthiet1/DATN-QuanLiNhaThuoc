@@ -8,9 +8,12 @@ const HomePage = lazy(() => import('../pages/homePage/HomePage'));
 const ProductSearch = lazy(() => import('../pages/productSearch/ProductSearch'));
 const ProductDetail = lazy(() => import('../pages/product/ProductDetail'));
 const CategoryDetails = lazy(() => import('../pages/category/CategoryDetails'));
+const SubcategoryDetails = lazy(() => import('../pages/category/SubCategoryDetail'));
 const Cart = lazy(() => import('../pages/cart/Cart'));
 const BlogDetails = lazy(() => import('../pages/blog/BlogDetails'));
 const Pharmacy = lazy(() => import('../pages/pharmacy/PharmacyDetails'));
+const AccountUser = lazy(() => import('../pages/account/AccoutUser'));
+
 
 const DashBoard = lazy(() => import('../admin/dashboard/Dashboard'));
 const AddProduct = lazy(() => import('../admin/product/AddProduct'));
@@ -82,6 +85,14 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: PATH_ROUTERS_CLIENT.PRODUCT_SEARCH,
+        element: (
+          <SuspenseWrapper>
+            <ProductSearch />
+          </SuspenseWrapper>
+        )
+      },
+      {
         path: PATH_ROUTERS_CLIENT.CATEGORIES_DETAILS,
         element: (
           <SuspenseWrapper>
@@ -90,10 +101,26 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: PATH_ROUTERS_CLIENT.SUBCATEGORIES_DETAILS,
+        element: (
+          <SuspenseWrapper>
+            <SubcategoryDetails />
+          </SuspenseWrapper>
+        )
+      },
+      {
         path: PATH_ROUTERS_CLIENT.CART,
         element: (
           <SuspenseWrapper>
             <Cart />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_CLIENT.ACCOUNT,
+        element: (
+          <SuspenseWrapper>
+            <AccountUser />
           </SuspenseWrapper>
         )
       },

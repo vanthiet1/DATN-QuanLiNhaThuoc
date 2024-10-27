@@ -57,6 +57,7 @@ const Auth = {
             return res.status(500).json({ message: error.message });
         }
     },
+    
     Login: async (req, res) => {
         try {
             const { email, password } = req.body;

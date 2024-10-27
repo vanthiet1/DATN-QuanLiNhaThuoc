@@ -5,6 +5,7 @@ const END_POIND_API = {
   CART: '/cart',
   MESSAGE: '/message',
   PRODUCT: '/product',
+  SEARCH: '/search',
   ORDER: '/order',
   ORDER_DETAILS: '/order-details',
   ADDRESS: '/address',

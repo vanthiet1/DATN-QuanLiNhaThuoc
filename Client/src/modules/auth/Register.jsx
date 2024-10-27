@@ -48,10 +48,10 @@ const Register = () => {
 
             <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-[#FEFEFE] rounded-lg">
                 <div className="flex flex-col overflow-y-auto md:flex-row">
-                    <div className=" md:h-auto md:w-[70%] flex justify-center items-center max-md:mb-5">
+                    <div className=" md:h-auto md:w-[70%] flex justify-center items-center ">
                         <img
                             aria-hidden="true"
-                            className=" w-full h-[220px] dark:block max-md:h-[130px]"
+                            className=" w-full h-[220px] dark:block max-md:h-[100px] max-md:w-[200px] max-md:p-3"
                             src={Logo}
                             alt="Office"
                         />
@@ -67,7 +67,7 @@ const Register = () => {
                                     refinput={register("fullname")}
                                     type="text" placeholder="Nhập tên của bạn"
                                     addClassNames="block w-full px-3 py-1 text-sm focus:outline-none  rounded-md   focus:ring  border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent"
-                                    name="email"
+                                    name="fullname"
                                 />
                                 {errors.fullname && (
                                     <p className="text-red-500 text-sm">
