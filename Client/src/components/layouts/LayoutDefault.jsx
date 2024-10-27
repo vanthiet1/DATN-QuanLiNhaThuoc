@@ -11,8 +11,6 @@ import NewPassword from '../../modules/auth/NewPassword';
 import VerifyEmail from '../../modules/auth/VerifyEmail';
 import NotificationModal from '../ui/cart/NotificationModal';
 import { ToggleFormContext } from '../../contexts/ToggleFormContext';
-import Footer from './Footer';
-
 const formComponents = {
   login: Login,
   register: Register,
@@ -21,7 +19,6 @@ const formComponents = {
   verifyEmail: VerifyEmail,
   notificationModal:NotificationModal
 };
-
 
 const LayoutDefault = () => {
   const  {dialogState , handleCloseDialog} = useContext(ToggleFormContext);
@@ -32,26 +29,12 @@ const LayoutDefault = () => {
       <div className='w-full h-auto p-[30px]'>
         <Outlet />
       </div>
-
-      <DiaLog
-        onClose={handleCloseDialog}
-        isOpen={dialogState.isOpen}
-      >
-        {dialogState.type === 'login' && <Login /> }
-        {dialogState.type === 'register' && <Register /> }
-        {dialogState.type === 'forgotPassword' && <ForgotPassword/>}
-        {dialogState.type === 'newPassword' && <NewPassword/>}
-        {dialogState.type === 'verifyEmail' && <VerifyEmail /> }
-      </DiaLog>
-      <Footer />
-
       <Footer/>
       {dialogState.isOpen && (
         <DiaLog onClose={handleCloseDialog} isOpen={dialogState.isOpen}>
           {FormComponent && <FormComponent />}
         </DiaLog>
       )}
-
     </div>
   );
 };
