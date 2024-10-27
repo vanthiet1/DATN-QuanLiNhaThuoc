@@ -143,7 +143,7 @@ const Footer = () => {
         {/* Footer  */}
         <div className="mt-8 text-center text-xs text-[#6b7280]">
           <p>© 2014 - 2025 Công Ty Trách Nhiệm Hữu Hạn Bình An Dược</p>
-          <p>Địa chỉ: Y1 Hồng Lĩnh, Phường 15, Quận 10, TPDN - Hotline: 1800 2247</p>
+          <p>Địa chỉ: 116 Nguyễn Huy Tưởng, Hoà An, Liên Chiểu, TP.Đà Nẵng - Hotline: 1800 2247</p>
           <p>Từ khoá tìm kiếm: Nhà thuốc 24/24, Mua thuốc online, Nhà thuốc online, Hiệu thuốc gần đây</p>
         </div>
       </div>

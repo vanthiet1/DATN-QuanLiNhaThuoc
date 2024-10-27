@@ -65,7 +65,7 @@ const HomePage = () => {
                       }
                       priceNew={formatsHelper.currency(newProduct?.price_distcount)}
                       priceOld={formatsHelper.currency(newProduct?.price_old)}
-                      userId={user._id}
+                      
                       productId={newProduct._id}
                     />
                   </div>

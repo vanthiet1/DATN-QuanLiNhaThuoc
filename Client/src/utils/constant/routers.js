@@ -5,7 +5,9 @@ const PATH_ROUTERS_CLIENT = {
   CATEGORIES_DETAILS: 'danh-muc/:id',
   PHARMACY_DETAILS: 'nha-thuoc/:id',
   BLOG_DETAILS: 'bai-viet/:id',
-  CART: 'gio-hang'
+  CART: 'gio-hang',
+  ABOUT:'gioi-thieu',
+  CONTACT:'lien-he'
 };
 
 const PATH_ROUTERS_ADMIN = {
