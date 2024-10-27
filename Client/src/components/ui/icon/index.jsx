@@ -781,9 +781,6 @@ const TimeIcon = ({ width = '24', height = '24', addClassNames = '' }) => (
   </svg>
 );
 
-
-
-
 const CkeckIcon = ({ width = '24', height = '24', addClassNames = '' }) => {
   return (
     <svg
@@ -848,6 +845,8 @@ const icons = {
   ClipboardIcon,
   UserIconOutline,
   ShieldIcon,
+  TimeIcon,
+  CkeckIcon,
   TimeIcon,
   CkeckIcon
 };

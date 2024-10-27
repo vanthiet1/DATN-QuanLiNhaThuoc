@@ -8,7 +8,7 @@ const CardCategory = ({ name, description, image, categoriesId }) => {
                     <span className="block text-[#fff]">{description}</span>
                 </div>
                 <div>
-                {image.map((img, index) => (
+                {image?.map((img, index) => (
                         <img 
                             key={index} 
                             className="w-[100px] h-[80px]  rounded-[10px] object-cover" 
