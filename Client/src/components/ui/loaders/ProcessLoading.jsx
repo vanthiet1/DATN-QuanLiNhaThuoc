@@ -13,7 +13,7 @@ const ProcessLoading = ({ isLoading = 'idle', message = '' }) => {
   );
 };
 
-ProcessLoading.propTypes = {
+ProcessLoading.prototype = {
   isLoading: PropTypes.oneOf(['idle', true, false])
 };
 

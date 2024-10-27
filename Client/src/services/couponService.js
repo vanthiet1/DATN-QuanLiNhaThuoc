@@ -24,6 +24,16 @@ const couponServices = {
       console.log(error.message);
     }
   },
+  getCouponsActive: async () => {
+    try {
+      const { data } = await http.get(`${END_POIND_API.COUPON}/active`);
+      console.log(data);
+      return data;
+    } catch (error) {
+      showToastError(error.response?.data?.message || 'Lỗi khi lấy danh sách phiếu giảm giá');
+      console.log(error.message);
+    }
+  },
 
   // Get Coupon by ID
   getCouponById: async (requestParams) => {

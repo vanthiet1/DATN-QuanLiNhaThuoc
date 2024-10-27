@@ -268,7 +268,7 @@ const SidebarAdmin = () => {
     <aside className='w-[270px] hidden lg:block overflow-y-auto' id='sider-bar-main'>
       <h1 className='p-4 font-bold text-lg'>
         <Link to={PATH_ROUTERS_ADMIN.DASHBOARD}>
-          <Image src={LogoImage}></Image>
+          <Image src={LogoImage} alt='img-logo'></Image>
         </Link>
       </h1>
       <div className='p-4' id='menu-admin-wrapper'>
