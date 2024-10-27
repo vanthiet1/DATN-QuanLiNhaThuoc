@@ -55,7 +55,7 @@ const orderServices = {
   },
   deleteOrder: async (resquestParrams) => {
     try {
-      const { data } = await http.delete(`/${END_POIND_API.ORDER}/${resquestParrams}`);
+      const { data } = await http.delete(`${END_POIND_API.ORDER}/${resquestParrams}`);
       showToastSuccess(data.message || 'Xóa.ORDER thành công');
       return data;
     } catch (error) {
@@ -63,14 +63,26 @@ const orderServices = {
       console.log(error.message);
     }
   },
-  updateOrder: async (requestParams) => {
+  updateOrder: async (requestParams, requestBody) => {
     try {
-      const { data } = await http.put(`/${END_POIND_API.ORDER}/${requestParams}`);
+      const { data } = await http.put(`${END_POIND_API.ORDER}/${requestParams}`, requestBody);
       showToastSuccess(data.message || 'Cập nhật order thành công');
       return data;
     } catch (error) {
       showToastError(error.response.data.message);
       console.log(error.message);
+    }
+  },
+  createOrderOff: async (requestBody) => {
+    try {
+      const { data } = await http.post(`${END_POIND_API.ORDER}/create-order-off`, requestBody, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      console.log(data);
+      return data;
+    } catch (error) {
+      showToastError(error.response.data.message);
+      console.log(error);
     }
   }
 };

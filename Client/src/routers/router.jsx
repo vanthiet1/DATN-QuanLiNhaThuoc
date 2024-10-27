@@ -6,7 +6,7 @@ import SuspenseWrapper from '../components/suspenseWrapper/SuspenseWrapper';
 
 const HomePage = lazy(() => import('../pages/homePage/HomePage'));
 const ProductSearch = lazy(() => import('../pages/productSearch/ProductSearch'));
-const ProductDetail = lazy(() => import('../pages/product/ProductDetail'))
+const ProductDetail = lazy(() => import('../pages/product/ProductDetail'));
 const CategoryDetails = lazy(() => import('../pages/category/CategoryDetails'));
 const SubcategoryDetails = lazy(() => import('../pages/category/SubCategoryDetail'));
 const Cart = lazy(() => import('../pages/cart/Cart'));
@@ -19,6 +19,7 @@ const DashBoard = lazy(() => import('../admin/dashboard/Dashboard'));
 const AddProduct = lazy(() => import('../admin/product/AddProduct'));
 const AllProduct = lazy(() => import('../admin/product/AllProduct'));
 const EditProduct = lazy(() => import('../admin/product/EditProduct'));
+const ProductDetailsAdmin = lazy(() => import('../admin/product/ProductDetailsAdmin'));
 
 const AddCategory = lazy(() => import('../admin/category/AddCategory'));
 const AllCategory = lazy(() => import('../admin/category/AllCategory'));
@@ -58,6 +59,7 @@ const Messages = lazy(() => import('../admin/messages/Messages'));
 const Transaction = lazy(() => import('../admin/transaction/Transaction'));
 const Orders = lazy(() => import('../admin/orders/Orders'));
 const OrderDetails = lazy(() => import('../admin/orders/OrderDetails'));
+const OrderSaleOff = lazy(() => import('../admin/orders/OrderSaleOff'));
 
 const TemplateComponent = lazy(() => import('../admin/testComponents/TemplateComponent'));
 
@@ -173,6 +175,14 @@ const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <EditProduct />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.DETAILS_PRODUCT,
+        element: (
+          <SuspenseWrapper>
+            <ProductDetailsAdmin />
           </SuspenseWrapper>
         )
       },
@@ -397,6 +407,14 @@ const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <OrderDetails />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.ORDER_SALE_OFF,
+        element: (
+          <SuspenseWrapper>
+            <OrderSaleOff />
           </SuspenseWrapper>
         )
       }

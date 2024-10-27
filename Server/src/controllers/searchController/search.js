@@ -64,9 +64,5 @@ const searchProduct = {
         }
     }
     
-    
-
-
-
 }
 module.exports = searchProduct;

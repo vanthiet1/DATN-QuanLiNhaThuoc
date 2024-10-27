@@ -6,7 +6,7 @@ const provinceServices = {
   getInforProvices: async () => {
     try {
       const result = await axios.get(`${PROVINCE_API}/1/0.htm`);
-      console.log(result.data.data);
+      // console.log(result.data.data);
       return result.data.data;
     } catch (error) {
       console.log(error.message);
@@ -15,7 +15,7 @@ const provinceServices = {
   getInforDistricts: async (idProvice) => {
     try {
       const result = await axios.get(`${PROVINCE_API}/2/${idProvice}.htm`);
-      console.log(result.data.data);
+      // console.log(result.data.data);
       return result.data.data;
     } catch (error) {
       console.log(error.message);
@@ -24,7 +24,7 @@ const provinceServices = {
   getInforWards: async (idDistrict) => {
     try {
       const result = await axios.get(`${PROVINCE_API}/3/${idDistrict}.htm`);
-      console.log(result.data.data);
+      // console.log(result.data.data);
       return result.data.data;
     } catch (error) {
       console.log(error.message);
@@ -33,7 +33,7 @@ const provinceServices = {
   getInforDetails: async (idWard) => {
     try {
       const result = await axios.get(`${PROVINCE_API}/5/${idWard}.htm`);
-      console.log(result.data.data);
+      // console.log(result.data.data);
       return result.data.data;
     } catch (error) {
       console.log(error.message);

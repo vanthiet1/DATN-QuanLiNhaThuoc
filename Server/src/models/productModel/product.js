@@ -44,6 +44,12 @@ const ProductSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true
+    },
+    production_date: {
+      type: Date
+    },
+    expiration_date: {
+      type: Date
     }
   },
   { timestamps: true }

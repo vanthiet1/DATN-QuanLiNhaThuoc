@@ -3,7 +3,7 @@ import SectionWrapper from '../../components/sectionWrapper/SectionWrapper';
 import BreadCrumb from '../../components/breadCrumb/BreadCrumb';
 import { PATH_ROUTERS_ADMIN } from '../../utils/constant/routers';
 import AppIcons from '../../components/ui/icon';
-import { ErrorMessage, FileInput, InputText, SelectBox, Textarea } from '../../components/ui/form';
+import { ErrorMessage, FileInput, InputText, SelectBox, Textarea, InputDate } from '../../components/ui/form';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import formProductSchema from '../../utils/validations/formProduct';
@@ -14,9 +14,11 @@ import brandServices from '../../services/brandService';
 import categoryServices from '../../services/categoryService';
 import Editor from '../../components/ui/editor/Editor';
 import { useParams } from 'react-router-dom';
-import { DiaLog } from '../../components/dialog';
-import { ProcessLoading, SpinnerLoading } from '../../components/ui/loaders';
+import { ProcessLoading } from '../../components/ui/loaders';
 import { useNavigate } from 'react-router-dom';
+import formatsHelper from '../../utils/helpers/formats';
+import { DATE_TYPE_IS_YEAR_TO_DATE } from '../../utils/constant/common';
+import { Image } from '../../components/ui/image';
 
 const FormEditProduct = () => {
   const { productData } = useContext(FormEditProductContext);
@@ -29,19 +31,45 @@ const FormEditProduct = () => {
     reset,
     setValue,
     formState: { errors }
-  } = useForm({ resolver: yupResolver(formProductSchema.product) });
+  } = useForm({
+    resolver: yupResolver(formProductSchema.product)
+  });
 
   useEffect(() => {
     if (productData) {
-      setValue('name', productData[0].name);
-      // setValue('sub_category_id', productData[0].sub_category_id);
-      setValue('brand_id', productData[0].brand_id);
-      setValue('description_short', productData[0].description_short);
-      setValue('percent_price', productData[0].percent_price);
-      setValue('price_distcount', productData[0].price_distcount);
-      setValue('price_old', productData[0].price_old);
-      setValue('stock', productData[0].stock);
-      setValue('productImg', productData[0].images);
+      const {
+        name,
+        brand_id,
+        sub_category_id,
+        description_short,
+        percent_price,
+        price_distcount,
+        price_old,
+        stock,
+        production_date,
+        expiration_date,
+        images
+      } = productData[0];
+      setValue('name', name);
+      // setValue('sub_category_id', sub_category_id);
+      setValue('brand_id', brand_id);
+      setValue('description_short', description_short);
+      setValue('percent_price', percent_price);
+      setValue('price_distcount', price_distcount);
+      setValue('price_old', price_old);
+      setValue('stock', stock);
+      setValue(
+        'production_date',
+        production_date ? formatsHelper.formatDate(production_date, DATE_TYPE_IS_YEAR_TO_DATE) : ''
+      );
+      setValue(
+        'expiration_date',
+        expiration_date ? formatsHelper.formatDate(expiration_date, DATE_TYPE_IS_YEAR_TO_DATE) : ''
+      );
+      setValue(
+        'productImg',
+        images.map((image) => image.url_img)
+      );
     }
   }, [productData, setValue]);
 
@@ -127,6 +155,21 @@ const FormEditProduct = () => {
               <label htmlFor='' className='font-medium text-sm mb-2'>
                 Product Image
               </label>
+              <div className='flex gap-4 items-center p-2 border border-solid border-gray-300 bg-gray-100 mb-4 rounded'>
+                {productData &&
+                  productData.length > 0 &&
+                  productData[0].images.map((image) => {
+                    return (
+                      <div className='p-1 bg-white' key={image._id}>
+                        <Image
+                          src={image.url_img}
+                          alt={image.url_img}
+                          addClassNames='w-[250px] h-[150px] object-cover'
+                        />
+                      </div>
+                    );
+                  })}
+              </div>
               <FileInput refinput={register('productImg')} size='m' rounded='s'></FileInput>
               {errors.productImg && <ErrorMessage messsage={errors.productImg.message}></ErrorMessage>}
             </div>
@@ -172,6 +215,27 @@ const FormEditProduct = () => {
                 refinput={register('percent_price')}
               />
               {errors.percent_price && <ErrorMessage messsage={errors.percent_price.message}></ErrorMessage>}
+            </div>
+            <div className='grid grid-cols-2 gap-4'>
+              <div className='flex flex-col text-gray-700 mb-4'>
+                <label htmlFor='' className='font-medium text-sm mb-2'>
+                  Production date
+                </label>
+                <InputDate size='m' rounded='s' refinput={register('production_date', { valueAsDate: true })} />
+                {errors.production_date && <ErrorMessage messsage={errors.production_date.message}></ErrorMessage>}
+              </div>
+              <div className='flex flex-col text-gray-700 mb-4'>
+                <label htmlFor='' className='font-medium text-sm mb-2'>
+                  Expiration date
+                </label>
+                <InputDate
+                  size='m'
+                  rounded='s'
+                  defaultValue='2024-10-10T17:00:00.000Z'
+                  refinput={register('expiration_date')}
+                />
+                {errors.expiration_date && <ErrorMessage messsage={errors.expiration_date.message}></ErrorMessage>}
+              </div>
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
