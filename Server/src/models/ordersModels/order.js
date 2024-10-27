@@ -10,7 +10,9 @@ const orderSchema = new mongoose.Schema(
     sale_type: { type: String, required: true, enum: ['online', 'off'] },
     coupon_id: { type: mongoose.Schema.Types.ObjectId },
     payment_method_id: { type: mongoose.Schema.Types.ObjectId, required: true },
-    shipping_address_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Address', required: true }
+    shipping_address_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Address', required: true },
+    prescriptionImage: { type: String },
+    isPay: { type: Boolean, default: false }
   },
   { timestamps: true }
 );
