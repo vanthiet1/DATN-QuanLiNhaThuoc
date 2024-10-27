@@ -16,6 +16,14 @@ const productServices = {
       showToastError(error.message);
     }
   },
+  getAllDataProducts: async () => {
+    try {
+      const { data } = await http.get(`${END_POIND_API.PRODUCT}/all`);
+      return data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
   getAllProducts: async (requestParams) => {
     try {
       const { data } = await http.get(`${END_POIND_API.PRODUCT}${requestParams}`);
@@ -35,7 +43,6 @@ const productServices = {
   getListProductNew: async (requestParams) => {
     try {
       const { data } = await http.get(`${END_POIND_API.PRODUCT}/new`);
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error.message);

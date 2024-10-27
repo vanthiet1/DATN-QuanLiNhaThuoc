@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema(
         },
         is_active: {
             type: Number,
-            default: 0,
+            default: 1,
             required: true
         },
         provider: {

@@ -14,8 +14,8 @@ const sliderConfigBanner = {
 };
 const sliderConfigProduct = {
   modules: [Pagination, Autoplay, Navigation], 
-  spaceBetween: 50,
-  slidesPerView: 4,
+  spaceBetween: 16,
+  slidesPerView: 5,
   autoplay: {
     delay: 3000,
     disableOnInteraction: false,

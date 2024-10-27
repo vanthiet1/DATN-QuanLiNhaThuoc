@@ -37,12 +37,8 @@ const cartServices = {
     }
   },
   updateQuantityCart: async (requestBody)=>{
-    console.log(requestBody);
-    
     try {
       const { data } = await http.put(`${END_POIND_API.CART}/updateCart`,requestBody);
-      console.log(data);
-      
       showToastSuccess(data.message)
       return data;
     } catch (error) {

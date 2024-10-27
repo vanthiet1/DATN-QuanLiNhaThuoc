@@ -6,6 +6,38 @@ const formatHelper = require('../../utilities/helper/formatHelper');
 const mongoose = require('mongoose');
 
 const ProductController = {
+  getAllDataProducts: async (req, res) => {
+    try {
+      const productsWithImages = await ProductModel.aggregate([
+        {
+          $lookup: {
+            from: 'images',       
+            localField: '_id',        
+            foreignField: 'product_id', 
+            as: 'images',              
+          },
+        },
+        {
+          $lookup: {
+            from: 'brands',
+            localField: 'brand_id',
+            foreignField: '_id',
+            as: 'brand'
+          }
+        },
+        {
+          $match: { images: { $ne: [] } },
+        },
+      ]);
+  
+      res.status(200).json(productsWithImages);
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: 'Lỗi khi lấy danh sách sản phẩm: ' + error.message });
+    }
+  },
+  
   createProduct: async (req, res) => {
     try {
       const {
@@ -168,7 +200,15 @@ const ProductController = {
             foreignField: 'product_id',
             as: 'images'
           }
-        }
+        },
+        {
+          $lookup: {
+            from: 'brands',
+            localField: 'brand_id',
+            foreignField: '_id',
+            as: 'brand'
+          }
+        },
       ]).limit(limitProduct);
       return res.status(200).json(listProductNew);
     } catch (error) {
@@ -280,9 +320,9 @@ const ProductController = {
           },
           {
             $lookup: {
-              from: 'subcategories', 
-              localField: 'sub_category_id',  
-              foreignField: '_id', 
+              from: 'subcategories',
+              localField: 'sub_category_id',
+              foreignField: '_id',
               as: 'sub_category'
             }
           }

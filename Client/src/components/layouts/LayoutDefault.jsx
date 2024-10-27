@@ -26,7 +26,7 @@ const LayoutDefault = () => {
   return (
     <div>
       <Header />
-      <div className='w-full flex items-center h-auto justify-center p-[30px]'>
+      <div className='w-full h-auto p-[30px]'>
         <Outlet />
       </div>
       <Footer/>

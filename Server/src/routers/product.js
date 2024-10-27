@@ -3,6 +3,7 @@ const ProductController = require('../controllers/productController/product');
 const upload = require('../middlewares/uploadMiddleware');
 
 Router.get('/', ProductController.getAllProducts);
+Router.get('/all', ProductController.getAllDataProducts);
 Router.post('/create', upload.array('productImg', 6), ProductController.createProduct);
 Router.get('/best-seller', ProductController.getListProductBestSeller);
 Router.get('/new', ProductController.getListProductNew);

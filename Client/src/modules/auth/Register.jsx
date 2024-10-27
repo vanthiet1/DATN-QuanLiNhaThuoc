@@ -48,10 +48,10 @@ const Register = () => {
 
             <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-[#FEFEFE] rounded-lg">
                 <div className="flex flex-col overflow-y-auto md:flex-row">
-                    <div className=" md:h-auto md:w-[70%] flex justify-center items-center max-md:mb-5">
+                    <div className=" md:h-auto md:w-[70%] flex justify-center items-center ">
                         <img
                             aria-hidden="true"
-                            className=" w-full h-[220px] dark:block max-md:h-[130px]"
+                            className=" w-full h-[220px] dark:block max-md:h-[100px] max-md:w-[200px] max-md:p-3"
                             src={Logo}
                             alt="Office"
                         />

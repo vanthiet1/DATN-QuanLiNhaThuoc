@@ -11,6 +11,16 @@ const searchProductServices = {
       console.log(error.message);
     }
   },
+  getProductByQuery: async (query) => {
+    try {
+      const { data } = await http.get(`${END_POIND_API.SEARCH}/${END_POIND_API.PRODUCT}/query`,{
+        params:{q:query}
+      });
+      return data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
 };
 
 export default searchProductServices;

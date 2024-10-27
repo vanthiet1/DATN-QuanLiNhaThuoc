@@ -13,15 +13,16 @@ const NotificationModal = () => {
             </div>
             <span className="block text-center font-bold text-[20px] animate-slideDown">Thêm vào giỏ hàng thành công</span>
             <span className="block text-center  text-[16px]  animate-slideDown ">Vào giỏ hàng để xem thêm sản phẩm nhé</span>
-            <div className="flex justify-center mt-[20px]">
-                <Button
+            <div className="flex justify-center mt-[20px] w-full">
+            <Link to={`${PATH_ROUTERS_CLIENT.CART}`} className=' w-full flex  justify-center'>
+            <Button
                     onClick={() => handleCloseDialog({ isOpen: false, type: '' })}
-                    addClassNames='text-[16px] border border-[#2563EB] p-2 rounded-[5px] w-1/2 flex justify-center text-[#2563EB] font-bold  '
+                    addClassNames='text-[16px] border border-[#2563EB] p-2 rounded-[5px]  text-[#2563EB] font-bold w-1/2 flex justify-center'
                 >
-                    <Link to={`${PATH_ROUTERS_CLIENT.CART}`}>
                         Vào giỏ hàng
-                    </Link>
+                 
                 </Button>
+                    </Link>
             </div>
         </div>
     );

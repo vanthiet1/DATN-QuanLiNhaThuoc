@@ -16,14 +16,19 @@ import { showToastError, showToastSuccess } from "../../configs/toastConfig";
 import TextArea from "../../components/ui/form/Textarea";
 import { useConfirmDialog } from "../../components/dialog/ConfirmDialogContext";
 import { HandleCartContext } from "../../contexts/HandleCartContext";
+import GalleryComponent from "../../components/ui/image/Gallery";
+import useSrcollTop from '../../hooks/useSrcollTop';
 
 const ProductDetail = () => {
+  useSrcollTop()
   const { slug } = useParams();
   const { user } = useContext(UserContext)
   const { register, handleSubmit, formState: { errors }, watch, reset } = useForm({ resolver: yupResolver(formCommentSchema.comment) });
   const { isLoading, responsData: product, isError } = useFetch(
     () => productServices.getProductWithBySlug(slug), { slug }, [slug]
   );
+  console.log(product);
+  
   const commentContent = watch("content");
   const [dataComment, setDataComment] = useState([])
  const {
@@ -34,10 +39,8 @@ const ProductDetail = () => {
   handleQuantityChange,
    calculateTotalPrice,
    quantityProductDetail,
-   setDataRequestBody
  } = useContext(HandleCartContext)
 
-  // const commentBoxRef = useRef(null);
 
   const getCommentProduct = async () => {
     if (!product || !product[0]) return;
@@ -57,10 +60,6 @@ const ProductDetail = () => {
       setCalculateTotalPrice(quantityProductDetail * product[0].price_distcount);
     }
   }, [quantityProductDetail]);
-
-useEffect(()=>{
-  setDataRequestBody({product,user })
-},[product])
 
   const handlePostComment = async (formData) => {
     if (!user || user == null) return showToastError("Vui lòng đăng nhập rồi bình luận")
@@ -95,9 +94,9 @@ useEffect(()=>{
     }
 
   }
-  if (isLoading) return <div><SpinnerLoading /></div>;
-  if (isError) return <div>Trang hiện tại đang lỗi</div>;
 
+  if (isError) return <div>Trang hiện tại đang lỗi</div>;
+  
   return (
     <div className="w-[80%] m-auto">
       {product ? (
@@ -113,19 +112,12 @@ useEffect(()=>{
           </div>
           <div className="flex pt-4 gap-5 bg-[#FFFFFF] shadow p-10 rounded-[5px] mb-5 max-md:flex-col max-md:p-2 ">
             <div>
-              <div className="w-[300px] max-md:w-full">
+              <div className="w-[500px] max-md:w-full">
                 <img className="w-full" src={product[0]?.images[0]?.url_img
                 } alt="" />
               </div>
-              <div>
-                {product[0]?.images.map((listImage) => (
-                  <React.Fragment key={listImage._id}>
-                    <div className="flex pt-2">
-                      <img className="w-[100px] border-2 border-blue-600 rounded-[7px] cursor-pointer" src={listImage?.url_img
-                      } alt="" />
-                    </div>
-                  </React.Fragment>
-                ))}
+              <div className="pt-3">
+                <GalleryComponent images={product[0]} />
               </div>
             </div>
             <div className="w-full">
@@ -176,17 +168,17 @@ useEffect(()=>{
                   <span className="text-[20px] font-bold">{formatsHelper.currency(calculateTotalPrice)}</span>
                 </div>
               </div>
-              <div className="flex gap-4 pt-4 max-md:justify-between   ">
+              <div className="flex gap-4 pt-4 max-md:justify-between max-md:flex-col max-md:m-3">
                 <Button
-                  onClick={handleAddToCart}
+                  onClick={()=>handleAddToCart(product[0]?._id,user?._id)}
                   disabled={quantityProductDetail < 1 ? true : false}
-                  addClassNames="text-[16px] uppercase border border-[#C9C9C9] p-2 py-1 px-[30px] rounded-[10px]  font-semibold hover:bg-gray-100 duration-300 max-md:w-[50%] flex justify-center"
+                  addClassNames="text-[16px] uppercase border border-[#C9C9C9] p-2 py-1 px-[30px] rounded-[10px]  font-semibold hover:bg-gray-100 duration-300 max-md:w-[50%] flex justify-center max-md:w-full"
                 >
                   Thêm giỏ hàng
                 </Button>
                 <Button
                   disabled={quantityProductDetail < 1 ? true : false}
-                  addClassNames="text-[16px] text-[#fff] bg-[#2563EB] p-2 w-[150px] flex justify-center rounded-[10px] uppercase hover:bg-blue-700 duration-300 max-md:w-[50%]"
+                  addClassNames="text-[16px] text-[#fff] bg-[#2563EB] p-2 w-[150px] flex justify-center rounded-[10px] uppercase hover:bg-blue-700 duration-300 max-md:w-[50%] max-md:w-full"
                 >
                   Mua ngay
                 </Button>
@@ -235,7 +227,7 @@ useEffect(()=>{
                         <div className="flex items-center mb-2 gap-3" >
                           <img
                             className="w-[50px] h-[50px] rounded-full object-cover"
-                            src={comment?.user_id?.avatar || "/default-avatar.png"}
+                            src={comment?.user_id?.avatar || "https://res.cloudinary.com/dz93cdipw/image/upload/v1713866997/Book-Store/Avatar/kwuemqemetzsp4jw21mt.webp"}
                             alt={comment?.user_id?.fullname || "User avatar"}
                           />
                           <div className="flex flex-col">
@@ -269,7 +261,9 @@ useEffect(()=>{
           </div>
         </div>
       ) : (
-        <div>Hiện tại chưa có sản phẩm</div>
+        <div className="flex justify-center">
+          <SpinnerLoading/>
+        </div>
       )}
 
     </div>

@@ -1,20 +1,25 @@
-import React from 'react';
 import { useParams } from 'react-router-dom';
+import { useContext } from 'react';
 import useFetch from '../../hooks/useFetch';
 import { SpinnerLoading } from '../../components/ui/loaders';
 import CardProduct from '../../components/card/CardProduct';
-import formatsHelper from '../../utils/helpers/formats';
 import subCategoryServices from '../../services/subCategoryService';
-
+import { UserContext } from '../../contexts/UserContext';
+import { HandleCartContext } from '../../contexts/HandleCartContext';
+import useSrcollTop from '../../hooks/useSrcollTop';
 const CategoryDetails = () => {
     const { id } = useParams(); 
+    useSrcollTop(id)
+    const {user} = useContext(UserContext)
 
     const { responsData, isLoading } = useFetch(
         () => subCategoryServices.getProductBySubCategory(id),
         {},
         [id]
     );
+const {handleAddToCart} = useContext(HandleCartContext)
 
+ 
     if (isLoading) {
         return (
             <div className="flex justify-center pt-[50px]">
@@ -29,15 +34,8 @@ const CategoryDetails = () => {
                 {responsData?.length > 0 ? (
                     responsData.map((product) => (
                         <CardProduct
-                            key={product?._id}
-                            image={
-                                product?.images?.[0]?.url_img
-                            }
-                            name={product?.name || "Sản phẩm không có tên"}
-                            description_short={product?.description_short || "Không có mô tả"}
-                            priceNew={formatsHelper.currency(product?.price_distcount || 0)}
-                            priceOld={formatsHelper.currency(product?.price_old || 0)}
-                            detail={`/product/${product?.slug || "#"}`}
+                               products={product}
+                               handleAddToCart={()=>handleAddToCart(product?._id,user?._id)}
                         />
                     ))
                 ) : (
