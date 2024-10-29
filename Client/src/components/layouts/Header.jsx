@@ -1,4 +1,4 @@
-import { Link , useNavigate  } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { PATH_ROUTERS_ADMIN, PATH_ROUTERS_CLIENT } from '../../utils/constant/routers';
 import Logo from '../../assets/images/logo/logo3.png';
@@ -26,7 +26,9 @@ const Header = () => {
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    
+
+
+
     const getProductSearch = async () => {
         if (!searchKeyword.trim()) return setProducts([]);
         setIsLoading(true);
@@ -51,19 +53,19 @@ const Header = () => {
         }
     };
 
-    const handleSearchQueryProduct = async ()=>{
+    const handleSearchQueryProduct = async () => {
         if (searchKeyword.trim()) {
             navigate(`product/search?q=${encodeURIComponent(searchKeyword)}`);
-          }
-          setSearchKeyword("")
+        }
+        setSearchKeyword("")
     }
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-          e.preventDefault(); 
-          handleSearchQueryProduct(); 
+            e.preventDefault();
+            handleSearchQueryProduct();
         }
-      };
- 
+    };
+
 
     return (
         <div className={`ease-in-out sticky top-0 z-30`}>
@@ -75,9 +77,9 @@ const Header = () => {
                                 <img className='w-[200px]' src={Logo} alt="Logo" />
                             </Link>
                             <div className='relative'>
-                            <div className="absolute top-1/2 left-5 transform -translate-x-1/2 -translate-y-1/2 " onClick={handleSearchQueryProduct}>
-                                <AppIcons.SearchIcons addClassNames='text-[#a8a8a8] text-[20px] '/>
-                            </div>
+                                <div className="absolute top-1/2 left-5 transform -translate-x-1/2 -translate-y-1/2 " onClick={handleSearchQueryProduct}>
+                                    <AppIcons.SearchIcons addClassNames='text-[#a8a8a8] text-[20px] ' />
+                                </div>
                                 <InputText
                                     onChange={handleChange}
                                     addClassNames={"rounded-[5px] w-[400px] h-[50px] pl-[10px] text-[16px] pl-10"}
@@ -120,23 +122,30 @@ const Header = () => {
                                     <div className="flex items-center relative gap-3 group">
                                         <span className='text-[#fff]'>Chào bạn</span>
                                         <div className=' p-1 cursor-pointer'>
-                                          {user?.avatar ? (
-                                            <img className='w-[40px] rounded-[50%]' src={user?.avatar} alt="avatar" />
-                                          ):( 
-                                            <AppIcons.UserIcon addClassNames='text-[#2563EB] bg-[#fff] rounded-[50%] w-[40px] h-[40px] p-1 ' />
-                                          )}                                          
-                                     
+                                            {user?.avatar ? (
+                                                <img className='w-[40px] rounded-[50%]' src={user?.avatar} alt="avatar" />
+                                            ) : (
+                                                <AppIcons.UserIcon addClassNames='text-[#2563EB] bg-[#fff] rounded-[50%] w-[40px] h-[40px] p-1 ' />
+                                            )}
                                         </div>
                                         <div className='hidden group-hover:block absolute top-[25px] pt-[35px] z-10'>
                                             <div className='w-[250px] bg-[#fff] shadow p-3 rounded-[5px] '>
                                                 <span className='block'>Xin chào</span>
                                                 <span className='block font-bold'>{user?.fullname}</span>
-                                              <Link to={'/tai-khoan'}>
-                                              <div className="flex mt-3 items-center gap-2 cursor-pointer pb-1 group hover:text-[#2563EB] duration-200">
-                                                    <span><AppIcons.UserIcon addClassNames='' /></span>
-                                                    <span>Thông tin tài khoản</span>
-                                                </div>
-                                              </Link>
+                                                {user?.role_id?.role_Name.includes("admin") && (
+                                                    <Link to={`/${PATH_ROUTERS_ADMIN.DASHBOARD}`}>
+                                                        <div className="flex mt-3 items-center gap-2 cursor-pointer pb-1 group hover:text-[#2563EB] duration-200">
+                                                            <span><AppIcons.UserIcon addClassNames='' /></span>
+                                                            <span>Quản trị</span>
+                                                        </div>
+                                                    </Link>
+                                                )}
+                                                <Link to={`/${PATH_ROUTERS_CLIENT.ACCOUNT}`}>
+                                                    <div className="flex mt-3 items-center gap-2 cursor-pointer pb-1 group hover:text-[#2563EB] duration-200">
+                                                        <span><AppIcons.UserIcon addClassNames='' /></span>
+                                                        <span>Thông tin tài khoản</span>
+                                                    </div>
+                                                </Link>
                                                 <div className="flex mt-3 items-center gap-2 cursor-pointer pb-1 group hover:text-[#2563EB] duration-200">
                                                     <span><AppIcons.OderIcon addClassNames='' /></span>
                                                     <span>Đơn hàng xử lí</span>
