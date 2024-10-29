@@ -2,6 +2,7 @@ import { useState, useContext, useEffect, createContext } from 'react';
 import cartServices from '../services/cartService';
 import { ToggleFormContext } from './ToggleFormContext';
 import { CartContext } from './CartContext';
+import { showToastError } from '../configs/toastConfig';
 
 export const HandleCartContext = createContext();
 
@@ -27,26 +28,9 @@ const HandleCartProvider = ({ children }) => {
   };
 
   const handleAddToCart = async (productId,userId) => {
+    if(!productId) return
     if (!userId) {
-          try {
-            const cartFromLocal = JSON.parse(localStorage.getItem('cart')) || [];
-            const existingProductIndex = cartFromLocal.findIndex(
-              (item) => item._id === productId
-            );
-            if (existingProductIndex >= 0) {
-              cartFromLocal[existingProductIndex].quantity += 1;
-            } else {
-              cartFromLocal.push({ productId: productId, quantity: quantityProductDetail });
-            }
-            localStorage.setItem('cart', JSON.stringify(cartFromLocal));
-          } catch (error) {
-            console.error('Lỗi khi cập nhật giỏ hàng trong localStorage:', error);
-          }
-          return;
-        }
-
-    if (!productId) {
-      return;
+      return showToastError("Vui lòng đăng nhập")
     }
 
     const cart = {
