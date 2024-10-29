@@ -17,6 +17,7 @@ import { HandleCartContext } from "../../contexts/HandleCartContext";
 import Advertisement from "../../components/card/Advertisement";
 import AppIcons from '../../components/ui/icon/index'
 import FeedbackUser from "../../components/card/FeedbackUser";
+import ManShip from '../../assets/images/home/man_shiping2.jpg'
 const HomePage = () => {
   const { responsData: initialCategoryData } = useFetch(categoryServices.getCategory);
   const { responsData: initialProductRecommendData } = useFetch(productServices.getListProductNew);
@@ -54,7 +55,6 @@ const HomePage = () => {
     }
   }, [initialCategoryData, initialProductData]);
 
-  console.log(initialCommentData);
   
   return (
     <div className="overflow-hidden w-full">
@@ -121,12 +121,14 @@ const HomePage = () => {
              <h1 className="font-bold text-[22px] text-center pb-4">Đánh giá của khách hàng</h1>
               <div className="grid grid-cols-3 w-[70%] gap-3 m-auto">
               {initialCommentData && initialCommentData?.slice(0,3).map((comment)=>(
-              <FeedbackUser avatar={comment?.user_id?.avatar ||  "https://res.cloudinary.com/dz93cdipw/image/upload/v1713866997/Book-Store/Avatar/kwuemqemetzsp4jw21mt.webp"} username={comment?.user_id?.fullname
-} content={comment?.content} />
+              <FeedbackUser
+               avatar={comment?.user_id?.avatar ||  "https://res.cloudinary.com/dz93cdipw/image/upload/v1713866997/Book-Store/Avatar/kwuemqemetzsp4jw21mt.webp"}
+                username={comment?.user_id?.fullname} 
+                content={comment?.content} />
              ))}
               </div>
           </div>
-          <div className="flex items-center justify-between bg-[#F3F8FB] mt-[70px] rounded-md px-4">
+          <div className="flex items-center justify-between bg-[#F3F8FB] mt-[70px] rounded-md">
             <div className="p-5">
                     <h1 className="font-bold text-[25px] py-5">Giới thiệu webiste đặt thuốc online 
                     <span className="text-[#2563EB] pl-2">Bình An Dược</span>
@@ -138,7 +140,7 @@ const HomePage = () => {
                      </p>
             </div>
             <div>
-                 <img className="w-[300px]" src={"https://www.medigoapp.com/assets/images-html/intro-bn.png"} alt="" />
+                 <img className="w-[400px]" src={ManShip} alt="" />
             </div>
           </div>
         </div>
