@@ -14,7 +14,7 @@ const Cart = lazy(() => import('../pages/cart/Cart'));
 const BlogDetails = lazy(() => import('../pages/blog/BlogDetails'));
 const Pharmacy = lazy(() => import('../pages/pharmacy/PharmacyDetails'));
 const AccountUser = lazy(() => import('../pages/account/AccoutUser'));
-const AllProductPage = lazy(() => import('../pages/product/AllProduct'));
+const ListAllProduct = lazy(() => import('../pages/product/ListAllProduct'));
 const NotFoundPage = lazy(() => import('../pages/notfound/NotFound'));
 
 const DashBoard = lazy(() => import('../admin/dashboard/Dashboard'));
@@ -106,7 +106,7 @@ const router = createBrowserRouter([
         path: PATH_ROUTERS_CLIENT.ALL_PRODUCT,
         element: (
           <SuspenseWrapper>
-            <AllProductPage />
+            <ListAllProduct />
           </SuspenseWrapper>
         )
       },
