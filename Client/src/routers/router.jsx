@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { LayoutAdmin, LayoutDefault } from '../components/layouts';
 import { PATH_ROUTERS_ADMIN, PATH_ROUTERS_CLIENT } from '../utils/constant/routers';
 import SuspenseWrapper from '../components/suspenseWrapper/SuspenseWrapper';
+import ProtectedRoute from '../routers/ProtectedRoute';
 
 const HomePage = lazy(() => import('../pages/homePage/HomePage'));
 const ProductSearch = lazy(() => import('../pages/productSearch/ProductSearch'));
@@ -13,7 +14,8 @@ const Cart = lazy(() => import('../pages/cart/Cart'));
 const BlogDetails = lazy(() => import('../pages/blog/BlogDetails'));
 const Pharmacy = lazy(() => import('../pages/pharmacy/PharmacyDetails'));
 const AccountUser = lazy(() => import('../pages/account/AccoutUser'));
-
+const AllProductPage = lazy(() => import('../pages/product/AllProduct'));
+const NotFoundPage = lazy(() => import('../pages/notfound/NotFound'));
 
 const DashBoard = lazy(() => import('../admin/dashboard/Dashboard'));
 const AddProduct = lazy(() => import('../admin/product/AddProduct'));
@@ -77,6 +79,14 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: PATH_ROUTERS_CLIENT.NOTFOUND,
+        element: (
+          <SuspenseWrapper>
+            <NotFoundPage />
+          </SuspenseWrapper>
+        )
+      },
+      {
         path: PATH_ROUTERS_CLIENT.PRODUCT_DETAILS,
         element: (
           <SuspenseWrapper>
@@ -89,6 +99,14 @@ const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <ProductSearch />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_CLIENT.ALL_PRODUCT,
+        element: (
+          <SuspenseWrapper>
+            <AllProductPage />
           </SuspenseWrapper>
         )
       },
@@ -142,9 +160,13 @@ const router = createBrowserRouter([
       }
     ]
   },
+
   {
     path: '/', // router của admin
-    element: <LayoutAdmin />,
+    element:
+      <ProtectedRoute>
+        <LayoutAdmin />
+      </ProtectedRoute>,
     children: [
       {
         path: PATH_ROUTERS_ADMIN.DASHBOARD,
