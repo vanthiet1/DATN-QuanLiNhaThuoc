@@ -13,6 +13,8 @@ const Cart = lazy(() => import('../pages/cart/Cart'));
 const BlogDetails = lazy(() => import('../pages/blog/BlogDetails'));
 const Pharmacy = lazy(() => import('../pages/pharmacy/PharmacyDetails'));
 const AccountUser = lazy(() => import('../pages/account/AccoutUser'));
+const About = lazy(() => import('../pages/about/About'));
+const Contact = lazy(() => import('../pages/contact/Contact'));
 
 
 const DashBoard = lazy(() => import('../admin/dashboard/Dashboard'));
@@ -137,6 +139,22 @@ const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <Pharmacy />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_CLIENT.ABOUT,
+        element: (
+          <SuspenseWrapper>
+            <About/>
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_CLIENT.CONTACT,
+        element: (
+          <SuspenseWrapper>
+            <Contact/>
           </SuspenseWrapper>
         )
       }
@@ -359,6 +377,14 @@ const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <AddRole />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.EDIT_ROLE_USER,
+        element: (
+          <SuspenseWrapper>
+            <EditRole />
           </SuspenseWrapper>
         )
       },
