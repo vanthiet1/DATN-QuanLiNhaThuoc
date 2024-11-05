@@ -3,6 +3,8 @@ import cartServices from '../services/cartService';
 import { ToggleFormContext } from './ToggleFormContext';
 import { CartContext } from './CartContext';
 import { showToastError } from '../configs/toastConfig';
+import {PATH_ROUTERS_CLIENT } from '../utils/constant/routers';
+
 
 export const HandleCartContext = createContext();
 
@@ -27,7 +29,7 @@ const HandleCartProvider = ({ children }) => {
     setQuantityProductDetail(value);
   };
 
-  const handleAddToCart = async (productId,userId) => {
+  const handleAddToCart = async (productId,userId,modal) => {
     if(!productId) return
     if (!userId) {
       return showToastError("Vui lòng đăng nhập")
@@ -48,8 +50,12 @@ const HandleCartProvider = ({ children }) => {
     const dataCart = await cartServices.addToCart(cart);
     if (!dataCart) return;
 
-    await getProductCart(userId);
-    handleOpenDialog('notificationModal'); 
+    await getProductCart(userId); 
+    if (modal) {
+      handleOpenDialog('notificationModal');
+    } else {
+      window.location.href = `/${PATH_ROUTERS_CLIENT.CART}`;
+    }
   };
 
 
