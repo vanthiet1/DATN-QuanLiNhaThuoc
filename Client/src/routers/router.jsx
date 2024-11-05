@@ -15,6 +15,7 @@ const BlogDetails = lazy(() => import('../pages/blog/BlogDetails'));
 const Pharmacy = lazy(() => import('../pages/pharmacy/PharmacyDetails'));
 const AccountUser = lazy(() => import('../pages/account/AccoutUser'));
 const ListAllProduct = lazy(() => import('../pages/product/ListAllProduct'));
+const BmiCalculator = lazy(() => import('../pages/tools/BmiCalculator'));
 const NotFoundPage = lazy(() => import('../pages/notfound/NotFound'));
 
 const DashBoard = lazy(() => import('../admin/dashboard/Dashboard'));
@@ -91,6 +92,14 @@ const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <ProductDetail />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_CLIENT.BMICALCULATOR,
+        element: (
+          <SuspenseWrapper>
+            <BmiCalculator />
           </SuspenseWrapper>
         )
       },
