@@ -15,9 +15,12 @@ import { CartContext } from '../../contexts/CartContext';
 import searchProductServices from '../../services/searchProductService';
 import debounce from '../../hooks/useDebounce';
 import formatsHelper from '../../utils/helpers/formats';
+import { TabUIAccountContext } from '../../contexts/TabUIAccountContext';
 
 const Header = () => {
     const { user } = useContext(UserContext) || { user: null };
+    const { setTabIndex, } = useContext(TabUIAccountContext) || null;
+
     const navigate = useNavigate()
     const { cart } = useContext(CartContext);
     const { handleOpenDialog } = useContext(ToggleFormContext);
@@ -27,7 +30,14 @@ const Header = () => {
     const [isLoading, setIsLoading] = useState(false);
 
 
-
+const redirectOrder = ()=>{
+    navigate(`${PATH_ROUTERS_CLIENT.ACCOUNT}`)
+    setTabIndex(3)
+}
+const redirectHistoryOrder= ()=>{
+    navigate(`${PATH_ROUTERS_CLIENT.ACCOUNT}`)
+    setTabIndex(4)
+}
 
     const getProductSearch = async () => {
         if (!searchKeyword.trim()) return setProducts([]);
@@ -135,28 +145,30 @@ const Header = () => {
                                                 {user?.role_id?.role_Name.includes("admin") && (
                                                     <Link to={`/${PATH_ROUTERS_ADMIN.DASHBOARD}`}>
                                                         <div className="flex mt-3 items-center gap-2 cursor-pointer pb-1 group hover:text-[#2563EB] duration-200">
-                                                            <span><AppIcons.UserIcon addClassNames='' /></span>
+                                                            <span><AppIcons.UserIcon addClassNames='text-gray-800' /></span>
                                                             <span>Quản trị</span>
                                                         </div>
                                                     </Link>
                                                 )}
                                                 <Link to={`/${PATH_ROUTERS_CLIENT.ACCOUNT}`}>
                                                     <div className="flex mt-3 items-center gap-2 cursor-pointer pb-1 group hover:text-[#2563EB] duration-200">
-                                                        <span><AppIcons.UserIcon addClassNames='' /></span>
+                                                        <span><AppIcons.UserIcon addClassNames='text-gray-800' /></span>
                                                         <span>Thông tin tài khoản</span>
                                                     </div>
                                                 </Link>
-                                                <div className="flex mt-3 items-center gap-2 cursor-pointer pb-1 group hover:text-[#2563EB] duration-200">
-                                                    <span><AppIcons.OderIcon addClassNames='' /></span>
-                                                    <span>Đơn hàng xử lí</span>
-                                                </div>
-                                                <div className="flex mt-3 items-center gap-2 cursor-pointer pb-1 group hover:text-[#2563EB] duration-200">
-                                                    <span><AppIcons.BanknotesIcon addClassNames='' /></span>
+                                             
+                                                    <div className="flex mt-3 items-center gap-2 cursor-pointer pb-1 group hover:text-[#2563EB] duration-200" onClick={redirectOrder}>
+                                                        <span><AppIcons.OderIcon addClassNames='text-gray-800' /></span>
+                                                        <span>Đơn hàng xử lí</span>
+                                                    </div>
+                                                
+                                                <div className="flex mt-3 items-center gap-2 cursor-pointer pb-1 group hover:text-[#2563EB] duration-200" onClick={redirectHistoryOrder}>
+                                                    <span><AppIcons.BanknotesIcon addClassNames='text-gray-800' /></span>
                                                     <span>Lịch sử đặt hàng</span>
                                                 </div>
                                                 <hr className='my-2 border-gray-300' />
                                                 <div className="flex mt-3 items-center gap-2 cursor-pointer group hover:text-[#2563EB] duration-200">
-                                                    <span><AppIcons.LogIcon addClassNames='' /></span>
+                                                    <span><AppIcons.LogIcon addClassNames='text-gray-500' /></span>
                                                     <span onClick={authServices.logout}>Đăng xuất</span>
                                                 </div>
                                             </div>
@@ -226,6 +238,55 @@ const Header = () => {
                                 )}
                             </div>
                         ))}
+                        <div className="flex items-center group relative" >
+                            <span className="w-max cursor-pointer hover:text-[#2563EB] duration-200 text-[15px] font-semibold">Góc sống khỏe</span>
+                            <div className="ml-3">
+                                <AppIcons.ArrowDown
+                                    addClassNames="inline-block ml-1 transition-transform duration-300 group-hover:rotate-180 group-hover:text-[#2563EB]"
+                                />
+                                <div className='absolute left-[-5px] pt-[17px] z-20'>
+                                    <div className="hidden max-h-0 overflow-hidden group-hover:max-h-[500px] duration-500 group-hover:duration-500 group-hover:block bg-[#fff] w-[250px] shadow-2xl p-4 rounded-[5px] ">
+                                        <div >
+                                            <span className="block py-2 text-sm text-gray-600 hover:text-[#2563EB] w-max font-bold cursor-pointer">
+                                                Bài Viết
+                                            </span>
+                                        </div>
+                                        <div >
+                                            <Link to={`/${PATH_ROUTERS_CLIENT.BMICALCULATOR}`}>
+                                                <span className="block py-2 text-sm text-gray-600 hover:text-[#2563EB] w-max font-bold cursor-pointer">
+                                                    Tính chỉ số BMI
+                                                </span>
+                                            </Link>
+                                        </div>
+                                        <div >
+                                            <span className="block py-2 text-sm text-gray-600 hover:text-[#2563EB] w-max font-bold cursor-pointer">
+                                                Công cụ tính ngày dự sinh
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span className="block py-2 text-sm text-gray-600 hover:text-[#2563EB] w-max font-bold cursor-pointer">
+                                                Công cụ tính ngày rụng trứng
+                                            </span>
+                                        </div>
+                                        <div >
+                                            <span className="block py-2 text-sm text-gray-600 hover:text-[#2563EB] w-max font-bold cursor-pointer">
+                                                Tra cứu bệnh
+                                            </span>
+                                        </div>
+                                        <div >
+                                            <span className="block py-2 text-sm text-gray-600 hover:text-[#2563EB] w-max font-bold cursor-pointer">
+                                                Hoạt chất
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex items-center group relative" >
+                            <Link>
+                                <span className="w-max cursor-pointer hover:text-[#2563EB] duration-200 text-[15px] font-semibold">Nhà thuốc</span>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </nav>
