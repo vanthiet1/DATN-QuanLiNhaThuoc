@@ -111,7 +111,7 @@ const Cart = () => {
                   <div className="w-max flex items-center gap-3">
                     <Button
                       onClick={() => handleQuantityChange(productCart.productId._id, -1)}
-                      className="w-[50px] h-10 border border-gray-300 flex items-center justify-center text-lg font-bold text-gray-400 hover:text-blue-500 transition-all"
+                      className="w-[50px] h-10 border border-gray-300 flex items-center justify-center text-lg font-bold text-gray-400  transition-all rounded-[5px] hover:bg-[#2563EB] hover:text-[#fff] duration-300"
                     >
                       -
                     </Button>
@@ -119,11 +119,11 @@ const Cart = () => {
                       type="text"
                       value={quantities[productCart.productId._id] || productCart.quantity}
                       readOnly
-                      className="w-[50px] h-10 text-center border"
+                      className="w-[50px] h-10 text-center border rounded-[5px]"
                     />
                     <Button
                       onClick={() => handleQuantityChange(productCart.productId._id, 1)}
-                      className="w-[50px] h-10 border flex items-center justify-center text-lg font-bold text-blue-500 transition-all"
+                      className="w-[50px] h-10 border flex items-center justify-center text-lg font-bold text-blue-500 transition-all rounded-[5px] hover:bg-[#2563EB] hover:text-[#fff] duration-300"
                     >
                       +
                     </Button>
@@ -151,7 +151,7 @@ const Cart = () => {
               {/* <Transactions /> */}
               <PaymentMethod />
               <CouponSection />
-              <div className='border p-4 mt-6'>
+              <div className='border p-4 mt-6 rounded-[7px]'>
                 <div className='font-bold text-lg pb-2'>Thông tin đơn hàng</div>
                 <div className='flex justify-between py-1'>
                   <p className=' text-base font-medium'>Tổng đơn hàng</p>
