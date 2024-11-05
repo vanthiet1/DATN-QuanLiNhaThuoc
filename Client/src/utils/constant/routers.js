@@ -15,8 +15,8 @@ const PATH_ROUTERS_CLIENT = {
   BLOG_DETAILS: 'bai-viet/:id',
   CART: 'gio-hang',
   ACCOUNT: 'tai-khoan',
+  BMICALCULATOR: 'tinh-chi-so-bmi',
   NOTFOUND: '*',
-
 };
 
 const PATH_ROUTERS_ADMIN = {
