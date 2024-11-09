@@ -18,6 +18,9 @@ const ListAllProduct = lazy(() => import('../pages/product/ListAllProduct'));
 const BmiCalculator = lazy(() => import('../pages/tools/BmiCalculator'));
 const HistoryOrder = lazy(() => import('../pages/order/HistoryOrder'));
 const NotFoundPage = lazy(() => import('../pages/notfound/NotFound'));
+const About = lazy(() => import('../pages/about/About'));
+const Contact = lazy(() => import('../pages/contact/Contact'));
+
 
 const DashBoard = lazy(() => import('../admin/dashboard/Dashboard'));
 const AddProduct = lazy(() => import('../admin/product/AddProduct'));
@@ -169,10 +172,26 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: PATH_ROUTERS_CLIENT.ABOUT,
+        element: (
+          <SuspenseWrapper>
+            <About />
+          </SuspenseWrapper>
+        )
+      },
+      {
         path: PATH_ROUTERS_CLIENT.HISTORY_ORDER,
         element: (
           <SuspenseWrapper>
             <HistoryOrder />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_CLIENT.CONTACT,
+        element: (
+          <SuspenseWrapper>
+            <Contact/>
           </SuspenseWrapper>
         )
       }
@@ -399,6 +418,14 @@ const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <AddRole />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.EDIT_ROLE_USER,
+        element: (
+          <SuspenseWrapper>
+            <EditRole />
           </SuspenseWrapper>
         )
       },

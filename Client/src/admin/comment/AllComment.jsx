@@ -97,8 +97,8 @@ const AllComment = () => {
                 commentData.map((comment) => (
                   <tr key={comment._id} className='hover:bg-gray-100'>
                     <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>{comment.content}</td>
-                    <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{comment.user_id}</td>
-                    <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{comment.product_id}</td>
+                    <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{comment.user_id.fullname}</td>
+                    <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{comment.product_id.name}</td>
                     <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
                       {formatsHelper.formatDate(comment.date_create)}
                     </td>
