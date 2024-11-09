@@ -301,7 +301,7 @@ const Auth = {
                 const token = req.headers.authorization.split(' ')[1];
                 const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
                 const userId = decoded.userId;
-                const user = await UserModel.findById(userId);
+                const user = await UserModel.findById(userId).populate('role_id')
                 if (!user) {
                     return res.status(404).json({ message: 'Không tìm thấy người dùng' });
                 }

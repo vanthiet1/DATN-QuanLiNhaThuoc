@@ -4,8 +4,11 @@ import React from 'react';
 import TextArea from '../../components/ui/form/Textarea';
 import { Link } from 'react-router-dom';
 import AppIcons from '../../components/ui/icon/index';
+import useSrcollTop from '../../hooks/useSrcollTop';
+
 
 const Contact = () => {
+  useSrcollTop();
   return (
     <div className='flex flex-col items-center'>
       <div className='max-w-[1300px] w-full px-4 flex gap-2 pb-6 mr-7 items-center'>

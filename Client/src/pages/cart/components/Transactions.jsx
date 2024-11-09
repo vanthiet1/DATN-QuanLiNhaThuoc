@@ -1,4 +1,3 @@
-import React from 'react';
 
 const Transactions = () => {
   const transition = [
@@ -11,7 +10,7 @@ const Transactions = () => {
   ];
 
   return (
-    <div className='border-b pb-6'>
+    <div className='border-b pb-6  rounded-[7px]'>
       <h2 className='font-bold mb-4'>Chọn phương thức vận chuyển</h2>
       <div className='space-y-4'>
         {transition.map((tran, index) => (

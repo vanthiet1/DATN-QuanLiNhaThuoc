@@ -8,12 +8,16 @@ const PATH_ROUTERS_CLIENT = {
   HOMEPAGE: '/',
   PRODUCT_SEARCH: 'product/search',
   PRODUCT_DETAILS: 'product/:slug',
+  ALL_PRODUCT: 'danh-muc/san-pham',
   CATEGORIES_DETAILS: 'danh-muc/:id',
   SUBCATEGORIES_DETAILS: 'danh-muc/san-pham-danh-muc/:id',
   PHARMACY_DETAILS: 'nha-thuoc/:id',
   BLOG_DETAILS: 'bai-viet/:id',
   CART: 'gio-hang',
   ACCOUNT: 'tai-khoan',
+  BMICALCULATOR: 'tinh-chi-so-bmi',
+  HISTORY_ORDER: 'lich-su-dat-hang',
+  NOTFOUND: '*',
   ABOUT: 'gioi-thieu',
   CONTACT:'lien-he'
 };

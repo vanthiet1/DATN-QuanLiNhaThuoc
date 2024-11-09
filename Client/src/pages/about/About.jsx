@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import AppIcons from '../../components/ui/icon/index';
+import useSrcollTop from '../../hooks/useSrcollTop';
 
 const About = () => {
+  useSrcollTop();
   const [showMore, setShowMore] = useState(false);
-
   const toggleShowMore = () => {
     setShowMore((prevShowMore) => !prevShowMore);
   };

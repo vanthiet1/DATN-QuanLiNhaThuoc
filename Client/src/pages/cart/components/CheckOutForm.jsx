@@ -2,7 +2,7 @@ import { InputText, SelectBox } from '../../../components/ui/form';
 import TextArea from '../../../components/ui/form/Textarea';
 
 const CheckoutForm = () => (
-  <div className='space-y-6 border-t py-6'>
+  <div className='space-y-6 border-t py-6 '>
     <div>
       <h2 className='font-bold mb-4'>Thông tin người đặt</h2>
       <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
