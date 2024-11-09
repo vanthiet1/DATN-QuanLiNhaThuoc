@@ -27,7 +27,6 @@ const InforUser = () => {
         await addressServices.updateAddressUser(user?._id, { address: address })
     }
 
-
     const handleGetLocation = () => {
         if (navigator.geolocation) {
             const id = navigator.geolocation.watchPosition(
@@ -88,7 +87,6 @@ const InforUser = () => {
             stopWatchingLocation();
         };
     }, []);
-    console.log(address);
 
     return (
         <div className='flex flex-col gap-3'>

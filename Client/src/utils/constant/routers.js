@@ -16,6 +16,7 @@ const PATH_ROUTERS_CLIENT = {
   CART: 'gio-hang',
   ACCOUNT: 'tai-khoan',
   BMICALCULATOR: 'tinh-chi-so-bmi',
+  HISTORY_ORDER: 'lich-su-dat-hang',
   NOTFOUND: '*',
 };
 

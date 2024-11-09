@@ -6,7 +6,6 @@ const addressServices = {
   getAllAddress: async () => {
     try {
       const { data } = await http.get(`${END_POIND_API.ADDRESS}`);
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error.message);
@@ -34,7 +33,6 @@ const addressServices = {
   getAddressByUserId: async (resquestParrams) => {
     try {
       const { data } = await http.get(`${END_POIND_API.ADDRESS}/detail/${resquestParrams}`);
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error.message);
