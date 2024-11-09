@@ -207,6 +207,22 @@ const TemplateComponent = () => {
             <AppIcons.HistoryIcon />
             <span>HistoryIcon</span>
           </div>
+          <div className='flex gap-1 items-center'>
+            <AppIcons.FastDelivery />
+            <span>FastDelivery</span>
+          </div>
+          <div className='flex gap-1 items-center'>
+            <AppIcons.PhonePlus />
+            <span>PhonePlus</span>
+          </div>
+          <div className='flex gap-1 items-center'>
+            <AppIcons.TimeIcon/>
+            <span>TimeIcon</span>
+          </div>
+          <div className='flex gap-1 items-center'>
+            <AppIcons.ShieldIcon2/>
+            <span>ShieldIcon</span>
+          </div>
         </div>
       </div>
     </div>
