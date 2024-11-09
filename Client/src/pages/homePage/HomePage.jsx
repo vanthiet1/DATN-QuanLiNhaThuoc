@@ -111,11 +111,33 @@ const HomePage = () => {
               <SpinnerLoading />
             </div>
           )}
-          <div className="flex justify-between mt-[50px]">
-            <Advertisement image={"https://www.medigoapp.com/assets/images-html/icon-support-popup-img.png"} title={"GIAO THUỐC NHANH"} description={"Đơn hàng của bạn sẽ được mua và giao từ nhà thuốc gần nhất và tốt nhất"} />
-            <Advertisement image={"https://www.medigoapp.com/assets/images-html/icon-support-popup-img.png"} title={"ĐÁNG TIN CẬY"} description={"Bình An Dược chỉ hoạt động với các hiệu thuốc đạt chuẩn GPP và được cấp phép của Bộ Y Tế"} />
-            <Advertisement image={"https://www.medigoapp.com/assets/images-html/icon-support-popup-img.png"} title={"TƯ VẤN NHIỆT TÌNH"} description={"Các dược sĩ kinh nghiệm sẽ gọi điện và tư vấn nhiệt tình cho bạn"} />
-            <Advertisement image={"https://www.medigoapp.com/assets/images-html/icon-support-popup-img.png"} title={"PHỤC VỤ 24H"} description={"Khách hàng luôn biết trước giá với mức giá thành hợp lý , giúp bạn an tâm sử dụng dịch vụ"} />
+          <div className='flex justify-between mt-[50px]'>
+            <Advertisement
+              icon={
+                <AppIcons.FastDelivery
+                  addClassNames='w-[100px] text-[#2563EB] -mb-2 -mt-2'
+                  width='45px'
+                  height='50px'
+                />
+              }
+              title={'GIAO THUỐC NHANH'}
+              description={'Đơn hàng của bạn sẽ được mua và giao từ nhà thuốc gần nhất và tốt nhất'}
+            />
+            <Advertisement
+              icon={<AppIcons.ShieldIcon2 addClassNames='w-[100px] text-[#2563EB]' width='35px' height='35px' />}
+              title={'ĐÁNG TIN CẬY'}
+              description={'Bình An Dược chỉ hoạt động với các hiệu thuốc đạt chuẩn GPP và được cấp phép của Bộ Y Tế'}
+            />
+            <Advertisement
+              icon={<AppIcons.PhonePlus addClassNames='w-[100px] text-[#2563EB]' width='35px' height='35px' />}
+              title={'TƯ VẤN NHIỆT TÌNH'}
+              description={'Các dược sĩ kinh nghiệm sẽ gọi điện và tư vấn nhiệt tình cho bạn'}
+            />
+            <Advertisement
+              icon={<AppIcons.TimeIcon2 addClassNames='w-[100px] text-[#2563EB]' width='35px' height='35px' />}
+              title={'PHỤC VỤ 24H'}
+              description={'Khách hàng luôn biết trước giá với mức giá thành hợp lý , giúp bạn an tâm sử dụng dịch vụ'}
+            />
           </div>
           <div className="mt-[70px]">
             <h1 className="font-bold text-[22px] text-center pb-4">Đánh giá của khách hàng</h1>
