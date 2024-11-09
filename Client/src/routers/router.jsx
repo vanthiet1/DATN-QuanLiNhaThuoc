@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { LayoutAdmin, LayoutDefault } from '../components/layouts';
 import { PATH_ROUTERS_ADMIN, PATH_ROUTERS_CLIENT } from '../utils/constant/routers';
 import SuspenseWrapper from '../components/suspenseWrapper/SuspenseWrapper';
+import ProtectedRoute from '../routers/ProtectedRoute';
 
 const HomePage = lazy(() => import('../pages/homePage/HomePage'));
 const ProductSearch = lazy(() => import('../pages/productSearch/ProductSearch'));
@@ -13,6 +14,12 @@ const Cart = lazy(() => import('../pages/cart/Cart'));
 const BlogDetails = lazy(() => import('../pages/blog/BlogDetails'));
 const Pharmacy = lazy(() => import('../pages/pharmacy/PharmacyDetails'));
 const AccountUser = lazy(() => import('../pages/account/AccoutUser'));
+const ListAllProduct = lazy(() => import('../pages/product/ListAllProduct'));
+const BmiCalculator = lazy(() => import('../pages/tools/BmiCalculator'));
+const HistoryOrder = lazy(() => import('../pages/order/HistoryOrder'));
+const NotFoundPage = lazy(() => import('../pages/notfound/NotFound'));
+const About = lazy(() => import('../pages/about/About'));
+const Contact = lazy(() => import('../pages/contact/Contact'));
 
 
 const DashBoard = lazy(() => import('../admin/dashboard/Dashboard'));
@@ -77,6 +84,14 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: PATH_ROUTERS_CLIENT.NOTFOUND,
+        element: (
+          <SuspenseWrapper>
+            <NotFoundPage />
+          </SuspenseWrapper>
+        )
+      },
+      {
         path: PATH_ROUTERS_CLIENT.PRODUCT_DETAILS,
         element: (
           <SuspenseWrapper>
@@ -85,10 +100,26 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: PATH_ROUTERS_CLIENT.BMICALCULATOR,
+        element: (
+          <SuspenseWrapper>
+            <BmiCalculator />
+          </SuspenseWrapper>
+        )
+      },
+      {
         path: PATH_ROUTERS_CLIENT.PRODUCT_SEARCH,
         element: (
           <SuspenseWrapper>
             <ProductSearch />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_CLIENT.ALL_PRODUCT,
+        element: (
+          <SuspenseWrapper>
+            <ListAllProduct />
           </SuspenseWrapper>
         )
       },
@@ -139,12 +170,40 @@ const router = createBrowserRouter([
             <Pharmacy />
           </SuspenseWrapper>
         )
+      },
+      {
+        path: PATH_ROUTERS_CLIENT.ABOUT,
+        element: (
+          <SuspenseWrapper>
+            <About />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_CLIENT.HISTORY_ORDER,
+        element: (
+          <SuspenseWrapper>
+            <HistoryOrder />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_CLIENT.CONTACT,
+        element: (
+          <SuspenseWrapper>
+            <Contact/>
+          </SuspenseWrapper>
+        )
       }
     ]
   },
+
   {
     path: '/', // router của admin
-    element: <LayoutAdmin />,
+    element:
+      <ProtectedRoute>
+        <LayoutAdmin />
+      </ProtectedRoute>,
     children: [
       {
         path: PATH_ROUTERS_ADMIN.DASHBOARD,
@@ -359,6 +418,14 @@ const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <AddRole />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.EDIT_ROLE_USER,
+        element: (
+          <SuspenseWrapper>
+            <EditRole />
           </SuspenseWrapper>
         )
       },

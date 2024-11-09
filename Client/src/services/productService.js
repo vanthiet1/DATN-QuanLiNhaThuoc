@@ -26,7 +26,8 @@ const productServices = {
   },
   getAllProducts: async (requestParams) => {
     try {
-      const { data } = await http.get(`${END_POIND_API.PRODUCT}${requestParams}`);
+      const queryString = new URLSearchParams(requestParams).toString();
+      const { data } = await http.get(`${END_POIND_API.PRODUCT}?${queryString}`);
       return data;
     } catch (error) {
       console.log(error.message);

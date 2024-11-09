@@ -3,6 +3,7 @@ import useFetch from "../../hooks/useFetch";
 import roleServices from "../../services/roleService";
 import { useConfirmDialog } from "../../components/dialog/ConfirmDialogContext";
 import AppIcons from '../../components/ui/icon';
+import { useNavigate } from "react-router-dom";
 
 const allRole = () => {
     const titleRow = [
@@ -11,6 +12,7 @@ const allRole = () => {
     ];
     const { responsData: roleData} = useFetch(roleServices.getAllRole)
     const confirmDialog = useConfirmDialog();
+    const navigate = useNavigate()
 
     const handleDetele = async (role) => {
         
@@ -29,7 +31,7 @@ const allRole = () => {
       };
       const handleEdit = async (idRole)=>{
           console.log(idRole);
-          
+          navigate(`/admin/edit-role/${idRole}`);
       }
     return (
         <div>

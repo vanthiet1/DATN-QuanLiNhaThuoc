@@ -32,19 +32,19 @@ const AllBrand = () => {
     <>
       <BreadCrumb crumbsData={brandBreadCrumb} addClassNames='my-3' />
       <div className='max-w-7xl mx-auto p-6 bg-white shadow-md rounded-lg'>
-        <h1 className='text-3xl font-bold mb-6 text-center'>All thương hiệu</h1>
+        <h1 className='text-3xl font-bold mb-6 text-center'>All brand</h1>
         <div className='overflow-x-auto'>
           <table className='min-w-full table-auto border-collapse'>
             <thead className='w-full'>
               <tr className='bg-gray-200 w-full'>
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
-                  Tên thương hiệu
+                  Brand name
                 </th>
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
-                  Nước xuất xứ
+  Origin country
                 </th>
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
-                  Quốc gia sản xuất
+                Country made
                 </th>
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>action</th>
               </tr>

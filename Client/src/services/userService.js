@@ -2,6 +2,7 @@
 import axios from 'axios'
 import http from '../utils/helpers/http';
 import END_POIND_API from '../utils/helpers/endpoind';
+import { showToastSuccess } from '../configs/toastConfig';
 const userServices = {
     getAuthLoginGoogle: async (google_access_token) => {
         try {
@@ -58,6 +59,18 @@ const userServices = {
         } catch (error) {
             console.log(error);
         }
-    }
+    },
+    updatePhoneNumberUser: async (requestParams,requestBody) => {
+        try {
+            const { data } = await http.put(`${END_POIND_API.USER}/phoneNumber/${requestParams}`,requestBody)
+            if(data){
+             showToastSuccess(data.message)
+            }
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
 }
 export default userServices

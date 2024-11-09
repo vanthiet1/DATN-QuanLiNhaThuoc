@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-const useSrcollTop = (id_url_param) => {
+const useSrcollTop = (param) => {
     useEffect(()=>{
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      },[id_url_param])
+      },[param])
 };
 
 export default useSrcollTop;

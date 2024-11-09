@@ -19,6 +19,7 @@ import { HandleCartContext } from "../../contexts/HandleCartContext";
 import GalleryComponent from "../../components/ui/image/Gallery";
 import useSrcollTop from '../../hooks/useSrcollTop';
 
+
 const ProductDetail = () => {
   useSrcollTop()
   const { slug } = useParams();
@@ -170,17 +171,20 @@ const ProductDetail = () => {
               </div>
               <div className="flex gap-4 pt-4 max-md:justify-between max-md:flex-col max-md:m-3">
                 <Button
-                  onClick={()=>handleAddToCart(product[0]?._id,user?._id)}
+                  onClick={()=>handleAddToCart(product[0]?._id,user?._id,true)}
                   disabled={quantityProductDetail < 1 ? true : false}
                   addClassNames="text-[16px] uppercase border border-[#C9C9C9] p-2 py-1 px-[30px] rounded-[10px]  font-semibold hover:bg-gray-100 duration-300 max-md:w-[50%] flex justify-center max-md:w-full"
                 >
                   Thêm giỏ hàng
                 </Button>
                 <Button
+                    onClick={()=>handleAddToCart(product[0]?._id,user?._id,false)}
                   disabled={quantityProductDetail < 1 ? true : false}
                   addClassNames="text-[16px] text-[#fff] bg-[#2563EB] p-2 w-[150px] flex justify-center rounded-[10px] uppercase hover:bg-blue-700 duration-300 max-md:w-[50%] max-md:w-full"
                 >
-                  Mua ngay
+          
+                Mua ngay
+            
                 </Button>
               </div>
             </div>
