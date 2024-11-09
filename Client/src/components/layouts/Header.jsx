@@ -9,7 +9,7 @@ import { ToggleFormContext } from '../../contexts/ToggleFormContext';
 import authServices from '../../services/authService';
 import AppIcons from '../ui/icon';
 import SpinnerLoading from '../../components/ui/loaders/SpinnerLoading';
-import categoryServices from '../../services/categoryService';
+import categoryServices from "../../services/categoryService";
 import useFetch from '../../hooks/useFetch';
 import { CartContext } from '../../contexts/CartContext';
 import searchProductServices from '../../services/searchProductService';
@@ -20,6 +20,7 @@ import { TabUIAccountContext } from '../../contexts/TabUIAccountContext';
 const Header = () => {
     const { user } = useContext(UserContext) || { user: null };
     const { setTabIndex, } = useContext(TabUIAccountContext) || null;
+
     const navigate = useNavigate()
     const { cart } = useContext(CartContext);
     const { handleOpenDialog } = useContext(ToggleFormContext);
@@ -47,22 +48,20 @@ const redirectHistoryOrder= ()=>{
         setIsLoading(false);
     }
 
-  const debouncedFetchProducts = debounce(getProductSearch, 3000);
+    const debouncedFetchProducts = debounce(getProductSearch, 3000);
 
-  const handleChange = (e) => {
-    const value = e.target.value;
-    setSearchKeyword(value);
-    if (value.trim() === '') {
-      setProducts([]);
-    } else {
-      if (value !== ' ') {
-        setSearchKeyword(value.trim().replace(/\s+/g, ' '));
-        debouncedFetchProducts();
-      }
-    }
-  };
-
-  
+    const handleChange = (e) => {
+        const value = e.target.value;
+        setSearchKeyword(value);
+        if (value.trim() === '') {
+            setProducts([]);
+        } else {
+            if (value !== ' ') {
+                setSearchKeyword(value.trim().replace(/\s+/g, ' '));
+                debouncedFetchProducts();
+            }
+        }
+    };
 
     const handleSearchQueryProduct = async () => {
         if (searchKeyword.trim()) {
@@ -76,6 +75,7 @@ const redirectHistoryOrder= ()=>{
             handleSearchQueryProduct();
         }
     };
+
 
     return (
         <div className={`ease-in-out sticky top-0 z-30`}>
@@ -125,6 +125,7 @@ const redirectHistoryOrder= ()=>{
                                     </div>
                                 )}
                             </div>
+                     
                         </div>
                         <div className='flex gap-5 items-center '>
                             {user ? (
@@ -175,6 +176,123 @@ const redirectHistoryOrder= ()=>{
                                         </div>
                                     </div>
 
-)};
+                                </div>
+                            ) : (
+                                <>
+                                    <div className="flex items-center gap-3">
+                                        <Button onClick={() => handleOpenDialog('login')} addClassNames='text-[16px] text-[#fff] font-normal '>
+                                            Đăng nhập
+                                        </Button>
+                                        <Button onClick={() => handleOpenDialog('register')} addClassNames='text-[16px] text-[#fff] font-normal '>
+                                            Đăng ký
+                                        </Button>
+                                    </div>
+                                </>
+                            )}
+                            <div className='flex gap-4'>
+                                <AppIcons.ChatIcon addClassNames='text-[#fff] cursor-pointer' width='20px' height='20px' />
+                                <div className='w-[2px] h-[20px] bg-[#fff] rounded-md'></div>
+                                <Link to={'/gio-hang'}>
+                                    <div className='relative'>
+                                        <AppIcons.OderIcon addClassNames='text-[#fff] cursor-pointer' width='20px' height='20px' />
+                                        {cart && (
+                                            <div className="absolute top-[-10px] right-[-12px]">
+                                                <span className='text-[#fff] bg-red-500 flex justify-center items-center rounded-[50%] w-[20px] h-[20px] text-[15px]'>
+                                                    {cart?.length}
+                                                </span>
+                                            </div>
+                                        )}
+                                    </div>
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <nav>
+                <div className=" border-1 w-[100%]  p-4 shadow-lg bg-[#fff]">
+                    <div className=" flex justify-between items-center gap-2 w-[90%] m-auto">
+                        {initialCategoryData && initialCategoryData.map((category) => (
+                            <div className="flex items-center group relative" key={category._id}>
+                                <Link to={`/danh-muc/${category._id}`}>
+                                    <span className="w-max cursor-pointer hover:text-[#2563EB] duration-200 text-[15px] font-semibold">{category?.name}</span>
+                                </Link>
+                                {category.subcategories && category.subcategories.length > 0 && (
+                                    <div className="ml-3">
+                                        <AppIcons.ArrowDown
+                                            addClassNames="inline-block ml-1 transition-transform duration-300 group-hover:rotate-180 group-hover:text-[#2563EB]"
+                                        />
+                                        <div className='absolute left-[-5px] pt-[17px] z-20'>
+                                            <div className="hidden max-h-0 overflow-hidden group-hover:max-h-[500px] duration-500 group-hover:duration-500 group-hover:block bg-[#fff] w-[250px] shadow-2xl p-4 rounded-[5px] ">
+                                                {category.subcategories.map((sub) => (
+                                                    <div key={sub._id}>
+                                                        <Link to={`/danh-muc/san-pham-danh-muc/${sub._id}`}>
+                                                            <span className="block py-2 text-sm text-gray-600 hover:text-[#2563EB] w-max font-bold">
+                                                                {sub?.name}
+                                                            </span>
+                                                        </Link>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                        <div className="flex items-center group relative" >
+                            <span className="w-max cursor-pointer hover:text-[#2563EB] duration-200 text-[15px] font-semibold">Góc sống khỏe</span>
+                            <div className="ml-3">
+                                <AppIcons.ArrowDown
+                                    addClassNames="inline-block ml-1 transition-transform duration-300 group-hover:rotate-180 group-hover:text-[#2563EB]"
+                                />
+                                <div className='absolute left-[-5px] pt-[17px] z-20'>
+                                    <div className="hidden max-h-0 overflow-hidden group-hover:max-h-[500px] duration-500 group-hover:duration-500 group-hover:block bg-[#fff] w-[250px] shadow-2xl p-4 rounded-[5px] ">
+                                        <div >
+                                            <span className="block py-2 text-sm text-gray-600 hover:text-[#2563EB] w-max font-bold cursor-pointer">
+                                                Bài Viết
+                                            </span>
+                                        </div>
+                                        <div >
+                                            <Link to={`/${PATH_ROUTERS_CLIENT.BMICALCULATOR}`}>
+                                                <span className="block py-2 text-sm text-gray-600 hover:text-[#2563EB] w-max font-bold cursor-pointer">
+                                                    Tính chỉ số BMI
+                                                </span>
+                                            </Link>
+                                        </div>
+                                        <div >
+                                            <span className="block py-2 text-sm text-gray-600 hover:text-[#2563EB] w-max font-bold cursor-pointer">
+                                                Công cụ tính ngày dự sinh
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span className="block py-2 text-sm text-gray-600 hover:text-[#2563EB] w-max font-bold cursor-pointer">
+                                                Công cụ tính ngày rụng trứng
+                                            </span>
+                                        </div>
+                                        <div >
+                                            <span className="block py-2 text-sm text-gray-600 hover:text-[#2563EB] w-max font-bold cursor-pointer">
+                                                Tra cứu bệnh
+                                            </span>
+                                        </div>
+                                        <div >
+                                            <span className="block py-2 text-sm text-gray-600 hover:text-[#2563EB] w-max font-bold cursor-pointer">
+                                                Hoạt chất
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex items-center group relative" >
+                            <Link>
+                                <span className="w-max cursor-pointer hover:text-[#2563EB] duration-200 text-[15px] font-semibold">Nhà thuốc</span>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    );
+};
 
 export default Header;
