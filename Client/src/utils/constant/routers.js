@@ -13,7 +13,9 @@ const PATH_ROUTERS_CLIENT = {
   PHARMACY_DETAILS: 'nha-thuoc/:id',
   BLOG_DETAILS: 'bai-viet/:id',
   CART: 'gio-hang',
-  ACCOUNT: 'tai-khoan'
+  ACCOUNT: 'tai-khoan',
+  ABOUT: 'gioi-thieu',
+  CONTACT:'lien-he'
 };
 
 const PATH_ROUTERS_ADMIN = {
@@ -48,6 +50,7 @@ const PATH_ROUTERS_ADMIN = {
   MANAGER_CUSTOMER: 'admin/manager-customer',
   ALL_ROLE_USER: 'admin/all-role',
   ADD_ROLE_USER: 'admin/add-role',
+  EDIT_ROLE_USER: 'admin/edit-role/:id',
   ORDERS: 'admin/orders',
   TRANSACTION: 'admin/transaction',
   MESSAGES: 'admin/messages',
