@@ -25,7 +25,7 @@ const authServices = {
     },
     getUserData: async (access_token) => {
         if (!access_token) {
-            return;
+            return null;
         }
 
         try {
