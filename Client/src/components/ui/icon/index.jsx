@@ -1111,8 +1111,6 @@ const icons = {
   ShieldIcon,
   TimeIcon,
   CkeckIcon,
-  TimeIcon,
-  CkeckIcon,
   HeartIcon,
   HistoryIcon,
   EmailIcon,
