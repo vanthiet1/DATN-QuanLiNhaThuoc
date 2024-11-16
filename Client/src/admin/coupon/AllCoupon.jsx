@@ -39,6 +39,7 @@ const AllCoupon = () => {
   };
 
   const handleDelete = async (id, name) => {
+  const handleDelete = async (id, name) => {
     try {
       const result = await confirmDialog({
         title: 'Xóa Coupon',

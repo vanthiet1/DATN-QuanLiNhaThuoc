@@ -149,6 +149,19 @@ const User = {
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
+    },
+    updatePhoneNumberUser: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const { phoneNumber } = req.body;
+            if (!id) {
+                return res.status(400).json({ message: "Không tìm thấy user" });
+            }
+            const updatedUser = await UserModel.findByIdAndUpdate(id, { phone: phoneNumber }, { new: true })
+            res.status(200).json({ message: "Đã cập nhật số điện thoại thành công",updatedUser });
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
     }
 }
 module.exports = User

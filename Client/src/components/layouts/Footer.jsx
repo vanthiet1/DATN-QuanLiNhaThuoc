@@ -1,4 +1,5 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
+import { PATH_ROUTERS_CLIENT } from '../../utils/constant/routers';
 import logoFooter from '../../assets/images/logo/logo1.png';
 import logo from '../../assets/images/logo/logo.png'
 import logoFB from '../../assets/images/logo/logoFb.png'
@@ -43,8 +44,12 @@ const Footer = () => {
           <div>
             <h1 className="font-bold mb-3">Về Bình An Dược</h1>
             <ul className="space-y-2">
-              <li>Giới thiệu</li>
+            <Link to={`${PATH_ROUTERS_CLIENT.CONTACT}`}>
+              <li  className='pb-2'>Giới thiệu</li>
+            </Link>
+            <Link className='' to={`${PATH_ROUTERS_CLIENT.ABOUT}`} >
               <li>Liên hệ</li>
+            </Link>
               <li>Phòng xét nghiệm</li>
               <li>Tính bmi online</li>
               <li>Công cụ tính ngày dự sinh</li>
@@ -68,6 +73,7 @@ const Footer = () => {
           <div>
             <h1 className="font-bold mb-3">Danh Mục Sản Phẩm</h1>
             <ul className="space-y-2">
+      
               <li>Chăm sóc sắc đẹp</li>
               <li>Chăm sóc cá nhân</li>
               <li>Thiết bị y tế</li>

@@ -1,10 +1,10 @@
 
-const Advertisement = ({ image, title, description }) => {
+const Advertisement = ({ icon, title, description }) => {
     return (
         <div>
             <div>
               <div className="flex justify-center">
-              <img className="w-[50px]" src={image} alt="" />
+              <div className="w-[100px]">{icon}</div>  
               </div>
                 <div className="w-full text-center py-2">
                 <span className="font-semibold">{title}</span>

@@ -10,7 +10,9 @@ const { socket } = require('./configs/socket');
 const http = require('http');
 
 // Middleware
-require('./configs/cron');
+const cronConfig = require('./configs/cron');
+cronConfig.clearOTP();
+cronConfig.sendReminderEmail();
 app.use(morgan('common'));
 app.use(bodyParser.json());
 app.use(cookieParser());

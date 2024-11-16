@@ -3,6 +3,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import UserProvider from './UserContext';
 import ToggleFormProvider from './ToggleFormContext';
 import HanldeCartProvider from './HandleCartContext';
+import TabUIAccountProvider from './TabUIAccountContext';
 import CartProvider from './CartContext';
 import { ConfirmDialogProvider } from '../components/dialog/ConfirmDialogContext';
 import SocketProvider from './SocketContext';

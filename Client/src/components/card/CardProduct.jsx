@@ -5,6 +5,7 @@ import formatsHelper from "../../utils/helpers/formats";
 
 const CardProduct = ({ products, handleAddToCart }) => {
     if (!products) return null; 
+
     return (
         <div className="w-full shadow-xl rounded-[10px] grid grid-rows-[auto,1fr]" key={products?._id}>
             <Link to={`/product/${products?.slug}`}>
@@ -39,4 +40,5 @@ const CardProduct = ({ products, handleAddToCart }) => {
             </div>
         </div>
     );
+  }
 export default CardProduct;

@@ -77,6 +77,14 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: PATH_ROUTERS_CLIENT.NOTFOUND,
+        element: (
+          <SuspenseWrapper>
+            <NotFoundPage />
+          </SuspenseWrapper>
+        )
+      },
+      {
         path: PATH_ROUTERS_CLIENT.PRODUCT_DETAILS,
         element: (
           <SuspenseWrapper>
@@ -85,10 +93,26 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: PATH_ROUTERS_CLIENT.BMICALCULATOR,
+        element: (
+          <SuspenseWrapper>
+            <BmiCalculator />
+          </SuspenseWrapper>
+        )
+      },
+      {
         path: PATH_ROUTERS_CLIENT.PRODUCT_SEARCH,
         element: (
           <SuspenseWrapper>
             <ProductSearch />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_CLIENT.ALL_PRODUCT,
+        element: (
+          <SuspenseWrapper>
+            <ListAllProduct />
           </SuspenseWrapper>
         )
       },
@@ -139,9 +163,34 @@ const router = createBrowserRouter([
             <Pharmacy />
           </SuspenseWrapper>
         )
+      },
+      {
+        path: PATH_ROUTERS_CLIENT.ABOUT,
+        element: (
+          <SuspenseWrapper>
+            <About />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_CLIENT.HISTORY_ORDER,
+        element: (
+          <SuspenseWrapper>
+            <HistoryOrder />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_CLIENT.CONTACT,
+        element: (
+          <SuspenseWrapper>
+            <Contact/>
+          </SuspenseWrapper>
+        )
       }
     ]
   },
+
   {
     path: '/', // router của admin
     element: (
@@ -363,6 +412,14 @@ const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <AddRole />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.EDIT_ROLE_USER,
+        element: (
+          <SuspenseWrapper>
+            <EditRole />
           </SuspenseWrapper>
         )
       },
