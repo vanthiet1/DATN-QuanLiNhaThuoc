@@ -28,7 +28,7 @@ const DiaLog = ({ isOpen, onClose, children }) => {
 
 DiaLog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
   children: PropTypes.node.isRequired
 };
 

@@ -19,7 +19,9 @@ const GlobalContextProvider = ({ children }) => {
             <CartProvider>
               <ToggleFormProvider>
                 <HanldeCartProvider>
-                  <UserProvider>{children}</UserProvider>
+                  <TabUIAccountProvider>
+                    <UserProvider>{children}</UserProvider>
+                  </TabUIAccountProvider>
                 </HanldeCartProvider>
               </ToggleFormProvider>
             </CartProvider>

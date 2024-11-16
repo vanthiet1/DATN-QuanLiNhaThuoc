@@ -25,7 +25,7 @@ const UserProvider = ({ children }) => {
           getProductCart(userLoginLocal?._id);
           storageUtil.setItem('userInfor', userLoginLocal);
           console.log(userLoginLocal);
-          socket.emit('registerRoom', userLoginLocal?.role_id?.role_Name);
+          // socket.emit('registerRoom', userLoginLocal?.role_id?.role_Name);
         } else {
           tokenService.removeAccessToken();
           setUser(null);
@@ -35,7 +35,7 @@ const UserProvider = ({ children }) => {
       console.error('Lỗi khi xác thực token hoặc token không hợp lệ:', error);
       tokenService.removeAccessToken();
       setUser(null);
-      storageUtil.removeItem('userInfor', userLoginLocal);
+      storageUtil.removeItem('userInfor');
     }
   };
 

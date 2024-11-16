@@ -14,6 +14,11 @@ const Cart = lazy(() => import('../pages/cart/Cart'));
 const BlogDetails = lazy(() => import('../pages/blog/BlogDetails'));
 const Pharmacy = lazy(() => import('../pages/pharmacy/PharmacyDetails'));
 const AccountUser = lazy(() => import('../pages/account/AccoutUser'));
+const BmiCalculator = lazy(() => import('../pages/tools/BmiCalculator'));
+const ListAllProduct = lazy(() => import('../pages/product/ListAllProduct'));
+const About = lazy(() => import('../pages/about/About'));
+const Contact = lazy(() => import('../pages/contact/Contact'));
+const HistoryOrder = lazy(() => import('../pages/order/HistoryOrder'));
 
 const DashBoard = lazy(() => import('../admin/dashboard/Dashboard'));
 const AddProduct = lazy(() => import('../admin/product/AddProduct'));
@@ -62,6 +67,7 @@ const OrderDetails = lazy(() => import('../admin/orders/OrderDetails'));
 const OrderSaleOff = lazy(() => import('../admin/orders/OrderSaleOff'));
 
 const TemplateComponent = lazy(() => import('../admin/testComponents/TemplateComponent'));
+const NotFoundPage = lazy(() => import('../pages/notfound/NotFound'));
 
 const router = createBrowserRouter([
   {
@@ -184,7 +190,7 @@ const router = createBrowserRouter([
         path: PATH_ROUTERS_CLIENT.CONTACT,
         element: (
           <SuspenseWrapper>
-            <Contact/>
+            <Contact />
           </SuspenseWrapper>
         )
       }
