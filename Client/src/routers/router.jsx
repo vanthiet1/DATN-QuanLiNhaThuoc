@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { LayoutAdmin, LayoutDefault } from '../components/layouts';
 import { PATH_ROUTERS_ADMIN, PATH_ROUTERS_CLIENT } from '../utils/constant/routers';
 import SuspenseWrapper from '../components/suspenseWrapper/SuspenseWrapper';
+import PrivateRouter from './privateRouter/PrivateRouter';
 
 const HomePage = lazy(() => import('../pages/homePage/HomePage'));
 const ProductSearch = lazy(() => import('../pages/productSearch/ProductSearch'));
@@ -13,7 +14,6 @@ const Cart = lazy(() => import('../pages/cart/Cart'));
 const BlogDetails = lazy(() => import('../pages/blog/BlogDetails'));
 const Pharmacy = lazy(() => import('../pages/pharmacy/PharmacyDetails'));
 const AccountUser = lazy(() => import('../pages/account/AccoutUser'));
-
 
 const DashBoard = lazy(() => import('../admin/dashboard/Dashboard'));
 const AddProduct = lazy(() => import('../admin/product/AddProduct'));
@@ -144,7 +144,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/', // router của admin
-    element: <LayoutAdmin />,
+    element: (
+      <PrivateRouter>
+        <LayoutAdmin />
+      </PrivateRouter>
+    ),
     children: [
       {
         path: PATH_ROUTERS_ADMIN.DASHBOARD,
