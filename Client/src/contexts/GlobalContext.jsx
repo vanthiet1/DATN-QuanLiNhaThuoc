@@ -5,25 +5,26 @@ import ToggleFormProvider from './ToggleFormContext';
 import HanldeCartProvider from './HandleCartContext';
 import CartProvider from './CartContext';
 import { ConfirmDialogProvider } from '../components/dialog/ConfirmDialogContext';
+import SocketProvider from './SocketContext';
 const GlobalContext = createContext();
 
 const GlobalContextProvider = ({ children }) => {
   const [visited, setVisited] = useState(false);
   return (
     <GlobalContext.Provider value={visited}>
-      <ConfirmDialogProvider>
-        <GoogleOAuthProvider clientId={'1060538151130-fugnan197mqpku6dp2a9vlhnb0vi9l1j.apps.googleusercontent.com'}>
-          <CartProvider>
-            <ToggleFormProvider>
-              <HanldeCartProvider>
-                <UserProvider>
-                  {children}
-                </UserProvider>
-              </HanldeCartProvider>
-            </ToggleFormProvider>
-          </CartProvider>
-        </GoogleOAuthProvider>
-      </ConfirmDialogProvider>
+      <SocketProvider>
+        <ConfirmDialogProvider>
+          <GoogleOAuthProvider clientId={'1060538151130-fugnan197mqpku6dp2a9vlhnb0vi9l1j.apps.googleusercontent.com'}>
+            <CartProvider>
+              <ToggleFormProvider>
+                <HanldeCartProvider>
+                  <UserProvider>{children}</UserProvider>
+                </HanldeCartProvider>
+              </ToggleFormProvider>
+            </CartProvider>
+          </GoogleOAuthProvider>
+        </ConfirmDialogProvider>
+      </SocketProvider>
     </GlobalContext.Provider>
   );
 };
