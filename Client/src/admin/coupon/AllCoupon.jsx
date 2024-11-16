@@ -39,7 +39,6 @@ const AllCoupon = () => {
   };
 
   const handleDelete = async (id, name) => {
-  const handleDelete = async (id, name) => {
     try {
       const result = await confirmDialog({
         title: 'Xóa Coupon',
@@ -129,7 +128,7 @@ const AllCoupon = () => {
                           addClassNames='bg-blue-500 text-white hover:bg-blue-600 px-3 py-1 rounded-md ml-2'
                           onClick={() => handleEdit(coupon._id)}
                         >
-                          <AppIcons.EditIcon width='18' height='18'/>
+                          <AppIcons.EditIcon width='18' height='18' />
                         </Button>
                         <Button
                           size='m'
@@ -137,7 +136,7 @@ const AllCoupon = () => {
                           addClassNames='bg-rose-500 text-white hover:bg-rose-600 px-3 py-1 rounded-md ml-2'
                           onClick={() => handleDelete(coupon._id, coupon.code)}
                         >
-                          <AppIcons.TrashBinIcon width='18' height='18'/>
+                          <AppIcons.TrashBinIcon width='18' height='18' />
                         </Button>
                       </td>
                     </tr>
