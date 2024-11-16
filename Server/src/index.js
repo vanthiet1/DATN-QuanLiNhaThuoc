@@ -6,6 +6,9 @@ const cors = require('cors');
 require('dotenv').config();
 const app = express();
 const connectDB = require('./db/connectDB');
+const { socket } = require('./configs/socket');
+const http = require('http');
+
 // Middleware
 require('./configs/cron');
 app.use(morgan('common'));
@@ -21,6 +24,9 @@ app.use(
 );
 
 connectDB();
+
+const server = http.createServer(app);
+socket(server);
 
 app.get('/', (req, res) => {
   res.send('Welcome To Api');
@@ -50,6 +56,7 @@ const PaymentMethodRouter = require('./routers/paymentMethod');
 const VnpayRouter = require('./routers/vnpay');
 const TransactionRouter = require('./routers/transaction');
 const ReportRouter = require('./routers/report');
+const NotificationRouter = require('./routers/notification');
 
 app.use('/api/v1/order', OrderRouter);
 app.use('/api/v1/order-details', OrderDetailRouter);
@@ -75,9 +82,10 @@ app.use('/api/v1/payment-method', PaymentMethodRouter);
 app.use('/api/v1/vnpay', VnpayRouter);
 app.use('/api/v1/transactions', TransactionRouter);
 app.use('/api/v1/report', ReportRouter);
+app.use('/api/v1/notification', NotificationRouter);
 
 // Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
