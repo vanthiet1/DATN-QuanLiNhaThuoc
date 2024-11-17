@@ -10,13 +10,12 @@ const cronCofig = {
                 const expiredUsers = await UserModel.find({
                     timeOtp: { $lt: Date.now() }  
                 });
-        
                 if (expiredUsers.length > 0) {
                     for (const user of expiredUsers) {
                         user.otpVerify = undefined;
                         user.timeOtp = undefined;
                         user.otpForgotPass = undefined;
-                        user.lastOtpRequestTime = undefined; // để kiểm tra spam
+                        user.lastOtpRequestTime = undefined; // check spam
                         await user.save(); 
                         console.log(`Đã xóa OTP của người dùng: ${user.email}`);
                     }

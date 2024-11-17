@@ -75,8 +75,6 @@ const redirectHistoryOrder= ()=>{
             handleSearchQueryProduct();
         }
     };
-
-
     return (
         <div className={`ease-in-out sticky top-0 z-30`}>
             <header>
@@ -246,12 +244,12 @@ const redirectHistoryOrder= ()=>{
                                     addClassNames="inline-block ml-1 transition-transform duration-300 group-hover:rotate-180 group-hover:text-[#2563EB]"
                                 />
                                 <div className='absolute left-[-5px] pt-[17px] z-20'>
-                                    <div className="hidden max-h-0 overflow-hidden group-hover:max-h-[500px] duration-500 group-hover:duration-500 group-hover:block bg-[#fff] w-[250px] shadow-2xl p-4 rounded-[5px] ">
-                                        <div >
+                                    <div className="hidden max-h-0 overflow-hidden group-hover:max-h-[500px] duration-500 group-hover:duration-500 group-hover:block bg-[#fff] w-[250px] shadow-2xl p-4 rounded-[5px]">
+                                        <Link to={PATH_ROUTERS_CLIENT.BLOG}>
                                             <span className="block py-2 text-sm text-gray-600 hover:text-[#2563EB] w-max font-bold cursor-pointer">
                                                 Bài Viết
                                             </span>
-                                        </div>
+                                        </Link>
                                         <div >
                                             <Link to={`/${PATH_ROUTERS_CLIENT.BMICALCULATOR}`}>
                                                 <span className="block py-2 text-sm text-gray-600 hover:text-[#2563EB] w-max font-bold cursor-pointer">
