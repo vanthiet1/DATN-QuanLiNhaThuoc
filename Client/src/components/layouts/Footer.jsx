@@ -24,7 +24,7 @@ const Footer = () => {
             <h1 className="font-bold mb-3">Hỗ Trợ Khách Hàng</h1>
             <ul className="space-y-2">
               <li>Hotline: 1800 2247 (Miễn phí 24/7)</li>
-              <li>Email: cskh@medigoapp.com</li>
+              <li>Email: cskh@binhanduoc.com</li>
               <li>Chính sách thanh toán</li>
               <li>Chính sách xử lý khiếu nại</li>
               <li>Chính sách vận chuyển và giao nhận</li>
