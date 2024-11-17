@@ -18,7 +18,8 @@ app.use(
   cors({
     origin: 'http://localhost:5173',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true
+    credentials: true,
+    exposedHeaders: ['x-auth-token']
   })
 );
 
@@ -52,7 +53,7 @@ const PaymentMethodRouter = require('./routers/paymentMethod');
 const VnpayRouter = require('./routers/vnpay');
 const TransactionRouter = require('./routers/transaction');
 const ReportRouter = require('./routers/report');
-const WebhookRouter = require('./routers/webhook');
+
 
 
 app.use('/api/v1/order', OrderRouter);
@@ -79,7 +80,7 @@ app.use('/api/v1/payment-method', PaymentMethodRouter);
 app.use('/api/v1/vnpay', VnpayRouter);
 app.use('/api/v1/transactions', TransactionRouter);
 app.use('/api/v1/report', ReportRouter);
-app.use('/api/v1/webhook', WebhookRouter);
+
 
 
 // Start server
