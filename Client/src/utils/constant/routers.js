@@ -13,6 +13,7 @@ const PATH_ROUTERS_CLIENT = {
   SUBCATEGORIES_DETAILS: 'danh-muc/san-pham-danh-muc/:id',
   PHARMACY_DETAILS: 'nha-thuoc/:id',
   BLOG_DETAILS: 'bai-viet/:id',
+  BLOG: 'bai-viet',
   CART: 'gio-hang',
   ACCOUNT: 'tai-khoan',
   BMICALCULATOR: 'tinh-chi-so-bmi',
