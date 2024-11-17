@@ -38,7 +38,7 @@ const categoryController = {
         return res.status(404).json({ message: 'Category not found.' });
       }
 
-      res.status(200).json({ message: 'Không tìm thấy danh mục.', data: deletedCategory });
+      res.status(200).json({ message: 'Xóa danh mục thành công', data: deletedCategory });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
