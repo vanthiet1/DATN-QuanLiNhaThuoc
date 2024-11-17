@@ -100,7 +100,7 @@ const HomePage = () => {
                   <SwiperSlide key={product._id}>
                     <CardProduct
                       products={product}
-                      handleAddToCart={() => handleAddToCart(product?._id, user?._id)}
+                      handleAddToCart={() => handleAddToCart(product?._id, user?._id,true)}
                     />
                   </SwiperSlide>
                 ))}

@@ -92,7 +92,7 @@ const FormAddBlog = () => {
 const AddBlog = () => {
   return (
     <div>
-      <SectionWrapper title='Add Brand' addClassNames={{ wrapper: 'mt-2' }}>
+      <SectionWrapper title='Add Blog' addClassNames={{ wrapper: 'mt-2' }}>
         <BreadCrumb crumbsData={brandBreadCrumb} />
         <FormAddBlog />
       </SectionWrapper>

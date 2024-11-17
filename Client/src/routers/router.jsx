@@ -20,7 +20,7 @@ const HistoryOrder = lazy(() => import('../pages/order/HistoryOrder'));
 const NotFoundPage = lazy(() => import('../pages/notfound/NotFound'));
 const About = lazy(() => import('../pages/about/About'));
 const Contact = lazy(() => import('../pages/contact/Contact'));
-
+const Blog = lazy(() => import('../pages/blog/Blog'));
 
 const DashBoard = lazy(() => import('../admin/dashboard/Dashboard'));
 const AddProduct = lazy(() => import('../admin/product/AddProduct'));
@@ -160,6 +160,14 @@ const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <BlogDetails />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_CLIENT.BLOG,
+        element: (
+          <SuspenseWrapper>
+            <Blog />
           </SuspenseWrapper>
         )
       },
