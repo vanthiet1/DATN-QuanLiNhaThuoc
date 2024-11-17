@@ -12,19 +12,16 @@ import formBMISchema from "../../utils/validations/formBMI";
 import calculationBmiImage from '../../assets/images/bmi/cong_thuc_tinh_bmi.png'
 import bmiGirl from '../../assets/images/bmi/bmifa_girls.png'
 import bmiBoy from '../../assets/images/bmi/bmi_boy.png'
-
+import useSrcollTop from "../../hooks/useSrcollTop";
 const BmiCalculator = () => {
-
+  useSrcollTop()
   const [gender, setGender] = useState('male');
   const [bmi, setBmi] = useState(null);
   const [message, setMessage] = useState('');
 
-
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(formBMISchema.BMI),
   });
-
-
 
   const onSubmit = (data) => {
     const { weight, height, date, month, year } = data;

@@ -949,7 +949,16 @@ const icons = {
   UserIconOutline,
   ShieldIcon,
   TimeIcon,
-  CkeckIcon
+  CkeckIcon,
+  HeartIcon,
+  HistoryIcon,
+  EmailIcon,
+  PhoneIcon,
+  FacebookIcon,
+  FastDelivery,
+  PhonePlus,
+  ShieldIcon2,
+  TimeIcon2
 };
 
 export default icons;
