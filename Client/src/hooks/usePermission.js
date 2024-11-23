@@ -1,13 +1,12 @@
 import { ROLE_ADMIN, ROLE_STAFF, ROLE_CUSTOMMER } from '../utils/constant/common';
-import storageUtil from '../utils/helpers/storageUtil';
 
-const usePermission = () => {
-  const userInfor = storageUtil.getItem('userInfor') || {};
+const usePermission = (user = {}) => {
+  console.log(user);
   const checkIsRoleUser = (roles = []) => {
     if (!Array.isArray(roles)) {
       return false;
     }
-    return roles.some((role) => role === userInfor?.role_id?.role_Name);
+    return roles.some((role) => role === user?.role_id?.role_Name);
   };
 
   const isAdmin = () => checkIsRoleUser([ROLE_ADMIN]);
