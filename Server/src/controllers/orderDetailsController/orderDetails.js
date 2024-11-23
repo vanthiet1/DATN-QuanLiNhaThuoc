@@ -1,4 +1,5 @@
 const OrderDetailsModel = require('../../models/orderDetailsModel/orderDetails');
+const ImageProduct = require('../../models/imageModels/image');
 const mongoose = require('mongoose');
 
 const OrderDetailController = {
@@ -16,37 +17,42 @@ const OrderDetailController = {
     try {
       const orderId = req.params.id;
       const { ObjectId } = mongoose.Types;
-      const orderIdConvert = new ObjectId(orderId);
-      if (!orderIdConvert) {
-        return res.status(404).json({ message: 'order id không tồn tại' });
+      if (!ObjectId.isValid(orderId)) {
+        return res.status(400).json({ message: 'order id không hợp lệ' });
       }
-
-      const orderDetailsConditions = {};
-      if (orderId) {
-        orderDetailsConditions.order_id = orderIdConvert;
-      }
-
+      const orderDetailsConditions = { order_id: new ObjectId(orderId) };
       const orderDetail = await OrderDetailsModel.aggregate([
-        {
-          $match: orderDetailsConditions
-        },
+        { $match: orderDetailsConditions },
         {
           $lookup: {
             from: 'products',
             localField: 'product_id',
             foreignField: '_id',
-            as: 'product'
-          }
+            as: 'product',
+          },
         },
-        { $unwind: '$product' }
+        { $unwind: '$product' },
       ]);
-
-      if (!orderDetail) return res.status(404).json({ message: 'không tìm thấy order details' });
-      res.status(200).json(orderDetail);
+      if (!orderDetail.length) {
+        return res.status(404).json({ message: 'Không tìm thấy chi tiết order' });
+      }
+      const productIds = orderDetail.map((item) => item.product_id);
+      const imagesByProductId = await ImageProduct.find({ product_id: { $in: productIds } });
+      const orderProductDetail = orderDetail.map((product) => {
+        const productImages = imagesByProductId.filter(
+          (img) => img.product_id.toString() === product.product_id.toString()
+        );
+        return {
+          ...product,
+          images: productImages,
+        };
+      });
+      res.status(200).json(orderProductDetail);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
   },
+  
   updateOrderDetail: async (req, res) => {
     try {
       const orderDetail = await OrderDetailsModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
