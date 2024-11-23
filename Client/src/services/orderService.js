@@ -33,9 +33,11 @@ const orderServices = {
       console.log(error.message);
     }
   },
-  getOrderByUserId: async (resquestParrams) => {
+  getOrderByUserId: async (resquestParams) => {
     try {
-      const { data } = await http.get(`${END_POIND_API.ORDER}/${resquestParrams}`);
+      const { data } = await http.get(`${END_POIND_API.ORDER}/detail/${resquestParams}`);
+      console.log(data);
+      
       return data;
     } catch (error) {
       console.log(error.message);
