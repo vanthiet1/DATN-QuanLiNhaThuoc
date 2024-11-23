@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { PATH_ROUTERS_ADMIN } from '../../utils/constant/routers';
@@ -7,9 +7,12 @@ import formBlogSchema from '../../utils/validations/formBlog';
 import SectionWrapper from '../../components/sectionWrapper/SectionWrapper';
 import BreadCrumb from '../../components/breadCrumb/BreadCrumb';
 import AppIcons from '../../components/ui/icon';
-import { ErrorMessage, InputText, FileInput, Textarea } from '../../components/ui/form';
+import { ErrorMessage, InputText, FileInput } from '../../components/ui/form';
 import { Button } from '../../components/ui/button';
 import blogServices from '../../services/blogService';
+import { ProcessLoading } from '../../components/ui/loaders';
+import { UserContext } from '../../contexts/UserContext';
+import Editor from '../../components/ui/editor/Editor'; // Import Editor
 
 const brandBreadCrumb = [
   {
@@ -23,6 +26,9 @@ const brandBreadCrumb = [
 ];
 
 const FormAddBlog = () => {
+  const { user } = useContext(UserContext);
+  const [isLoadingCreateBlog, setIsLoadingCreateBlog] = useState('idle');
+  const [contentValue, setContentValue] = useState('');
   const {
     handleSubmit,
     register,
@@ -31,9 +37,19 @@ const FormAddBlog = () => {
   } = useForm({ resolver: yupResolver(formBlogSchema.blog) });
 
   const handleCreateBlog = async (data) => {
-    console.log(data);
-    // await blogServices.addBlog(data);
+    const { title, image, description } = data;
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('image', image[0]);
+    formData.append('description', description);
+    formData.append('content', contentValue);
+    formData.append('user_id', user?._id);
+
+    setIsLoadingCreateBlog(true);
+    await blogServices.addBlog(formData);
+    setIsLoadingCreateBlog(false);
     reset();
+    setContentValue('');
   };
 
   return (
@@ -50,14 +66,14 @@ const FormAddBlog = () => {
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Blog title
+                Blog Title
               </label>
-              <InputText size='m' rounded='s' placeholder='Type   Blog title here' refinput={register('title')} />
+              <InputText size='m' rounded='s' placeholder='Type Blog title here' refinput={register('title')} />
               {errors.title && <ErrorMessage messsage={errors.title.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Blog description
+                Blog Description
               </label>
               <InputText
                 size='m'
@@ -69,9 +85,21 @@ const FormAddBlog = () => {
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Blog content
+                Blog Content
               </label>
-              <Textarea size='m' rounded='s' placeholder='Enter content here' refinput={register('content')} />
+              <Editor
+                name='content'
+                editorLoaded={true}
+                onChange={(value) => {
+                  setContentValue(value);
+                }}
+              />
+
+              {contentValue && (
+                <div className='font-normal mt-2 w-full p-2 text-sm text-gray-800 border border-slate-300 border-solid '>
+                  {contentValue}
+                </div>
+              )}
               {errors.content && <ErrorMessage messsage={errors.content.message}></ErrorMessage>}
             </div>
           </div>
@@ -85,6 +113,7 @@ const FormAddBlog = () => {
       >
         Create
       </Button>
+      <ProcessLoading isLoading={isLoadingCreateBlog} message='Đang trong quá trình tải Blog' />
     </form>
   );
 };

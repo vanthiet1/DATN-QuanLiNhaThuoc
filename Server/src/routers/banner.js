@@ -4,6 +4,7 @@ const upload = require('../middlewares/uploadMiddleware');
 
 Router.post('/create', upload.single('bannerImg'), bannerController.createBanner);
 Router.get('/', bannerController.getBanners);
+Router.get('/:id', bannerController.getBannerById);
 Router.delete('/:id', bannerController.deleteBanner);
 Router.put('/:id', upload.single('bannerImg'), bannerController.updateBanner);
 

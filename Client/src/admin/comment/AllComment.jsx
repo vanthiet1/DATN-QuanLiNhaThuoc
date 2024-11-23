@@ -45,9 +45,7 @@ const AllComment = () => {
 
       if (result) {
         await commetServices.deleteComment(id);
-        setCommentData(prevComments =>
-          prevComments.filter(comment => comment._id !== id)
-        );
+        setCommentData((prevComments) => prevComments.filter((comment) => comment._id !== id));
       }
     } catch (error) {
       console.error('Failed to delete comment:', error);
@@ -98,7 +96,7 @@ const AllComment = () => {
                   <tr key={comment._id} className='hover:bg-gray-100'>
                     <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>{comment.content}</td>
                     <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{comment.user_id.fullname}</td>
-                    <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{comment.product_id.name}</td>
+                    <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{comment.product_id?.name}</td>
                     <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
                       {formatsHelper.formatDate(comment.date_create)}
                     </td>
@@ -106,10 +104,10 @@ const AllComment = () => {
                       <Button
                         size='m'
                         rounded='m'
-                        addClassNames='bg-red-600 text-white hover:bg-red-500 px-3 py-1 rounded-md ml-2'
+                        addClassNames='bg-rose-500 text-white hover:bg-rose-600 px-3 py-1 rounded-md ml-2'
                         onClick={() => handleDelete(comment._id, comment.content)}
                       >
-                        Delete
+                        <AppIcons.TrashBinIcon width='20' height='20' />
                       </Button>
                     </td>
                   </tr>
