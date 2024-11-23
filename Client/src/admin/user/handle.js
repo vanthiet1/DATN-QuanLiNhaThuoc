@@ -39,19 +39,19 @@ export const handleIsActiveAccount = async (id, getService, setData, updateServi
 };
 
 
-export const handleUpdateRoleAccount = async (idUser, idRole, handleUpdateRole ) => {
+export const handleUpdateRoleAccount = async (idUser, idRole, handleUpdateRole,setChange ) => {
     if (!idUser || !idRole) {
         return showToastError("Không tìm được id user hoặc role")
     }
     const response = await handleUpdateRole(idUser, { role_id: idRole });
+    setChange(response?.user)
     if (response) {
-        window.location.reload()
         const updatedData = roleData.map(item =>
             item._id === idUser ? { ...item, role_id: { ...item.role_id, _id: idRole } } : item
         );
-        setRoleData(updatedData);
+         console.log('updatedData',updatedData);
     } else {
-        showToastError(response.message || "Xóa thất bại");
+        showToastError(response.message || "Cập nhật thất bại");
     }
 
 }
