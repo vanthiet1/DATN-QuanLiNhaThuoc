@@ -36,7 +36,7 @@ const Blog = () => {
               <Link to={`${blog._id}`}>
                 <div
                   key={blog.id}
-                  className='flex flex-col lg:h-[200px] md:flex-row bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow'
+                  className='flex flex-col lg:h-[200px] mb-5 md:flex-row bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow'
                 >
                   <div className='w-full md:w-80  flex-shrink-0'>
                     <img src={blog.image} alt={blog.title} className='w-full h-full object-cover' />
