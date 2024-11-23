@@ -1,7 +1,6 @@
 const OrderDetailsModel = require('../../models/orderDetailsModel/orderDetails');
 const ImageProduct = require('../../models/imageModels/image');
 const mongoose = require('mongoose');
-const ImageProduct = require('../../models/imageModels/image');
 
 const OrderDetailController = {
   createOrderDetail: async (req, res) => {
