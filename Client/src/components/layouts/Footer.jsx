@@ -37,10 +37,10 @@ const Footer = () => {
           <div>
             <h1 className="font-bold mb-3">Về Bình An Dược</h1>
             <ul className="space-y-2">
-              <Link to={`${PATH_ROUTERS_CLIENT.CONTACT}`}>
+              <Link to={`${PATH_ROUTERS_CLIENT.ABOUT}`}>
                 <li className='pb-2'>Giới thiệu</li>
               </Link>
-              <Link to={`${PATH_ROUTERS_CLIENT.ABOUT}`} >
+              <Link to={`${PATH_ROUTERS_CLIENT.CONTACT}`} >
                 <li>Liên hệ</li>
               </Link>
               <li>Phòng xét nghiệm</li>

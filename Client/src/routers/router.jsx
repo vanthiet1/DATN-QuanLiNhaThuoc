@@ -47,9 +47,12 @@ const EditCoupon = lazy(() => import('../admin/coupon/EditCoupon'));
 
 const AddBanner = lazy(() => import('../admin/banner/AddBanner'));
 const AllBanner = lazy(() => import('../admin/banner/AllBanner'));
+const EditBanner = lazy(() => import('../admin/banner/EditBanner'));
 
 const AddBlog = lazy(() => import('../admin/blog/AddBlog'));
 const AllBlog = lazy(() => import('../admin/blog/AllBlog'));
+const BlogDetailsAdmin = lazy(() => import('../admin/blog/BlogDetailAdmin'));
+const EditBlog = lazy(() => import('../admin/blog/EditBlog'));
 
 const AddPharmacy = lazy(() => import('../admin/pharmacy/AddPharmacy'));
 const AllPharmacy = lazy(() => import('../admin/pharmacy/AllPharmacy'));
@@ -343,6 +346,22 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: PATH_ROUTERS_ADMIN.ADD_PHARMARCY,
+        element: (
+          <SuspenseWrapper>
+          <AddPharmacy />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.ALL_PHARMARCY,
+        element: (
+          <SuspenseWrapper>
+          <AllPharmacy />
+          </SuspenseWrapper>
+        )
+      },
+      {
         path: PATH_ROUTERS_ADMIN.ADD_BANNER,
         element: (
           <SuspenseWrapper>
@@ -351,26 +370,18 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: PATH_ROUTERS_ADMIN.ADD_PHARMARCY,
-        element: (
-          <SuspenseWrapper>
-            <AddPharmacy />
-          </SuspenseWrapper>
-        )
-      },
-      {
-        path: PATH_ROUTERS_ADMIN.ALL_PHARMARCY,
-        element: (
-          <SuspenseWrapper>
-            <AllPharmacy />
-          </SuspenseWrapper>
-        )
-      },
-      {
         path: PATH_ROUTERS_ADMIN.ALL_BANNER,
         element: (
           <SuspenseWrapper>
             <AllBanner />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.EDIT_BANNER,
+        element: (
+          <SuspenseWrapper>
+            <EditBanner />
           </SuspenseWrapper>
         )
       },
@@ -387,6 +398,22 @@ const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <AllBlog />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.BLOG_DETAIL_ADMIN,
+        element: (
+          <SuspenseWrapper>
+            <BlogDetailsAdmin />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.EDIT_BLOG,
+        element: (
+          <SuspenseWrapper>
+            <EditBlog />
           </SuspenseWrapper>
         )
       },

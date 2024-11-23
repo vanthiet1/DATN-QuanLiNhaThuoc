@@ -4,7 +4,6 @@ const formBlogSchema = {
   blog: Yup.object().shape({
     title: Yup.string().required('Không được để title trống.'),
     description: Yup.string().required('Không được để description trống.'),
-    content: Yup.string().required('Không được để content trống.'),
     image: Yup.mixed()
       .test('required', 'Không được để image trống.', (value) => {
         return value && value.length > 0;

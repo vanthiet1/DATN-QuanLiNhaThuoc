@@ -37,7 +37,7 @@ const bannerServices = {
 
   deleteBannerById: async (resquestParrams) => {
     try {
-      const { data } = await http.delete(`/${END_POIND_API.BANNER}/${resquestParrams}`);
+      const { data } = await http.delete(`${END_POIND_API.BANNER}/${resquestParrams}`);
       showToastSuccess(data.message || 'Xóa banner thành công');
       return data;
     } catch (error) {
@@ -46,9 +46,11 @@ const bannerServices = {
     }
   },
 
-  updateBanner: async (requestParams) => {
+  updateBanner: async (requestParams, requestBody) => {
     try {
-      const { data } = await http.put(`/${END_POIND_API.BANNER}/${requestParams}`);
+      const { data } = await http.put(`${END_POIND_API.BANNER}/${requestParams}`, requestBody, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
       showToastSuccess(data.message || 'Cập nhật banner thành công');
       return data;
     } catch (error) {

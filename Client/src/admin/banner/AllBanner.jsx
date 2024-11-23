@@ -90,7 +90,7 @@ const AllBanner = () => {
                     </td>
                     <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{banner.name}</td>
 
-                    <td className='px-6 py-4 whitespace-nowrap text-sm flex '>
+                    <td className='px-6 py-4 whitespace-nowrap text-sm flex mt-3'>
                       <Button
                         size='m'
                         rounded='s'
