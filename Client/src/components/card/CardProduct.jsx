@@ -22,9 +22,6 @@ const CardProduct = ({ products, handleAddToCart }) => {
             <span className='block'>{formatsHelper.currency(products?.price_distcount)}</span>
             <span className='block line-through text-gray-400'>{formatsHelper.currency(products?.price_old)}</span>
           </div>
-          {/* <div className="flex">
-                        <span className="truncate">Thương hiệu: {products?.brand?.[0]?.name || 'Không có'}</span>
-                    </div> */}
         </div>
       </Link>
       <div className='flex justify-between items-center px-3 pb-3 h-max'>
