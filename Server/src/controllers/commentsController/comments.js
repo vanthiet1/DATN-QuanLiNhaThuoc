@@ -35,6 +35,7 @@ const commentController = {
         try {
             const allComments = await Comment.find()
             .populate('user_id' , 'fullname email avatar')
+            .populate('product_id', 'name');
             if (!allComments || allComments.length === 0) {
                 return res.status(404).json({ error: "" });
             }

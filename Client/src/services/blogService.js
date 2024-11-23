@@ -5,7 +5,9 @@ import { showToastError, showToastSuccess } from '../configs/toastConfig';
 const blogServices = {
   addBlog: async (requestBody) => {
     try {
-      const { data } = await http.post(`${END_POIND_API.BLOG}/create`, requestBody);
+      const { data } = await http.post(`${END_POIND_API.BLOG}`, requestBody, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
       showToastSuccess(data.message || 'Thêm blog thành công');
       return data;
     } catch (error) {
@@ -15,11 +17,20 @@ const blogServices = {
   },
   getAllBlogs: async (resquestParrams) => {
     try {
-      const { data } = await http.get(`${END_POIND_API.BLOG}/${resquestParrams}`);
+      const { data } = await http.get(`${END_POIND_API.BLOG}`);
       console.log(data);
       return data;
     } catch (error) {
       showToastError(error.response.data.message);
+      console.log(error.message);
+    }
+  },
+  getOneBlog: async (requestParams) => {
+    try {
+      const { data } = await http.get(`${END_POIND_API.BLOG}/${requestParams}`);
+      console.log(data);
+      return data;
+    } catch (error) {
       console.log(error.message);
     }
   },
@@ -43,9 +54,11 @@ const blogServices = {
       console.log(error.message);
     }
   },
-  updateBlog: async (requestParams) => {
+  updateBlog: async (requestParams,requestBody) => {
     try {
-      const { data } = await http.put(`${END_POIND_API.BLOG}/${requestParams}`);
+      const { data } = await http.put(`${END_POIND_API.BLOG}/${requestParams}`,requestBody,{
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
       showToastSuccess(data.message || 'Cập nhật blog thành công');
       return data;
     } catch (error) {
