@@ -1,40 +1,40 @@
-import {TableOrder} from "../../../components/ui/table/index";
-
-const purchaseData = [
-    {
-        _id: "1",
-        fullname: "Nguyễn Văn A",
-        quantity: 2,
-        bookTitle: "Sách Kinh Tế",
-        price: 150000,
-        totalPrice: 300000,
-        status: "Đã hoàn tất",
-        purchaseDate: "2024-10-01"
-    },
-    {
-        _id: "2",
-        fullname: "Trần Thị B",
-        quantity: 1,
-        bookTitle: "Lịch Sử Việt Nam",
-        price: 200000,
-        totalPrice: 200000,
-        status: "Chưa hoàn tất",
-        purchaseDate: "2024-10-02"
-    },
-];
-
-const handleDelete = (id) => {
-    console.log(`Hủy đơn với ID: ${id}`);
-};
-
+import { useContext, useEffect, useState } from "react";
+import { TableOrder } from "../../../components/ui/table/index";
+import orderServices from "../../../services/orderService";
+import orderDetailsServices from "../../../services/orderDetailsService";
+import { UserContext } from "../../../contexts/UserContext";
 const YourOrders = () => {
+    const [orderProduct, setOrderProduct] = useState([]);
+    const [orderDetailProduct, setOrderDetailProduct] = useState([]);
+    const [expandedOrderId, setExpandedOrderId] = useState(null);
+    const { user } = useContext(UserContext);
+    const handleCancelOrder = (id) => {
+        console.log(`Hủy đơn với ID: ${id}`);
+    };
+    const getDataOrder = async () => {
+        const dataOrder = await orderServices.getOrderByUserId(user?._id);
+        const filteredOrders = dataOrder?.filter(order => order.status === 1);
+        setOrderProduct(filteredOrders || []);
+    };
+    useEffect(() => {
+        getDataOrder();
+    }, [user?._id]);
+    const checkOrderDetail = async (id) => {
+        setExpandedOrderId(prev => (prev === id ? null : id));
+        const dataOrderDetail = await orderDetailsServices.getOrderDetailByOrderId(id);
+        setOrderDetailProduct(dataOrderDetail);
+    }
     return (
         <div className="overflow-x-auto">
             <TableOrder
-                data={purchaseData}
+                data={orderProduct}
+                orderDetailProduct={orderDetailProduct}
                 addClassNames="my-custom-class w-full table-auto"
-                titleRow={["Tên", "Số lượng", "Sách", "Giá", "Tổng Tiền", "Trạng thái", "Ngày Mua", "Hủy đơn"]}
-                handleDelete={handleDelete}
+                titleRow={["Số lượng sản phẩm", "Tổng Tiền", "Trạng thái đơn hàng", "Ngày Mua", "Hủy đơn", "Xem đơn hàng"]}
+                titleRowOrderDetail={["Ảnh","Tên sản phẩm", "giá tiền","Số lượng","Ngày Mua"]}
+                handleCancelOrder={handleCancelOrder}
+                checkOrderDetail={checkOrderDetail}
+                expandedOrderId={expandedOrderId}
             />
         </div>
     );

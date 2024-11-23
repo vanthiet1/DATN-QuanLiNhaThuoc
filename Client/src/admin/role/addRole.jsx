@@ -30,8 +30,6 @@ const FormAddBrand = () => {
   } = useForm({ resolver: yupResolver(formRoleSchema.role) });
 
   const handleCreateRole = async (data) => {
-    console.log(data);
-    
      if(!data) return
     await roleServices.addRole(data);
     reset();

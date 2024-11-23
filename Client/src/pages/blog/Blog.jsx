@@ -54,23 +54,6 @@ const Blog = () => {
               </Link>
             ))}
         </div>
-
-        <div className='w-full md:w-[30%] space-y-6'>
-          <div className='w-full border border-gray-200 rounded-lg overflow-hidden'>
-            <img
-              src='https://www.medigoapp.com/assets/images-html/sub-banner.jpg'
-              alt='Banner'
-              className='w-full h-auto object-cover'
-            />
-            <div className='flex flex-col md:flex-row justify-between items-center p-4'>
-              <div className='text-center md:text-left mb-4 md:mb-0'>
-                <span className='block text-gray-600'>Bạn cần tư vấn</span>
-                <span className='block text-blue-600 font-bold text-xl'>Với chúng tôi</span>
-              </div>
-              <button className='bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg'>ĐẶT TƯ VẤN</button>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );

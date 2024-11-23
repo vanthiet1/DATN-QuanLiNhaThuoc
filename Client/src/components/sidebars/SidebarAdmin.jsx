@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { PATH_ROUTERS_ADMIN, PATH_ROUTERS_CLIENT } from '../../utils/constant/routers';
 import AppIcons from '../../components/ui/icon';
@@ -6,6 +6,8 @@ import { cn } from '../../utils/helpers/mergeClasses';
 import Button from '../ui/button/Button';
 import LogoImage from '../../assets/images/logo/logo1.png';
 import Image from '../ui/image/Image';
+import { UserContext } from '../../contexts/UserContext';
+
 
 const MenuAdminItem = ({ children, isSubMenu = false, addClassNames = '', ...props }) => {
   return (
@@ -140,8 +142,8 @@ const dataMenu = [
         title: 'Manager Staff'
       },
       {
-        path: PATH_ROUTERS_ADMIN.MANAGER_USER,
-        title: 'Manager User'
+        path: PATH_ROUTERS_ADMIN.MANAGER_ACCOUNT,
+        title: 'Manager Account'
       },
       {
         path: PATH_ROUTERS_ADMIN.MANAGER_CUSTOMER,
@@ -189,11 +191,6 @@ const dataMenu = [
     path: PATH_ROUTERS_CLIENT.HOMEPAGE
   },
   {
-    icon: <AppIcons.LocationIcon />,
-    title: 'Adress',
-    path: PATH_ROUTERS_ADMIN.MANAGER_ADDRESS
-  },
-  {
     icon: <AppIcons.SetIcon />,
     title: 'template component',
     path: PATH_ROUTERS_ADMIN.TEMPLATECOMPONENT
@@ -202,7 +199,8 @@ const dataMenu = [
 
 const MenuAdmin = ({ data, isSubMenu = false, addClassNames = '' }) => {
   const [openMenus, setOpenMenus] = useState({});
-
+  const { user } = useContext(UserContext);
+  console.log(user);
   const handleToggleMenu = (title) => {
     if (title === false) return;
     setOpenMenus((prevOpenMenus) => ({
@@ -225,6 +223,10 @@ const MenuAdmin = ({ data, isSubMenu = false, addClassNames = '' }) => {
         data.map((menu, index) => {
           const { title, subMenu, path, icon } = menu;
           const isOpen = openMenus[title];
+          if (user?.role_id?.role_Name !== 'admin'
+            && title.includes('Role')) {
+            return null;
+          }
           if (!subMenu) {
             return (
               <MenuAdminItem isSubMenu={false} key={index + title} onClick={() => handleToggleMenu(false)}>
@@ -254,7 +256,7 @@ const MenuAdmin = ({ data, isSubMenu = false, addClassNames = '' }) => {
                   data={subMenu}
                   isSubMenu={true}
                   addClassNames={('transition-all duration-500', { hidden: !isOpen, block: isOpen })}
-                ></MenuAdmin>
+                />
               </MenuAdminItem>
             );
           }

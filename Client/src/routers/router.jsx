@@ -21,6 +21,8 @@ const NotFoundPage = lazy(() => import('../pages/notfound/NotFound'));
 const About = lazy(() => import('../pages/about/About'));
 const Contact = lazy(() => import('../pages/contact/Contact'));
 const Blog = lazy(() => import('../pages/blog/Blog'));
+const BankDemo = lazy(() => import('../pages/bank/BankDemo'));
+
 
 const DashBoard = lazy(() => import('../admin/dashboard/Dashboard'));
 const AddProduct = lazy(() => import('../admin/product/AddProduct'));
@@ -58,13 +60,12 @@ const AllPharmacy = lazy(() => import('../admin/pharmacy/AllPharmacy'));
 const AllRoleUser = lazy(() => import('../admin/role/allRole'));
 
 const ManagementStaff = lazy(() => import('../admin/user/ManagementStaff'));
-const ManagementUser = lazy(() => import('../admin/user/ManagementUser'));
+const ManagementAccount = lazy(() => import('../admin/user/ManagementAccount'));
 const ManagementCustomer = lazy(() => import('../admin/user/ManagementCustomer'));
 
 const AddRole = lazy(() => import('../admin/role/addRole'));
 const EditRole = lazy(() => import('../admin/role/editRole'));
 
-const ManagementAdress = lazy(() => import('../admin/address/ManagementAdress'));
 const Messages = lazy(() => import('../admin/messages/Messages'));
 const Transaction = lazy(() => import('../admin/transaction/Transaction'));
 const Orders = lazy(() => import('../admin/orders/Orders'));
@@ -91,6 +92,14 @@ const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <NotFoundPage />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path:'bank',
+        element: (
+          <SuspenseWrapper>
+            <BankDemo />
           </SuspenseWrapper>
         )
       },
@@ -417,10 +426,10 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: PATH_ROUTERS_ADMIN.MANAGER_USER,
+        path: PATH_ROUTERS_ADMIN.MANAGER_ACCOUNT,
         element: (
           <SuspenseWrapper>
-            <ManagementUser />
+            <ManagementAccount />
           </SuspenseWrapper>
         )
       },
@@ -429,14 +438,6 @@ const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <ManagementStaff />
-          </SuspenseWrapper>
-        )
-      },
-      {
-        path: PATH_ROUTERS_ADMIN.MANAGER_ADDRESS,
-        element: (
-          <SuspenseWrapper>
-            <ManagementAdress />
           </SuspenseWrapper>
         )
       },

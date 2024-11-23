@@ -3,8 +3,8 @@ import { TableManagerAccount } from '../../components/ui/table/index.js';
 import userServices from '../../services/userService.js';
 import authServices from '../../services/authService.js';
 import useFetch from '../../hooks/useFetch.js';
-import { handleDelete , handleIsActiveAccount , handleUpdateRoleAccount  } from './handle.js';
-import { useConfirmDialog } from "../../components/dialog/ConfirmDialogContext"; 
+import { handleDelete, handleIsActiveAccount, handleUpdateRoleAccount } from './handle.js';
+import { useConfirmDialog } from "../../components/dialog/ConfirmDialogContext.jsx";
 import roleServices from '../../services/roleService.js';
 
 const ManagementUser = () => {
@@ -25,18 +25,16 @@ const ManagementUser = () => {
     const [roleData, setRoleData] = useState([]);
 
     useEffect(() => {
-        if (initialUserData && initialRoleData ) {
+        if (initialUserData && initialRoleData) {
             setUserData(initialUserData);
             setRoleData(initialRoleData)
         }
-    }, [initialUserData,initialRoleData]);
+    }, [initialUserData, initialRoleData]);
 
-   const optionsRole = roleData.map(role => ({
-    value: role._id,
-    title: role.role_Name
-  }));
-  console.log(optionsRole);
-  
+    const optionsRole = roleData.map(role => ({
+        value: role._id,
+        title: role.role_Name
+    }));
     return (
         <div>
             <TableManagerAccount
@@ -44,7 +42,7 @@ const ManagementUser = () => {
                 roleData={optionsRole}
                 data={userData}
                 titleRow={titleRow}
-                handleDelete={(id) => handleDelete(id, userData, setUserData, userServices.deleteUser,confirmDialog)}
+                handleDelete={(id) => handleDelete(id, userData, setUserData, userServices.deleteUser, confirmDialog)}
                 handleIsActiveAccount={(id) => handleIsActiveAccount(id, userServices.getAllUser, setUserData, authServices.handleIsActiveAccount)}
                 handleUpdateRoleAccount={(idUser, idRole) => handleUpdateRoleAccount(idUser, idRole, roleServices.updateRoleUser)}
             />

@@ -94,10 +94,9 @@ const Auth = {
                 sameSite: 'Strict',
                 path: '/',
             })
-            console.log('Cookies after setting:', req.cookies.refreshToken);
             res.json({
                 message: "Đăng nhập thành công",
-                accessToken
+                accessToken,
             });
         } catch (error) {
             res.status(500).json({ message: error.message });

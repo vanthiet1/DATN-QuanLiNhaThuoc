@@ -92,7 +92,6 @@ const HomePage = () => {
               <h1 className="font-bold text-[25px] py-[30px]">Sản phẩm mới nhất</h1>
             </Link>
           </div>
-
           {initialProductRecommendData ? (
             <div className="flex">
               <Swiper {...sliderConfigProduct} className="mySwiper rounded-[5px]">
@@ -142,7 +141,7 @@ const HomePage = () => {
           <div className="mt-[70px]">
             <h1 className="font-bold text-[22px] text-center pb-4">Đánh giá của khách hàng</h1>
             <div className="grid grid-cols-3 w-[70%] gap-3 m-auto">
-              {initialCommentData && initialCommentData?.slice(0,4).map((comment) => (
+              {initialCommentData && initialCommentData?.slice(0,3).map((comment) => (
                 <FeedbackUser
                   avatar={comment?.user_id?.avatar || "https://res.cloudinary.com/dz93cdipw/image/upload/v1713866997/Book-Store/Avatar/kwuemqemetzsp4jw21mt.webp"}
                   username={comment?.user_id?.fullname}

@@ -53,7 +53,7 @@ const PATH_ROUTERS_ADMIN = {
   ADD_PHARMARCY: 'admin/add-pharmarcy',
   ALL_PHARMARCY: 'admin/all-pharmarcy',
   ALL_COMMENT: 'admin/all-comment',
-  MANAGER_USER: 'admin/manager-user',
+  MANAGER_ACCOUNT: 'admin/manager-account',
   MANAGER_STAFF: 'admin/manager-staff',
   MANAGER_CUSTOMER: 'admin/manager-customer',
   ALL_ROLE_USER: 'admin/all-role',

@@ -5,6 +5,8 @@ import AppIcons from '../../../components/ui/icon';
 import { PATH_ROUTERS_ADMIN } from '../../../utils/constant/routers';
 import BreadCrumb from '../../breadCrumb/BreadCrumb';
 import { Button } from '../button';
+import { UserContext } from '../../../contexts/UserContext';
+import { useContext, useEffect, useState } from 'react';
 
 const roleBreadCrumbs = [
   {
@@ -13,15 +15,16 @@ const roleBreadCrumbs = [
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'Manager User'
+    title: 'Manager Account'
   }
 ];
 
 const Table = ({ data, addClassNames, handleDelete, handleIsActiveAccount, roleData, handleUpdateRoleAccount }) => {
+  const { user } = useContext(UserContext)
   return (
     <>
       <BreadCrumb crumbsData={roleBreadCrumbs} addClassNames='my-3' />
-      <div className='max-w-7xl mx-auto p-6 bg-white shadow-md rounded-lg'>
+      <div className='max-w-7xl mx-auto bg-white shadow-md rounded-lg'>
         <div className='overflow-x-auto'>
           <table className='min-w-full table-auto border-collapse'>
             <thead className='w-full'>
@@ -71,33 +74,37 @@ const Table = ({ data, addClassNames, handleDelete, handleIsActiveAccount, roleD
                   <td className='p-4 text-sm text-gray-600'>{formatsHelper.formatDate(item?.createdAt)}</td>
                   <td className='p-4 truncate text-sm text-gray-600'>{item?.role_id?.role_Name}</td>
                   <td className='p-4 flex gap-2'>
-                    <SelectBox
-                      onChange={(e) => handleUpdateRoleAccount(item._id, e.target.value)}
-                      optionData={roleData}
-                      size='m'
-                      rounded='m'
-                      defaultValue={item?.role_id?._id || ''}
-                    />
-                    <Button
-                      size='m'
-                      rounded='s'
-                      addClassNames='bg-rose-500 text-white hover:bg-rose-600 px-3 py-1 rounded-md ml-2'
-                      onClick={() => handleDelete(item._id)}
-                    >
-                      <AppIcons.TrashBinIcon width='20' height='20' />
-                    </Button>
-
-                    <Button
+                    {user?.role_id?.role_Name !== "staff" && (
+                      <>
+                        <SelectBox
+                          onChange={(e) => handleUpdateRoleAccount(item._id, e.target.value)}
+                          optionData={roleData}
+                          size='m'
+                          rounded='m'
+                          defaultValue={item?.role_id?._id || ''}
+                        />
+                        <Button
+                          size='m'
+                          rounded='s'
+                          addClassNames='bg-rose-500 text-white hover:bg-rose-600 px-3 py-1 rounded-md ml-2'
+                          onClick={() => handleDelete(item._id)}
+                        >
+                          <AppIcons.TrashBinIcon width='20' height='20' />
+                        </Button>
+                      </>
+                    )}
+                    {item?.role_id?.role_Name !== "admin" && user?.role_id?.role_Name !== item?.role_id?.role_Name &&  (
+                      <Button
                       size='s'
-                      className={`px-3 py-1 rounded-md ${
-                        item?.is_active === 1
-                          ? 'border border-red-500 text-red-500 hover:bg-red-500 hover:text-white' // Nút "Block"
-                          : 'border border-green-500 text-green-500 hover:bg-green-500 hover:text-white' // Nút "Unblock"
-                      }`}
+                      className={`px-3 py-1 rounded-md ${item?.is_active === 1
+                          ? 'border border-red-500 text-red-500 hover:bg-red-500 hover:text-white' 
+                          : 'border border-green-500 text-green-500 hover:bg-green-500 hover:text-white' 
+                        }`}
                       onClick={() => handleIsActiveAccount(item._id)}
                     >
                       {item?.is_active === 1 ? 'Block' : 'Unblock'}
                     </Button>
+                    )}
                   </td>
                 </tr>
               ))}

@@ -3,7 +3,6 @@ const RoleModel = require('../../models/roleModel/role');
 const RoleController = {
   createRole: async (req, res) => {
     const { role_Name } = req.body;
-     console.log(role_Name);
     try {
       const newRole = new RoleModel({ role_Name });
       await newRole.save();
