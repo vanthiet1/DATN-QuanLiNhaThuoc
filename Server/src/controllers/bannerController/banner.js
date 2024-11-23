@@ -48,6 +48,21 @@ const bannerController = {
     }
   },
 
+  getBannerById: async (req, res) => {
+    const { id } = req.params;
+    try {
+      const getOneBanner = await BannerModel.findById(id);
+
+      if (!getOneBanner) {
+        return res.status(404).json({ message: 'Không tìm thấy banner' });
+      }
+
+      res.status(200).json( getOneBanner);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+
   deleteBanner: async (req, res) => {
     const { id } = req.params;
     try {
@@ -64,11 +79,28 @@ const bannerController = {
   },
 
   updateBanner: async (req, res) => {
-    const { id } = req.params;
-    const { name, url_img } = req.body;
-
     try {
-      const updatedBanner = await BannerModel.findByIdAndUpdate(id, { name, url_img }, { new: true });
+      const { id } = req.params;
+      const { name, url_img } = req.body;
+      const imgFile = req.file;
+
+      let urlCloundCreated = '';
+
+      if (imgFile) {
+        const b64 = Buffer.from(imgFile.buffer).toString('base64');
+        let dataURI = 'data:' + imgFile.mimetype + ';base64,' + b64;
+
+        const imageName = imgFile.originalname.split('.')[0];
+        const urlOptions = {
+          folder: 'nhathuoc/banners',
+          public_id: formatHelper.converStringToSlug(imageName)
+        };
+        const secure_url = await handleCreateImageUpload(dataURI, urlOptions);
+        urlCloundCreated = secure_url;
+        console.log(urlCloundCreated);
+      }
+
+      const updatedBanner = await BannerModel.findByIdAndUpdate(id, { name, url_img: urlCloundCreated }, { new: true });
 
       if (!updatedBanner) {
         return res.status(404).json({ message: 'Không tìm thấy banner' });

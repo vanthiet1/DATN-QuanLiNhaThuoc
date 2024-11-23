@@ -1,4 +1,5 @@
 const OrderDetailsModel = require('../../models/orderDetailsModel/orderDetails');
+const ImageProduct = require('../../models/imageModels/image');
 const mongoose = require('mongoose');
 const ImageProduct = require('../../models/imageModels/image');
 
@@ -38,12 +39,8 @@ const OrderDetailController = {
       if (!orderDetail.length) {
         return res.status(404).json({ message: 'Không tìm thấy chi tiết order' });
       }
-
-      // Lấy danh sách product_id để truy vấn ảnh
       const productIds = orderDetail.map((item) => item.product_id);
       const imagesByProductId = await ImageProduct.find({ product_id: { $in: productIds } });
-
-      // Gộp ảnh vào sản phẩm
       const orderProductDetail = orderDetail.map((product) => {
         const productImages = imagesByProductId.filter(
           (img) => img.product_id.toString() === product.product_id.toString()
@@ -53,13 +50,13 @@ const OrderDetailController = {
           images: productImages
         };
       });
-
       res.status(200).json(orderProductDetail);
     } catch (error) {
       console.error('Error in getOrderDetailByOrderId:', error.message);
       res.status(500).json({ message: error.message });
     }
   },
+
   updateOrderDetail: async (req, res) => {
     try {
       const orderDetail = await OrderDetailsModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
