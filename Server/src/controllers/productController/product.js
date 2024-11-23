@@ -11,11 +11,11 @@ const ProductController = {
       const productsWithImages = await ProductModel.aggregate([
         {
           $lookup: {
-            from: 'images',       
-            localField: '_id',        
-            foreignField: 'product_id', 
-            as: 'images',              
-          },
+            from: 'images',
+            localField: '_id',
+            foreignField: 'product_id',
+            as: 'images'
+          }
         },
         {
           $lookup: {
@@ -26,18 +26,16 @@ const ProductController = {
           }
         },
         {
-          $match: { images: { $ne: [] } },
-        },
+          $match: { images: { $ne: [] } }
+        }
       ]);
-  
+
       res.status(200).json(productsWithImages);
     } catch (error) {
-      res
-        .status(500)
-        .json({ message: 'Lỗi khi lấy danh sách sản phẩm: ' + error.message });
+      res.status(500).json({ message: 'Lỗi khi lấy danh sách sản phẩm: ' + error.message });
     }
   },
-  
+
   createProduct: async (req, res) => {
     try {
       const {
@@ -192,7 +190,15 @@ const ProductController = {
             as: 'product'
           }
         },
-        { $unwind: '$product' }
+        { $unwind: '$product' },
+        {
+          $lookup: {
+            from: 'images',
+            localField: '_id',
+            foreignField: 'product_id',
+            as: 'images'
+          }
+        }
       ]).limit(limitProduct);
       return res.status(200).json(listProductBestOrder);
     } catch (error) {
@@ -218,7 +224,7 @@ const ProductController = {
             foreignField: '_id',
             as: 'brand'
           }
-        },
+        }
       ]).limit(limitProduct);
       return res.status(200).json(listProductNew);
     } catch (error) {

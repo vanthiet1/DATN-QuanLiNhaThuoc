@@ -5,11 +5,12 @@ import { showToastError, showToastSuccess } from '../configs/toastConfig';
 const orderServices = {
   createOrder: async (requestBody) => {
     try {
-      const { data } = await http.post(`${END_POIND_API.ORDER}/create`, requestBody);
-      showToastSuccess(data.message || 'order thành công');
+      const { data } = await http.post(`${END_POIND_API.ORDER}`, requestBody, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      console.log(data);
       return data;
     } catch (error) {
-      showToastError(error.response.data.message);
       console.log(error.message);
     }
   },

@@ -3,7 +3,7 @@ const OrderController = require('../controllers/orderController/order');
 const OrderOffController = require('../controllers/orderOffController/orderOffController');
 const upload = require('../middlewares/uploadMiddleware');
 
-Router.post('/', OrderController.createOrder);
+Router.post('/', upload.single('prescriptionImage'), OrderController.createOrder);
 Router.get('/', OrderController.getAllOrders);
 Router.get('/detail/:user_id', OrderController.getOrderByUserId);
 Router.get('/:id', OrderController.getOrderById);

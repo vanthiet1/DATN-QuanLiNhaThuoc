@@ -3,44 +3,42 @@ const AddressModel = require('../../models/addressModel/address');
 const OrderDetailsModel = require('../../models/orderDetailsModel/orderDetails');
 const CouponModel = require('../../models/couponModel/coupon');
 const mongoose = require('mongoose');
-const PaymentMethodModel = require('../../models/paymentMethodModel/paymentMethod');
+const { handleCreateImageUpload } = require('../../services/mediaCloudinary');
+const formatHelper = require('../../utilities/helper/formatHelper');
+const ProductModel = require('../../models/productModel/product');
 
 const OrderController = {
   createOrder: async (req, res) => {
     try {
       // dữ liệu gửi lên
-      // address , coupon_id, productCartList, user , product, payment method , transactions, prescriptionImage
-      const { address, productCart, payment_method_id, coupon_id, order_date, sale_type } = req.body;
-      const { street, district, commune, address: address_, receiver, city, phone, note } = address;
+      // address , coupon_id, productCart, user_id , payment method , prescriptionImage, order_date , sale_type
+      const { address, productCart, payment_method_id, coupon_id, order_date, sale_type, user_id } = req.body;
+      const addressParse = JSON.parse(address);
 
-      const user_id = '670740947937a56191ec601c';
+      const { street, district, ward, address: address_, receiver, province, phone, note } = addressParse;
+      const { total_quantity, total_price, productList } = JSON.parse(productCart);
+
+      const prescriptionImageFile = req.file;
+
+      if (!productList || (!Array.isArray(productList) && total_quantity && total_price)) {
+        return res.status(400).json('Giỏ hàng của bạn bị lỗi!');
+      }
+
       const { ObjectId } = mongoose.Types;
       const user_id_convert = new ObjectId(user_id);
       const payment_method_id_convert = new ObjectId(payment_method_id);
 
+      console.log(addressParse);
       // kiểm tra xem user đã có địa chỉ chưa ?
       // thêm và cập nhật địa chỉ người mua
-      const userAddress = await AddressModel.find({ user_id: user_id_convert });
-      let newUserAddress;
-      let userAddressExist;
-      if (userAddress.length === 0) {
-        newUserAddress = new AddressModel({
-          street,
-          district,
-          commune,
-          address: address_,
-          receiver,
-          city,
-          phone,
-          note,
-          user_id: user_id_convert
-        });
 
+      let newUserAddress;
+      let userAddressExist = await AddressModel.findOne({ user_id: user_id_convert, address: address_ });
+      if (!userAddressExist) {
+        newUserAddress = new AddressModel({ ...addressParse, user_id: user_id_convert });
         await newUserAddress.save();
       } else {
-        userAddressExist = userAddress.find((item) => {
-          return item.address === address_;
-        });
+        console.log(userAddressExist);
         const filterUpdateAddress = {};
         if (userAddressExist.receiver !== receiver) {
           filterUpdateAddress.receiver = receiver;
@@ -52,45 +50,14 @@ const OrderController = {
           filterUpdateAddress.note = note;
         }
         await AddressModel.findOneAndUpdate(
-          { address: userAddressExist.address },
-          { ...address, ...filterUpdateAddress },
+          { _id: userAddressExist._id },
+          { ...filterUpdateAddress },
           { new: true, upsert: false }
         );
       }
 
-      let total_price = productCart.totalPrice;
-      const total_quantity = productCart.quantity;
-
-      // check payment method;
-      const paymentMethod = await PaymentMethodModel.findById(payment_method_id_convert);
-      console.log(paymentMethod);
-      if (paymentMethod.name === 'thanh toán khi nhận hàng') {
-        // không có transaction
-      }
-
-      if (paymentMethod.name === 'thanh toán qua online Vnpay') {
-        // có transaction
-
-        if ('thanh toán thành công') {
-          // cập nhật status lên 3
-        }
-      }
-
-      // kiểm tra phiếu giảm giá
-      let couponIsReady;
-      if (coupon_id) {
-        const couponFilter = {
-          _id: coupon_id,
-          is_active: true
-        };
-        couponIsReady = await CouponModel.findOne(couponFilter);
-        if (couponIsReady) {
-          total_price = total_price - couponIsReady.discount_value;
-        }
-      }
-
       const orderState = {
-        shipping_address_id: newUserAddress ? newUserAddress._id : userAddressExist._id,
+        shipping_address_id: userAddressExist ? userAddressExist?._id : newUserAddress._id,
         user_id: user_id_convert,
         order_date,
         sale_type,
@@ -99,8 +66,35 @@ const OrderController = {
         payment_method_id: payment_method_id_convert
       };
 
+      let couponIsReady = null;
+
+      if (coupon_id) {
+        couponIsReady = await CouponModel.findOne({ _id: coupon_id, is_active: true });
+      }
+
+      if (couponIsReady) {
+        orderState.total_price -= couponIsReady.discount_value;
+      }
+
       if (couponIsReady) {
         orderState.coupon_id = couponIsReady._id;
+      }
+
+      let urlCloundCreated;
+
+      if (prescriptionImageFile) {
+        const b64 = Buffer.from(prescriptionImageFile.buffer).toString('base64');
+        let dataURI = `data:${prescriptionImageFile.mimetype};base64,${b64}`;
+        const imageName = prescriptionImageFile.originalname.split('.')[0];
+        const urlOptions = {
+          folder: 'nhathuoc/orders',
+          public_id: formatHelper.converStringToSlug(imageName)
+        };
+        urlCloundCreated = await handleCreateImageUpload(dataURI, urlOptions);
+      }
+
+      if (urlCloundCreated) {
+        orderState.prescriptionImage = urlCloundCreated;
       }
 
       const newOrder = new OrderModel(orderState);
@@ -108,16 +102,30 @@ const OrderController = {
 
       // tạo hóa đơn chi tiết
       if (newOrder) {
+        if (couponIsReady) {
+          const updatedCoupon = await CouponModel.findByIdAndUpdate(
+            orderState.coupon_id,
+            { is_active: false },
+            { new: true }
+          );
+          updatedCoupon.save();
+        }
+
         const handleSaveOrderDetails = async ({ product_id, quantity, price }) => {
           const newOrderDetails = new OrderDetailsModel({ product_id, quantity, price, order_id: newOrder._id });
           await newOrderDetails.save();
+          const productExist = await ProductModel.findById(product_id);
+          if (productExist) {
+            const newStock = productExist.stock - quantity;
+            await ProductModel.updateOne({ _id: product_id }, { $set: { stock: newStock } });
+          }
         };
-        // kiểm tra productCart;
-        if (productCart.productList.length > 0 && Array.isArray(productCart.productList)) {
-          productCart.productList.forEach((productItem) => {
-            const { productId, quantity, price } = productItem;
-            handleSaveOrderDetails({ product_id: productId, quantity, price });
-          });
+
+        if (productList.length > 0 && Array.isArray(productList)) {
+          for (const productItem of productList) {
+            const { productId, quantity, totalPriceProduct } = productItem;
+            await handleSaveOrderDetails({ product_id: productId, quantity, price: totalPriceProduct });
+          }
         }
       }
       res.status(200).json({ newOrder, message: 'Tạo hóa đơn thành công' });

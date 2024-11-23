@@ -1,23 +1,35 @@
-const PaymentMethod = () => (
-  <div className=''>
-    <h2 className='font-bold mb-4'>Chọn phương thức thanh toán</h2>
-    <div className='space-y-4'>
-        <div  className='flex cursor-pointer  items-center gap-5 py-3 border-b last:border-b-0'>
-          <input type='radio' name='payment' className='h-4 w-4' />
-          <div className='w-10 h-10 border border:bg-black rounded-md'>
-            <img src="" alt='' className='w-8 h-8 object-cover' />
-          </div>
-          <label>Thanh toán khi nhận hàng</label>
-        </div>
-        <div  className='flex cursor-pointer items-center gap-5 py-3  border-b last:border-b-0'>
-          <input type='radio' name='payment' className='h-4 w-4' />
-          <div className='w-10 h-10 border border:bg-black rounded-md'>
-            <img src="" alt='' className='w-8 h-8 object-cover' />
-          </div>
-          <label> Thanh toán trực tuyến</label>
-        </div>
+import useFetch from '../../../hooks/useFetch';
+import paymentMethodServices from '../../../services/paymentMethodService';
+import { useCartFormContext } from './context/CartFormProvider';
+import { InputRadio, ErrorMessage } from '../../../components/ui/form';
+import { Image } from '../../../components/ui/image';
+
+const PaymentMethod = () => {
+  const { responsData: paymentMethodData } = useFetch(paymentMethodServices.getAllPaymentMethod, {}, []);
+  const { register, errors } = useCartFormContext();
+
+  return (
+    <div>
+      <h2 className='text-lg font-medium text-gray-700 mb-4'>Phương thức thanh toán</h2>
+      <div>
+        {paymentMethodData &&
+          paymentMethodData.length > 0 &&
+          paymentMethodData.map((paymentMethod) => {
+            const { name, image, _id } = paymentMethod;
+            return (
+              <label htmlFor={_id} key={_id} className='cursor-pointer'>
+                <div className='card-payMethod flex items-center gap-3 mb-3'>
+                  <InputRadio id={_id} refinput={register('payment_method_id')} defaultValue={_id} />
+                  <Image src={image} width='36px' height='36px' alt={_id} />
+                  <span>{name}</span>
+                </div>
+              </label>
+            );
+          })}
+        {errors.payment_method_id && <ErrorMessage messsage={errors.payment_method_id.message}></ErrorMessage>}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default PaymentMethod;
