@@ -1,7 +1,19 @@
 import { cn } from "../../../utils/helpers/mergeClasses";
 import formatsHelper from "../../../utils/helpers/formats";
 import { Button } from "../button";
-const TableOrder = ({ data, addClassNames, titleRow, handleDelete }) => {
+
+const TableOrder = ({
+    data,
+    addClassNames,
+    titleRow,
+    titleRowOrderDetail,
+    handleCancelOrder,
+    checkOrderDetail,
+    orderDetailProduct,
+    expandedOrderId
+}) => {
+
+
     return (
         <table className={cn(`w-full text-left table-auto border-collapse shadow-md bg-white mb-5 rounded-[5px] ${addClassNames}`)}>
             <thead>
@@ -13,18 +25,59 @@ const TableOrder = ({ data, addClassNames, titleRow, handleDelete }) => {
             </thead>
             <tbody>
                 {data && data.map((order) => (
-                    <tr key={order._id} className='border-b border-gray-300 hover:bg-gray-50'>
-                        <td className='p-2'>{order.fullname}</td>
-                        <td className='p-2'>{order.quantity}</td>
-                        <td className='p-2'>{order.bookTitle}</td>
-                        <td className='p-2'>{(order.price)}</td>
-                        <td className='p-2'>{(order.totalPrice)}</td>
-                        <td className='p-2'>{order.status}</td>
-                        <td className='p-2'>{formatsHelper.formatDate(order.purchaseDate)}</td>
-                        <td className='p-2'>
-                            <Button addClassNames="bg-red-500 text-[#fff] text-[16px] rounded-[7px] px-3 py-2 w-[90px] flex justify-center cursor-pointer" onClick={() => handleDelete(order._id)}>Hủy</Button>
-                        </td>
-                    </tr>
+                    <>
+                        <tr key={order._id} className='border-b border-gray-300 hover:bg-gray-50'>
+                            <td className='p-2'>{order?.total_quantity}</td>
+                            <td className='p-2'>{formatsHelper.currency(order?.total_price)}</td>
+                            <td className={`p-2 ${order?.status === 1 ? "text-yellow-600 font-bold" : "text-[#333]"}`}>{order?.status === 1 && "Đang xử lí"}</td>
+                            <td className='p-2'>{formatsHelper.formatDate(order?.createdAt)}</td>
+                            <td className='p-2'>
+                                <Button
+                                    addClassNames="bg-red-500 text-[#fff] text-[16px] rounded-[7px] px-3 py-2 w-[90px] flex justify-center cursor-pointer"
+                                    onClick={() => handleCancelOrder(order._id)}
+                                >
+                                    Hủy
+                                </Button>
+                            </td>
+                            <td className='p-2'>
+                                <Button
+                                    addClassNames="bg-[#2563EB] text-[#fff] text-[16px] rounded-[7px] px-3 py-2 w-full flex justify-center cursor-pointer"
+                                    onClick={() => checkOrderDetail(order._id)}
+                                >
+                                    {expandedOrderId === order._id ? "Ẩn" : "Xem"}
+                                </Button>
+                            </td>
+                        </tr>
+                        {expandedOrderId === order._id && (
+                            <tr className='bg-gray-50'>
+                                <td colSpan={titleRow.length}>
+                                    <table className='w-full'>
+                                        <thead>
+                                            <tr>
+                                                {titleRowOrderDetail && titleRowOrderDetail.map((title, index) => (
+                                                    <th key={index} className='p-3 w-max font-normal3 text-[#333]'>{title}</th>
+                                                ))}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {orderDetailProduct?.map((detailProduct) => (
+                                                <tr key={detailProduct._id} className='border-b border-gray-300'>
+                                                    <td className='p-2'>
+                                                        <img className="w-[50px]" src={detailProduct?.images[0].url_img} alt="" />
+                                                    </td>
+                                                    <td className='p-2'>{detailProduct?.product?.name
+                                                    }</td>
+                                                    <td className='p-2'>{formatsHelper.currency(detailProduct?.price)}</td>
+                                                    <td className='p-2'>{detailProduct?.quantity}</td>
+                                                    <td className='p-2'>{formatsHelper.formatDate(detailProduct?.createdAt)} - {formatsHelper.FormatDateAndTime(detailProduct?.createdAt)}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        )}
+                    </>
                 ))}
             </tbody>
         </table>
