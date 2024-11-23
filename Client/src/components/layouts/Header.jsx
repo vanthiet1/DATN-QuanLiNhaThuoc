@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { PATH_ROUTERS_ADMIN, PATH_ROUTERS_CLIENT } from '../../utils/constant/routers';
 import Logo from '../../assets/images/logo/logo3.png';
 import { InputText } from '../../components/ui/form/index';
@@ -16,6 +16,7 @@ import searchProductServices from '../../services/searchProductService';
 import debounce from '../../hooks/useDebounce';
 import formatsHelper from '../../utils/helpers/formats';
 import { TabUIAccountContext } from '../../contexts/TabUIAccountContext';
+import orderServices from '../../services/orderService';
 
 const Header = () => {
     const { user } = useContext(UserContext) || { user: null };
@@ -29,6 +30,7 @@ const Header = () => {
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isShowCategory, setIsShowCategory] = useState(false);
+    const [orderProduct, setOrderProduct] = useState(null);
 
 
 
@@ -77,6 +79,17 @@ const Header = () => {
             handleSearchQueryProduct();
         }
     };
+
+    useEffect(() => {
+        const getDataOrder = async () => {
+            const dataOrder = await orderServices.getOrderByUserId(user?._id);
+            const filteredOrders = dataOrder?.filter(order => order.status === 1);
+            setOrderProduct(filteredOrders?.length || []);
+        };
+        getDataOrder()
+    }, [])
+    console.log(orderProduct);
+
     return (
         <div className={`ease-in-out sticky top-0 z-30`}>
             <header>
@@ -160,8 +173,18 @@ const Header = () => {
                                                     </div>
                                                 </Link>
                                                 <div className="flex mt-3 items-center gap-2 cursor-pointer pb-1 group hover:text-[#2563EB] duration-200" onClick={redirectOrder}>
-                                                    <span><AppIcons.OderIcon addClassNames='text-gray-800' /></span>
+                                                    <span className=' relative'>
+                                                    <AppIcons.OderIcon addClassNames='text-gray-800' />
+                                                    {orderProduct && (
+                                                        <div className="absolute top-[-10px] right-[-7px]">
+                                                            <span className='text-[#fff] bg-red-500 flex justify-center items-center rounded-[50%] w-[15px] h-[15px] text-[10px]'>
+                                                                {orderProduct}
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                    </span>
                                                     <span>Đơn hàng xử lí</span>
+                                                  
                                                 </div>
                                                 <div className="flex mt-3 items-center gap-2 cursor-pointer pb-1 group hover:text-[#2563EB] duration-200" onClick={redirectHistoryOrder}>
                                                     <span><AppIcons.BanknotesIcon addClassNames='text-gray-800' /></span>
@@ -209,7 +232,7 @@ const Header = () => {
                 </div>
             </header>
             <nav>
-                <div className=" border-1 w-[100%] p-4 shadow-lg bg-[#fff] max-md:mt-[45px]  ">
+                <div className=" border-1 w-[100%] p-4 shadow-lg bg-[#fff] max-md:mt-[40px]  ">
                     <div
                         className="cursor-pointer hidden max-md:block"
                         onClick={() => setIsShowCategory(!isShowCategory)}
@@ -302,7 +325,7 @@ const Header = () => {
                     </div>
                 </div>
             </nav>
-            
+
         </div>
     );
 };
