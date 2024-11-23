@@ -241,8 +241,7 @@ const OrderController = {
       if (!user_id) {
         return res.status(400).json({ message: 'Thiếu thông tin user' });
       }
-      const orderUser = await OrderModel.findOne({ user_id: user_id }).populate('user_id').populate('shipping_address');
-
+      const orderUser = await OrderModel.find({ user_id: user_id })
       if (!orderUser) {
         return res.status(404).json({ message: 'Không tìm thấy đơn hàng' });
       }
