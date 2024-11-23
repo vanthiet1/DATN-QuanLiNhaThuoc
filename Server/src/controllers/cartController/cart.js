@@ -71,15 +71,13 @@ const Cart = {
     getCartByUserId: async (req, res) => {
         try {
             const { userId } = req.params;
-            
             const cart = await CartModel.findOne({ userId }).populate('productList.productId');
-            
             if (!cart) {
                 return res.status(404).json({ message: "Giỏ hàng của người dùng này rỗng" });
             }
             const cartProducts = await Promise.all(
                 cart.productList.map(async (product) => {
-                    const images = await ImageProduct.find({ product_id: product.productId._id });
+                    const images = await ImageProduct.find({ product_id: product.productId?._id });
                     return {
                         ...product.toObject(),
                         images,
