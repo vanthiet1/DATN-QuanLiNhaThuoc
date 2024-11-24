@@ -47,9 +47,9 @@ function Security() {
                 />
                 <div className='pl-3'>
                     {user?.phone ? (
-                        <span className='text-green-600 font-bold'>Đã xác thực</span>
+                        <span className='text-green-600 font-bold'>Đã cập nhật</span>
                     ) : (
-                        <span className='text-red-600 font-bold'>Chưa xác thực</span>
+                        <span className='text-red-600 font-bold'>Chưa cập nhật số điện thoại</span>
                     )}
                 </div>
             </div>
@@ -63,12 +63,6 @@ function Security() {
                 >
                     Xác thực
                 </Button>
-                <p className='mt-2'>
-                    Bạn không có nhu cầu sử dụng tài khoản này nữa?{' '}
-                    <Link to={'/tai-khoan/xoa-tai-khoan'} className='text-[#2563EB] font-bold'>
-                        Xóa tài khoản
-                    </Link>
-                </p>
             </div>
         </div>
     );

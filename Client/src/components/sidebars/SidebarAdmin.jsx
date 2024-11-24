@@ -200,7 +200,6 @@ const dataMenu = [
 const MenuAdmin = ({ data, isSubMenu = false, addClassNames = '' }) => {
   const [openMenus, setOpenMenus] = useState({});
   const { user } = useContext(UserContext);
-  console.log(user);
   const handleToggleMenu = (title) => {
     if (title === false) return;
     setOpenMenus((prevOpenMenus) => ({

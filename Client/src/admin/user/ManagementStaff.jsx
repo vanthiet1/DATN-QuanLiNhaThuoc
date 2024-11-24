@@ -23,44 +23,51 @@ const managementStaffBreadcrumb = [
 ];
 
 const ManagementStaff = () => {
-  const confirmDialog = useConfirmDialog();
+    const titleRow = [
+        "Full name",
+        "Email",
+        "Provider",
+        "Status",
+        "IsActive",
+        "Date created",
+        "Role",
+        "Action"
+    ];
+    
+    const { responsData: initialRoleData } = useFetch(roleServices.getAllRole);
+    const [staffData, setStaffData] = useState([]);
+    const [roleData, setRoleData] = useState([]);
+    const [changeRole,setChange] = useState({});
 
-  const titleRow = ['Full name', 'Email', 'Provider', 'Email verify', 'IsActive', 'Date created', 'Role', 'Action'];
-
-  const { isLoading, isError, messsageError, responsData: initialStaffData } = useFetch(userServices.getAllStaff);
-  const { responsData: initialRoleData } = useFetch(roleServices.getAllRole);
-  const [staffData, setStaffData] = useState([]);
-  const [roleData, setRoleData] = useState([]);
-  useEffect(() => {
-    if (initialStaffData && initialRoleData) {
-      setStaffData(initialStaffData);
-      setRoleData(initialRoleData);
+    const getUserData = async ()=>{
+          const initialStaffData = await userServices.getAllStaff()
+          setStaffData(initialStaffData);
     }
-  }, [initialStaffData, initialRoleData]);
-  const optionsRole = roleData.map((role) => ({
-    value: role._id,
-    title: role.role_Name
-  }));
-  return (
-    <div>
-      <SectionWrapper title='Management staff' addClassNames={{ wrapper: 'mt-2' }}>
-        <BreadCrumb crumbsData={managementStaffBreadcrumb} />
-        <TableManagerAccount
-          roleData={optionsRole}
-          addClassNames={'w-[100%]'}
-          data={staffData}
-          titleRow={titleRow}
-          handleDelete={(id) => handleDelete(id, staffData, setStaffData, userServices.deleteUser, confirmDialog)}
-          handleIsActiveAccount={(id) =>
-            handleIsActiveAccount(id, userServices.getAllStaff, setStaffData, authServices.handleIsActiveAccount)
-          }
-          handleUpdateRoleAccount={(idUser, idRole) =>
-            handleUpdateRoleAccount(idUser, idRole, roleServices.updateRoleUser)
-          }
-        />
-      </SectionWrapper>
-    </div>
-  );
+    useEffect(() => {
+        getUserData()
+        if ( initialRoleData) {
+            setRoleData(initialRoleData)
+        }
+    }, [changeRole,initialRoleData]);
+
+
+    const optionsRole = roleData.map(role => ({
+        value: role._id,
+        title: role.role_Name
+      }));
+    return (
+        <div>
+            <TableManagerAccount
+                roleData={optionsRole}
+                addClassNames={'w-[100%]'}
+                data={staffData}
+                titleRow={titleRow}
+                handleDelete={(id) => handleDelete(id, staffData, setStaffData, userServices.deleteUser,confirmDialog)}
+                handleIsActiveAccount={(id) => handleIsActiveAccount(id, userServices.getAllStaff, setStaffData, authServices.handleIsActiveAccount)}
+                handleUpdateRoleAccount={(idUser, idRole) => handleUpdateRoleAccount(idUser, idRole, roleServices.updateRoleUser,setChange)}
+            />
+        </div>
+    );
 };
 
 export default ManagementStaff;
