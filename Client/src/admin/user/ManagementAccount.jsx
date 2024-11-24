@@ -4,7 +4,7 @@ import userServices from '../../services/userService.js';
 import authServices from '../../services/authService.js';
 import useFetch from '../../hooks/useFetch.js';
 import { handleDelete, handleIsActiveAccount, handleUpdateRoleAccount } from './handle.js';
-import { useConfirmDialog } from "../../components/dialog/ConfirmDialogContext.jsx";
+import { useConfirmDialog } from '../../components/dialog/ConfirmDialogContext.jsx';
 import roleServices from '../../services/roleService.js';
 
 const ManagementUser = () => {

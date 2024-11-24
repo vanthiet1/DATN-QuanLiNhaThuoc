@@ -21,6 +21,7 @@ const END_POIND_API = {
   PHARMACY: '/pharmacy',
   PAYMENT_METHOD: '/payment-method',
   TRANSACTION: '/transactions',
-  REPORT: '/report'
+  REPORT: '/report',
+  NOTIFICATION: '/notification'
 };
 export default END_POIND_API;

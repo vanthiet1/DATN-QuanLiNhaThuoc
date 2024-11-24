@@ -2,12 +2,12 @@ const OrderModel = require('../../models/ordersModels/order');
 const AddressModel = require('../../models/addressModel/address');
 const OrderDetailsModel = require('../../models/orderDetailsModel/orderDetails');
 const CouponModel = require('../../models/couponModel/coupon');
-const mongoose = require('mongoose');
-const PaymentMethodModel = require('../../models/paymentMethodModel/paymentMethod');
 const UserModel = require('../../models/userModel/user');
 const ProductModel = require('../../models/productModel/product');
 const { handleCreateImageUpload } = require('../../services/mediaCloudinary');
 const formatHelper = require('../../utilities/helper/formatHelper');
+const { getIoSocket } = require('../../configs/socket');
+const NotificationModel = require('../../models/notificationModel/notificationModel');
 
 const OrderOffControll = {
   createOrder: async (req, res) => {
@@ -145,6 +145,20 @@ const OrderOffControll = {
           const { productId, quantity, totalPrice } = productItem;
           await handleSaveOrderDetails({ product_id: productId, quantity, totalPrice });
         }
+      }
+
+      if (newOrder) {
+        getIoSocket().to('staff').emit('notificationNewOrder', newOrder);
+        getIoSocket().to('admin').emit('notificationNewOrder', newOrder);
+
+        const newNotificationState = {
+          type: 'info',
+          message: 'Bạn có đơn hàng mới' + ' ' + newOrder._id,
+          category: 'new order'
+        };
+
+        const newNotification = new NotificationModel(newNotificationState);
+        await newNotification.save();
       }
 
       res.status(200).json({ newOrder, message: 'Tạo hóa đơn thành công' });

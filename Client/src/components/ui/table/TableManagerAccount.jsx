@@ -20,7 +20,7 @@ const roleBreadCrumbs = [
 ];
 
 const Table = ({ data, addClassNames, handleDelete, handleIsActiveAccount, roleData, handleUpdateRoleAccount }) => {
-  const { user } = useContext(UserContext)
+  const { user } = useContext(UserContext);
   return (
     <>
       <BreadCrumb crumbsData={roleBreadCrumbs} addClassNames='my-3' />
@@ -74,7 +74,7 @@ const Table = ({ data, addClassNames, handleDelete, handleIsActiveAccount, roleD
                   <td className='p-4 text-sm text-gray-600'>{formatsHelper.formatDate(item?.createdAt)}</td>
                   <td className='p-4 truncate text-sm text-gray-600'>{item?.role_id?.role_Name}</td>
                   <td className='p-4 flex gap-2'>
-                    {user?.role_id?.role_Name !== "staff" && (
+                    {user?.role_id?.role_Name !== 'staff' && (
                       <>
                         <SelectBox
                           onChange={(e) => handleUpdateRoleAccount(item._id, e.target.value)}
@@ -93,17 +93,18 @@ const Table = ({ data, addClassNames, handleDelete, handleIsActiveAccount, roleD
                         </Button>
                       </>
                     )}
-                    {item?.role_id?.role_Name !== "admin" && user?.role_id?.role_Name !== item?.role_id?.role_Name &&  (
+                    {item?.role_id?.role_Name !== 'admin' && user?.role_id?.role_Name !== item?.role_id?.role_Name && (
                       <Button
-                      size='s'
-                      className={`px-3 py-1 rounded-md ${item?.is_active === 1
-                          ? 'border border-red-500 text-red-500 hover:bg-red-500 hover:text-white' 
-                          : 'border border-green-500 text-green-500 hover:bg-green-500 hover:text-white' 
+                        size='s'
+                        className={`px-3 py-1 rounded-md ${
+                          item?.is_active === 1
+                            ? 'border border-red-500 text-red-500 hover:bg-red-500 hover:text-white'
+                            : 'border border-green-500 text-green-500 hover:bg-green-500 hover:text-white'
                         }`}
-                      onClick={() => handleIsActiveAccount(item._id)}
-                    >
-                      {item?.is_active === 1 ? 'Block' : 'Unblock'}
-                    </Button>
+                        onClick={() => handleIsActiveAccount(item._id)}
+                      >
+                        {item?.is_active === 1 ? 'Block' : 'Unblock'}
+                      </Button>
                     )}
                   </td>
                 </tr>

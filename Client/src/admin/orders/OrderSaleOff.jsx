@@ -34,15 +34,12 @@ const SectionListProduct = () => {
       <div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
         {productAllData &&
           productAllData.productsList.map((item) => {
-            const { _id, price_distcount, name, images, description_short } = item;
+            const { _id, price_distcount, name, images } = item;
             return (
               <CardProduct
                 key={_id}
-                image={images[0].url_img}
-                name={name}
-                priceOld={price_distcount}
-                description_short={description_short}
-                handleAddProductToCart={() => handleAddProductToCart(_id, price_distcount, 1, name, images[0].url_img)}
+                products={item}
+                handleAddToCart={() => handleAddProductToCart(_id, price_distcount, 1, name, images[0].url_img)}
               ></CardProduct>
             );
           })}

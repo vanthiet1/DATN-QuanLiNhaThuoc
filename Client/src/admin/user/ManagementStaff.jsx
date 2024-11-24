@@ -3,13 +3,26 @@ import { TableManagerAccount } from '../../components/ui/table/index.js';
 import userServices from '../../services/userService.js';
 import authServices from '../../services/authService.js';
 import useFetch from '../../hooks/useFetch.js';
-import { handleDelete,handleIsActiveAccount ,handleUpdateRoleAccount } from './handle.js';
-import { useConfirmDialog } from "../../components/dialog/ConfirmDialogContext"; 
+import { handleDelete, handleIsActiveAccount, handleUpdateRoleAccount } from './handle.js';
+import { useConfirmDialog } from '../../components/dialog/ConfirmDialogContext';
 import roleServices from '../../services/roleService.js';
+import SectionWrapper from '../../components/sectionWrapper/SectionWrapper.jsx';
+import BreadCrumb from '../../components/breadCrumb/BreadCrumb.jsx';
+import { PATH_ROUTERS_ADMIN } from '../../utils/constant/routers.js';
+import AppIcons from '../../components/ui/icon';
+
+const managementStaffBreadcrumb = [
+  {
+    path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
+    title: 'Dashboard',
+    icon: <AppIcons.HomeIcon width='16' height='16' />
+  },
+  {
+    title: 'Management customer'
+  }
+];
 
 const ManagementStaff = () => {
-    const confirmDialog = useConfirmDialog();
-
     const titleRow = [
         "Full name",
         "Email",
@@ -21,7 +34,6 @@ const ManagementStaff = () => {
         "Action"
     ];
     
-    const { isLoading, isError, messsageError, responsData: initialStaffData } = useFetch(userServices.getAllStaff);
     const { responsData: initialRoleData } = useFetch(roleServices.getAllRole);
     const [staffData, setStaffData] = useState([]);
     const [roleData, setRoleData] = useState([]);

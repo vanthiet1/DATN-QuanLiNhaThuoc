@@ -3,7 +3,8 @@ import { createBrowserRouter } from 'react-router-dom';
 import { LayoutAdmin, LayoutDefault } from '../components/layouts';
 import { PATH_ROUTERS_ADMIN, PATH_ROUTERS_CLIENT } from '../utils/constant/routers';
 import SuspenseWrapper from '../components/suspenseWrapper/SuspenseWrapper';
-import ProtectedRoute from '../routers/ProtectedRoute';
+import PrivateRouter from './privateRouter/PrivateRouter';
+import ProtectedRoute from './ProtectedRoute';
 
 const HomePage = lazy(() => import('../pages/homePage/HomePage'));
 const ProductSearch = lazy(() => import('../pages/productSearch/ProductSearch'));
@@ -14,15 +15,13 @@ const Cart = lazy(() => import('../pages/cart/Cart'));
 const BlogDetails = lazy(() => import('../pages/blog/BlogDetails'));
 const Pharmacy = lazy(() => import('../pages/pharmacy/PharmacyDetails'));
 const AccountUser = lazy(() => import('../pages/account/AccoutUser'));
-const ListAllProduct = lazy(() => import('../pages/product/ListAllProduct'));
 const BmiCalculator = lazy(() => import('../pages/tools/BmiCalculator'));
-const HistoryOrder = lazy(() => import('../pages/order/HistoryOrder'));
-const NotFoundPage = lazy(() => import('../pages/notfound/NotFound'));
+const ListAllProduct = lazy(() => import('../pages/product/ListAllProduct'));
 const About = lazy(() => import('../pages/about/About'));
 const Contact = lazy(() => import('../pages/contact/Contact'));
+const HistoryOrder = lazy(() => import('../pages/order/HistoryOrder'));
 const Blog = lazy(() => import('../pages/blog/Blog'));
-const BankDemo = lazy(() => import('../pages/bank/BankDemo'));
-
+// const BankDemo = lazy(() => import('../pages/bank/BankDemo'));
 
 const DashBoard = lazy(() => import('../admin/dashboard/Dashboard'));
 const AddProduct = lazy(() => import('../admin/product/AddProduct'));
@@ -73,6 +72,7 @@ const OrderDetails = lazy(() => import('../admin/orders/OrderDetails'));
 const OrderSaleOff = lazy(() => import('../admin/orders/OrderSaleOff'));
 
 const TemplateComponent = lazy(() => import('../admin/testComponents/TemplateComponent'));
+const NotFoundPage = lazy(() => import('../pages/notfound/NotFound'));
 
 const router = createBrowserRouter([
   {
@@ -96,12 +96,8 @@ const router = createBrowserRouter([
         )
       },
       {
-        path:'bank',
-        element: (
-          <SuspenseWrapper>
-            <BankDemo />
-          </SuspenseWrapper>
-        )
+        path: 'bank',
+        element: <SuspenseWrapper>{/* <BankDemo /> */}</SuspenseWrapper>
       },
       {
         path: PATH_ROUTERS_CLIENT.PRODUCT_DETAILS,
@@ -211,7 +207,7 @@ const router = createBrowserRouter([
         path: PATH_ROUTERS_CLIENT.CONTACT,
         element: (
           <SuspenseWrapper>
-            <Contact/>
+            <Contact />
           </SuspenseWrapper>
         )
       }
@@ -220,10 +216,11 @@ const router = createBrowserRouter([
 
   {
     path: '/', // router của admin
-    element:
+    element: (
       <ProtectedRoute>
         <LayoutAdmin />
-      </ProtectedRoute>,
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: PATH_ROUTERS_ADMIN.DASHBOARD,
@@ -349,7 +346,7 @@ const router = createBrowserRouter([
         path: PATH_ROUTERS_ADMIN.ADD_PHARMARCY,
         element: (
           <SuspenseWrapper>
-          <AddPharmacy />
+            <AddPharmacy />
           </SuspenseWrapper>
         )
       },
@@ -357,7 +354,7 @@ const router = createBrowserRouter([
         path: PATH_ROUTERS_ADMIN.ALL_PHARMARCY,
         element: (
           <SuspenseWrapper>
-          <AllPharmacy />
+            <AllPharmacy />
           </SuspenseWrapper>
         )
       },
