@@ -18,6 +18,7 @@ const VerifyEmail = () => {
         handleSubmit,
         control,
         formState: { errors },
+        getValues,
     } = useForm({
         resolver: yupResolver(formAuthSchema.verifyEmail),
     });
@@ -61,14 +62,11 @@ const VerifyEmail = () => {
     };
 
     const handleResendClick = async () => {
-        const disposableEmail = tokenService.getDisposableEmail()
-        if (!disposableEmail) {
-            showToastError("Liệu bạn đã đăng ký chưa")
-            return;
+        const email = getValues("email"); 
+        if(!email){
+           return showToastError('Vui lòng nhập email để nhận mã xác thực')
         }
-        const data = {
-            email: disposableEmail
-        }
+        const data = { email };
         try {
             ResendClick(setTimeOtp, setResendEnabled)
             await authServices.ResendVerifyCode(data)
