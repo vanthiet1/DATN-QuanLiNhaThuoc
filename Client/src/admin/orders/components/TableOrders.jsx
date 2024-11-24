@@ -65,7 +65,7 @@ const TableOrders = ({ data: orderData }) => {
                         defaultValue={status}
                         addClassNames='w-fit'
                         rounded='full'
-                        onChange={(e) => handleChangeStatusOrder(_id, e.target.value)}
+                        onChange={(e) => handleChangeStatusOrder(_id, e.target.value, status)}
                       ></SelectBox>
                     )}
                   </td>
