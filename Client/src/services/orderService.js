@@ -29,15 +29,12 @@ const orderServices = {
       console.log(data);
       return data[0];
     } catch (error) {
-      showToastError(error.response.data.message);
       console.log(error.message);
     }
   },
   getOrderByUserId: async (resquestParams) => {
     try {
       const { data } = await http.get(`${END_POIND_API.ORDER}/detail/${resquestParams}`);
-      console.log(data);
-      
       return data;
     } catch (error) {
       console.log(error.message);

@@ -30,9 +30,7 @@ const Header = () => {
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isShowCategory, setIsShowCategory] = useState(false);
-    const [orderProduct, setOrderProduct] = useState(null);
-
-
+    const [orderProduct, setOrderProduct] = useState(0);
 
     const redirectOrder = () => {
         navigate(`${PATH_ROUTERS_CLIENT.ACCOUNT}`)
@@ -52,7 +50,7 @@ const Header = () => {
         setIsLoading(false);
     }
 
-    const debouncedFetchProducts = debounce(getProductSearch, 3000);
+    const debouncedFetchProducts = debounce(getProductSearch, 2000);
 
     const handleChange = (e) => {
         const value = e.target.value;
@@ -82,13 +80,14 @@ const Header = () => {
 
     useEffect(() => {
         const getDataOrder = async () => {
-            const dataOrder = await orderServices.getOrderByUserId(user?._id);
-            const filteredOrders = dataOrder?.filter(order => order.status === 1);
-            setOrderProduct(filteredOrders?.length || []);
+            if (user?._id) {
+                    const dataOrder = await orderServices.getOrderByUserId(user._id);
+                    const filteredOrders = dataOrder?.filter(order => order.status === 1);
+                    setOrderProduct(filteredOrders || []);
+            }
         };
-        getDataOrder()
-    }, [])
-    console.log(orderProduct);
+        getDataOrder();
+    }, [user?._id]); 
 
     return (
         <div className={`ease-in-out sticky top-0 z-30`}>
@@ -173,18 +172,15 @@ const Header = () => {
                                                     </div>
                                                 </Link>
                                                 <div className="flex mt-3 items-center gap-2 cursor-pointer pb-1 group hover:text-[#2563EB] duration-200" onClick={redirectOrder}>
-                                                    <span className=' relative'>
+                                                    <span className='relative'>
                                                     <AppIcons.OderIcon addClassNames='text-gray-800' />
-                                                    {orderProduct && (
                                                         <div className="absolute top-[-10px] right-[-7px]">
-                                                            <span className='text-[#fff] bg-red-500 flex justify-center items-center rounded-[50%] w-[15px] h-[15px] text-[10px]'>
-                                                                {orderProduct}
+                                                            <span className='text-[#fff] bg-red-500 flex justify-center items-center rounded-[50%] w-[15px] h-[15px] text-[10px] pl-[1px]'>
+                                                            {orderProduct ? orderProduct.length : 0}
                                                             </span>
                                                         </div>
-                                                    )}
                                                     </span>
                                                     <span>Đơn hàng xử lí</span>
-                                                  
                                                 </div>
                                                 <div className="flex mt-3 items-center gap-2 cursor-pointer pb-1 group hover:text-[#2563EB] duration-200" onClick={redirectHistoryOrder}>
                                                     <span><AppIcons.BanknotesIcon addClassNames='text-gray-800' /></span>

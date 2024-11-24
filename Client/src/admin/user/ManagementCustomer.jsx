@@ -19,18 +19,21 @@ const ManagementCustomer = () => {
         "Role",
         "Action"
     ];
-    
-    const { isLoading, isError, messsageError, responsData: initialCustomerData } = useFetch(userServices.getAllCustomer);
+
     const { responsData: initialRoleData } = useFetch(roleServices.getAllRole);
-    
     const [customerData, setCustomerData] = useState([]);
     const [roleData, setRoleData] = useState([]);
+    const [changeRole,setChange] = useState({});
+    const getCustomerData = async ()=>{
+          const initialUserData = await userServices.getAllCustomer()
+          setCustomerData(initialUserData);
+    }
     useEffect(() => {
-        if (initialCustomerData && initialRoleData) {
-            setCustomerData(initialCustomerData);
+        getCustomerData()
+        if (initialRoleData) {
             setRoleData(initialRoleData)
         }
-    }, [initialCustomerData]);
+    }, [initialRoleData,changeRole]);
     const optionsRole = roleData.map(role => ({
         value: role._id,
         title: role.role_Name
@@ -44,7 +47,7 @@ const ManagementCustomer = () => {
                 titleRow={titleRow}
                 handleDelete={(id) => handleDelete(id, customerData, setCustomerData, userServices.deleteUser ,  confirmDialog)}
                 handleIsActiveAccount={(id) => handleIsActiveAccount(id, userServices.getAllStaff, setCustomerData, authServices.handleIsActiveAccount)}  
-                handleUpdateRoleAccount={(idUser, idRole) => handleUpdateRoleAccount(idUser, idRole, roleServices.updateRoleUser)}
+                handleUpdateRoleAccount={(idUser, idRole) => handleUpdateRoleAccount(idUser, idRole, roleServices.updateRoleUser,setChange)}
             />
         </div>
     );
