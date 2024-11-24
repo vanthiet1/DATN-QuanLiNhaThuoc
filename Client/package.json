@@ -38,6 +38,8 @@
     "react-router-dom": "^6.26.1",
     "react-toastify": "^10.0.5",
     "socket.io-client": "^4.8.1",
+    "stream-chat": "^8.45.1",
+    "stream-chat-react": "^12.6.0",
     "swiper": "^11.1.14",
     "tailwind-merge": "^2.5.2",
     "xlsx": "^0.18.5",

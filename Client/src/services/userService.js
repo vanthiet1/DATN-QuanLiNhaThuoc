@@ -19,8 +19,6 @@ const userServices = {
     getAllUser: async () => {
         try {
             const { data } = await http.get(`${END_POIND_API.USER}`)
-            console.log(data);
-            
             return data
         } catch (error) {
             console.log(error);

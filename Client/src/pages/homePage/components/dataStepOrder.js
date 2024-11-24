@@ -1,7 +1,7 @@
 const dataStepOrder= [
     { 
         title:"Đăng nhập tài khoản",
-        image:'https://i.pinimg.com/550x/a7/87/20/a78720c39a39ac50a2856420d636d113.jpg',
+        image:'https://res.cloudinary.com/dz93cdipw/image/upload/fl_preserve_transparency/v1731810149/Screenshot_2024-11-17_092135_kgk1kb.jpg?_s=public-apps',
         des:"Bạn có thể đăng nhập tài khoản nhanh với tài khoản google của mình"
     },
     
