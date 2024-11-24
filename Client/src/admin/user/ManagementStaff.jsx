@@ -25,12 +25,20 @@ const ManagementStaff = () => {
     const { responsData: initialRoleData } = useFetch(roleServices.getAllRole);
     const [staffData, setStaffData] = useState([]);
     const [roleData, setRoleData] = useState([]);
+    const [changeRole,setChange] = useState({});
+
+    const getUserData = async ()=>{
+          const initialStaffData = await userServices.getAllStaff()
+          setStaffData(initialStaffData);
+    }
     useEffect(() => {
-        if (initialStaffData && initialRoleData) {
-            setStaffData(initialStaffData);
+        getUserData()
+        if ( initialRoleData) {
             setRoleData(initialRoleData)
         }
-    }, [initialStaffData,initialRoleData]);
+    }, [changeRole,initialRoleData]);
+
+
     const optionsRole = roleData.map(role => ({
         value: role._id,
         title: role.role_Name
@@ -44,7 +52,7 @@ const ManagementStaff = () => {
                 titleRow={titleRow}
                 handleDelete={(id) => handleDelete(id, staffData, setStaffData, userServices.deleteUser,confirmDialog)}
                 handleIsActiveAccount={(id) => handleIsActiveAccount(id, userServices.getAllStaff, setStaffData, authServices.handleIsActiveAccount)}
-                handleUpdateRoleAccount={(idUser, idRole) => handleUpdateRoleAccount(idUser, idRole, roleServices.updateRoleUser)}
+                handleUpdateRoleAccount={(idUser, idRole) => handleUpdateRoleAccount(idUser, idRole, roleServices.updateRoleUser,setChange)}
             />
         </div>
     );

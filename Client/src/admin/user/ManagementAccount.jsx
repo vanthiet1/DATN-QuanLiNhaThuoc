@@ -19,22 +19,26 @@ const ManagementUser = () => {
         "Role",
         "Action"
     ];
-    const { responsData: initialUserData } = useFetch(userServices.getAllUser);
     const { responsData: initialRoleData } = useFetch(roleServices.getAllRole);
     const [userData, setUserData] = useState([]);
     const [roleData, setRoleData] = useState([]);
-
+    const [changeRole,setChange] = useState({});
+    const getUserData = async ()=>{
+          const initialUserData = await userServices.getAllUser()
+          setUserData(initialUserData);
+    }
     useEffect(() => {
-        if (initialUserData && initialRoleData) {
-            setUserData(initialUserData);
+        if (initialRoleData) {
             setRoleData(initialRoleData)
         }
-    }, [initialUserData, initialRoleData]);
+        getUserData();
+    }, [initialRoleData,changeRole]);
 
     const optionsRole = roleData.map(role => ({
         value: role._id,
         title: role.role_Name
     }));
+    
     return (
         <div>
             <TableManagerAccount
@@ -44,7 +48,7 @@ const ManagementUser = () => {
                 titleRow={titleRow}
                 handleDelete={(id) => handleDelete(id, userData, setUserData, userServices.deleteUser, confirmDialog)}
                 handleIsActiveAccount={(id) => handleIsActiveAccount(id, userServices.getAllUser, setUserData, authServices.handleIsActiveAccount)}
-                handleUpdateRoleAccount={(idUser, idRole) => handleUpdateRoleAccount(idUser, idRole, roleServices.updateRoleUser)}
+                handleUpdateRoleAccount={(idUser, idRole) => handleUpdateRoleAccount(idUser, idRole, roleServices.updateRoleUser,setChange)}
             />
         </div>
     );
