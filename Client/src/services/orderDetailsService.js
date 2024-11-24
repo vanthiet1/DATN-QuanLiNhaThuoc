@@ -15,7 +15,6 @@ const orderDetailsServices = {
   getOrderDetailByOrderId: async (resquestParrams) => {
     try {
       const { data } = await http.get(`${END_POIND_API.ORDER_DETAILS}/${resquestParrams}`);
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error.message);
