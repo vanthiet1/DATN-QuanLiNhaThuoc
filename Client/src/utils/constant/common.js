@@ -30,5 +30,6 @@ export const DATE_TYPE_IS_DATE_TO_YEAR = 'dd-MM-yyyy';
 
 export const PAYMENT_METHODS_CODE = {
   VNPAY_ID: '66f12ff016469e40e03998fe',
-  COD_ID: '67020c5c21e941e9e5240bf1'
+  COD_ID: '67020c5c21e941e9e5240bf1',
+  BANK_ID: '6742ed8fee23b6dc36d7c86b'
 };

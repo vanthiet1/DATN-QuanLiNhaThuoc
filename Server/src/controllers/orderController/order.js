@@ -273,6 +273,19 @@ const OrderController = {
       res.status(400).json({ message: error.message });
     }
   },
+  updatePayOrder: async (req, res) => {
+    const { id } = req.params;
+    const { isPay } = req.body;
+    try {
+      if(!id){
+        return res.status(400).json({message:"Không tìm thấy id sẳn phẩm"})
+      }
+        const order = await OrderModel.findByIdAndUpdate(id, {isPay: isPay }, { new: true });
+      res.status(200).json(order);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  },
 
   userCancelOrder: async (req, res) => {
     const { id } = req.params;

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import formOrderSchema from '../../../../utils/validations/formOrder';
@@ -16,11 +16,12 @@ export const useCartFormContext = () => {
   return useContext(CartFormContext);
 };
 
-const CartFormProvider = ({ children }) => {
+const CartFormProvider = ({ children,setShowQrCode }) => {
   const [isLoadingCreateOrder, setIsLoadingCreateOrder] = useState(false);
   const { user } = useContext(UserContext);
   const { cart } = useContext(CartContext);
   const { address_state, handleOrderWithVnpay } = uesCheckOutContext();
+   const [orderSuccsess,setOrderSuccsess] = useState({});
 
   const {
     handleSubmit,
@@ -45,6 +46,7 @@ const CartFormProvider = ({ children }) => {
       setIsLoadingCreateOrder(true);
       const { receiver, phone, street, prescriptionImage, ...orderDataRest } = data;
       const formData = new FormData();
+      
       if (prescriptionImage) {
         formData.append('prescriptionImage', prescriptionImage[0]);
       }
@@ -57,7 +59,7 @@ const CartFormProvider = ({ children }) => {
 
       if (Array.isArray(cart) && cart.length > 0) {
         productCart.total_price = cart.reduce((init, product) => {
-          return (init += product.quantity * product.totalPriceProduct);
+          return (init += product.quantity * product?.productId?.price_distcount);
         }, 0);
 
         productCart.total_quantity = cart.reduce((init, product) => {
@@ -103,7 +105,11 @@ const CartFormProvider = ({ children }) => {
           });
           reset();
         }
-      } else {
+        setOrderSuccsess(orderResponse)
+      } else if(orderDataRest.payment_method_id === PAYMENT_METHODS_CODE.BANK_ID && orderSuccsess ){
+        await orderServices.createOrder(formData);
+        setShowQrCode(true)
+      }else{
         const orderNew = await orderServices.createOrder(formData);
         console.log(orderNew);
 

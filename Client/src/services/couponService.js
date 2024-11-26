@@ -27,7 +27,6 @@ const couponServices = {
   getCouponsActive: async () => {
     try {
       const { data } = await http.get(`${END_POIND_API.COUPON}/active`);
-      console.log(data);
       return data;
     } catch (error) {
       showToastError(error.response?.data?.message || 'Lỗi khi lấy danh sách phiếu giảm giá');

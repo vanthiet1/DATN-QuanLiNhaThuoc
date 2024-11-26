@@ -13,7 +13,6 @@ const cartServices = {
   getCartByUserId: async (requestParams) => {
     try {
       const { data } = await http.get(`${END_POIND_API.CART}/${requestParams}`);
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error.message);
