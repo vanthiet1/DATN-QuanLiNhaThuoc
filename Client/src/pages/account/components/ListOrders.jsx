@@ -53,7 +53,7 @@ const YourOrders = () => {
                 data={orderProduct}
                 orderDetailProduct={orderDetailProduct}
                 addClassNames="my-custom-class w-full table-auto"
-                titleRow={["Số lượng sản phẩm", "Tổng Tiền", "Trạng thái đơn hàng", "Ngày Mua", "Hủy đơn", "Xem đơn hàng"]}
+                titleRow={["Số lượng sản phẩm", "Tổng Tiền", "Trạng thái đơn hàng", "Ngày Mua", "Thanh toán","Hủy đơn", "Xem đơn hàng"]}
                 titleRowOrderDetail={["Ảnh","Tên sản phẩm", "giá tiền","Số lượng","Ngày Mua"]}
                 handleCancelOrder={handleCancelOrder}
                 checkOrderDetail={checkOrderDetail}

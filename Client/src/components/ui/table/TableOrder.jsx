@@ -32,6 +32,9 @@ const TableOrder = ({
                                 </td>
                                 <td className="p-2">{formatsHelper.formatDate(order?.createdAt)}</td>
                                 <td className="p-2">
+                                {order?.isPay ? <span className="text-green-500">Đã thanh toán</span>: <span className="text-red-500 font-bold">Chưa thanh toán</span>}
+                                </td>
+                                <td className="p-2">
                                     <Button
                                         addClassNames="bg-red-500 text-[#fff] text-[16px] rounded-[7px] px-3 py-2 w-[90px] flex justify-center cursor-pointer"
                                         onClick={() => handleCancelOrder(order._id)}
