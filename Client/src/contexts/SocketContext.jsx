@@ -6,7 +6,7 @@ const SocketContext = createContext();
 const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
 
-  const SERVER_URL = 'http://localhost:8080';
+  const SERVER_URL = 'https://datn-quanlinhathuoc.onrender.com';
   useEffect(() => {
     const socketIntance = io(SERVER_URL);
     setSocket(socketIntance);
