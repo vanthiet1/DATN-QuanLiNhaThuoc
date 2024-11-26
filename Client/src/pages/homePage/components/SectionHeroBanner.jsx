@@ -15,7 +15,7 @@ const SectionHeroBanner = () => {
             <div className=" h-auto m-auto ">
                 <Swiper
                     {...sliderConfigBanner}
-                    className="mySwiper rounded-[5px] w-[1000px] max-md:w-[500px]"
+                    className="mySwiper rounded-[5px] w-[1000px] max-md:w-[700px] "
                 >
                     {initialBannerData && initialBannerData.map((banner, index) => (
                         <SwiperSlide key={index}>
