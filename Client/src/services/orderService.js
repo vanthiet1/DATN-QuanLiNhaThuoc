@@ -71,6 +71,16 @@ const orderServices = {
       console.log(error.message);
     }
   },
+  updatePayOrder: async (requestParams, requestBody) => {
+    try {
+      const { data } = await http.put(`${END_POIND_API.ORDER}/bank/${requestParams}`, requestBody);
+      showToastSuccess(data.message || '');
+      return data;
+    } catch (error) {
+      showToastError(error.response.data.message);
+      console.log(error.message);
+    }
+  },
   createOrderOff: async (requestBody) => {
     try {
       const { data } = await http.post(`${END_POIND_API.ORDER}/create-order-off`, requestBody, {
