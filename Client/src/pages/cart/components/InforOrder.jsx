@@ -16,7 +16,7 @@ const InforOrder = () => {
       </div>
       <div className='flex justify-between py-1'>
         <p className=' text-base text-gray-700 font-medium'>Số lượng</p>
-        <p className='text-base text-gray-700 font-medium'>{formatsHelper.currency(totalQuanity)}</p>
+        <p className='text-base text-gray-700 font-medium'>{totalQuanity}</p>
       </div>
       <div className=' border-t-2 mt-4 mb-4'>
         <div className='flex justify-between pt-4'>

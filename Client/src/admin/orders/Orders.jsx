@@ -11,6 +11,8 @@ import { Button } from '../../components/ui/button';
 import PaginatedItems from '../../components/paginate/Paginate';
 import { useConfirmDialog } from '../../components/dialog/ConfirmDialogContext';
 import { handleExportExeclWithTableAdmin } from '../../utils/helpers/handleExportExecl';
+import histroyOrderServices from '../../services/historyOrderServices';
+import { useUserContext } from '../../contexts/UserContext';
 
 const OrderBreadCrumbs = [
   {
@@ -31,6 +33,8 @@ const OrdersContextProvider = ({ children }) => {
   const [isLoadingUpdate, setIsLoadingUpDate] = useState('ide');
   const confirmDialog = useConfirmDialog();
   const tableRef = useRef();
+  const [statusOrderDetails, setStatusOrderDetails] = useState(0);
+  const { user } = useUserContext();
 
   const {
     isLoading,
@@ -53,7 +57,7 @@ const OrdersContextProvider = ({ children }) => {
     );
   };
 
-  const handleChangeStatusOrder = async (orderId, statusValue) => {
+  const handleChangeStatusOrder = async (orderId, statusValue, orderStatus) => {
     const result = await confirmDialog({
       title: 'Cập nhật đơn hàng',
       iconLeft: <AppIcons.ProductIcon />,
@@ -63,7 +67,24 @@ const OrdersContextProvider = ({ children }) => {
     });
     if (result) {
       setIsLoadingUpDate(true);
-      await orderServices.updateOrder(orderId, { status: statusValue });
+      setStatusOrderDetails(orderStatus);
+      const orderUpdateResult = await orderServices.updateOrder(orderId, { status: statusValue });
+      console.log(orderUpdateResult);
+
+      if (orderUpdateResult && statusOrderDetails) {
+        const { _id, status } = orderUpdateResult;
+        const status_from = statusOrderDetails;
+        const s = await histroyOrderServices.createHistoryOrder({
+          order_id: _id,
+          status_from,
+          status_to: status,
+          note: '',
+          updated_by_user_id: user?._id
+        });
+
+        console.log(s);
+      }
+
       setIsLoadingUpDate(false);
     }
   };
