@@ -7,26 +7,30 @@ import { showToastSuccess } from '../../../configs/toastConfig';
 
 const BankCheckout = ({ setShowQrCode }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const { user } = useContext(UserContext); 
+  const { user } = useContext(UserContext);
   const [order, setOrder] = useState({});
   const [isPaid, setIsPaid] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(10);
-  const maxAttempts = 100; 
-  const intervalTime = 3000; 
+  const [timeLeft, setTimeLeft] = useState(300);
+  const maxAttempts = 100;
+  const intervalTime = 3000;
 
   useEffect(() => {
     const fetchOrder = async () => {
-        const dataOrder = await orderServices.getOrderByUserId(user?._id);
-        setOrder(dataOrder[dataOrder.length - 1]); 
+      const dataOrder = await orderServices.getOrderByUserId(user?._id);
+      setOrder(dataOrder[dataOrder.length - 1]);
     };
     if (user?._id) {
       fetchOrder();
     }
   }, [user]);
 
+  const updatePayOrder = async () => {
+    await orderServices.updatePayOrder(order?._id, { isPay: true });
+  };
+
   const checkPaymentStatus = async (attempts) => {
     if (attempts > maxAttempts || isPaid) {
-      stopChecking(); 
+      stopChecking();
       if (!isPaid) {
         setShowQrCode(false);
       }
@@ -41,8 +45,8 @@ const BankCheckout = ({ setShowQrCode }) => {
       ) {
         setIsPaid(true);
         showToastSuccess("Thanh toán thành công");
-        updateOrderStatus(); 
-        stopChecking(); 
+        updatePayOrder();
+        stopChecking();
       } else {
         console.log("Vui lòng thanh toán.");
       }
@@ -51,9 +55,7 @@ const BankCheckout = ({ setShowQrCode }) => {
     }
   };
 
-  const updateOrderStatus = async () => {
-      await orderServices.updateOrder(order?._id, { status: 5 });
-  };
+
 
   useEffect(() => {
     let attempts = 0;
@@ -89,12 +91,12 @@ const BankCheckout = ({ setShowQrCode }) => {
         className={`w-[350px] ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}
         src={imageUrl}
         alt="QR Code"
-        onLoad={() => setIsLoading(false)} 
+        onLoad={() => setIsLoading(false)}
         onError={() => setIsLoading(false)}
       />
       <p className={`mt-2 text-gray-600 ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-30`}>
-            QR Code sẽ hết hạn sau: <b className='text-blue-600'>{Math.floor(timeLeft / 60)} phút {timeLeft % 60} giây</b>
-          </p>
+        QR Code sẽ hết hạn sau: <b className='text-blue-600'>{Math.floor(timeLeft / 60)} phút {timeLeft % 60} giây</b>
+      </p>
     </div>
   );
 };
