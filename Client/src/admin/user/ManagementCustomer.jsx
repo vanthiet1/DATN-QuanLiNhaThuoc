@@ -24,8 +24,6 @@ const managetCustomerBreadCrumb = [
 
 const ManagementCustomer = () => {
   const confirmDialog = useConfirmDialog();
-  const titleRow = ['Full name', 'Email', 'Provider', 'Email verify', 'IsActive', 'Date created', 'Role', 'Action'];
-  const { responsData: initialRoleData } = useFetch(roleServices.getAllRole);
     const titleRow = [
         "Full name",
         "Email",
@@ -67,8 +65,6 @@ const ManagementCustomer = () => {
                 handleUpdateRoleAccount={(idUser, idRole) => handleUpdateRoleAccount(idUser, idRole, roleServices.updateRoleUser,setChange)}
             />
         </div>
-      </SectionWrapper>
-    </div>
   );
 };
 
