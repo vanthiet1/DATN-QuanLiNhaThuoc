@@ -32,7 +32,7 @@ const TableOrder = ({
                                 </td>
                                 <td className="p-2">{formatsHelper.formatDate(order?.createdAt)}</td>
                                 <td className="p-2">
-                                {order?.isPay ? <span className="text-green-500">Đã thanh toán</span>: <span className="text-red-500 font-bold">Chưa thanh toán</span>}
+                                {order?.isPay ? <span className="text-green-600 font-bold">Đã thanh toán</span>: <span className="text-red-500 font-bold">Chưa thanh toán</span>}
                                 </td>
                                 <td className="p-2">
                                     <Button
