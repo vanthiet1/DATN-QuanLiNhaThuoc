@@ -10,7 +10,7 @@ import logoAppStore from '../../assets/images/logo/logo App store.png'
 import logoCongthuong from '../../assets/images/logo/logo Congthuong.png'
 const Footer = () => {
   return (
-    <footer className="bg-[#f9f9f9] text-[#27272a] p-10">
+    <footer className="bg-[#FFFFFF] text-[#27272a] p-10 max-md:p-2">
       <div className="container mx-auto">
         <div className="text-left mb-8">
           <img
