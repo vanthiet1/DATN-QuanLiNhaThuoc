@@ -1,11 +1,15 @@
+import { useNavigate } from 'react-router-dom';
 import React, { useContext, useEffect, useState } from 'react';
 import { SpinnerLoading } from '../../../components/ui/loaders';
 import bankServices from '../../../services/bankService';
 import orderServices from '../../../services/orderService';
 import { UserContext } from '../../../contexts/UserContext';
 import { showToastSuccess } from '../../../configs/toastConfig';
+import { PATH_ROUTERS_CLIENT } from '../../../utils/constant/routers';
+import { TabUIAccountContext } from '../../../contexts/TabUIAccountContext';
 
 const BankCheckout = ({ setShowQrCode }) => {
+  const { setTabIndex, } = useContext(TabUIAccountContext) || null;
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useContext(UserContext);
   const [order, setOrder] = useState({});
@@ -13,6 +17,12 @@ const BankCheckout = ({ setShowQrCode }) => {
   const [timeLeft, setTimeLeft] = useState(300);
   const maxAttempts = 100;
   const intervalTime = 3000;
+  const navigate = useNavigate();
+  
+  const redirectYourOrder = () => {
+    navigate(`${PATH_ROUTERS_CLIENT.ACCOUNT}`)
+    setTabIndex(4)
+}
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -47,6 +57,7 @@ const BankCheckout = ({ setShowQrCode }) => {
         showToastSuccess("Thanh toán thành công");
         updatePayOrder();
         stopChecking();
+        redirectYourOrder();
       } else {
         console.log("Vui lòng thanh toán.");
       }
