@@ -31,7 +31,9 @@ const HandleCartProvider = ({ children }) => {
   const handleAddToCart = async (productId, userId, modal) => {
     if (!productId) return;
     if (!userId) {
-      return showToastError('Vui lòng đăng nhập');
+      showToastError('Vui lòng đăng nhập');
+      handleOpenDialog('login')
+      return;
     }
 
     const cart = {
