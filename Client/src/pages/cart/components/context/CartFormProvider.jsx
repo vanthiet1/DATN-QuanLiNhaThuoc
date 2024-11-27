@@ -9,6 +9,7 @@ import orderServices from '../../../../services/orderService';
 import { PAYMENT_METHODS_CODE } from '../../../../utils/constant/common';
 import cartServices from '../../../../services/cartService';
 import { uesCheckOutContext } from './CheckOutProvider';
+import { useNavigate } from 'react-router-dom';
 
 const CartFormContext = createContext();
 
@@ -21,8 +22,8 @@ const CartFormProvider = ({ children,setShowQrCode }) => {
   const { user } = useContext(UserContext);
   const { cart } = useContext(CartContext);
   const { address_state, handleOrderWithVnpay } = uesCheckOutContext();
-   const [orderSuccsess,setOrderSuccsess] = useState({});
-
+  const [orderSuccsess,setOrderSuccsess] = useState({});
+  const navigate = useNavigate()
   const {
     handleSubmit,
     register,
@@ -111,20 +112,17 @@ const CartFormProvider = ({ children,setShowQrCode }) => {
         setShowQrCode(true)
       }else{
         const orderNew = await orderServices.createOrder(formData);
-        console.log(orderNew);
-
         if (orderNew) {
           for (let productItem of cart) {
             await cartServices.deleteProductCartByUserId(user?._id, productItem.productId._id);
           }
-          showToastSuccess(orderNew.message || 'tạo đơn hàng thành công');
+          showToastSuccess( 'Đơn đã được đặt');
         }
         reset();
-        window.location.reload();
+        navigate('/')
       }
     } catch (error) {
-      console.log(error);
-      showToastError('Đã xảy ra lỗi khi ');
+      showToastError('Đã xảy ra lỗi khi thanh toán ');
     } finally {
       setIsLoadingCreateOrder(false);
     }

@@ -6,6 +6,7 @@ import SuspenseWrapper from '../components/suspenseWrapper/SuspenseWrapper';
 import PrivateRouter from './privateRouter/PrivateRouter';
 import ProtectedRoute from './ProtectedRoute';
 
+
 const HomePage = lazy(() => import('../pages/homePage/HomePage'));
 const ProductSearch = lazy(() => import('../pages/productSearch/ProductSearch'));
 const ProductDetail = lazy(() => import('../pages/product/ProductDetail'));
@@ -82,7 +83,7 @@ const router = createBrowserRouter([
         path: PATH_ROUTERS_CLIENT.HOMEPAGE,
         element: (
           <SuspenseWrapper>
-            <HomePage />
+              <HomePage />
           </SuspenseWrapper>
         )
       },
