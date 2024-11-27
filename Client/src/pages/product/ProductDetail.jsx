@@ -27,6 +27,7 @@ import 'swiper/css';
 const ProductDetail = () => {
   const { slug } = useParams();
   // useSrcollTop(slug)
+  
   const { user } = useContext(UserContext)
   const { register, handleSubmit, formState: { errors }, watch, reset } = useForm({ resolver: yupResolver(formCommentSchema.comment) });
   const { isLoading, responsData: product, isError } = useFetch(
@@ -50,13 +51,23 @@ const ProductDetail = () => {
 
   useEffect(() => {
     if (allProduct && product.length > 0) {
-      const dataProductRelated = allProduct?.filter(
+      const relatedProducts = allProduct?.filter(
         (pro) => pro?.sub_category_id === product?.[0]?.sub_category_id
-      )
-      setProductRelated(dataProductRelated);
+      );
+      if (relatedProducts.length < 6) {
+        const unrelatedProducts = allProduct?.filter(
+          (pro) => pro?.sub_category_id !== product?.[0]?.sub_category_id
+        );
+        const randomUnrelatedProducts = unrelatedProducts
+          .sort(() => Math.random() - 0.5) 
+          .slice(0, 6 - relatedProducts.length);
+        setProductRelated([...relatedProducts, ...randomUnrelatedProducts]);
+      } else {
+        setProductRelated(relatedProducts);
+      }
     }
-  }, [allProduct, product?.[0]])
-
+  }, [allProduct, product?.[0]]);
+  
 
   const getCommentProduct = async () => {
     if (!product || !product[0]) return;
@@ -110,6 +121,7 @@ const ProductDetail = () => {
     }
 
   }
+  console.log(product?.[0]);
 
   if (isError) return <div>Trang hiện tại đang lỗi</div>;
 
@@ -169,8 +181,8 @@ const ProductDetail = () => {
                 </div>
                 <div className="flex gap-3 pb-2">
                   <span className="block font-semibold">Ngày nhập thuốc:</span>
-                  {product[0]?.date ? (
-                    <span>{product[0]?.date}</span>
+                  {product?.[0]?.production_date ? (
+                    <span> { formatsHelper.formatDate(product?.[0]?.production_date)}</span>
                   ) : (
                     <span>Tạm thời chưa có ngày nhập</span>
                   )}
