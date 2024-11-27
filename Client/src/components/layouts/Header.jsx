@@ -283,7 +283,7 @@ const Header = () => {
                                     <div className="hidden max-h-0 overflow-hidden group-hover:max-h-[500px] duration-500 group-hover:duration-500 group-hover:block bg-[#fff] w-[250px] shadow-2xl p-4 rounded-[5px]">
                                         <Link to={PATH_ROUTERS_CLIENT.BLOG}>
                                             <span className="block py-2 text-sm text-gray-600 hover:text-[#2563EB] w-max font-bold cursor-pointer">
-                                                Bài Viết
+                                                Bài viết
                                             </span>
                                         </Link>
                                         <div >
@@ -292,26 +292,6 @@ const Header = () => {
                                                     Tính chỉ số BMI
                                                 </span>
                                             </Link>
-                                        </div>
-                                        <div >
-                                            <span className="block py-2 text-sm text-gray-600 hover:text-[#2563EB] w-max font-bold cursor-pointer">
-                                                Công cụ tính ngày dự sinh
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <span className="block py-2 text-sm text-gray-600 hover:text-[#2563EB] w-max font-bold cursor-pointer">
-                                                Công cụ tính ngày rụng trứng
-                                            </span>
-                                        </div>
-                                        <div >
-                                            <span className="block py-2 text-sm text-gray-600 hover:text-[#2563EB] w-max font-bold cursor-pointer">
-                                                Tra cứu bệnh
-                                            </span>
-                                        </div>
-                                        <div >
-                                            <span className="block py-2 text-sm text-gray-600 hover:text-[#2563EB] w-max font-bold cursor-pointer">
-                                                Hoạt chất
-                                            </span>
                                         </div>
                                     </div>
                                 </div>
