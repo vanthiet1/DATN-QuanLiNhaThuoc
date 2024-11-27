@@ -23,7 +23,6 @@ const YourOrders = () => {
           });
           if(result){
             const orderUpdate = await orderServices.updateOrder(id,{status:5})
-            console.log(orderUpdate);
             if (orderUpdate?.status === 5) {
                 const updatedOrders = orderProduct.filter(
                     (productCancel) => productCancel._id !== id
