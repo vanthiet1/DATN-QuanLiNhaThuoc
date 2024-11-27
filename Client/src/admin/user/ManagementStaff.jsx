@@ -38,7 +38,7 @@ const ManagementStaff = () => {
     const [staffData, setStaffData] = useState([]);
     const [roleData, setRoleData] = useState([]);
     const [changeRole,setChange] = useState({});
-
+   const confirmDialog = useConfirmDialog()
     const getUserData = async ()=>{
           const initialStaffData = await userServices.getAllStaff()
           setStaffData(initialStaffData);
