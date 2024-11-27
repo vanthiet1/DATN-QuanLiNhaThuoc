@@ -6,8 +6,6 @@ import useFetch from '../../hooks/useFetch.js';
 import { handleDelete, handleIsActiveAccount, handleUpdateRoleAccount } from './handle.js';
 import { useConfirmDialog } from '../../components/dialog/ConfirmDialogContext';
 import roleServices from '../../services/roleService.js';
-import SectionWrapper from '../../components/sectionWrapper/SectionWrapper.jsx';
-import BreadCrumb from '../../components/breadCrumb/BreadCrumb.jsx';
 import { PATH_ROUTERS_ADMIN } from '../../utils/constant/routers.js';
 import AppIcons from '../../components/ui/icon';
 
@@ -56,6 +54,7 @@ const ManagementCustomer = () => {
     return (
         <div>
             <TableManagerAccount
+                roleBreadCrumbs={managetCustomerBreadCrumb}
                 roleData={optionsRole}
                 addClassNames={'w-[100%]'}
                 data={customerData}
