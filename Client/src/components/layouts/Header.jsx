@@ -80,13 +80,13 @@ const Header = () => {
     useEffect(() => {
         const getDataOrder = async () => {
             if (user?._id) {
-                    const dataOrder = await orderServices.getOrderByUserId(user._id);
-                    const filteredOrders = dataOrder?.filter(order => order.status === 1);
-                    setOrderProduct(filteredOrders || []);
+                const dataOrder = await orderServices.getOrderByUserId(user._id);
+                const filteredOrders = dataOrder?.filter(order => order.status === 1);
+                setOrderProduct(filteredOrders || []);
             }
         };
         getDataOrder();
-    }, [user?._id]); 
+    }, [user?._id]);
 
     return (
         <div className={`ease-in-out sticky top-0 z-30`}>
@@ -172,11 +172,13 @@ const Header = () => {
                                                 </Link>
                                                 <div className="flex mt-3 items-center gap-2 cursor-pointer pb-1 group hover:text-[#2563EB] duration-200" onClick={redirectOrder}>
                                                     <span className='relative'>
-                                                    <AppIcons.OderIcon addClassNames='text-gray-800' />
+                                                        <AppIcons.OderIcon addClassNames='text-gray-800' />
                                                         <div className="absolute top-[-10px] right-[-5px]">
-                                                            <span className='text-[#fff] bg-red-500 flex justify-center items-center rounded-[50%] w-[15px] h-[15px] text-[10px] pl-[-2px]'>
-                                                            {orderProduct ? orderProduct.length : 0}
-                                                            </span>
+                                                            {user && orderProduct && (
+                                                                <span className="text-[#fff] bg-red-500 flex justify-center items-center rounded-[50%] w-[15px] h-[15px] text-[10px]">
+                                                                    {orderProduct.length}
+                                                                </span>
+                                                            )}
                                                         </div>
                                                     </span>
                                                     <span>Đơn hàng xử lí</span>
