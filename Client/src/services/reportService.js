@@ -6,7 +6,7 @@ const reportServices = {
   getoverallReport: async () => {
     try {
       const { data } = await http.get(`${END_POIND_API.REPORT}/overall`);
-      return data.currentDateOrder;
+      return data;
     } catch (error) {
       console.log(error.message);
     }
