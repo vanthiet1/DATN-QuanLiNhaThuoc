@@ -26,7 +26,6 @@ const orderServices = {
   getOrderById: async (resquestParrams) => {
     try {
       const { data } = await http.get(`${END_POIND_API.ORDER}/${resquestParrams}`);
-      console.log(data);
       return data[0];
     } catch (error) {
       console.log(error.message);
@@ -73,10 +72,8 @@ const orderServices = {
   updatePayOrder: async (requestParams, requestBody) => {
     try {
       const { data } = await http.put(`${END_POIND_API.ORDER}/bank/${requestParams}`, requestBody);
-      showToastSuccess(data.message || '');
       return data;
     } catch (error) {
-      showToastError(error.response.data.message);
       console.log(error.message);
     }
   },

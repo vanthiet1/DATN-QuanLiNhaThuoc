@@ -19,7 +19,7 @@ const BmiCalculator = lazy(() => import('../pages/tools/BmiCalculator'));
 const ListAllProduct = lazy(() => import('../pages/product/ListAllProduct'));
 const About = lazy(() => import('../pages/about/About'));
 const Contact = lazy(() => import('../pages/contact/Contact'));
-const HistoryOrder = lazy(() => import('../pages/order/HistoryOrder'));
+const HistoryOrder = lazy(() => import('../pages/order/HistoryOrderDetail'));
 const Blog = lazy(() => import('../pages/blog/Blog'));
 
 const DashBoard = lazy(() => import('../admin/dashboard/Dashboard'));

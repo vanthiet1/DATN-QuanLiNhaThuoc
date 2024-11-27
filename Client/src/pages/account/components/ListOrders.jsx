@@ -36,7 +36,7 @@ const YourOrders = () => {
     };
     const getDataOrder = async () => {
         const dataOrder = await orderServices.getOrderByUserId(user?._id);
-        const filteredOrders = dataOrder?.filter(order => order.status === 1);
+        const filteredOrders = dataOrder?.filter(order => [1, 2].includes(order.status));
         setOrderProduct(filteredOrders || []);
     };
     useEffect(() => {
