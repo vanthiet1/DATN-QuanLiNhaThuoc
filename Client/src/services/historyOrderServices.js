@@ -2,7 +2,7 @@ import END_POIND_API from '../utils/helpers/endpoind';
 import http from '../utils/helpers/http';
 import { showToastError, showToastSuccess } from '../configs/toastConfig';
 
-const histroyOrderServices = {
+const historyOrderServices = {
   createHistoryOrder: async (requestBody) => {
     try {
       const { data } = await http.post(`${END_POIND_API.HISTORY_ORDER}`, requestBody);
@@ -16,10 +16,8 @@ const histroyOrderServices = {
   getAllHistoryOrders: async () => {
     try {
       const { data } = await http.get(`${END_POIND_API.HISTORY_ORDER}`);
-      console.log(data);
       return data;
     } catch (error) {
-      showToastError(error.response?.data?.message);
       console.log(error.message);
     }
   },
@@ -45,4 +43,4 @@ const histroyOrderServices = {
   }
 };
 
-export default histroyOrderServices;
+export default historyOrderServices;
