@@ -4,20 +4,51 @@ const createHistoryOrder = async (req, res) => {
   try {
     const { order_id, status_from, status_to, note, updated_by_user_id } = req.body;
 
-    const newHistoryOrder = new HistoryOrder({
-      order_id,
-      status_from,
-      status_to,
-      note,
-      updated_by_user_id
-    });
+    if (!order_id || !status_from || !status_to || !updated_by_user_id) {
+      return res.status(400).json({ message: 'các trường trong history order chưa đúng' });
+    }
 
-    const savedHistoryOrder = await newHistoryOrder.save();
+    const historyOrderExist = await HistoryOrder.findOne({ order_id });
+    if (historyOrderExist) {
+      let isUpdated = false;
 
-    return res.status(201).json({
-      message: 'History order created successfully!',
-      data: savedHistoryOrder
-    });
+      if (historyOrderExist.status_from !== status_from) {
+        historyOrderExist.status_from = status_from;
+        isUpdated = true;
+      }
+      if (historyOrderExist.status_to !== status_to) {
+        historyOrderExist.status_to = status_to;
+        isUpdated = true;
+      }
+      if (historyOrderExist.note !== note) {
+        historyOrderExist.note = note;
+        isUpdated = true;
+      }
+
+      if (isUpdated) {
+        historyOrderExist.updated_by_user_id = updated_by_user_id;
+        await historyOrderExist.save();
+        return res.status(200).json({
+          message: 'History order updated successfully!',
+          data: historyOrderExist
+        });
+
+      } else {
+        const newHistoryOrder = new HistoryOrder({
+          order_id,
+          status_from,
+          status_to,
+          note,
+          updated_by_user_id
+        });
+
+        const savedHistoryOrder = await newHistoryOrder.save();
+        return res.status(201).json({
+          message: 'History order created successfully!',
+          data: savedHistoryOrder
+        });
+      }
+    }
   } catch (error) {
     console.error('Error creating history order:', error);
     return res.status(500).json({ error: 'Internal Server Error' });
