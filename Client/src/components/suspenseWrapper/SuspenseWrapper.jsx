@@ -1,5 +1,6 @@
 import { Suspense, useState, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+import Logo from '../../assets/images/logo/logo1.png'
 const ErrorFallback = ({ error, resetErrorBoundary }) => (
   <div className="p-4 text-center">
     <p className="text-red-500 font-semibold">Something went wrong:</p>
@@ -17,7 +18,7 @@ const LoadingScreen = () => {
   return (
     <div className="fixed inset-0 bg-white z-50 flex items-center justify-center">
       <img
-        src="http://localhost:5173/src/assets/images/logo/logo1.png"
+        src={Logo}
         alt="Bình An Dược"
         className="w-max h-24 animate-pulse"
       />
@@ -32,7 +33,6 @@ const SuspenseWrapper = ({ children }) => {
     const timer = setTimeout(() => {
       setIsLoading(false);
     },1000);
-
     return () => clearTimeout(timer); 
   }, []);
 

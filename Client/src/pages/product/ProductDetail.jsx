@@ -277,8 +277,6 @@ const ProductDetail = () => {
               <div>
               </div>
             </div>
-
-          
           </div>
         ) : (
           <div className="flex justify-center">
@@ -288,7 +286,7 @@ const ProductDetail = () => {
       </div>
       <div>
         <h1 className='py-4 text-[25px] font-semibold'>Sản phẩm liên quan khác</h1>
-        {relatedProduct ? (
+        {relatedProduct && relatedProduct.length > 0 ? (
           <div className="flex">
             <Swiper {...sliderConfigProduct} className="mySwiper rounded-[5px]">
               {relatedProduct.map((product) => (
@@ -307,7 +305,6 @@ const ProductDetail = () => {
           </div>
         )}
       </div>
-     
     </div>
   );
 };

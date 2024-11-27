@@ -26,7 +26,7 @@ const createHistoryOrder = async (req, res) => {
 
 const getAllHistoryOrders = async (req, res) => {
   try {
-    const historyOrders = await HistoryOrder.find().sort({ created_at: -1 });
+    const historyOrders = await HistoryOrder.find().sort({ created_at: -1 }).populate('order_id');
     return res.status(200).json({ data: historyOrders });
   } catch (error) {
     console.error('Error fetching history orders:', error);

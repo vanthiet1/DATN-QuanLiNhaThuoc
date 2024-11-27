@@ -21,7 +21,6 @@ import orderServices from '../../services/orderService';
 const Header = () => {
     const { user } = useContext(UserContext) || { user: null };
     const { setTabIndex, } = useContext(TabUIAccountContext) || null;
-
     const navigate = useNavigate()
     const { cart } = useContext(CartContext);
     const { handleOpenDialog } = useContext(ToggleFormContext);
@@ -174,8 +173,8 @@ const Header = () => {
                                                 <div className="flex mt-3 items-center gap-2 cursor-pointer pb-1 group hover:text-[#2563EB] duration-200" onClick={redirectOrder}>
                                                     <span className='relative'>
                                                     <AppIcons.OderIcon addClassNames='text-gray-800' />
-                                                        <div className="absolute top-[-10px] right-[-7px]">
-                                                            <span className='text-[#fff] bg-red-500 flex justify-center items-center rounded-[50%] w-[15px] h-[15px] text-[10px] pl-[1px]'>
+                                                        <div className="absolute top-[-10px] right-[-5px]">
+                                                            <span className='text-[#fff] bg-red-500 flex justify-center items-center rounded-[50%] w-[15px] h-[15px] text-[10px] pl-[-2px]'>
                                                             {orderProduct ? orderProduct.length : 0}
                                                             </span>
                                                         </div>

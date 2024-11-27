@@ -10,20 +10,20 @@ const StepOrder = () => {
     setIsManualClick(true);
   };
 
-  useEffect(() => {
-    if (isManualClick) {
-      const timeout = setTimeout(() => {
-        setIsManualClick(false);
-      }, 3000);
-      return () => clearTimeout(timeout);
-    }
+  // useEffect(() => {
+  //   if (isManualClick) {
+  //     const timeout = setTimeout(() => {
+  //       setIsManualClick(false);
+  //     }, 3000);
+  //     return () => clearTimeout(timeout);
+  //   }
 
-    const slide = setInterval(() => {
-      setCurrentStep((prevStep) => (prevStep + 1) % dataStepOrder.length);
-    }, 3000);
+  //   const slide = setInterval(() => {
+  //     setCurrentStep((prevStep) => (prevStep + 1) % dataStepOrder.length);
+  //   }, 3000);
 
-    return () => clearInterval(slide);
-  }, [isManualClick, currentStep]);
+  //   return () => clearInterval(slide);
+  // }, [isManualClick, currentStep]);
 
   return (
     <div className="flex gap-5">
