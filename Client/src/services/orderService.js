@@ -20,7 +20,6 @@ const orderServices = {
       console.log(data);
       return data;
     } catch (error) {
-      showToastError(error.response.data.message);
       console.log(error.message);
     }
   },
