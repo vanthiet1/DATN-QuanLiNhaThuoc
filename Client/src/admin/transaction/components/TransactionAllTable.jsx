@@ -38,7 +38,7 @@ const TransactionAllTable = ({ data: transactionData }) => {
                     {formatsHelper.currency(amount)}
                   </td>
                   <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-700'>{response_code}</td>
-                  <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-700'>{order_id._id}</td>
+                  <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-700'>{order_id?._id}</td>
                   <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-700 '>{createdAt}</td>
                 </tr>
               );

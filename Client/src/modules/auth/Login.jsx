@@ -9,10 +9,9 @@ import { InputText } from "../../components/ui/form";
 import { Button } from "../../components/ui/button";
 import Logo from '../../assets/images/logo/logo.png'
 import { ToggleFormContext } from "../../contexts/ToggleFormContext";
-import tokenService from "../../services/tokenService";
 const Login = () => {
-  const { fetchUser } = useContext(UserContext)
-  const {handleOpenDialog,setDialogState} = useContext(ToggleFormContext)
+  const { fetchUser } = useContext(UserContext);
+  const {handleOpenDialog,setDialogState} = useContext(ToggleFormContext);
   const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(formAuthSchema.login) });
   const onSubmit = async (formData) => {
    const data = await authServices.login(
@@ -21,15 +20,11 @@ const Login = () => {
         password: formData.password,
       }
     );
-     
     if(!data) return;
      setDialogState({ isOpen: false, type: '' })
-     tokenService.removeDisposableEmail()
     await fetchUser()
   };
   const login = useGoogleLoginHook()
-  
-
   return (
     <>
       <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-[#FEFEFE] rounded-lg ">

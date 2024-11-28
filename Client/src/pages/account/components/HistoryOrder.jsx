@@ -46,7 +46,7 @@ const HistoryOrder = () => {
                                 <div className="px-5 cursor-pointer ">
                                     <div className="flex justify-between items-center">
                                         <div className="flex gap-2 items-center pb-3">
-                                            <span className="block font-semibold">Đơn {hisOrder?.order_id?._id}</span>
+                                            <span className="block font-semibold">Đơn hàng {hisOrder?.order_id?._id}</span>
                                             <span
                                                 className={`p-1 w-max flex justify-center rounded-[7px] ${hisOrder?.order_id?.status === 5
                                                     ? 'text-red-500 bg-[#FFE7E9] font-bold'
@@ -59,11 +59,11 @@ const HistoryOrder = () => {
                                                 {hisOrder?.order_id?.status === 4 && "Đã hoàn thành"}
                                             </span>
                                         </div>
-                                        <div>xóa</div>
+                                        <div className=" text-[#EF4444] w-[100px] p-2 rounded-[6px] text-center font-semibold">xóa</div>
                                     </div>
                                     <div>
                                         <div className="flex items-center gap-3 pb-2">
-                                            <AppIcons.BuildingStorefront addClassNames="text-[#2563eb]" />
+                                            <AppIcons.BuildingStorefront />
                                             <span>Nhà thuốc bình an dược</span>
                                         </div>
                                         <div className="flex items-center gap-3 pb-2">
@@ -71,7 +71,7 @@ const HistoryOrder = () => {
                                             <span>Đơn thuốc giao hàng</span>
                                         </div>
                                         <div className="flex items-center gap-3">
-                                            <AppIcons.BanknotesIcon addClassNames="" />
+                                            <AppIcons.BanknotesIcon  />
                                             <span>{formatsHelper.currency(hisOrder?.order_id?.total_price)}</span>
                                         </div>
                                         <div className="flex justify-between items-center">
