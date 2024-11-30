@@ -19,7 +19,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
   cors({
-    origin: 'https://quan-li-nha-thuoc.vercel.app',
+    origin: 'https://nha-thuoc-binh-an-duoc.vercel.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
     exposedHeaders: ['x-auth-token']
