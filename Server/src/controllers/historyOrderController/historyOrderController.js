@@ -29,7 +29,6 @@ const createHistoryOrder = async (req, res) => {
         historyOrderExist.updated_by_user_id = updated_by_user_id;
         await historyOrderExist.save();
         return res.status(200).json({
-          message: 'History order updated successfully!',
           data: historyOrderExist
         });
 
@@ -57,7 +56,15 @@ const createHistoryOrder = async (req, res) => {
 
 const getAllHistoryOrders = async (req, res) => {
   try {
-    const historyOrders = await HistoryOrder.find().sort({ created_at: -1 }).populate('order_id');
+    const historyOrders = await HistoryOrder.find().sort({ created_at: -1 })
+    .populate('order_id')
+    .populate({
+      path: 'updated_by_user_id',
+      populate: {
+        path: 'role_id', 
+        select: 'role_Name',
+      },
+    })
     return res.status(200).json({ data: historyOrders });
   } catch (error) {
     console.error('Error fetching history orders:', error);

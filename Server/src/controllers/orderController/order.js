@@ -9,6 +9,7 @@ const ProductModel = require('../../models/productModel/product');
 const { getIoSocket } = require('../../configs/socket');
 const NotificationModel = require('../../models/notificationModel/notificationModel');
 const UserModel = require('../../models/userModel/user');
+const HistoryOrder = require('../../models/historyOrderModel/historyOrder')
 
 const OrderController = {
   createOrder: async (req, res) => {
@@ -281,11 +282,28 @@ const OrderController = {
     const { id } = req.params;
     const { status } = req.body;
     try {
+      const currentOrder = await OrderModel.findById(id);
+      if (!currentOrder) {
+        return res.status(404).json({ message: 'Không tìm thấy đơn hàng' });
+      }
       if (status == 4) {
         const order = await OrderModel.findByIdAndUpdate(id, { status, isPay: true }, { new: true });
         return res.status(200).json(order);
       } else if (status == 5) {
         const order = await OrderModel.findByIdAndUpdate(id, { status, isPay: false }, { new: true });
+        const existingHistory = await HistoryOrder.findOne({
+          order_id: id,
+          status_to: status
+        });
+        if (!existingHistory) {
+          await HistoryOrder.create({
+            order_id: id,
+            status_from: currentOrder.status,
+            status_to: status,
+            note: '',
+            updated_by_user_id: id 
+          });
+        }
         return res.status(200).json(order);
       }
       const order = await OrderModel.findByIdAndUpdate(id, { status }, { new: true });

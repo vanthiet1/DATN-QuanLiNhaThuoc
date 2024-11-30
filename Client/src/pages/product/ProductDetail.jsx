@@ -21,13 +21,12 @@ import GalleryComponent from "../../components/ui/image/Gallery";
 import CardProduct from "../../components/card/CardProduct";
 import { sliderConfigProduct } from "../../configs/sliderConfig";
 import 'swiper/css';
-// import useSrcollTop from '../../hooks/useSrcollTop';
+import useSrcollTop from '../../hooks/useSrcollTop';
 
 
 const ProductDetail = () => {
   const { slug } = useParams();
-  // useSrcollTop(slug)
-  
+  useSrcollTop(slug)
   const { user } = useContext(UserContext)
   const { register, handleSubmit, formState: { errors }, watch, reset } = useForm({ resolver: yupResolver(formCommentSchema.comment) });
   const { isLoading, responsData: product, isError } = useFetch(

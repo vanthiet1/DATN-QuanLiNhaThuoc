@@ -15,7 +15,7 @@ const HistoryOrder = () => {
 
     const getDataHistoryOrder = async () => {
         try {
-            setIsLoading(true); 
+            setIsLoading(true);
             const dataHisOrder = await historyOrderServices.getAllHistoryOrders();
             const filteredHistoryOrders = dataHisOrder?.data?.filter(
                 (hisOrder) => hisOrder?.order_id?.user_id === user?._id
@@ -24,13 +24,14 @@ const HistoryOrder = () => {
         } catch (error) {
             console.error("Lỗi khi tải lịch sử đơn hàng:", error);
         } finally {
-            setIsLoading(false); 
+            setIsLoading(false);
         }
     };
 
     useEffect(() => {
         getDataHistoryOrder();
     }, []);
+    console.log(hisOrderUser);
 
     return (
         <div>
@@ -71,7 +72,7 @@ const HistoryOrder = () => {
                                             <span>Đơn thuốc giao hàng</span>
                                         </div>
                                         <div className="flex items-center gap-3">
-                                            <AppIcons.BanknotesIcon  />
+                                            <AppIcons.BanknotesIcon />
                                             <span>{formatsHelper.currency(hisOrder?.order_id?.total_price)}</span>
                                         </div>
                                         <div className="flex justify-between items-center">

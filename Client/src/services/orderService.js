@@ -52,7 +52,6 @@ const orderServices = {
   deleteOrder: async (resquestParrams) => {
     try {
       const { data } = await http.delete(`${END_POIND_API.ORDER}/${resquestParrams}`);
-      showToastSuccess(data.message || 'Xóa.ORDER thành công');
       return data;
     } catch (error) {
       showToastError(error.response.data.message);
