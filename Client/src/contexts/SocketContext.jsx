@@ -6,7 +6,7 @@ const SocketContext = createContext();
 const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
 
-  const SERVER_URL = 'https://nha-thuoc-binh-an-duoc.vercel.app';
+  const SERVER_URL = 'https://datn-quanlinhathuoc.onrender.com';
   useEffect(() => {
     const socketIntance = io(SERVER_URL);
     setSocket(socketIntance);
