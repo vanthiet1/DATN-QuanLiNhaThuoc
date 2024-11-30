@@ -6,6 +6,10 @@ const mongoose = require('mongoose');
 const { handleCreateImageUpload } = require('../../services/mediaCloudinary');
 const formatHelper = require('../../utilities/helper/formatHelper');
 const ProductModel = require('../../models/productModel/product');
+const { getIoSocket } = require('../../configs/socket');
+const NotificationModel = require('../../models/notificationModel/notificationModel');
+const UserModel = require('../../models/userModel/user');
+const HistoryOrder = require('../../models/historyOrderModel/historyOrder')
 
 const OrderController = {
   createOrder: async (req, res) => {
@@ -28,7 +32,6 @@ const OrderController = {
       const user_id_convert = new ObjectId(user_id);
       const payment_method_id_convert = new ObjectId(payment_method_id);
 
-      console.log(addressParse);
       // kiểm tra xem user đã có địa chỉ chưa ?
       // thêm và cập nhật địa chỉ người mua
 
@@ -38,7 +41,6 @@ const OrderController = {
         newUserAddress = new AddressModel({ ...addressParse, user_id: user_id_convert });
         await newUserAddress.save();
       } else {
-        console.log(userAddressExist);
         const filterUpdateAddress = {};
         if (userAddressExist.receiver !== receiver) {
           filterUpdateAddress.receiver = receiver;
@@ -128,6 +130,24 @@ const OrderController = {
           }
         }
       }
+
+      if (newOrder) {
+        const userInfor = await UserModel.findById(user_id_convert);
+        getIoSocket().to('staff').emit('notificationNewOrder', newOrder);
+        getIoSocket().to('admin').emit('notificationNewOrder', newOrder);
+
+        if (userInfor) {
+          const newNotificationState = {
+            type: 'info',
+            message: `${userInfor?.fullname} vừa tạo đơn hàng ${newOrder.total_price} vnd`,
+            category: 'new order'
+          };
+
+          const newNotification = new NotificationModel(newNotificationState);
+          await newNotification.save();
+        }
+      }
+
       res.status(200).json({ newOrder, message: 'Tạo hóa đơn thành công' });
     } catch (error) {
       res.status(400).json({ message: error.message });
@@ -249,7 +269,7 @@ const OrderController = {
       if (!user_id) {
         return res.status(400).json({ message: 'Thiếu thông tin user' });
       }
-      const orderUser = await OrderModel.find({ user_id: user_id })
+      const orderUser = await OrderModel.find({ user_id: user_id });
       if (!orderUser) {
         return res.status(404).json({ message: 'Không tìm thấy đơn hàng' });
       }
@@ -262,8 +282,28 @@ const OrderController = {
     const { id } = req.params;
     const { status } = req.body;
     try {
+      const currentOrder = await OrderModel.findById(id);
+      if (!currentOrder) {
+        return res.status(404).json({ message: 'Không tìm thấy đơn hàng' });
+      }
       if (status == 4) {
         const order = await OrderModel.findByIdAndUpdate(id, { status, isPay: true }, { new: true });
+        return res.status(200).json(order);
+      } else if (status == 5) {
+        const order = await OrderModel.findByIdAndUpdate(id, { status, isPay: false }, { new: true });
+        const existingHistory = await HistoryOrder.findOne({
+          order_id: id,
+          status_to: status
+        });
+        if (!existingHistory) {
+          await HistoryOrder.create({
+            order_id: id,
+            status_from: currentOrder.status,
+            status_to: status,
+            note: '',
+            updated_by_user_id: id 
+          });
+        }
         return res.status(200).json(order);
       }
       const order = await OrderModel.findByIdAndUpdate(id, { status }, { new: true });

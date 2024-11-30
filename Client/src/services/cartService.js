@@ -30,7 +30,6 @@ const cartServices = {
   deleteProductCartByUserId: async (userId, productId) => {
     try {
       const { data } = await http.delete(`${END_POIND_API.CART}/product/${userId}/${productId}`);
-      showToastSuccess(data.message);
       return data;
     } catch (error) {
       console.log(error.message);

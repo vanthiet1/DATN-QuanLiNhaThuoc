@@ -23,7 +23,6 @@ const YourOrders = () => {
           });
           if(result){
             const orderUpdate = await orderServices.updateOrder(id,{status:5})
-            console.log(orderUpdate);
             if (orderUpdate?.status === 5) {
                 const updatedOrders = orderProduct.filter(
                     (productCancel) => productCancel._id !== id
@@ -36,7 +35,7 @@ const YourOrders = () => {
     };
     const getDataOrder = async () => {
         const dataOrder = await orderServices.getOrderByUserId(user?._id);
-        const filteredOrders = dataOrder?.filter(order => order.status === 1);
+        const filteredOrders = dataOrder?.filter(order => [1,2,3].includes(order.status));
         setOrderProduct(filteredOrders || []);
     };
     useEffect(() => {

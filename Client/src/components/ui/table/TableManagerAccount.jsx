@@ -8,18 +8,9 @@ import { Button } from '../button';
 import { UserContext } from '../../../contexts/UserContext';
 import { useContext, useEffect, useState } from 'react';
 
-const roleBreadCrumbs = [
-  {
-    path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
-    icon: <AppIcons.HomeIcon width='16' height='16' />
-  },
-  {
-    title: 'Manager Account'
-  }
-];
 
-const Table = ({ data, addClassNames, handleDelete, handleIsActiveAccount, roleData, handleUpdateRoleAccount }) => {
+
+const Table = ({ data, addClassNames, handleDelete, handleIsActiveAccount, roleData, handleUpdateRoleAccount,roleBreadCrumbs }) => {
   const { user } = useContext(UserContext);
   return (
     <>

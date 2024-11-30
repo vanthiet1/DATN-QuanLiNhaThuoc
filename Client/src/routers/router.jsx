@@ -6,6 +6,7 @@ import SuspenseWrapper from '../components/suspenseWrapper/SuspenseWrapper';
 import PrivateRouter from './privateRouter/PrivateRouter';
 import ProtectedRoute from './ProtectedRoute';
 
+
 const HomePage = lazy(() => import('../pages/homePage/HomePage'));
 const ProductSearch = lazy(() => import('../pages/productSearch/ProductSearch'));
 const ProductDetail = lazy(() => import('../pages/product/ProductDetail'));
@@ -19,7 +20,7 @@ const BmiCalculator = lazy(() => import('../pages/tools/BmiCalculator'));
 const ListAllProduct = lazy(() => import('../pages/product/ListAllProduct'));
 const About = lazy(() => import('../pages/about/About'));
 const Contact = lazy(() => import('../pages/contact/Contact'));
-const HistoryOrder = lazy(() => import('../pages/order/HistoryOrder'));
+const HistoryOrder = lazy(() => import('../pages/order/HistoryOrderDetail'));
 const Blog = lazy(() => import('../pages/blog/Blog'));
 
 const DashBoard = lazy(() => import('../admin/dashboard/Dashboard'));
@@ -82,7 +83,7 @@ const router = createBrowserRouter([
         path: PATH_ROUTERS_CLIENT.HOMEPAGE,
         element: (
           <SuspenseWrapper>
-            <HomePage />
+              <HomePage />
           </SuspenseWrapper>
         )
       },

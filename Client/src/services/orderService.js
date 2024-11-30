@@ -20,14 +20,12 @@ const orderServices = {
       console.log(data);
       return data;
     } catch (error) {
-      showToastError(error.response.data.message);
       console.log(error.message);
     }
   },
   getOrderById: async (resquestParrams) => {
     try {
       const { data } = await http.get(`${END_POIND_API.ORDER}/${resquestParrams}`);
-      console.log(data);
       return data[0];
     } catch (error) {
       console.log(error.message);
@@ -54,7 +52,6 @@ const orderServices = {
   deleteOrder: async (resquestParrams) => {
     try {
       const { data } = await http.delete(`${END_POIND_API.ORDER}/${resquestParrams}`);
-      showToastSuccess(data.message || 'Xóa.ORDER thành công');
       return data;
     } catch (error) {
       showToastError(error.response.data.message);
@@ -74,10 +71,8 @@ const orderServices = {
   updatePayOrder: async (requestParams, requestBody) => {
     try {
       const { data } = await http.put(`${END_POIND_API.ORDER}/bank/${requestParams}`, requestBody);
-      showToastSuccess(data.message || '');
       return data;
     } catch (error) {
-      showToastError(error.response.data.message);
       console.log(error.message);
     }
   },

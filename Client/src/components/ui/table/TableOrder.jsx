@@ -27,12 +27,14 @@ const TableOrder = ({
                             <tr key={order._id} className="border-b border-gray-300 hover:bg-gray-50">
                                 <td className="p-2">{order?.total_quantity}</td>
                                 <td className="p-2">{formatsHelper.currency(order?.total_price)}</td>
-                                <td className={`p-2 ${order?.status === 1 ? "text-yellow-600 font-bold" : "text-[#333]"}`}>
-                                    {order?.status === 1 && "Đang xử lí"}
+                                <td className={`p-2 ${order?.status === 1 ? "text-yellow-600 font-bold" : order?.status === 2 ? "text-green-600 font-bold" : order?.status === 3 ? "text-blue-600 font-bold" : "text-[#333]"}`}>
+                                    {order?.status === 1 && "Đang xử lý"}
+                                    {order?.status === 2 && "Đã xác nhận"}
+                                    {order?.status === 3 && "Đang giao hàng"}
                                 </td>
                                 <td className="p-2">{formatsHelper.formatDate(order?.createdAt)}</td>
                                 <td className="p-2">
-                                {order?.isPay ? <span className="text-green-600 font-bold">Đã thanh toán</span>: <span className="text-red-500 font-bold">Chưa thanh toán</span>}
+                                    {order?.isPay ? <span className="text-green-600 font-bold">Đã thanh toán</span> : <span className="text-red-500 font-bold">Chưa thanh toán</span>}
                                 </td>
                                 <td className="p-2">
                                     <Button

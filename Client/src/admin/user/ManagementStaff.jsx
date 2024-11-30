@@ -6,8 +6,6 @@ import useFetch from '../../hooks/useFetch.js';
 import { handleDelete, handleIsActiveAccount, handleUpdateRoleAccount } from './handle.js';
 import { useConfirmDialog } from '../../components/dialog/ConfirmDialogContext';
 import roleServices from '../../services/roleService.js';
-import SectionWrapper from '../../components/sectionWrapper/SectionWrapper.jsx';
-import BreadCrumb from '../../components/breadCrumb/BreadCrumb.jsx';
 import { PATH_ROUTERS_ADMIN } from '../../utils/constant/routers.js';
 import AppIcons from '../../components/ui/icon';
 
@@ -18,10 +16,9 @@ const managementStaffBreadcrumb = [
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'Management customer'
+    title: 'Management staff'
   }
 ];
-
 const ManagementStaff = () => {
     const titleRow = [
         "Full name",
@@ -38,7 +35,7 @@ const ManagementStaff = () => {
     const [staffData, setStaffData] = useState([]);
     const [roleData, setRoleData] = useState([]);
     const [changeRole,setChange] = useState({});
-
+   const confirmDialog = useConfirmDialog();
     const getUserData = async ()=>{
           const initialStaffData = await userServices.getAllStaff()
           setStaffData(initialStaffData);
@@ -58,6 +55,7 @@ const ManagementStaff = () => {
     return (
         <div>
             <TableManagerAccount
+                roleBreadCrumbs={managementStaffBreadcrumb}
                 roleData={optionsRole}
                 addClassNames={'w-[100%]'}
                 data={staffData}
