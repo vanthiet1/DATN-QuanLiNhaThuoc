@@ -52,6 +52,7 @@ const CheckoutForm = () => {
               Tỉnh Thành
             </label>
             <select
+              refinput={register('province')}
               onChange={(e) => setSelectedProvince(e.target.value)}
               id='province'
               className='border  border-gray-300 text-gray-600 text-base rounded block w-full py-1 px-2 focus:outline-none'
@@ -66,12 +67,14 @@ const CheckoutForm = () => {
                   );
                 })}
             </select>
+            {errors.province && <ErrorMessage messsage={errors.province.message}></ErrorMessage>}
           </div>
           <div className='flex flex-col text-gray-700'>
             <label htmlFor='' className='font-medium text-sm mb-2'>
               Huyện
             </label>
             <select
+              refinput={register('district')}
               onChange={(e) => setSelectedDistrict(e.target.value)}
               disabled={!selectedProvice}
               className='border  border-gray-300 text-gray-600 text-base rounded block w-full py-1 px-2 focus:outline-none'
@@ -86,12 +89,14 @@ const CheckoutForm = () => {
                   );
                 })}
             </select>
+            {errors.district && <ErrorMessage messsage={errors.district.message}></ErrorMessage>}
           </div>
           <div className='flex flex-col text-gray-700'>
             <label htmlFor='' className='font-medium text-sm mb-2'>
               Thị Xã
             </label>
             <select
+              refinput={register('ward')}
               onChange={(e) => handleChangeValueWard(e.target.value)}
               disabled={!selectedDistrict}
               className='border  border-gray-300 text-gray-600 text-base rounded block w-full py-1 px-2 focus:outline-none'
@@ -106,6 +111,7 @@ const CheckoutForm = () => {
                   );
                 })}
             </select>
+            {errors.ward && <ErrorMessage messsage={errors.ward.message}></ErrorMessage>}
           </div>
           <div className='flex flex-col text-gray-700 col-span-3'>
             <label htmlFor='' className='font-medium text-sm mb-2'>
