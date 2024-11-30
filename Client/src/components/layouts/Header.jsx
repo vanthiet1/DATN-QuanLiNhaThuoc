@@ -86,7 +86,7 @@ const Header = () => {
         };
         getDataOrder();
     }, [user?._id]);
-  
+
     return (
         <div className={`ease-in-out sticky top-0 z-30`}>
             <header>
@@ -213,10 +213,10 @@ const Header = () => {
                                 <Link to={'/gio-hang'}>
                                     <div className='relative'>
                                         <AppIcons.OderIcon addClassNames='text-[#fff] cursor-pointer' width='20px' height='20px' />
-                                        {cart && (
+                                        {user && cart?.length > 0 && (
                                             <div className="absolute top-[-10px] right-[-12px]">
-                                                <span className='text-[#fff] bg-red-500 flex justify-center items-center rounded-[50%] w-[20px] h-[20px] text-[15px]'>
-                                                    {cart?.length}
+                                                <span className="text-[#fff] bg-red-500 flex justify-center items-center rounded-full w-[20px] h-[20px] text-[15px]">
+                                                    {cart.length}
                                                 </span>
                                             </div>
                                         )}
