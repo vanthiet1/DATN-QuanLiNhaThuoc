@@ -21,7 +21,7 @@ const NotFoundPage = lazy(() => import('../pages/notfound/NotFound'));
 const About = lazy(() => import('../pages/about/About'));
 const Contact = lazy(() => import('../pages/contact/Contact'));
 const Blog = lazy(() => import('../pages/blog/Blog'));
-const BankDemo = lazy(() => import('../pages/bank/BankDemo'));
+// const BankDemo = lazy(() => import('../pages/bank/BankDemo'));
 
 
 const DashBoard = lazy(() => import('../admin/dashboard/Dashboard'));
@@ -95,14 +95,14 @@ const router = createBrowserRouter([
           </SuspenseWrapper>
         )
       },
-      {
-        path:'bank',
-        element: (
-          <SuspenseWrapper>
-            <BankDemo />
-          </SuspenseWrapper>
-        )
-      },
+      // {
+      //   path:'bank',
+      //   element: (
+      //     <SuspenseWrapper>
+      //       <BankDemo />
+      //     </SuspenseWrapper>
+      //   )
+      // },
       {
         path: PATH_ROUTERS_CLIENT.PRODUCT_DETAILS,
         element: (
