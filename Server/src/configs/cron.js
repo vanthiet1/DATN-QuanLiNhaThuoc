@@ -41,11 +41,11 @@ const cronCofig = {
                                 <h1 style="color: #ffffff; font-size: 24px; margin: 0;">Nhắc nhở uống thuốc</h1>
                             </div>
                             <div style="padding: 20px; text-align: center;">
-                                <img src="https://your-domain.com/path-to-image/logo1.png" alt="Logo" style="width: 100px; margin-bottom: 20px;">
+                                <img src="https://res.cloudinary.com/dz93cdipw/image/upload/v1733052072/DATN_QuanLiNhaThuoc/lfriluyngwydd2ri21ey.png" alt="Logo" style="width: 100px; margin-bottom: 20px;">
                                 <p style="color: #555555; font-size: 16px; line-height: 1.5; margin: 0 0 20px;">
                                     Đây là nhắc nhở uống thuốc hàng ngày của bạn! Đừng quên uống thuốc đúng giờ để đảm bảo sức khỏe.
                                 </p>
-                                <a href="http://localhost:5173/" style="display: inline-block; padding: 10px 20px; background-color: #2563EB; color: #ffffff; text-decoration: none; font-weight: bold; border-radius: 4px;">
+                                <a href="https://nha-thuoc-binh-an-duoc.vercel.app" style="display: inline-block; padding: 10px 20px; background-color: #2563EB; color: #ffffff; text-decoration: none; font-weight: bold; border-radius: 4px;">
                                     Ghé thăm website của chúng tôi
                                 </a>
                             </div>
