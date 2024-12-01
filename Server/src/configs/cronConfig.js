@@ -1,4 +1,4 @@
 module.exports = {
-    reminderEmailSchedule: '27 0 * * *',
+    reminderEmailSchedule: '0 19 * * 1',
     clearOtpSchedule: '* * * * *'
 };
