@@ -7,6 +7,12 @@ const formOrderSchema = {
     order_date: Yup.date().default(new Date()),
     payment_method_id: Yup.string().required('Vui lòng chọn phương thức thanh toán'),
     street: Yup.string().required('Vui lòng nhập tuyến đường'),
+
+    province: Yup.string().required('Vui lòng chọn tỉnh của bạn'),
+    district: Yup.string().required('Vui lòng chọn huyện / quận của bạn'),
+    ward: Yup.string().required('Vui lòng chọn phường / xã của bạn'),
+
+
     phone: Yup.string()
       .matches(/^[0-9]{10,11}$/, 'Số điện thoại không hợp lệ. Phải có 10-11 chữ số.')
       .required('Không được để phone trống.'),
