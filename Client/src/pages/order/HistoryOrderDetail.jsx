@@ -42,7 +42,8 @@ const HistoryOrder = () => {
             <div className="shadow p-5 rounded-lg">
                 <div className="flex items-center gap-2 flex-wrap">
                     <h1 className="font-semibold text-lg">Thông Tin Giao Hàng</h1>
-                    <span
+                    {hisOrderDetail?.status === 4 ? <span className="text-[#fff] rounded-[10px] text-[13px] px-2 py-1 bg-green-500">Đơn đã được giao thành công</span> : (
+                        <span
                         className={`text-[#fff] rounded-[10px] text-[13px] px-2 py-1 ${hisOrderDetail?.status === 4
                             ? 'bg-green-500'
                             : hisOrderDetail?.status === 5
@@ -56,8 +57,11 @@ const HistoryOrder = () => {
                                 ? 'Bạn đã hủy đơn'
                                 : 'Shop hủy đơn'
                         }
-                        {hisOrderDetail?.status === 4 && 'Đơn đã được giao thành công'}
+                       
                     </span>
+                    )}
+               
+
                 </div>
                 <div className="flex pt-5 gap-3 md:flex-row">
                     <div className="flex md:flex-col items-center">
