@@ -1,5 +1,6 @@
 const cron = require('node-cron');
 const UserModel = require('../models/userModel/user');
+const OrderModel = require('../models/ordersModels/order');
 require('dotenv').config()
 const sendReminderEmail = require('../helpers/notification')
 const { reminderEmailSchedule, clearOtpSchedule } = require('./cronConfig');
@@ -29,10 +30,15 @@ const cronCofig = {
         cron.schedule(reminderEmailSchedule, async () => {
             try {
                 const users = await UserModel.find();
+
                 if (users.length === 0) {
                     return;
                 }
                 for (const user of users) {
+                   const orders = await OrderModel.find({user_id:user._id});
+                   if (!orders.length) {
+                    continue;
+                     }
                     const email = user.email;
                     const subject = 'Nhắc nhở uống thuốc';
                     const htmlContent = `
@@ -54,7 +60,7 @@ const cronCofig = {
                         </div>
                     </div>
                 `;
-                    if (email) {
+                    if (email && orders) {
                         await sendReminderEmail({ email, subject, htmlContent });
                     } else {
                         console.log(`Người dùng ${user.username} không có email hợp lệ.`);

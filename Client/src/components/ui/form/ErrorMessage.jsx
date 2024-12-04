@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const ErrorMessage = ({ addClassNames = '', messsage = 'Lỗi khi nhập dữ liệu !', children, ...props }) => {
   return (
-    <p className={cn('text-pink-600 text-sm mt-2', addClassNames)} {...props}>
+    <p className={cn('text-pink-600 text-[16px] mt-2', addClassNames)} {...props}>
       {children}
       {messsage}
     </p>

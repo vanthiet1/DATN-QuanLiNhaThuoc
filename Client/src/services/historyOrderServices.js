@@ -33,8 +33,7 @@ const historyOrderServices = {
   },
   deleteHistoryOrder: async (requestParams) => {
     try {
-      const { data } = await http.get(`${END_POIND_API.HISTORY_ORDER}/${requestParams}`);
-      console.log(data);
+      const { data } = await http.delete(`${END_POIND_API.HISTORY_ORDER}/${requestParams}`);
       return data;
     } catch (error) {
       showToastError(error.response?.data?.message);
