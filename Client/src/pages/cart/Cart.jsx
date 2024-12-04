@@ -42,7 +42,7 @@ const Cart = () => {
             <div className='container mx-auto'>
               <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
                 <div className='lg:col-span-2 space-y-6'>
-                  <div className={` ${cart?.length === 2 && 'max-md:h-[600px] max-md:overflow-scroll'} `}>
+                  <div className={` ${cart?.length > 1 && 'max-md:h-[600px] max-md:overflow-scroll'} `}>
                     {cart.map((productCart) => {
                       return <CartCard key={productCart.productId._id} productCart={productCart} />
                     })}

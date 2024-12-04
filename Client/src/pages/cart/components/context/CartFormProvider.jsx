@@ -20,7 +20,7 @@ export const useCartFormContext = () => {
 const CartFormProvider = ({ children, setShowQrCode }) => {
   const [isLoadingCreateOrder, setIsLoadingCreateOrder] = useState(false);
   const { user } = useContext(UserContext);
-  const { cart } = useContext(CartContext);
+  const { cart , setCart } = useContext(CartContext);
   const { address_state, handleOrderWithVnpay } = uesCheckOutContext();
   const [orderSuccsess, setOrderSuccsess] = useState({});
   const navigate = useNavigate()
@@ -96,7 +96,6 @@ const CartFormProvider = ({ children, setShowQrCode }) => {
 
       if (orderDataRest.payment_method_id === PAYMENT_METHODS_CODE.VNPAY_ID) {
         const orderResponse = await orderServices.createOrder(formData);
-
         if (orderResponse && orderResponse.newOrder) {
           const { _id, order_date, total_price } = orderResponse.newOrder;
           await handleOrderWithVnpay({
@@ -120,6 +119,7 @@ const CartFormProvider = ({ children, setShowQrCode }) => {
           for (let productItem of cart) {
             await cartServices.deleteProductCartByUserId(user?._id, productItem.productId._id);
           }
+          setCart([])
           showToastSuccess('Đơn đã được đặt');
         }
         reset();
