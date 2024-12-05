@@ -2,6 +2,7 @@ const qs = require('qs');
 const crypto = require('crypto-js');
 const OrderModel = require('../../models/ordersModels/order');
 const TransactionModel = require('../../models/transactionModel/transaction');
+const OrderDetails = require('../../models/orderDetailsModel/orderDetails');
 function sortObject(obj) {
   let sorted = {};
   let str = [];
@@ -127,7 +128,12 @@ const Vnpay = {
         return res.redirect(process.env.URL_CLIENT);
       }
     } else {
-      res.json({ message: 'Payment failed', data: vnp_Params, secureHash, signed });
+      const orderId = vnp_Params['vnp_TxnRef'];
+      const orderDelete = await OrderModel.findByIdAndDelete(orderId);
+      if (orderDelete) {
+        await OrderDetails.deleteMany({ order_id: orderId });
+      }
+      return res.redirect(process.env.URL_CLIENT);
     }
   },
   querydr: async (req, res) => {}
