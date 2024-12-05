@@ -21,13 +21,12 @@ import GalleryComponent from "../../components/ui/image/Gallery";
 import CardProduct from "../../components/card/CardProduct";
 import { sliderConfigProduct } from "../../configs/sliderConfig";
 import 'swiper/css';
-// import useSrcollTop from '../../hooks/useSrcollTop';
+import useSrcollTop from '../../hooks/useSrcollTop';
 
 
 const ProductDetail = () => {
   const { slug } = useParams();
-  // useSrcollTop(slug)
-  
+  useSrcollTop(slug)
   const { user } = useContext(UserContext)
   const { register, handleSubmit, formState: { errors }, watch, reset } = useForm({ resolver: yupResolver(formCommentSchema.comment) });
   const { isLoading, responsData: product, isError } = useFetch(
@@ -50,17 +49,17 @@ const ProductDetail = () => {
   } = useContext(HandleCartContext)
 
   useEffect(() => {
-    if (allProduct && product.length > 0) {
+    if (allProduct && product?.length > 0) {
       const relatedProducts = allProduct?.filter(
         (pro) => pro?.sub_category_id === product?.[0]?.sub_category_id
       );
-      if (relatedProducts.length < 6) {
+      if (relatedProducts?.length < 6) {
         const unrelatedProducts = allProduct?.filter(
           (pro) => pro?.sub_category_id !== product?.[0]?.sub_category_id
         );
         const randomUnrelatedProducts = unrelatedProducts
           .sort(() => Math.random() - 0.5) 
-          .slice(0, 6 - relatedProducts.length);
+          .slice(0, 6 - relatedProducts?.length);
         setProductRelated([...relatedProducts, ...randomUnrelatedProducts]);
       } else {
         setProductRelated(relatedProducts);
@@ -153,7 +152,7 @@ const ProductDetail = () => {
                 <h1 className="font-bold text-[30px] max-md:text-[20px]">{product[0]?.name}</h1>
                 <div className="flex gap-3 pb-2">
                   <span className="block font-semibold">Danh mục:</span>
-                  {product[0].sub_category.length > 0 ? (
+                  {product?.[0].sub_category?.length > 0 ? (
                     product[0]?.sub_category.map((subCate) => (
                       <div key={subCate._id}>
                         <span >{subCate?.name}</span>
@@ -165,7 +164,7 @@ const ProductDetail = () => {
                 </div>
                 <div className="flex gap-3 pb-2">
                   <span className="block font-semibold">Công dụng:</span>
-                  <span className="max-w-[600px]">{product[0]?.description_short}</span>
+                  <span className="max-w-[600px]">{product?.[0]?.description_short}</span>
                 </div>
                 <div className="flex gap-3 pb-2">
                   <span className="block font-semibold">Thương hiệu:</span>
@@ -247,7 +246,7 @@ const ProductDetail = () => {
               </div>
 
               <div className="mt-[50px] h-auto overflow-y-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-200">
-                {dataComment && dataComment.length > 0 ? (
+                {dataComment && dataComment?.length > 0 ? (
                   dataComment
                     .slice()
                     .reverse()
@@ -298,7 +297,7 @@ const ProductDetail = () => {
       </div>
       <div>
         <h1 className='py-4 text-[25px] font-semibold'>Sản phẩm liên quan khác</h1>
-        {relatedProduct && relatedProduct.length > 0 ? (
+        {relatedProduct && relatedProduct?.length > 0 ? (
           <div className="flex">
             <Swiper {...sliderConfigProduct} className="mySwiper rounded-[5px]">
               {relatedProduct.map((product) => (

@@ -29,7 +29,7 @@ const Header = () => {
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isShowCategory, setIsShowCategory] = useState(false);
-    const [orderProduct, setOrderProduct] = useState(0);
+    const [orderProduct, setOrderProduct] = useState([]);
 
     const redirectOrder = () => {
         navigate(`${PATH_ROUTERS_CLIENT.ACCOUNT}`)
@@ -76,13 +76,12 @@ const Header = () => {
             handleSearchQueryProduct();
         }
     };
-
     useEffect(() => {
         const getDataOrder = async () => {
             if (user?._id) {
                 const dataOrder = await orderServices.getOrderByUserId(user._id);
                 const filteredOrders = dataOrder?.filter(order => order.status === 1);
-                setOrderProduct(filteredOrders || []);
+                setOrderProduct(filteredOrders);
             }
         };
         getDataOrder();
@@ -176,12 +175,12 @@ const Header = () => {
                                                         <div className="absolute top-[-10px] right-[-5px]">
                                                             {user && orderProduct && (
                                                                 <span className="text-[#fff] bg-red-500 flex justify-center items-center rounded-[50%] w-[15px] h-[15px] text-[10px]">
-                                                                    {orderProduct.length}
+                                                                    {orderProduct?.length}
                                                                 </span>
                                                             )}
                                                         </div>
                                                     </span>
-                                                    <span>Đơn hàng xử lí</span>
+                                                    <span>Đơn hàng của bạn</span>
                                                 </div>
                                                 <div className="flex mt-3 items-center gap-2 cursor-pointer pb-1 group hover:text-[#2563EB] duration-200" onClick={redirectHistoryOrder}>
                                                     <span><AppIcons.BanknotesIcon addClassNames='text-gray-800' /></span>
@@ -214,10 +213,10 @@ const Header = () => {
                                 <Link to={'/gio-hang'}>
                                     <div className='relative'>
                                         <AppIcons.OderIcon addClassNames='text-[#fff] cursor-pointer' width='20px' height='20px' />
-                                        {cart && (
+                                        {user && cart?.length > 0 && (
                                             <div className="absolute top-[-10px] right-[-12px]">
-                                                <span className='text-[#fff] bg-red-500 flex justify-center items-center rounded-[50%] w-[20px] h-[20px] text-[15px]'>
-                                                    {cart?.length}
+                                                <span className="text-[#fff] bg-red-500 flex justify-center items-center rounded-full w-[20px] h-[20px] text-[15px]">
+                                                    {cart.length}
                                                 </span>
                                             </div>
                                         )}

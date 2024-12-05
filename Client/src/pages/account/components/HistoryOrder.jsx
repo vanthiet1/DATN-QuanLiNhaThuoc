@@ -7,15 +7,18 @@ import historyOrderServices from "../../../services/historyOrderServices";
 import { UserContext } from "../../../contexts/UserContext";
 import formatsHelper from "../../../utils/helpers/formats";
 import { SpinnerLoading } from "../../../components/ui/loaders";
+import { useConfirmDialog } from "../../../components/dialog/ConfirmDialogContext";
+import { showToastSuccess } from "../../../configs/toastConfig";
 
 const HistoryOrder = () => {
     const { user } = useContext(UserContext);
     const [hisOrderUser, setHisOrderUser] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const confirmDialog = useConfirmDialog()
 
     const getDataHistoryOrder = async () => {
         try {
-            setIsLoading(true); 
+            setIsLoading(true);
             const dataHisOrder = await historyOrderServices.getAllHistoryOrders();
             const filteredHistoryOrders = dataHisOrder?.data?.filter(
                 (hisOrder) => hisOrder?.order_id?.user_id === user?._id
@@ -24,13 +27,31 @@ const HistoryOrder = () => {
         } catch (error) {
             console.error("Lỗi khi tải lịch sử đơn hàng:", error);
         } finally {
-            setIsLoading(false); 
+            setIsLoading(false);
         }
+    };
+    const deleteDataHistoryOrder = async (id) => {
+        if (!id) return;
+        const result = await confirmDialog({
+            title: 'Xóa sản phẩm',
+            message: 'Bạn có muốn xóa lịch sử đặt hàng đơn này không?',
+            confirmLabel: 'Xóa',
+            cancelLabel: 'Hủy'
+          })
+          if(result){
+            const dataHisOrder = await historyOrderServices.deleteHistoryOrder(id);
+            const filteredHistoryOrders = dataHisOrder?.data?.filter(
+                (hisOrder) => hisOrder?._id === id
+            );
+            setHisOrderUser(filteredHistoryOrders || []);
+          }
+          showToastSuccess(dataHisOrder?.message)
     };
 
     useEffect(() => {
         getDataHistoryOrder();
     }, []);
+    console.log(hisOrderUser);
 
     return (
         <div>
@@ -42,9 +63,9 @@ const HistoryOrder = () => {
                 <div className="h-[600px] overflow-x-auto">
                     {hisOrderUser.map((hisOrder) => (
                         <div className="shadow p-5 rounded-md" key={hisOrder?.order_id?._id}>
-                            <Link to={`/lich-su-dat-hang/${hisOrder?.order_id?._id}`}>
-                                <div className="px-5 cursor-pointer ">
-                                    <div className="flex justify-between items-center">
+                            <div className="px-5  ">
+                                <div className="flex justify-between items-center">
+                                    <Link to={`/lich-su-dat-hang/${hisOrder?.order_id?._id}`}>
                                         <div className="flex gap-2 items-center pb-3">
                                             <span className="block font-semibold">Đơn hàng {hisOrder?.order_id?._id}</span>
                                             <span
@@ -59,37 +80,37 @@ const HistoryOrder = () => {
                                                 {hisOrder?.order_id?.status === 4 && "Đã hoàn thành"}
                                             </span>
                                         </div>
-                                        <div className=" text-[#EF4444] w-[100px] p-2 rounded-[6px] text-center font-semibold">xóa</div>
+                                    </Link>
+                                    <div onClick={()=>deleteDataHistoryOrder(hisOrder?._id)} className=" text-[#EF4444] w-[100px] p-2 rounded-[6px] text-center font-semibold cursor-pointer">xóa</div>
+                                </div>
+                                <div>
+                                    <div className="flex items-center gap-3 pb-2">
+                                        <AppIcons.BuildingStorefront />
+                                        <span>Nhà thuốc bình an dược</span>
                                     </div>
-                                    <div>
-                                        <div className="flex items-center gap-3 pb-2">
-                                            <AppIcons.BuildingStorefront />
-                                            <span>Nhà thuốc bình an dược</span>
+                                    <div className="flex items-center gap-3 pb-2">
+                                        <AppIcons.ProductIcon />
+                                        <span>Đơn thuốc giao hàng</span>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        <AppIcons.BanknotesIcon />
+                                        <span>{formatsHelper.currency(hisOrder?.order_id?.total_price)}</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <div>
+                                            <span>
+                                                {formatsHelper.formatDate(hisOrder?.createdAt)}{" "}
+                                                {formatsHelper.FormatDateAndTime(hisOrder?.createdAt)}
+                                            </span>
                                         </div>
-                                        <div className="flex items-center gap-3 pb-2">
-                                            <AppIcons.ProductIcon />
-                                            <span>Đơn thuốc giao hàng</span>
-                                        </div>
-                                        <div className="flex items-center gap-3">
-                                            <AppIcons.BanknotesIcon  />
-                                            <span>{formatsHelper.currency(hisOrder?.order_id?.total_price)}</span>
-                                        </div>
-                                        <div className="flex justify-between items-center">
-                                            <div>
-                                                <span>
-                                                    {formatsHelper.formatDate(hisOrder?.createdAt)}{" "}
-                                                    {formatsHelper.FormatDateAndTime(hisOrder?.createdAt)}
-                                                </span>
-                                            </div>
-                                            <div>
-                                                <Button addClassNames="text-[16px] text-[#fff] bg-[#2563EB] p-[10px] rounded-[10px] w-[150px] flex justify-center">
-                                                    Đặt lại
-                                                </Button>
-                                            </div>
+                                        <div>
+                                            <Button addClassNames="text-[16px] text-[#fff] bg-[#2563EB] p-[10px] rounded-[10px] w-[150px] flex justify-center">
+                                                Đặt lại
+                                            </Button>
                                         </div>
                                     </div>
                                 </div>
-                            </Link>
+                            </div>
                         </div>
                     ))}
                 </div>

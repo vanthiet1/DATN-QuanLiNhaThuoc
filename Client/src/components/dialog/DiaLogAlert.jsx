@@ -17,8 +17,8 @@ const DiaLogAlert = ({
 
   return (
     <Portal wrapperElementID='dialog-alert-root'>
-      <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
-        <div className={`bg-white rounded-lg shadow-lg p-6 w-1/3 transform transition-transform duration-300`}>
+      <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 '>
+        <div className={`bg-white rounded-lg shadow-lg p-6 w-1/3 transform transition-transform duration-300 max-md:w-full`}>
           <h2 className='text-xl text-gray-700 font-semibold mb-4 flex items-center gap-2'>
             {iconLeft && iconLeft}
             {title}

@@ -1,14 +1,14 @@
 import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import orderServices from "../../services/orderService";
 import useFetch from "../../hooks/useFetch";
 import pharmacyServices from "../../services/pharmacyService";
 import orderDetailsServices from "../../services/orderDetailsService";
 import formatsHelper from "../../utils/helpers/formats";
-import { PATH_ROUTERS_CLIENT } from "../../utils/constant/routers";
-
+import historyOrderServices from "../../services/historyOrderServices";
 const HistoryOrder = () => {
     const { id } = useParams();
-    const titleRowOrderDetail = ["Ảnh", "Tên sản phẩm", "giá tiền", "Số lượng", "Ngày Mua"]
+    const [hisOrderUser, setHisOrderUser] = useState([]);
     const { isLoading, responsData: hisOrderDetail, isError } = useFetch(
         () => orderServices.getOrderById(id), { id }, [id]
     );
@@ -18,23 +18,50 @@ const HistoryOrder = () => {
     const { responsData: pharmacy } = useFetch(
         () => pharmacyServices.getPharmacy()
     );
-    console.log(hisOrderProductDetail);
+    const getDataHistoryOrder = async () => {
+        const dataHisOrder = await historyOrderServices.getAllHistoryOrders();
+        if(!dataHisOrder) return;
+        const matchingOrder = dataHisOrder?.data?.find(
+            (hisOrder) =>
+                hisOrder?.order_id?._id === hisOrderProductDetail?.[0]?.order_id
+        );
+        console.log('matchingOrder',matchingOrder);
+        
+        setHisOrderUser(matchingOrder);
+    };
+    useEffect(() => {
+        getDataHistoryOrder()
+    }, [])
+    console.log(hisOrderUser);
+    
+    console.log(hisOrderUser?.updated_by_user_id?.role_id?.role_Name);
+
+
     return (
         <div>
             <div className="shadow p-5 rounded-lg">
                 <div className="flex items-center gap-2 flex-wrap">
                     <h1 className="font-semibold text-lg">Thông Tin Giao Hàng</h1>
-                    <span
+                    {hisOrderDetail?.status === 4 ? <span className="text-[#fff] rounded-[10px] text-[13px] px-2 py-1 bg-green-500">Đơn đã được giao thành công</span> : (
+                        <span
                         className={`text-[#fff] rounded-[10px] text-[13px] px-2 py-1 ${hisOrderDetail?.status === 4
-                                ? 'bg-green-500'
-                                : hisOrderDetail?.status === 5
-                                    ? 'bg-[#EA0054]'
-                                    : ''
+                            ? 'bg-green-500'
+                            : hisOrderDetail?.status === 5
+                                ? 'bg-[#EA0054]'
+                                : ''
                             }`}
                     >
-                        {hisOrderDetail?.status === 5 && 'Khách hàng hủy đơn'}
-                        {hisOrderDetail?.status === 4 && 'Đơn đã được giao thành công'}
+                        {
+                            hisOrderDetail?.status === 5 &&
+                                !["admin", "staff"].includes(hisOrderUser?.updated_by_user_id?.role_id?.role_Name)
+                                ? 'Bạn đã hủy đơn'
+                                : 'Shop hủy đơn'
+                        }
+                       
                     </span>
+                    )}
+               
+
                 </div>
                 <div className="flex pt-5 gap-3 md:flex-row">
                     <div className="flex md:flex-col items-center">

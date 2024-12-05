@@ -17,12 +17,12 @@ export const useCartFormContext = () => {
   return useContext(CartFormContext);
 };
 
-const CartFormProvider = ({ children,setShowQrCode }) => {
+const CartFormProvider = ({ children, setShowQrCode }) => {
   const [isLoadingCreateOrder, setIsLoadingCreateOrder] = useState(false);
   const { user } = useContext(UserContext);
-  const { cart } = useContext(CartContext);
+  const { cart , setCart } = useContext(CartContext);
   const { address_state, handleOrderWithVnpay } = uesCheckOutContext();
-  const [orderSuccsess,setOrderSuccsess] = useState({});
+  const [orderSuccsess, setOrderSuccsess] = useState({});
   const navigate = useNavigate()
   const {
     handleSubmit,
@@ -43,11 +43,14 @@ const CartFormProvider = ({ children,setShowQrCode }) => {
 
   const handleSubmitForm = async (data) => {
     try {
-      console.log(data);
-      setIsLoadingCreateOrder(true);
+      if (user?.
+        is_active === 0){
+          return showToastError("Tài khoản của bạn đang bị hạn chế vui lòng liên hệ admin")
+        }
+        setIsLoadingCreateOrder(true);
       const { receiver, phone, street, prescriptionImage, ...orderDataRest } = data;
       const formData = new FormData();
-      
+
       if (prescriptionImage) {
         formData.append('prescriptionImage', prescriptionImage[0]);
       }
@@ -93,7 +96,6 @@ const CartFormProvider = ({ children,setShowQrCode }) => {
 
       if (orderDataRest.payment_method_id === PAYMENT_METHODS_CODE.VNPAY_ID) {
         const orderResponse = await orderServices.createOrder(formData);
-
         if (orderResponse && orderResponse.newOrder) {
           const { _id, order_date, total_price } = orderResponse.newOrder;
           await handleOrderWithVnpay({
@@ -107,16 +109,18 @@ const CartFormProvider = ({ children,setShowQrCode }) => {
           reset();
         }
         setOrderSuccsess(orderResponse)
-      } else if(orderDataRest.payment_method_id === PAYMENT_METHODS_CODE.BANK_ID && orderSuccsess ){
+      } else if (orderDataRest.payment_method_id === PAYMENT_METHODS_CODE.BANK_ID && orderSuccsess) {
+        
         await orderServices.createOrder(formData);
         setShowQrCode(true)
-      }else{
+      } else {
         const orderNew = await orderServices.createOrder(formData);
         if (orderNew) {
           for (let productItem of cart) {
             await cartServices.deleteProductCartByUserId(user?._id, productItem.productId._id);
           }
-          showToastSuccess( 'Đơn đã được đặt');
+          setCart([])
+          showToastSuccess('Đơn đã được đặt');
         }
         reset();
         navigate('/')

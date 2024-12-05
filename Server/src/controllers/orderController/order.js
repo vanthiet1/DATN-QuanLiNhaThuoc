@@ -9,6 +9,8 @@ const ProductModel = require('../../models/productModel/product');
 const { getIoSocket } = require('../../configs/socket');
 const NotificationModel = require('../../models/notificationModel/notificationModel');
 const UserModel = require('../../models/userModel/user');
+const HistoryOrder = require('../../models/historyOrderModel/historyOrder')
+const sendMail = require('../../helpers/sendMail');
 
 const OrderController = {
   createOrder: async (req, res) => {
@@ -281,11 +283,28 @@ const OrderController = {
     const { id } = req.params;
     const { status } = req.body;
     try {
+      const currentOrder = await OrderModel.findById(id);
+      if (!currentOrder) {
+        return res.status(404).json({ message: 'Không tìm thấy đơn hàng' });
+      }
       if (status == 4) {
         const order = await OrderModel.findByIdAndUpdate(id, { status, isPay: true }, { new: true });
         return res.status(200).json(order);
       } else if (status == 5) {
         const order = await OrderModel.findByIdAndUpdate(id, { status, isPay: false }, { new: true });
+        const existingHistory = await HistoryOrder.findOne({
+          order_id: id,
+          status_to: status
+        });
+        if (!existingHistory) {
+          await HistoryOrder.create({
+            order_id: id,
+            status_from: currentOrder.status,
+            status_to: status,
+            note: '',
+            updated_by_user_id: id 
+          });
+        }
         return res.status(200).json(order);
       }
       const order = await OrderModel.findByIdAndUpdate(id, { status }, { new: true });
@@ -308,7 +327,40 @@ const OrderController = {
       res.status(400).json({ message: error.message });
     }
   },
-
+  processPaymentDifference: async (req, res) => {
+    try {
+        const {email,subject,insufficientPayment , actionMoney} = req.body;
+        if(!email){
+          return res.status(400).json({ message:"Không tìm thấy email"})
+        }
+        await sendMail({
+            email: email,
+            subject: subject,
+            randomCode: `
+             <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+          <p style="font-size: 16px; margin-bottom: 20px;">Chào bạn <strong>${email}</strong>,</p>
+          <h1 style="font-size: 24px; color: #2563EB; margin-bottom: 10px;">${subject}</h1>
+          <p style="font-size: 14px; margin-bottom: 20px; border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9; color: #555;">
+            <strong>${actionMoney}</strong> ${insufficientPayment} VNĐ
+          </p>
+          <p style="font-size: 14px; margin-bottom: 20px;">
+             Nếu bạn có bất kỳ câu hỏi nào, hãy liên hệ với chúng tôi qua:
+          </p>
+          <p style="font-size: 14px; margin-bottom: 20px;">
+            <strong>Điện thoại:</strong> 0340850070<br>
+            <strong>Email:</strong> binhanduoc@gmail.com
+          </p>
+          <p style="font-size: 14px; margin-top: 30px; text-align: center; color: #888;">
+            Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!
+          </p>
+        </div>
+              `
+        });
+        res.status(200).json({ message: "Gửi thành công" });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+  },
   userCancelOrder: async (req, res) => {
     const { id } = req.params;
     const { user_id } = req.body;
@@ -327,7 +379,6 @@ const OrderController = {
       res.status(400).json({ message: error.message });
     }
   },
-
   deleteOrder: async (req, res) => {
     const { id } = req.params;
     try {
