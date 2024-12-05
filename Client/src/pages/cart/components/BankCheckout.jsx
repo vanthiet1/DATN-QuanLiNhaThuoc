@@ -62,12 +62,24 @@ const BankCheckout = ({ setShowQrCode }) => {
         stopChecking();
         redirectYourOrder();
       }else if(lastPaid["Giá trị"] > order?.total_price && lastPaid["Mô tả"].includes(`madonhang${order?._id}`) ){
-         console.log('Ban chuyen thua tien');
+          const residualMoney =  lastPaid["Giá trị"]  -  order?.total_price;
+          await orderServices.differencePayment({
+            email: user?.email, 
+            subject:"Bạn thanh toán thừa tiền ", 
+            insufficientPayment:`với số tiền ${residualMoney}`,
+            actionMoney:"Số tiền thừa"
+          })
          updatePayOrder();
          stopChecking();
          redirectYourOrder();
       }else if(lastPaid["Giá trị"] < order?.total_price && lastPaid["Mô tả"].includes(`madonhang${order?._id}`)){
-        console.log('Ban chuyen thua tien');
+          const residualMoney =  lastPaid["Giá trị"]  -  order?.total_price;
+          await orderServices.differencePayment({
+            email: user?.email, 
+            subject:"Bạn thanh toán thiếu tiền ", 
+            insufficientPayment:`với số tiền ${residualMoney}`,
+            actionMoney:"Số tiền thiếu"
+          })
       }else {
         console.log("Vui lòng thanh toán.");
       }

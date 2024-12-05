@@ -11,6 +11,7 @@ Router.put('/:id', OrderController.updateOrder);
 Router.put('/bank/:id', OrderController.updatePayOrder);
 Router.put('/cancel/:id', OrderController.userCancelOrder);
 Router.delete('/:id', OrderController.deleteOrder);
+Router.post('/difference/payment', OrderController.processPaymentDifference);
 Router.post('/create-order-off', upload.single('prescriptionImage'), OrderOffController.createOrder);
 
 module.exports = Router;
