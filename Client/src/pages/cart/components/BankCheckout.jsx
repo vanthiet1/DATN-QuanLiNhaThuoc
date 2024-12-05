@@ -14,7 +14,7 @@ const BankCheckout = ({ setShowQrCode }) => {
   const { user } = useContext(UserContext);
   const [order, setOrder] = useState({});
   const [isPaid, setIsPaid] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(10);
+  const [timeLeft, setTimeLeft] = useState(100);
   const maxAttempts = 100;
   const intervalTime = 3000;
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ const BankCheckout = ({ setShowQrCode }) => {
   }, [user]);
 
   const updatePayOrder = async () => {
-    await orderServices.updatePayOrder(order?._id);
+    await orderServices.updatePayOrder(order?._id,{isPay:true});
   };
   const deleteOrder = async () => {
     fetchOrder();
@@ -53,7 +53,7 @@ const BankCheckout = ({ setShowQrCode }) => {
       const data = await bankServices.checkPaidBank();
       const lastPaid = data[data.length - 1];
       if (
-        lastPaid["Giá trị"] >= order?.total_price &&
+        lastPaid["Giá trị"] === order?.total_price &&
         lastPaid["Mô tả"].includes(`madonhang${order?._id}`)
       ) {
         setIsPaid(true);
@@ -61,7 +61,26 @@ const BankCheckout = ({ setShowQrCode }) => {
         updatePayOrder();
         stopChecking();
         redirectYourOrder();
-      } else {
+      }else if(lastPaid["Giá trị"] > order?.total_price && lastPaid["Mô tả"].includes(`madonhang${order?._id}`) ){
+          const residualMoney =  lastPaid["Giá trị"]  -  order?.total_price;
+          await orderServices.differencePayment({
+            email: user?.email, 
+            subject:"Bạn thanh toán thừa tiền ", 
+            insufficientPayment:`với số tiền ${residualMoney}`,
+            actionMoney:"Số tiền thừa"
+          })
+         updatePayOrder();
+         stopChecking();
+         redirectYourOrder();
+      }else if(lastPaid["Giá trị"] < order?.total_price && lastPaid["Mô tả"].includes(`madonhang${order?._id}`)){
+          const residualMoney =  lastPaid["Giá trị"]  -  order?.total_price;
+          await orderServices.differencePayment({
+            email: user?.email, 
+            subject:"Bạn thanh toán thiếu tiền ", 
+            insufficientPayment:`với số tiền ${residualMoney}`,
+            actionMoney:"Số tiền thiếu"
+          })
+      }else {
         console.log("Vui lòng thanh toán.");
       }
     } catch (error) {

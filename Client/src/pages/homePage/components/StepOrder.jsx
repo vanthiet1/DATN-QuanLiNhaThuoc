@@ -26,10 +26,10 @@ const StepOrder = () => {
   // }, [isManualClick, currentStep]);
 
   return (
-    <div className="flex gap-5">
+    <div className="flex gap-5 max-md:flex-col">
       <div>
         <img
-          className="w-[300px] h-[450px]"
+          className="w-[300px] h-[450px] max-md:m-auto max-md:rounded-[20px]"
           src={dataStepOrder[currentStep].image}
           alt="Step Image"
         />
@@ -54,7 +54,7 @@ const StepOrder = () => {
             </div>
             <div>
               <span
-                className={`block font-bold text-[20px] ${
+                className={`block font-bold text-[20px] max-md:text-[16px] ${
                   currentStep === index ? 'text-[#2563EB]' : 'text-black'
                 }`}
               >

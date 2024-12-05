@@ -20,7 +20,7 @@ const CheckoutForm = () => {
     <div className='space-y-6 border-t py-6 '>
       <div>
         <h2 className='font-bold mb-4'>Thông tin khách hàng</h2>
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+        <div className='grid grid-cols-1 max-md:grid-cols-2 gap-4'>
           <div className='flex flex-col text-gray-700 mb-4'>
             <label htmlFor='' className='font-medium text-sm mb-2'>
               Họ và tên người nhận
@@ -28,7 +28,7 @@ const CheckoutForm = () => {
             <InputText size='m' rounded='s' placeholder='Nguyễn Văn A' refinput={register('receiver')} />
             {errors.receiver && <ErrorMessage messsage={errors.receiver.message}></ErrorMessage>}
           </div>
-          <div className='flex flex-col text-gray-700 mb-4'>
+          <div className='flex flex-col text-gray-700 mb-4 max-md:mb-0'>
             <label htmlFor='' className='font-medium text-sm mb-2'>
               Số điện thoại
             </label>
@@ -46,12 +46,13 @@ const CheckoutForm = () => {
       </div>
       <div>
         <h2 className='font-bold mb-4'>Địa chỉ nhận hàng</h2>
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+        <div className='grid grid-cols-3 max-md:grid-cols-3 gap-4'>
           <div className='flex flex-col text-gray-700'>
             <label htmlFor='' className='font-medium text-sm mb-2'>
               Tỉnh Thành
             </label>
             <select
+              {...register('province')}
               onChange={(e) => setSelectedProvince(e.target.value)}
               id='province'
               className='border  border-gray-300 text-gray-600 text-base rounded block w-full py-1 px-2 focus:outline-none'
@@ -66,12 +67,14 @@ const CheckoutForm = () => {
                   );
                 })}
             </select>
+            {errors.province && <ErrorMessage messsage={errors.province.message}></ErrorMessage>}
           </div>
           <div className='flex flex-col text-gray-700'>
             <label htmlFor='' className='font-medium text-sm mb-2'>
               Huyện
             </label>
             <select
+              {...register('district')}
               onChange={(e) => setSelectedDistrict(e.target.value)}
               disabled={!selectedProvice}
               className='border  border-gray-300 text-gray-600 text-base rounded block w-full py-1 px-2 focus:outline-none'
@@ -86,12 +89,14 @@ const CheckoutForm = () => {
                   );
                 })}
             </select>
+            {errors.district && <ErrorMessage messsage={errors.district.message}></ErrorMessage>}
           </div>
           <div className='flex flex-col text-gray-700'>
             <label htmlFor='' className='font-medium text-sm mb-2'>
               Thị Xã
             </label>
             <select
+              {...register('ward')}
               onChange={(e) => handleChangeValueWard(e.target.value)}
               disabled={!selectedDistrict}
               className='border  border-gray-300 text-gray-600 text-base rounded block w-full py-1 px-2 focus:outline-none'
@@ -106,6 +111,7 @@ const CheckoutForm = () => {
                   );
                 })}
             </select>
+            {errors.ward && <ErrorMessage messsage={errors.ward.message}></ErrorMessage>}
           </div>
           <div className='flex flex-col text-gray-700 col-span-3'>
             <label htmlFor='' className='font-medium text-sm mb-2'>
