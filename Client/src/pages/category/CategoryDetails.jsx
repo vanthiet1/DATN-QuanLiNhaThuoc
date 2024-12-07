@@ -10,6 +10,9 @@ import TitleCategory from './components/TitleCategory';
 import categoryServices from '../../services/categoryService';
 import useSrcollTop from '../../hooks/useSrcollTop';
 
+
+
+
 const CategoryDetails = () => {
   useSrcollTop()
   const { id } = useParams();
@@ -18,7 +21,7 @@ const CategoryDetails = () => {
   const [category, setCategory] = useState({});
   const { handleAddToCart } = useContext(HandleCartContext);
 
-  const { responsData: productData, isLoading: isProductLoading } = 
+  const { responsData: productData, isLoading: isProductLoading } =
     useFetch(() => productServices.getProductWithCategory(id), {}, [id]);
 
   const { responsData: allCategories } = useFetch(categoryServices.getCategory);
@@ -46,20 +49,22 @@ const CategoryDetails = () => {
           <SpinnerLoading />
         </div>
       ) : (
-        <div className="grid grid-cols-4 gap-5">
-          {categoriesProduct.length > 0 ? (
-            categoriesProduct.map(product => (
-              <CardProduct
-                key={product._id}
-                products={product}
-                handleAddToCart={() => handleAddToCart(product._id, user?._id,true)}
-              />
-            ))
-          ) : (
-            <div className="col-span-4 flex items-center justify-center w-full h-full">
-              <p className="pt-5 text-center">Tạm thời chưa có</p>
-            </div>
-          )}
+        <div className="grid grid-cols-4 gap-5 max-md:grid-cols-1">
+          
+            {categoriesProduct.length > 0 ? (
+              categoriesProduct.map(product => (
+                  <CardProduct
+                    key={product._id}
+                    products={product}
+                    handleAddToCart={() => handleAddToCart(product._id, user?._id, true)}
+                  />
+              ))
+
+            ) : (
+              <div className="col-span-4 flex items-center justify-center w-full h-full">
+                <p className="pt-5 text-center">Tạm thời chưa có</p>
+              </div>
+            )}
         </div>
       )}
     </div>
