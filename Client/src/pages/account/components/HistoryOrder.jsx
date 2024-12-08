@@ -43,9 +43,11 @@ const HistoryOrder = () => {
             const filteredHistoryOrders = dataHisOrder?.data?.filter(
                 (hisOrder) => hisOrder?._id === id
             );
-            setHisOrderUser(filteredHistoryOrders || []);
+            console.log(filteredHistoryOrders);
+            
+            setHisOrderUser(filteredHistoryOrders);
+            showToastSuccess(dataHisOrder?.message)
           }
-          showToastSuccess(dataHisOrder?.message)
     };
 
     useEffect(() => {
@@ -102,11 +104,6 @@ const HistoryOrder = () => {
                                                 {formatsHelper.formatDate(hisOrder?.createdAt)}{" "}
                                                 {formatsHelper.FormatDateAndTime(hisOrder?.createdAt)}
                                             </span>
-                                        </div>
-                                        <div>
-                                            <Button addClassNames="text-[16px] text-[#fff] bg-[#2563EB] p-[10px] rounded-[10px] w-[150px] flex justify-center">
-                                                Đặt lại
-                                            </Button>
                                         </div>
                                     </div>
                                 </div>
