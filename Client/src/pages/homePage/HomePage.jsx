@@ -99,7 +99,7 @@ const HomePage = () => {
                   <SwiperSlide key={product._id}>
                     <CardProduct
                       products={product}
-                      handleAddToCart={() => handleAddToCart(product?._id, user?._id,true)}
+                      handleAddToCart={() => handleAddToCart(product?._id, user?._id,product?.stock,true)}
                     />
                   </SwiperSlide>
                 ))}

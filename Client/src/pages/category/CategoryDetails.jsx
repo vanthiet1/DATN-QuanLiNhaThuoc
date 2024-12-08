@@ -56,7 +56,7 @@ const CategoryDetails = () => {
                   <CardProduct
                     key={product._id}
                     products={product}
-                    handleAddToCart={() => handleAddToCart(product._id, user?._id, true)}
+                    handleAddToCart={() => handleAddToCart(product._id, user?._id,product?.stock, true)}
                   />
               ))
 
