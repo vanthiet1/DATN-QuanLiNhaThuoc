@@ -4,7 +4,7 @@ import AppIcons from '../ui/icon';
 const Paginate = ({ totalNumberPage, setNumberPage }) => {
   return (
     <ReactPaginate
-      containerClassName='pagination flex space-x-2 mt-4 justify-end'
+      containerClassName='pagination flex space-x-2 mt-4'
       activeClassName='active'
       pageClassName='page-item w-[36px] h-[36px] overflow-hidden rounded border border-gray-300 hover:border-blue-500 hover:text-indigo-500 cursor-pointer'
       pageLinkClassName='w-full flex items-center justify-center h-full'
