@@ -30,7 +30,6 @@ const HandleCartProvider = ({ children }) => {
 
   const handleAddToCart = async (productId, userId, stock, modal) => {
     if (!productId) return;
-     console.log(stock);
      if(stock <= 0){
       return showToastError('Tạm thời sản phẩm này đã hết hàng');
      }
