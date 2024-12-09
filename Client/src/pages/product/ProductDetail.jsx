@@ -198,7 +198,7 @@ const ProductDetail = () => {
                 </div>
                 <div className="flex gap-4 pt-4 max-md:justify-between max-md:flex-col max-md:m-3">
                   <Button
-                    onClick={() => handleAddToCart(product[0]?._id, user?._id, true)}
+                    onClick={() => handleAddToCart(product[0]?._id, user?._id,  product[0]?.stock,true)}
                     disabled={quantityProductDetail < 1 ? true : false}
                     addClassNames="text-[16px] uppercase border border-[#C9C9C9] p-2 py-1 px-[30px] rounded-[10px]  font-semibold hover:bg-gray-100 duration-300 max-md:w-[50%] flex justify-center max-md:w-full"
                   >
