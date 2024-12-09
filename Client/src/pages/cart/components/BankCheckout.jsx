@@ -1,15 +1,13 @@
-import { useNavigate } from 'react-router-dom';
-import React, { useContext, useEffect, useState } from 'react';
-import { SpinnerLoading } from '../../../components/ui/loaders';
-import bankServices from '../../../services/bankService';
-import orderServices from '../../../services/orderService';
-import { UserContext } from '../../../contexts/UserContext';
-import { showToastSuccess } from '../../../configs/toastConfig';
-import { PATH_ROUTERS_CLIENT } from '../../../utils/constant/routers';
-import { TabUIAccountContext } from '../../../contexts/TabUIAccountContext';
-
-const BankCheckout = ({ setShowQrCode }) => {
-  const { setTabIndex, } = useContext(TabUIAccountContext) || null;
+import { useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { SpinnerLoading } from "../../../components/ui/loaders";
+import bankServices from "../../../services/bankService";
+import orderServices from "../../../services/orderService";
+import { UserContext } from "../../../contexts/UserContext";
+import { PATH_ROUTERS_CLIENT } from "../../../utils/constant/routers";
+import { TabUIAccountContext } from "../../../contexts/TabUIAccountContext";
+const BankCheckout = ({ setShowQrCode , showSuccessAnimation , setShowSuccessAnimation }) => {
+  const { setTabIndex } = useContext(TabUIAccountContext) || null;
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useContext(UserContext);
   const [order, setOrder] = useState({});
@@ -20,13 +18,15 @@ const BankCheckout = ({ setShowQrCode }) => {
   const navigate = useNavigate();
 
   const redirectYourOrder = () => {
-    navigate(`/${PATH_ROUTERS_CLIENT.ACCOUNT}`)
-    setTabIndex(3)
-  }
+    navigate(`/${PATH_ROUTERS_CLIENT.ACCOUNT}`);
+    setTabIndex(3);
+  };
+
   const fetchOrder = async () => {
     const dataOrder = await orderServices.getOrderByUserId(user?._id);
     setOrder(dataOrder[dataOrder.length - 1]);
   };
+
   useEffect(() => {
     if (user?._id) {
       fetchOrder();
@@ -34,12 +34,13 @@ const BankCheckout = ({ setShowQrCode }) => {
   }, [user]);
 
   const updatePayOrder = async () => {
-    await orderServices.updatePayOrder(order?._id,{isPay:true});
+    await orderServices.updatePayOrder(order?._id, { isPay: true });
   };
+
   const deleteOrder = async () => {
     fetchOrder();
     await orderServices.deleteOrder(order?._id);
-  }
+  };
 
   const checkPaymentStatus = async (attempts) => {
     if (attempts > maxAttempts || isPaid) {
@@ -56,39 +57,47 @@ const BankCheckout = ({ setShowQrCode }) => {
         lastPaid["Giá trị"] === order?.total_price &&
         lastPaid["Mô tả"].includes(`madonhang${order?._id}`)
       ) {
+        setShowSuccessAnimation(true); 
+        setTimeout(() => {
+          setShowSuccessAnimation(false); 
+          redirectYourOrder();
+        }, 2000);
         setIsPaid(true);
-        showToastSuccess("Thanh toán thành công");
+        updatePayOrder();
+ 
+        stopChecking();
+      } else if (
+        lastPaid["Giá trị"] > order?.total_price &&
+        lastPaid["Mô tả"].includes(`madonhang${order?._id}`)
+      ) {
+        const residualMoney = lastPaid["Giá trị"] - order?.total_price;
+        await orderServices.differencePayment({
+          email: user?.email,
+          subject: "Bạn thanh toán thừa tiền ",
+          insufficientPayment: `với số tiền ${residualMoney}`,
+          actionMoney: "Số tiền thừa",
+        });
         updatePayOrder();
         stopChecking();
         redirectYourOrder();
-      }else if(lastPaid["Giá trị"] > order?.total_price && lastPaid["Mô tả"].includes(`madonhang${order?._id}`) ){
-          const residualMoney =  lastPaid["Giá trị"]  -  order?.total_price;
-          await orderServices.differencePayment({
-            email: user?.email, 
-            subject:"Bạn thanh toán thừa tiền ", 
-            insufficientPayment:`với số tiền ${residualMoney}`,
-            actionMoney:"Số tiền thừa"
-          })
-         updatePayOrder();
-         stopChecking();
-         redirectYourOrder();
-      }else if(lastPaid["Giá trị"] < order?.total_price && lastPaid["Mô tả"].includes(`madonhang${order?._id}`)){
-          const residualMoney =  lastPaid["Giá trị"]  -  order?.total_price;
-          await orderServices.differencePayment({
-            email: user?.email, 
-            subject:"Bạn thanh toán thiếu tiền ", 
-            insufficientPayment:`với số tiền ${residualMoney}`,
-            actionMoney:"Số tiền thiếu"
-          })
-      }else {
+      } else if (
+        lastPaid["Giá trị"] < order?.total_price &&
+        lastPaid["Mô tả"].includes(`madonhang${order?._id}`)
+      ) {
+        const residualMoney = lastPaid["Giá trị"] - order?.total_price;
+        await orderServices.differencePayment({
+          email: user?.email,
+          subject: "Bạn thanh toán thiếu tiền ",
+          insufficientPayment: `với số tiền ${residualMoney}`,
+          actionMoney: "Số tiền thiếu",
+        });
+      } else {
         console.log("Vui lòng thanh toán.");
       }
     } catch (error) {
       console.error("Lỗi khi kiểm tra trạng thái thanh toán:", error);
     }
   };
-
-
 
   useEffect(() => {
     let attempts = 0;
@@ -112,7 +121,9 @@ const BankCheckout = ({ setShowQrCode }) => {
     }
   }, [timeLeft]);
 
-  const imageUrl = `https://api.vietqr.io/image/970422-9213112004-7BoO0Iy.jpg?accountName=NGUYEN%20VAN%20THIET&amount=${order?.total_price || ''}&addInfo=madonhang${order?._id}`;
+  const imageUrl = `https://api.vietqr.io/image/970422-9213112004-7BoO0Iy.jpg?accountName=NGUYEN%20VAN%20THIET&amount=${
+    order?.total_price || ""
+  }&addInfo=madonhang${order?._id}`;
 
   return (
     <div className="relative flex flex-col items-center justify-center">
@@ -122,14 +133,23 @@ const BankCheckout = ({ setShowQrCode }) => {
         </div>
       )}
       <img
-        className={`w-[350px] ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}
+        className={`w-[350px] ${
+          isLoading ? "opacity-0" : "opacity-100"
+        } transition-opacity duration-300`}
         src={imageUrl}
         alt="QR Code"
         onLoad={() => setIsLoading(false)}
         onError={() => setIsLoading(false)}
       />
-      <p className={`mt-2 text-gray-600 ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-30`}>
-        QR Code sẽ hết hạn sau: <b className='text-blue-600'>{Math.floor(timeLeft / 60)} phút {timeLeft % 60} giây</b>
+      <p
+        className={`mt-2 text-gray-600 ${
+          isLoading ? "opacity-0" : "opacity-100"
+        } transition-opacity duration-30`}
+      >
+        QR Code sẽ hết hạn sau:{" "}
+        <b className="text-blue-600">
+          {Math.floor(timeLeft / 60)} phút {timeLeft % 60} giây
+        </b>
       </p>
     </div>
   );

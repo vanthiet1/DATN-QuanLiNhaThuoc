@@ -61,7 +61,7 @@ const ProductController = {
         !percent_price ||
         !stock
       ) {
-        return res.status(404).json({
+        return res.status(400).json({
           message: 'Bạn cần nhập đầy đủ thông tin các trường'
         });
       }

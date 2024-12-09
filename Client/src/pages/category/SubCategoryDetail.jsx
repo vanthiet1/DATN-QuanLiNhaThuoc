@@ -35,7 +35,7 @@ const {handleAddToCart} = useContext(HandleCartContext)
                     responsData.map((product) => (
                         <CardProduct
                                products={product}
-                               handleAddToCart={()=>handleAddToCart(product?._id,user?._id,true)}
+                               handleAddToCart={()=>handleAddToCart(product?._id,user?._id,product?.stock,true)}
                         />
                     ))
                 ) : (
