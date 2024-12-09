@@ -81,7 +81,7 @@ const CouponController = {
       if (!deletedCoupon) {
         return res.status(404).json({ message: 'Không tìm thấy coupon' });
       }
-      res.status(200).json({ message: 'Coupon đã bị xóa' });
+      res.status(200).json(deletedCoupon);
     } catch (error) {
       res.status(500).json({ message: 'Lỗi khi xóa coupon: ' + error.message });
     }
