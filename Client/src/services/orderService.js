@@ -5,11 +5,12 @@ import { showToastError, showToastSuccess } from '../configs/toastConfig';
 const orderServices = {
   createOrder: async (requestBody) => {
     try {
-      const { data } = await http.post(`${END_POIND_API.ORDER}/create`, requestBody);
-      showToastSuccess(data.message || 'order thành công');
+      const { data } = await http.post(`${END_POIND_API.ORDER}`, requestBody, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      console.log(data);
       return data;
     } catch (error) {
-      showToastError(error.response.data.message);
       console.log(error.message);
     }
   },
@@ -19,25 +20,20 @@ const orderServices = {
       console.log(data);
       return data;
     } catch (error) {
-      showToastError(error.response.data.message);
       console.log(error.message);
     }
   },
   getOrderById: async (resquestParrams) => {
     try {
       const { data } = await http.get(`${END_POIND_API.ORDER}/${resquestParrams}`);
-      console.log(data);
       return data[0];
     } catch (error) {
-      showToastError(error.response.data.message);
       console.log(error.message);
     }
   },
   getOrderByUserId: async (resquestParams) => {
     try {
       const { data } = await http.get(`${END_POIND_API.ORDER}/detail/${resquestParams}`);
-      console.log(data);
-      
       return data;
     } catch (error) {
       console.log(error.message);
@@ -56,7 +52,6 @@ const orderServices = {
   deleteOrder: async (resquestParrams) => {
     try {
       const { data } = await http.delete(`${END_POIND_API.ORDER}/${resquestParrams}`);
-      showToastSuccess(data.message || 'Xóa.ORDER thành công');
       return data;
     } catch (error) {
       showToastError(error.response.data.message);
@@ -70,6 +65,14 @@ const orderServices = {
       return data;
     } catch (error) {
       showToastError(error.response.data.message);
+      console.log(error.message);
+    }
+  },
+  updatePayOrder: async (requestParams, requestBody) => {
+    try {
+      const { data } = await http.put(`${END_POIND_API.ORDER}/bank/${requestParams}`, requestBody);
+      return data;
+    } catch (error) {
       console.log(error.message);
     }
   },

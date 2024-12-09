@@ -13,6 +13,7 @@ const OrderDetailController = {
       res.status(400).json({ message: error.message });
     }
   },
+
   getOrderDetailByOrderId: async (req, res) => {
     try {
       const orderId = req.params.id;
@@ -28,11 +29,12 @@ const OrderDetailController = {
             from: 'products',
             localField: 'product_id',
             foreignField: '_id',
-            as: 'product',
-          },
+            as: 'product'
+          }
         },
-        { $unwind: '$product' },
+        { $unwind: '$product' }
       ]);
+
       if (!orderDetail.length) {
         return res.status(404).json({ message: 'Không tìm thấy chi tiết order' });
       }
@@ -44,15 +46,16 @@ const OrderDetailController = {
         );
         return {
           ...product,
-          images: productImages,
+          images: productImages
         };
       });
       res.status(200).json(orderProductDetail);
     } catch (error) {
+      console.error('Error in getOrderDetailByOrderId:', error.message);
       res.status(500).json({ message: error.message });
     }
   },
-  
+
   updateOrderDetail: async (req, res) => {
     try {
       const orderDetail = await OrderDetailsModel.findByIdAndUpdate(req.params.id, req.body, { new: true });

@@ -1,10 +1,13 @@
 import React from 'react';
 import useFetch from '../../hooks/useFetch';
 import brandServices from '../../services/brandService';
-import BrandCard from '../../components/card/BrandCard';
 import { PATH_ROUTERS_ADMIN } from '../../utils/constant/routers';
 import AppIcons from '../../components/ui/icon';
 import BreadCrumb from '../../components/breadCrumb/BreadCrumb';
+import SectionWrapper from '../../components/sectionWrapper/SectionWrapper.jsx';
+import { useNavigate } from 'react-router-dom';
+import { useConfirmDialog } from '../../components/dialog/ConfirmDialogContext.jsx';
+import Button from '../../components/ui/button/Button.jsx';
 
 const brandBreadCrumb = [
   {
@@ -18,6 +21,8 @@ const brandBreadCrumb = [
 ];
 
 const AllBrand = () => {
+  const confirmDialog = useConfirmDialog();
+  const navigate = useNavigate();
   const { isLoading, isError, responsData: brandData, messsageError } = useFetch(brandServices.getBrand);
 
   if (isLoading) {
@@ -28,37 +33,84 @@ const AllBrand = () => {
     return <div>{messsageError}</div>;
   }
 
+  const handleEdit = async (id) => {
+    navigate(`/admin/edit-brand/${id}`);
+  };
+
+  const handleDetele = async (name) => {
+    const result = await confirmDialog({
+      title: 'Xóa brand',
+      iconLeft: <AppIcons.TrashBinIcon />,
+      message: `Bạn có muốn xóa brand ${name} không ?`,
+      confirmLabel: 'Có, tôi đồng ý',
+      cancelLabel: 'Không, giữ lại'
+    });
+
+    if (result) {
+      await brandServices.deleteBrand(brand._id);
+      window.location.reload();
+    }
+  };
+
   return (
-    <>
+    <SectionWrapper title='Brand all' addClassNames={{ wrapper: 'mt-2' }}>
       <BreadCrumb crumbsData={brandBreadCrumb} addClassNames='my-3' />
-      <div className='max-w-7xl mx-auto p-6 bg-white shadow-md rounded-lg'>
-        <h1 className='text-3xl font-bold mb-6 text-center'>All brand</h1>
+      <div className=''>
         <div className='overflow-x-auto'>
           <table className='min-w-full table-auto border-collapse'>
             <thead className='w-full'>
               <tr className='bg-gray-200 w-full'>
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
-                  Brand name
+                  Tên thương hiệu
                 </th>
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
-  Origin country
+                  Nước xuất xứ
                 </th>
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
-                Country made
+                  Quốc gia sản xuất
                 </th>
-                <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>action</th>
+                <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
+                  action
+                </th>
               </tr>
             </thead>
             <tbody className='bg-white divide-y divide-gray-200 '>
               {brandData &&
-                brandData.map((brand,index) => {
-                  return <BrandCard brand={brand} key={index} />;
+                brandData.map((brand, index) => {
+                  const { _id, name, origin_country, country_made } = brand;
+                  return (
+                    <tr key={_id} className='hover:bg-gray-100'>
+                      <td className='px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900'>{name}</td>
+                      <td className='px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900'>
+                        {origin_country}
+                      </td>
+                      <td className='px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900'>{country_made}</td>
+                      <td className='px-6 py-4 whitespace-nowrap text-sm flex '>
+                        <Button
+                          size='m'
+                          rounded='m'
+                          addClassNames='bg-blue-500 text-white hover:bg-blue-600 px-3 py-1 rounded-md ml-2'
+                          onClick={() => handleEdit(_id)}
+                        >
+                          <AppIcons.EditIcon width='18' height='18'/>
+                        </Button>
+                        <Button
+                          size='m'
+                          rounded='m'
+                          addClassNames='bg-rose-500 text-white hover:bg-rose-600 px-3 py-1 rounded-md ml-2'
+                          onClick={() => handleDetele(name)}
+                        >
+                          <AppIcons.TrashBinIcon width='18' height='18'/>
+                        </Button>
+                      </td>
+                    </tr>
+                  );
                 })}
             </tbody>
           </table>
         </div>
       </div>
-    </>
+    </SectionWrapper>
   );
 };
 

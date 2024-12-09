@@ -11,21 +11,20 @@ const SectionHeroBanner = () => {
         <SpinnerLoading />
     </div>;
     return (
-        <div className='flex max-md:flex-col  gap-2'>
-         <div className=" h-auto m-auto ">
-         <Swiper
-                {...sliderConfigBanner}
-                className="mySwiper rounded-[5px] w-[1000px] max-md:w-[500px]"
-            >
-                {initialBannerData && initialBannerData.map((banner, index) => (
-                    <SwiperSlide key={index}>
-                        <img className="object-cover w-full cursor-pointer rounded-[5px] max-md" src={banner?.url_img} alt={banner?.title || "Banner"} />
-                    </SwiperSlide>
-                ))}
-            </Swiper>
-          
-        </div>
-          <div className="w-full border-2 border-slate-200 rounded-[5px] ">
+        <div className='flex max-md:flex-col gap-2'>
+            <div className=" h-auto m-auto ">
+                <Swiper
+                    {...sliderConfigBanner}
+                    className="mySwiper rounded-[5px] w-[1000px] max-md:w-[700px] "
+                >
+                    {initialBannerData && initialBannerData.map((banner, index) => (
+                        <SwiperSlide key={index}>
+                            <img className="object-cover w-full cursor-pointer rounded-[5px] max-md" src={banner?.url_img} alt={banner?.title || "Banner"} />
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </div>
+            <div className="w-full border-2 border-slate-200 rounded-[5px] ">
                 <img className='w-full' src="https://www.medigoapp.com/assets/images-html/sub-banner.jpg" alt="" />
                 <div className="flex justify-between items-center p-4">
                     <div>
@@ -36,7 +35,6 @@ const SectionHeroBanner = () => {
                 </div>
             </div>
         </div>
-      
     );
 };
 

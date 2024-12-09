@@ -10,7 +10,7 @@ const Paginate = ({ totalNumberPage, setNumberPage }) => {
       pageLinkClassName='w-full flex items-center justify-center h-full'
       previousLinkClassName='flex items-center justify-center text-gray-600 w-[36px] h-[36px] overflow-hidden rounded border border-gray-300 hover:border-indigo-500 hover:text-indigo-500 cursor-pointer'
       nextLinkClassName='flex items-center justify-center text-gray-600 w-[36px] h-[36px] overflow-hidden rounded border border-gray-300 hover:border-indigo-500 hover:text-indigo-500 cursor-pointer'
-      breakLinkClassName='px-4 py-2 bg-gray-200 text-gray-600 rounded'
+      breakLinkClassName='flex items-center justify-center w-[36px] h-[36px] bg-gray-200 text-gray-600 rounded'
       activeLinkClassName='text-white bg-blue-500'
       previousLabel={<AppIcons.ArrowDownIcon addClassNames='rotate-90' />}
       nextLabel={<AppIcons.ArrowDownIcon addClassNames='rotate-[270deg]' />}

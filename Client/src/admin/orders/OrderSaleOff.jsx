@@ -6,14 +6,49 @@ import useFetch from '../../hooks/useFetch';
 import productServices from '../../services/productService';
 import Paginate from '../../components/paginate/Paginate';
 import CardProduct from '../../components/card/CardProduct';
-import { InputText } from '../../components/ui/form';
+import { InputText, SelectBox } from '../../components/ui/form';
 import AppIcons from '../../components/ui/icon';
+import subCategoryServices from '../../services/subCategoryService';
 
 const HeaderListProduct = () => {
+  const { handleFilterProduct } = useContext(OrderSaleOffContext);
+  const [searchValue, setSearchValue] = useState('');
+  const [categoryId, setCategoryId] = useState('');
+  const { responsData: subCagegoryData } = useFetch(subCategoryServices.getSubCategory);
+
+  const handleConvertToSelectValue = (arr) => {
+    if (Array.isArray(arr) && arr.length > 0) {
+      return arr.map((item) => {
+        return { ...item, value: item._id, title: item.name };
+      });
+    }
+    return [{ value: 1, title: '' }];
+  };
+
   return (
     <div className='flex items-center gap-2 mb-10'>
-      <InputText placeholder='search product you want here ...' size='l' rounded='m' />
-      <Button size='l' rounded='m' addClassNames='bg-slate-600 text-white'>
+      <div className='flex-grow'>
+        <InputText
+          placeholder='search product you want here ...'
+          size='l'
+          rounded='m'
+          onChange={(e) => setSearchValue(e.target.value)}
+        />
+      </div>
+      <div>
+        <SelectBox
+          onChange={(e) => setCategoryId(e.target.value)}
+          size='l'
+          rounded='m'
+          optionData={handleConvertToSelectValue(subCagegoryData) || []}
+        />
+      </div>
+      <Button
+        size='l'
+        rounded='m'
+        addClassNames='bg-slate-600 text-white'
+        onClick={(e) => handleFilterProduct(searchValue, categoryId)}
+      >
         <AppIcons.SearchIcons />
       </Button>
     </div>
@@ -34,15 +69,12 @@ const SectionListProduct = () => {
       <div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
         {productAllData &&
           productAllData.productsList.map((item) => {
-            const { _id, price_distcount, name, images, description_short } = item;
+            const { _id, price_distcount, name, images } = item;
             return (
               <CardProduct
                 key={_id}
-                image={images[0].url_img}
-                name={name}
-                priceOld={price_distcount}
-                description_short={description_short}
-                handleAddProductToCart={() => handleAddProductToCart(_id, price_distcount, 1, name, images[0].url_img)}
+                products={item}
+                handleAddToCart={() => handleAddProductToCart(_id, price_distcount, 1, name, images[0].url_img)}
               ></CardProduct>
             );
           })}
@@ -60,21 +92,34 @@ const OrderSaleOffContext = createContext();
 
 const OrderSaleOffProvider = ({ children }) => {
   const [numberPage, setNumeberPage] = useState(1);
+  const [productQuery, setProductQuery] = useState('');
 
   const {
     isLoading,
     isError,
     responsData: productAllData,
     messageError
-  } = useFetch(() => productServices.getAllProducts(`?page=${numberPage}&limit=20`), {}, [numberPage]);
+  } = useFetch(() => productServices.getAllProducts(`?page=${numberPage}&limit=20&${productQuery}`), {}, [
+    numberPage,
+    productQuery
+  ]);
 
   const handleChangeNumberPage = (number) => {
     setNumeberPage(number);
   };
 
+  const handleFilterProduct = (searchValue, categoryId) => {
+    if (!searchValue && !categoryId) {
+      setProductQuery('');
+    } else {
+      setProductQuery(`key=${searchValue}&categoryId=${categoryId}`);
+    }
+  };
+
   const orderSaleOffState = {
     productAllData,
     handleChangeNumberPage,
+    handleFilterProduct,
     isLoading,
     isError,
     messageError

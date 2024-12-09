@@ -69,8 +69,6 @@ const InforUser = () => {
                 setLoadingAdress(false)
             }
             const components = data.components;
-            console.log(components);
-            
             const road = components?.road === 'unnamed road' ? "Không có tên đường" : components?.road ;
             const village = components.village || components?.quarter ; 
             const district = components?.county || components?.suburb
