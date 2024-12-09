@@ -1,9 +1,10 @@
 const cron = require('node-cron');
 const UserModel = require('../models/userModel/user');
 const OrderModel = require('../models/ordersModels/order');
+const CouponModel = require('../models/couponModel/coupon');
 require('dotenv').config()
 const sendReminderEmail = require('../helpers/notification')
-const { reminderEmailSchedule, clearOtpSchedule } = require('./cronConfig');
+const { reminderEmailSchedule, clearOtpSchedule , clearIsActive} = require('./cronConfig');
 const cronCofig = {
     clearOTP: () => {
         cron.schedule(clearOtpSchedule, async () => {
@@ -84,6 +85,22 @@ const cronCofig = {
                 console.log({ message: error.message });
             }
         });
+    },
+    clearCouponInactive: ()=>{
+        cron.schedule(clearIsActive, async () => { 
+          try {
+            const coupon = await CouponModel.find();
+            for (const couponisActive of coupon ) {
+                if (couponisActive.is_active === false) {
+                    const deleteCouponisActive =  await CouponModel.findByIdAndDelete(couponisActive._id);
+                    console.log(deleteCouponisActive);
+                }
+              }
+          } catch (error) {
+             console.log(error);
+          }
+        })
+     
     }
 }
 module.exports = cronCofig
