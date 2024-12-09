@@ -120,10 +120,7 @@ const ProductDetail = () => {
     }
 
   }
-  console.log(product?.[0]);
-
   if (isError) return <div>Trang hiện tại đang lỗi</div>;
-
   return (
     <div>
       <div className="w-[80%] m-auto">
@@ -185,6 +182,10 @@ const ProductDetail = () => {
                   ) : (
                     <span>Tạm thời chưa có ngày nhập</span>
                   )}
+                </div>
+                <div className="flex gap-3 pb-2">
+                  <span className="block font-semibold">Trạng thái hàng:</span>
+                  {product?.[0]?.stock > 0 ? <span className='text-green-600 font-semibold'>Còn hàng</span> : <span className='text-red-500 font-semibold'>Không còn hàng</span>}
                 </div>
                 <div className="flex justify-between w-[350px] max-md:w-full">
                   <div className="flex gap-2 items-center">
