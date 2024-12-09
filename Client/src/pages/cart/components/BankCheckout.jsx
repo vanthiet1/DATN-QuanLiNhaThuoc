@@ -61,7 +61,7 @@ const BankCheckout = ({ setShowQrCode , showSuccessAnimation , setShowSuccessAni
         setTimeout(() => {
           setShowSuccessAnimation(false); 
           redirectYourOrder();
-        }, 3000);
+        }, 2000);
         setIsPaid(true);
         updatePayOrder();
  
