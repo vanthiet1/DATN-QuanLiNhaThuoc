@@ -34,9 +34,6 @@ socket(server);
 app.get('/', (req, res) => {
   res.send('Welcome To Api');
 });
-if (process.env.NODE_ENV === "production") {
-  console.log = function () {}; 
-}
 // Routes
 const AuthRouter = require('./routers/auth');
 const OrderRouter = require('./routers/order');
