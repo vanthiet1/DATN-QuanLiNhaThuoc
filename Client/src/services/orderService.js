@@ -76,6 +76,14 @@ const orderServices = {
       console.log(error.message);
     }
   },
+  differencePayment: async (requestBody) => {
+    try {
+      const { data } = await http.post(`${END_POIND_API.ORDER}/difference/payment`, requestBody);
+      return data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
   createOrderOff: async (requestBody) => {
     try {
       const { data } = await http.post(`${END_POIND_API.ORDER}/create-order-off`, requestBody, {

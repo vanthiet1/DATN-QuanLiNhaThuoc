@@ -13,6 +13,8 @@ import InforOrder from './components/InforOrder';
 import CartCard from './components/CartCard';
 import CheckOutProvider, { uesCheckOutContext } from './components/context/CheckOutProvider';
 import BankCheckout from './components/BankCheckout';
+import SuccessAnimation from '../../components/notification-bell/SuccsessAnimation';
+
 
 const AddLoadingCart = () => {
   const { updateLoading } = uesCheckOutContext();
@@ -33,8 +35,11 @@ const Cart = () => {
   useSrcollTop();
   const { cart } = useCartContext();
   const [showQrCode, setShowQrCode] = useState(false);
+  const [showSuccessAnimation, setShowSuccessAnimation] = useState(false); 
+
   return (
     <>
+      {showSuccessAnimation && <SuccessAnimation />} 
       <CheckOutProvider>
         <AddLoadingCart />
         <CartFormProvider setShowQrCode={setShowQrCode}>
@@ -42,9 +47,12 @@ const Cart = () => {
             <div className='container mx-auto'>
               <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
                 <div className='lg:col-span-2 space-y-6'>
-                  {cart.map((productCart) => {
-                    return <CartCard key={productCart.productId._id} productCart={productCart} />
-                  })}
+                  <div className={` ${cart?.length > 1 && 'max-md:h-[600px] max-md:overflow-scroll'} `}>
+                    {cart.map((productCart) => {
+                      return <CartCard key={productCart.productId._id} productCart={productCart} />
+                    })}
+
+                  </div>
                   <CheckoutForm />
                 </div>
                 <div className='lg:col-span-1'>
@@ -76,7 +84,7 @@ const Cart = () => {
           {showQrCode && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
               <div className="bg-white p-4 rounded-lg shadow-lg">
-                <BankCheckout setShowQrCode={setShowQrCode} />
+                <BankCheckout showSuccessAnimation={showSuccessAnimation} setShowSuccessAnimation={setShowSuccessAnimation} setShowQrCode={setShowQrCode}  />
               </div>
             </div>
           )}

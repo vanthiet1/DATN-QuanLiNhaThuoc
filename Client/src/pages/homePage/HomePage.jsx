@@ -99,7 +99,7 @@ const HomePage = () => {
                   <SwiperSlide key={product._id}>
                     <CardProduct
                       products={product}
-                      handleAddToCart={() => handleAddToCart(product?._id, user?._id,true)}
+                      handleAddToCart={() => handleAddToCart(product?._id, user?._id,product?.stock,true)}
                     />
                   </SwiperSlide>
                 ))}
@@ -110,11 +110,12 @@ const HomePage = () => {
               <SpinnerLoading />
             </div>
           )}
-          <div className='flex justify-between mt-[50px]'>
-            <Advertisement
+          <div className='grid grid-cols-4 mt-[50px] place-items-center max-md:grid-cols-2 max-sm:grid-cols-1'>
+           <div className="max-md:mb-4">
+           <Advertisement
               icon={
                 <AppIcons.FastDelivery
-                  addClassNames='w-[100px] text-[#2563EB] -mb-2 -mt-2'
+                  addClassNames='w-[100px] text-[#2563EB] mb-2 mt-2 '
                   width='45px'
                   height='50px'
                 />
@@ -122,16 +123,21 @@ const HomePage = () => {
               title={'GIAO THUỐC NHANH'}
               description={'Đơn hàng của bạn sẽ được mua và giao từ nhà thuốc gần nhất và tốt nhất'}
             />
-            <Advertisement
+           </div>
+           <div className="max-md:mb-4">
+           <Advertisement
               icon={<AppIcons.ShieldIcon2 addClassNames='w-[100px] text-[#2563EB]' width='35px' height='35px' />}
               title={'ĐÁNG TIN CẬY'}
               description={'Bình An Dược chỉ hoạt động với các hiệu thuốc đạt chuẩn GPP và được cấp phép của Bộ Y Tế'}
             />
-            <Advertisement
+           </div>
+           <div className="max-md:mb-4">
+           <Advertisement
               icon={<AppIcons.PhonePlus addClassNames='w-[100px] text-[#2563EB]' width='35px' height='35px' />}
               title={'TƯ VẤN NHIỆT TÌNH'}
               description={'Các dược sĩ kinh nghiệm sẽ gọi điện và tư vấn nhiệt tình cho bạn'}
             />
+           </div>
             <Advertisement
               icon={<AppIcons.TimeIcon2 addClassNames='w-[100px] text-[#2563EB]' width='35px' height='35px' />}
               title={'PHỤC VỤ 24H'}
@@ -140,8 +146,8 @@ const HomePage = () => {
           </div>
           <div className="mt-[70px]">
             <h1 className="font-bold text-[22px] text-center pb-4">Đánh giá của khách hàng</h1>
-            <div className="grid grid-cols-3 w-[70%] gap-3 m-auto">
-              {initialCommentData && initialCommentData?.slice(0,3).map((comment) => (
+            <div className="grid grid-cols-4 w-[100%] gap-3 m-auto max-md:w-full max-md:grid-cols-2">
+              {initialCommentData && initialCommentData?.slice(0,4).map((comment) => (
                 <FeedbackUser
                   avatar={comment?.user_id?.avatar || "https://res.cloudinary.com/dz93cdipw/image/upload/v1713866997/Book-Store/Avatar/kwuemqemetzsp4jw21mt.webp"}
                   username={comment?.user_id?.fullname}
@@ -159,13 +165,13 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-between bg-[#F3F8FB] mt-[70px] rounded-md">
+          <div className="flex items-center justify-between bg-[#F3F8FB] mt-[70px] rounded-md max-md:flex-col">
             <div className="p-5">
-              <h1 className="font-bold text-[25px] py-5">Giới thiệu webiste đặt thuốc online
+              <h1 className="font-bold text-[25px] py-5 max-md:text-[20px]">Giới thiệu webiste đặt thuốc online
                 <span className="text-[#2563EB] pl-2">Bình An Dược</span>
               </h1>
-              <p className="w-[850px] text-[14px]">Website   <span className="text-[#2563EB] font-semibold">Bình An Dược</span> mang trong mình sứ mệnh chăm sóc sức khỏe cho hàng triệu người dân Việt Nam. Chúng tôi luôn không ngừng nâng cao dịch vụ để mang lại chất lượng và trải nghiệm tốt nhất cho khách hàng.</p>
-              <p className="w-[850px] text-[14px] pt-4">
+              <p className="w-[850px] text-[14px] max-md:w-[300px] max-md:m-auto">Website   <span className="text-[#2563EB] font-semibold ">Bình An Dược</span> mang trong mình sứ mệnh chăm sóc sức khỏe cho hàng triệu người dân Việt Nam. Chúng tôi luôn không ngừng nâng cao dịch vụ để mang lại chất lượng và trải nghiệm tốt nhất cho khách hàng.</p>
+              <p className="w-[850px] text-[14px] pt-4 max-md:w-[300px] max-md:m-auto">
                 Với khát vọng trở thành nền tảng y tế từ xa uy tín, chất lượng hàng đầu Việt Nam và tương lai là vươn ra thế giới, <span className="text-[#2563EB] font-semibold">Bình An Dược</span> không ngừng nỗ lực, sáng tạo để mang lại cho người dùng dịch vụ chăm sóc sức khỏe nhanh chóng và chất lượng nhất.
               </p>
             </div>

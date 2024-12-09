@@ -30,12 +30,12 @@ const {handleAddToCart} = useContext(HandleCartContext)
 
     return (
         <div>
-            <div className="grid grid-cols-4 gap-5">
+            <div className="grid grid-cols-4 gap-5 max-md:grid-cols-1">
                 {responsData?.length > 0 ? (
                     responsData.map((product) => (
                         <CardProduct
                                products={product}
-                               handleAddToCart={()=>handleAddToCart(product?._id,user?._id,true)}
+                               handleAddToCart={()=>handleAddToCart(product?._id,user?._id,product?.stock,true)}
                         />
                     ))
                 ) : (

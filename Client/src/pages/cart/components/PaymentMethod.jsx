@@ -26,7 +26,9 @@ const PaymentMethod = () => {
               </label>
             );
           })}
-        {errors.payment_method_id && <ErrorMessage messsage={errors.payment_method_id.message}></ErrorMessage>}
+          <div className='mb-4'>
+          {errors.payment_method_id && <ErrorMessage  messsage={errors.payment_method_id.message}></ErrorMessage>}
+          </div>
       </div>
     </div>
   );
