@@ -105,7 +105,7 @@ const ProductHeaderBar = () => {
   const filterOptions = [
     { value: 'sortField=price_distcount&sortOrder=asc', title: 'Low to High' },
     { value: 'sortField=price_distcount&sortOrder=desc', title: 'High to Low' },
-    { value: 'sortField=stock&sortOrder=asc', title: 'Low to Low stock' },
+    { value: 'sortField=stock&sortOrder=asc', title: 'Low to High stock' },
     { value: 'sortField=stock&sortOrder=desc', title: 'High to Low stock' }
   ];
 
