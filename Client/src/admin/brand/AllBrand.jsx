@@ -37,11 +37,11 @@ const AllBrand = () => {
     navigate(`/admin/edit-brand/${id}`);
   };
 
-  const handleDetele = async (name) => {
+  const handleDetele = async (brand) => {
     const result = await confirmDialog({
       title: 'Xóa brand',
       iconLeft: <AppIcons.TrashBinIcon />,
-      message: `Bạn có muốn xóa brand ${name} không ?`,
+      message: `Bạn có muốn xóa brand ${brand.name} không ?`,
       confirmLabel: 'Có, tôi đồng ý',
       cancelLabel: 'Không, giữ lại'
     });
@@ -98,7 +98,7 @@ const AllBrand = () => {
                           size='m'
                           rounded='m'
                           addClassNames='bg-rose-500 text-white hover:bg-rose-600 px-3 py-1 rounded-md ml-2'
-                          onClick={() => handleDetele(name)}
+                          onClick={() => handleDetele(brand)}
                         >
                           <AppIcons.TrashBinIcon width='18' height='18'/>
                         </Button>
