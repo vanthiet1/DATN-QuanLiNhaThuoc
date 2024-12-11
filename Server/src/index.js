@@ -13,6 +13,7 @@ const http = require('http');
 const cronConfig = require('./configs/cron');
 cronConfig.clearOTP();
 cronConfig.sendReminderEmail();
+cronConfig.clearCouponInactive();
 app.use(morgan('common'));
 app.use(bodyParser.json());
 app.use(cookieParser());
