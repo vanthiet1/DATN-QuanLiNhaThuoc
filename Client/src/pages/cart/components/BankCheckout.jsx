@@ -6,7 +6,7 @@ import orderServices from "../../../services/orderService";
 import { UserContext } from "../../../contexts/UserContext";
 import { PATH_ROUTERS_CLIENT } from "../../../utils/constant/routers";
 import { TabUIAccountContext } from "../../../contexts/TabUIAccountContext";
-const BankCheckout = ({ setShowQrCode , showSuccessAnimation , setShowSuccessAnimation }) => {
+const BankCheckout = ({ setShowQrCode , setShowSuccessAnimation }) => {
   const { setTabIndex } = useContext(TabUIAccountContext) || null;
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useContext(UserContext);
