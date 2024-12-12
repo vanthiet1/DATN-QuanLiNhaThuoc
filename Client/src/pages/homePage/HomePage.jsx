@@ -59,6 +59,7 @@ const HomePage = () => {
 
 
   return (
+
     <div className="overflow-hidden w-full">
       <SectionHeroBanner />
       <div className="w-full">
@@ -99,7 +100,7 @@ const HomePage = () => {
                   <SwiperSlide key={product._id}>
                     <CardProduct
                       products={product}
-                      handleAddToCart={() => handleAddToCart(product?._id, user?._id,product?.stock,true)}
+                      handleAddToCart={() => handleAddToCart(product?._id, user?._id, product?.stock, true)}
                     />
                   </SwiperSlide>
                 ))}
@@ -111,33 +112,33 @@ const HomePage = () => {
             </div>
           )}
           <div className='grid grid-cols-4 mt-[50px] place-items-center max-md:grid-cols-2 max-sm:grid-cols-1'>
-           <div className="max-md:mb-4">
-           <Advertisement
-              icon={
-                <AppIcons.FastDelivery
-                  addClassNames='w-[100px] text-[#2563EB] mb-2 mt-2 '
-                  width='45px'
-                  height='50px'
-                />
-              }
-              title={'GIAO THUỐC NHANH'}
-              description={'Đơn hàng của bạn sẽ được mua và giao từ nhà thuốc gần nhất và tốt nhất'}
-            />
-           </div>
-           <div className="max-md:mb-4">
-           <Advertisement
-              icon={<AppIcons.ShieldIcon2 addClassNames='w-[100px] text-[#2563EB]' width='35px' height='35px' />}
-              title={'ĐÁNG TIN CẬY'}
-              description={'Bình An Dược chỉ hoạt động với các hiệu thuốc đạt chuẩn GPP và được cấp phép của Bộ Y Tế'}
-            />
-           </div>
-           <div className="max-md:mb-4">
-           <Advertisement
-              icon={<AppIcons.PhonePlus addClassNames='w-[100px] text-[#2563EB]' width='35px' height='35px' />}
-              title={'TƯ VẤN NHIỆT TÌNH'}
-              description={'Các dược sĩ kinh nghiệm sẽ gọi điện và tư vấn nhiệt tình cho bạn'}
-            />
-           </div>
+            <div className="max-md:mb-4">
+              <Advertisement
+                icon={
+                  <AppIcons.FastDelivery
+                    addClassNames='w-[100px] text-[#2563EB] mb-2 mt-2 '
+                    width='45px'
+                    height='50px'
+                  />
+                }
+                title={'GIAO THUỐC NHANH'}
+                description={'Đơn hàng của bạn sẽ được mua và giao từ nhà thuốc gần nhất và tốt nhất'}
+              />
+            </div>
+            <div className="max-md:mb-4">
+              <Advertisement
+                icon={<AppIcons.ShieldIcon2 addClassNames='w-[100px] text-[#2563EB]' width='35px' height='35px' />}
+                title={'ĐÁNG TIN CẬY'}
+                description={'Bình An Dược chỉ hoạt động với các hiệu thuốc đạt chuẩn GPP và được cấp phép của Bộ Y Tế'}
+              />
+            </div>
+            <div className="max-md:mb-4">
+              <Advertisement
+                icon={<AppIcons.PhonePlus addClassNames='w-[100px] text-[#2563EB]' width='35px' height='35px' />}
+                title={'TƯ VẤN NHIỆT TÌNH'}
+                description={'Các dược sĩ kinh nghiệm sẽ gọi điện và tư vấn nhiệt tình cho bạn'}
+              />
+            </div>
             <Advertisement
               icon={<AppIcons.TimeIcon2 addClassNames='w-[100px] text-[#2563EB]' width='35px' height='35px' />}
               title={'PHỤC VỤ 24H'}
@@ -147,7 +148,7 @@ const HomePage = () => {
           <div className="mt-[70px]">
             <h1 className="font-bold text-[22px] text-center pb-4">Đánh giá của khách hàng</h1>
             <div className="grid grid-cols-4 w-[100%] gap-3 m-auto max-md:w-full max-md:grid-cols-2">
-              {initialCommentData && initialCommentData?.slice(0,4).map((comment) => (
+              {initialCommentData && initialCommentData?.slice(0, 4).map((comment) => (
                 <FeedbackUser
                   avatar={comment?.user_id?.avatar || "https://res.cloudinary.com/dz93cdipw/image/upload/v1713866997/Book-Store/Avatar/kwuemqemetzsp4jw21mt.webp"}
                   username={comment?.user_id?.fullname}
@@ -159,9 +160,9 @@ const HomePage = () => {
             <div className="pt-5">
               <h1 className="text-[24px] text-center font-bold">Cách đặt thuốc online qua website Bình An Dược</h1>
               <div className="flex justify-center items-center gap-4 mt-[50px]">
-                  <div>
-                        <StepOrder />
-                  </div>
+                <div>
+                  <StepOrder />
+                </div>
               </div>
             </div>
           </div>
