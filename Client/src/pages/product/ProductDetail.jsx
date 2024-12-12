@@ -258,7 +258,7 @@ const ProductDetail = () => {
                   />
                   {errors.content && <p className='text-red-500 text-sm pl-2 pb-4'>{errors.content.message}</p>}
                   <Button
-                    onClick={handlePostComment}
+                   disabled={commentContent ? false : true}
                     className={`w-full duration-200  p-3 rounded-[50px] text-[#333] ${
                       commentContent ? 'bg-green-700 duration-200 text-[#fff]' : 'bg-slate-200'
                     }`}
@@ -267,7 +267,6 @@ const ProductDetail = () => {
                   </Button>
                 </form>
               </div>
-
               <div className='mt-[50px] h-auto overflow-y-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-200'>
                 {dataComment && dataComment?.length > 0 ? (
                   dataComment
