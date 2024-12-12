@@ -33,3 +33,5 @@ export const PAYMENT_METHODS_CODE = {
   COD_ID: '67020c5c21e941e9e5240bf1',
   BANK_ID: '6742ed8fee23b6dc36d7c86b'
 };
+
+export const PRICE_FOR_COUPON = 50000;

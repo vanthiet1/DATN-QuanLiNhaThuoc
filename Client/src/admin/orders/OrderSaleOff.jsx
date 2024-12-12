@@ -9,6 +9,7 @@ import CardProduct from '../../components/card/CardProduct';
 import { InputText, SelectBox } from '../../components/ui/form';
 import AppIcons from '../../components/ui/icon';
 import subCategoryServices from '../../services/subCategoryService';
+import { showToastError } from '../../configs/toastConfig';
 
 const HeaderListProduct = () => {
   const { handleFilterProduct } = useContext(OrderSaleOffContext);
@@ -59,8 +60,12 @@ const SectionListProduct = () => {
   const { addProductToCart } = useContext(CartOrderOffContext);
   const { handleChangeNumberPage, productAllData } = useContext(OrderSaleOffContext);
 
-  const handleAddProductToCart = (_id = 1, price, quantity = 1, name, image) => {
-    addProductToCart({ _id, price, quantity, name, image });
+  const handleAddProductToCart = (_id = 1, price, quantity = 1, name, image, stock) => {
+    if (stock > 0) {
+      addProductToCart({ _id, price, quantity, name, image });
+    } else {
+      showToastError('sản phẩm này đã hết hàng');
+    }
   };
 
   return (
@@ -69,12 +74,12 @@ const SectionListProduct = () => {
       <div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
         {productAllData &&
           productAllData.productsList.map((item) => {
-            const { _id, price_distcount, name, images } = item;
+            const { _id, price_distcount, name, images, stock } = item;
             return (
               <CardProduct
                 key={_id}
                 products={item}
-                handleAddToCart={() => handleAddProductToCart(_id, price_distcount, 1, name, images[0].url_img)}
+                handleAddToCart={() => handleAddProductToCart(_id, price_distcount, 1, name, images[0].url_img, stock)}
               ></CardProduct>
             );
           })}
