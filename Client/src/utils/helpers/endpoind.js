@@ -1,4 +1,5 @@
 const END_POIND_API = {
+  CHAT:'/chat',
   USER: '/user',
   EMAIL: '/email',
   AUTH: '/auth',
