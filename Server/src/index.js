@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: 'https://nha-thuoc-binh-an-duoc.vercel.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
     exposedHeaders: ['x-auth-token']
@@ -35,7 +35,6 @@ socket(server);
 app.get('/', (req, res) => {
   res.send('Welcome To Api');
 });
-
 // Routes
 const AuthRouter = require('./routers/auth');
 const OrderRouter = require('./routers/order');
