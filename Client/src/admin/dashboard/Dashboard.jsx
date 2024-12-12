@@ -18,12 +18,12 @@ const iconMap = {
 
 const OrderCard = ({ title, quantity = 0, iconName, price }) => {
   return (
-    <div className='flex items-center justify-center text-gray-700 flex-col py-6 rounded bg-gray-100'>
-      <div className=''>{iconMap[iconName]}</div>
-      <div className='text-sm text-center mt-2'>
-        <h3>{title}</h3>
-        {!price && <p>Số lượng : {quantity}</p>}
-        {price && <p>Tổng : {formatsHelper.currency(price)}</p>}
+    <div className='flex items-center justify-center text-gray-700 flex-col py-6 rounded shadow'>
+      <div>{iconMap[iconName]}</div>
+      <div className='text-sm text-center mt-2 text-[#333]'>
+        <h3 className='text-[18px]'><b>{title}</b></h3>
+        {!price && <p>Số lượng : <span className='text-[#2563ea] font-bold'>{quantity} </span> </p>}
+        {price && <p>Tổng : <span className='text-[#2563ea] font-bold'>{formatsHelper.currency(price)}</span></p>}
       </div>
     </div>
   );

@@ -129,7 +129,6 @@ const ProductDetail = () => {
   };
 
   if (isError) return <div>Trang hiện tại đang lỗi</div>;
-
   return (
     <div>
       <div className='w-[80%] m-auto'>
@@ -187,6 +186,15 @@ const ProductDetail = () => {
                     <span>Tạm thời chưa có ngày nhập</span>
                   )}
                 </div>
+
+                <div className='flex gap-3 pb-2'>
+                  <span className='block font-semibold'>Trạng thái hàng:</span>
+                  {product?.[0]?.stock > 0 ? (
+                    <span className='text-green-600 font-semibold'>Còn hàng</span>
+                  ) : (
+                    <span className='text-red-500 font-semibold'>Không còn hàng</span>
+                  )}
+                </div>
                 <div className='flex justify-between w-[350px] max-md:w-full'>
                   <div className='flex gap-2 items-center'>
                     <button
@@ -218,7 +226,7 @@ const ProductDetail = () => {
                 </div>
                 <div className='flex gap-4 pt-4 max-md:justify-between max-md:flex-col max-md:m-3'>
                   <Button
-                    onClick={() => handleAddToCart(product[0]?._id, user?._id, true)}
+                    onClick={() => handleAddToCart(product[0]?._id, user?._id, product[0]?.stock, true)}
                     disabled={quantityProductDetail < 1 ? true : false}
                     addClassNames='text-[16px] uppercase border border-[#C9C9C9] p-2 py-1 px-[30px] rounded-[10px]  font-semibold hover:bg-gray-100 duration-300 max-md:w-[50%] flex justify-center max-md:w-full'
                   >

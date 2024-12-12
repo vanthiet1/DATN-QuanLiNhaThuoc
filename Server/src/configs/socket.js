@@ -5,7 +5,7 @@ const socket = async (httpServer) => {
   try {
     io = new Server(httpServer, {
       cors: {
-        origin: 'https://quan-li-nha-thuoc.vercel.app',
+        origin: 'http://localhost:5173',
         methods: ['GET', 'POST']
       }
     });

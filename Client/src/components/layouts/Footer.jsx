@@ -6,7 +6,7 @@ import logoFB from '../../assets/images/logo/logoFb.png'
 import logoYoutobe from '../../assets/images/logo/logoYoutobe.png'
 import logoTiktok from '../../assets/images/logo/logoTiktok.png'
 import logoPhay from '../../assets/images/logo/logo CH Phay.png'
-import logoAppStore from '../../assets/images/logo/logo App store.png'
+import logoAppStore from '../../assets/images/logo/logo_app_store.png'
 import logoCongthuong from '../../assets/images/logo/logo Congthuong.png'
 const Footer = () => {
   return (
