@@ -3,11 +3,11 @@ import END_POIND_API from '../utils/helpers/endpoind';
 import { showToastError, showToastSuccess } from '../configs/toastConfig';
 
 const commentServices = {
-  addComment: async (resquestParrams,requestBody) => {
+  addComment: async (resquestParrams, requestBody) => {
     try {
-      const { data } = await http.post(`${END_POIND_API.COMMENT}/${resquestParrams}`,requestBody);
-      if(!data) return
-      showToastSuccess(data.message)
+      const { data } = await http.post(`${END_POIND_API.COMMENT}/${resquestParrams}`, requestBody);
+      if (!data) return;
+      showToastSuccess(data.message);
       return data;
     } catch (error) {
       showToastError(error.response.data.message);
@@ -15,7 +15,7 @@ const commentServices = {
   },
   getCommentsByProductId: async (resquestParrams) => {
     try {
-      const { data } = await http.get(`${END_POIND_API.COMMENT}/${resquestParrams}`)
+      const { data } = await http.get(`${END_POIND_API.COMMENT}/${resquestParrams}`);
       return data;
     } catch (error) {
       showToastError(error.response.data.message);
@@ -31,9 +31,10 @@ const commentServices = {
       console.log(error.message);
     }
   },
-  updateComment: async (resquestParrams) => {
+  updateComment: async (resquestParrams, requestBody) => {
     try {
-      const { data } = await http.put(`${END_POIND_API.COMMENT}/${resquestParrams}`);
+      const { data } = await http.put(`${END_POIND_API.COMMENT}/${resquestParrams}`, requestBody);
+      showToastSuccess(data.message || 'Cập nhật comment thành công');
       return data;
     } catch (error) {
       showToastError(error.response.data.message);
@@ -49,7 +50,7 @@ const commentServices = {
       showToastError(error.response?.data?.message || 'Lỗi khi xoá comment');
       console.log(error);
     }
-  },
+  }
 };
 
 export default commentServices;
