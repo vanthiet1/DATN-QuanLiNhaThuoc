@@ -21,7 +21,7 @@ const CartCard = ({ productCart }) => {
         <div className='w-max flex items-center gap-3 max-md:my-3 max-md:pr-5 max-md:w-full'>
           <Button
             type='button'
-            onClick={() => handleQuantityChange(productCart?.productId._id, -1)}
+            onClick={() => handleQuantityChange(productCart?.productId?._id, -1)}
             className='w-[40px] max-md:w-[40%] h-10 border border-gray-300 flex items-center justify-center text-lg font-bold text-gray-400  transition-all rounded-[5px] hover:bg-[#2563EB] hover:text-[#fff] duration-300'
           >
             -

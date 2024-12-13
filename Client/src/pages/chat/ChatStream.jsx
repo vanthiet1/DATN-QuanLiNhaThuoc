@@ -31,7 +31,6 @@ const Chat = () => {
     }, []);
     useEffect(() => {
         if (!user) {
-            setLoading(false);
             return;
         }
         const getToken = async () => {
