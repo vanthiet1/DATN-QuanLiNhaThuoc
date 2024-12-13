@@ -61,6 +61,8 @@ const TransactionRouter = require('./routers/transaction');
 const ReportRouter = require('./routers/report');
 const NotificationRouter = require('./routers/notification');
 const HistoryOrderRouter = require('./routers/historyOrder');
+const ChatRouter = require('./routers/chat');
+
 
 app.use('/api/v1/order', OrderRouter);
 app.use('/api/v1/order-details', OrderDetailRouter);
@@ -88,6 +90,7 @@ app.use('/api/v1/transactions', TransactionRouter);
 app.use('/api/v1/report', ReportRouter);
 app.use('/api/v1/notification', NotificationRouter);
 app.use('/api/v1/historyOrder', HistoryOrderRouter);
+app.use('/api/v1/chat', ChatRouter);
 
 // Start server
 const PORT = process.env.PORT || 5000;

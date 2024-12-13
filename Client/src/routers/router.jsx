@@ -22,6 +22,8 @@ const About = lazy(() => import('../pages/about/About'));
 const Contact = lazy(() => import('../pages/contact/Contact'));
 const HistoryOrder = lazy(() => import('../pages/order/HistoryOrderDetail'));
 const Blog = lazy(() => import('../pages/blog/Blog'));
+const Chat = lazy(() => import('../pages/chat/ChatStream'));
+
 
 const DashBoard = lazy(() => import('../admin/dashboard/Dashboard'));
 const AddProduct = lazy(() => import('../admin/product/AddProduct'));
@@ -92,6 +94,14 @@ const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <NotFoundPage />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_CLIENT.CHAT,
+        element: (
+          <SuspenseWrapper>
+            <Chat />
           </SuspenseWrapper>
         )
       },

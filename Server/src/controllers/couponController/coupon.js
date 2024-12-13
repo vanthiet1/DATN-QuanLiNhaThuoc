@@ -3,6 +3,9 @@ const CouponModel = require('../../models/couponModel/coupon');
 const CouponController = {
   createCoupon: async (req, res) => {
     const { code, is_active, discount_value, start_date, end_date } = req.body;
+    if (new Date(start_date) > new Date(end_date)) {
+      return res.status(400).json({ message: 'Ngày bắt đầu không thể lớn hơn ngày kết thúc.' });
+  }
     try {
       const newCoupon = new CouponModel({
         code,
