@@ -18,7 +18,7 @@ import CartDetailsShow from './CartDetailsShow';
 import { Image } from '../../../components/ui/image';
 import useAddress from '../../../hooks/useAddress';
 import { ProcessLoading } from '../../../components/ui/loaders';
-import { PAYMENT_METHODS_CODE } from '../../../utils/constant/common';
+import { PAYMENT_METHODS_CODE, PRICE_FOR_COUPON } from '../../../utils/constant/common';
 
 const SectionInforOrder = () => {
   const {
@@ -273,25 +273,27 @@ const SectionInforOrder = () => {
                 {errors.payment_method_id && <ErrorMessage messsage={errors.payment_method_id.message}></ErrorMessage>}
               </div>
             </div>
-            <div>
-              <h2 className='text-lg font-medium text-gray-700 mb-4'>Sử dụng mã giảm giá</h2>
+            {cartTotalPrice > PRICE_FOR_COUPON && (
               <div>
-                {couponsData &&
-                  couponsData.length > 0 &&
-                  couponsData.map((coupon) => {
-                    const { _id, code, discount_value } = coupon;
-                    return (
-                      <label htmlFor={_id} key={_id}>
-                        <div className='flex items-center gap-3 mb-3 '>
-                          <InputRadio refinput={register('coupon_id')} id={_id} defaultValue={_id} />
-                          <p>nhập mã {code}</p>
-                          <span>Giảm {formatsHelper.currency(discount_value)}</span>
-                        </div>
-                      </label>
-                    );
-                  })}
+                <h2 className='text-lg font-medium text-gray-700 mb-4'>Sử dụng mã giảm giá</h2>
+                <div>
+                  {couponsData &&
+                    couponsData.length > 0 &&
+                    couponsData.map((coupon) => {
+                      const { _id, code, discount_value } = coupon;
+                      return (
+                        <label htmlFor={_id} key={_id}>
+                          <div className='flex items-center gap-3 mb-3 '>
+                            <InputRadio refinput={register('coupon_id')} id={_id} defaultValue={_id} />
+                            <p>nhập mã {code}</p>
+                            <span>Giảm {formatsHelper.currency(discount_value)}</span>
+                          </div>
+                        </label>
+                      );
+                    })}
+                </div>
               </div>
-            </div>
+            )}
             <div className='mt-8'>
               <Button
                 type='submit'

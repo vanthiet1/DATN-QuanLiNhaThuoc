@@ -22,7 +22,8 @@ const About = lazy(() => import('../pages/about/About'));
 const Contact = lazy(() => import('../pages/contact/Contact'));
 const HistoryOrder = lazy(() => import('../pages/order/HistoryOrderDetail'));
 const Blog = lazy(() => import('../pages/blog/Blog'));
-// const BankDemo = lazy(() => import('../pages/bank/BankDemo'));
+const BankDemo = lazy(() => import('../pages/bank/BankDemo'));
+const Chat = lazy(() => import('../pages/chat/ChatStream'));
 
 
 const DashBoard = lazy(() => import('../admin/dashboard/Dashboard'));
@@ -105,6 +106,14 @@ const router = createBrowserRouter([
       //     </SuspenseWrapper>
       //   )
       // },
+      {
+        path: PATH_ROUTERS_CLIENT.CHAT,
+        element: (
+          <SuspenseWrapper>
+            <Chat />
+          </SuspenseWrapper>
+        )
+      },
       {
         path: PATH_ROUTERS_CLIENT.PRODUCT_DETAILS,
         element: (

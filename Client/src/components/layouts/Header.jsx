@@ -208,7 +208,9 @@ const Header = () => {
                                 </>
                             )}
                             <div className='flex gap-4 max-md:gap-2'>
+                                <Link to={PATH_ROUTERS_CLIENT.CHAT}>
                                 <AppIcons.ChatIcon addClassNames='text-[#fff] cursor-pointer' width='20px' height='20px' />
+                                </Link>
                                 <div className='w-[2px] h-[20px] bg-[#fff] rounded-md'></div>
                                 <Link to={'/gio-hang'}>
                                     <div className='relative'>

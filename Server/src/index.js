@@ -13,13 +13,14 @@ const http = require('http');
 const cronConfig = require('./configs/cron');
 cronConfig.clearOTP();
 cronConfig.sendReminderEmail();
+cronConfig.clearCouponInactive();
 app.use(morgan('common'));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: 'https://nha-thuoc-binh-an-duoc.vercel.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
     exposedHeaders: ['x-auth-token']
@@ -34,7 +35,6 @@ socket(server);
 app.get('/', (req, res) => {
   res.send('Welcome To Api');
 });
-
 // Routes
 const AuthRouter = require('./routers/auth');
 const OrderRouter = require('./routers/order');
@@ -61,6 +61,8 @@ const TransactionRouter = require('./routers/transaction');
 const ReportRouter = require('./routers/report');
 const NotificationRouter = require('./routers/notification');
 const HistoryOrderRouter = require('./routers/historyOrder');
+const ChatRouter = require('./routers/chat');
+
 
 app.use('/api/v1/order', OrderRouter);
 app.use('/api/v1/order-details', OrderDetailRouter);
@@ -88,6 +90,7 @@ app.use('/api/v1/transactions', TransactionRouter);
 app.use('/api/v1/report', ReportRouter);
 app.use('/api/v1/notification', NotificationRouter);
 app.use('/api/v1/historyOrder', HistoryOrderRouter);
+app.use('/api/v1/chat', ChatRouter);
 
 // Start server
 const PORT = process.env.PORT || 5000;

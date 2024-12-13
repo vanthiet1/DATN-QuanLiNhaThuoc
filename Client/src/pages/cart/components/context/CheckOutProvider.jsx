@@ -20,7 +20,7 @@ const CheckOutProvider = ({ children }) => {
 
   useEffect(() => {
     const initialQuantities = cart?.reduce((initialValue, item) => {
-      initialValue[item.productId._id] = item.quantity;
+      initialValue[item.productId?._id] = item.quantity;
       return initialValue;
     }, {});
     setQuantities(initialQuantities);
@@ -30,11 +30,11 @@ const CheckOutProvider = ({ children }) => {
     setUpdateLoading(true);
     try {
       await cartServices.updateQuantityCart({
-        userId: user._id,
+        userId: user?._id,
         productId,
         quantity
       });
-      await getProductCart(user._id);
+      await getProductCart(user?._id);
     } catch (error) {
       console.error('Error updating quantity:', error);
     } finally {
