@@ -22,6 +22,7 @@
     "ckeditor5-premium-features": "^43.1.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "datn": "file:",
     "framer-motion": "^11.13.1",
     "jspdf": "^2.5.2",
     "jspdf-autotable": "^3.8.3",
