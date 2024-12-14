@@ -86,20 +86,25 @@ const cronCofig = {
             }
         });
     },
-    clearCouponInactive: ()=>{
-        cron.schedule(clearIsActive, async () => { 
-          try {
-            const coupon = await CouponModel.find();
-            for (const couponisActive of coupon ) {
-                if (couponisActive.is_active === false && new Date(couponisActive.end_date) < new Date() ) {
-                    const deleteCouponisActive =  await CouponModel.findByIdAndDelete(couponisActive._id);
-                    console.log(deleteCouponisActive);
+    clearCouponInactive: () => {
+        cron.schedule(clearIsActive, async () => {
+            try {
+                const coupons = await CouponModel.find();
+                const currentDate = new Date();  // Lấy thời gian hiện tại
+    
+                // Lặp qua tất cả các coupon
+                for (const coupon of coupons) {
+                    // Trường hợp coupon có trạng thái is_active = false và đã hết hạn, hoặc coupon có trạng thái is_active = true và đã hết hạn
+                    if ((!coupon.is_active && new Date(coupon.end_date) < currentDate) || (coupon.is_active && new Date(coupon.end_date) < currentDate)) {
+                        // Xóa coupon nếu thỏa mãn các điều kiện trên
+                        const deleteCoupon = await CouponModel.findByIdAndDelete(coupon._id);
+                        console.log('Đã xóa coupon:', deleteCoupon);
+                    }
                 }
-              }
-          } catch (error) {
-             console.log(error);
-          }
-        })
+            } catch (error) {
+                console.log(error);
+            }
+        });
     }
 }
 module.exports = cronCofig

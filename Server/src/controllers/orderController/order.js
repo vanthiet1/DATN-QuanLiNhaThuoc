@@ -10,7 +10,9 @@ const { getIoSocket } = require('../../configs/socket');
 const NotificationModel = require('../../models/notificationModel/notificationModel');
 const UserModel = require('../../models/userModel/user');
 const HistoryOrder = require('../../models/historyOrderModel/historyOrder')
+const PaymentMethodModel = require('../../models/paymentMethodModel/paymentMethod');
 const sendMail = require('../../helpers/sendMail');
+const sendReminderEmail = require('../../helpers/notification')
 
 const OrderController = {
   createOrder: async (req, res) => {
@@ -281,7 +283,7 @@ const OrderController = {
   },
   updateOrder: async (req, res) => {
     const { id } = req.params;
-    const { status } = req.body;
+    const { status, isPay } = req.body;
     try {
       const currentOrder = await OrderModel.findById(id);
       if (!currentOrder) {
@@ -291,7 +293,7 @@ const OrderController = {
         const order = await OrderModel.findByIdAndUpdate(id, { status, isPay: true }, { new: true });
         return res.status(200).json(order);
       } else if (status == 5) {
-        const order = await OrderModel.findByIdAndUpdate(id, { status, isPay: false }, { new: true });
+        const order = await OrderModel.findByIdAndUpdate(id, { status, isPay: isPay }, { new: true })
         const existingHistory = await HistoryOrder.findOne({
           order_id: id,
           status_to: status
@@ -302,7 +304,7 @@ const OrderController = {
             status_from: currentOrder.status,
             status_to: status,
             note: '',
-            updated_by_user_id: id 
+            updated_by_user_id: id
           });
         }
         return res.status(200).json(order);
@@ -314,14 +316,55 @@ const OrderController = {
       res.status(400).json({ message: error.message });
     }
   },
+
+  sendMailCancelOrder: async (req, res) => {
+    try {
+      const { email, isPay, total_price, payment_method_id } = req.body;
+      const formattedPrice = `${Number(total_price).toLocaleString('vi-VN')}`;
+      const htmlContent = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
+          <div style="background-color: #2563EB; padding: 20px; text-align: center;">
+              <h1 style="color: #ffffff; font-size: 24px; margin: 0;">Thông báo hoàn tiền</h1>
+          </div>
+          <div style="padding: 20px; text-align: center;">
+              <img src="https://res.cloudinary.com/dz93cdipw/image/upload/v1733052072/DATN_QuanLiNhaThuoc/lfriluyngwydd2ri21ey.png" alt="Logo Bình An Dược" style="width: 100px; margin-bottom: 20px;">
+              <p style="color: #555555; font-size: 16px; line-height: 1.5; margin: 0 0 20px;">
+                  Kính gửi quý khách,  
+                  <br>
+                  Đơn hàng của quý khách đã được hủy thành công. Với số tiền quý khách đã thanh toán là <strong>${formattedPrice} VND</strong>, chúng tôi sẽ tiến hành hoàn tiền trong vòng <strong>3 ngày làm việc</strong>.  
+              </p>
+              <p style="color: #555555; font-size: 16px; line-height: 1.5; margin: 0 0 20px;">
+                  Nếu có bất kỳ thắc mắc nào, quý khách vui lòng liên hệ với chúng tôi qua số điện thoại <strong>0349850070</strong> hoặc ghé thăm website để biết thêm chi tiết.  
+              </p>
+              <a href="https://nha-thuoc-binh-an-duoc.vercel.app" style="display: inline-block; padding: 10px 20px; background-color: #2563EB; color: #ffffff; text-decoration: none; font-weight: bold; border-radius: 4px;">
+                  Ghé thăm website của chúng tôi
+              </a>
+          </div>
+          <div style="background-color: #f5f5f5; padding: 15px; text-align: center; color: #777777; font-size: 12px;">
+              <p style="margin: 0;">&copy; 2024 Bình An Dược. Mọi quyền được bảo lưu.</p>
+          </div>
+      </div>
+      `;
+      const payment = await PaymentMethodModel.findOne({ _id: payment_method_id })
+      const subject = "Hoàn tiền đơn bị hủy";
+      if (isPay !== true && payment?.code !== "mb") {
+        return 
+      }
+      await sendReminderEmail({ email, subject, htmlContent })
+      res.status(200).json({ message: "Gửi thành công" })
+    } catch (error) {
+      res.status(500).json({ message: "Internal Server Error", error: error.message })
+    }
+  },
+
   updatePayOrder: async (req, res) => {
     const { id } = req.params;
     const { isPay } = req.body;
     try {
-      if(!id){
-        return res.status(400).json({message:"Không tìm thấy id sẳn phẩm"})
+      if (!id) {
+        return res.status(400).json({ message: "Không tìm thấy id sẳn phẩm" })
       }
-        const order = await OrderModel.findByIdAndUpdate(id, {isPay: isPay }, { new: true });
+      const order = await OrderModel.findByIdAndUpdate(id, { isPay: isPay }, { new: true });
       res.status(200).json(order);
     } catch (error) {
       res.status(400).json({ message: error.message });
@@ -329,14 +372,14 @@ const OrderController = {
   },
   processPaymentDifference: async (req, res) => {
     try {
-        const {email,subject,insufficientPayment , actionMoney} = req.body;
-        if(!email){
-          return res.status(400).json({ message:"Không tìm thấy email"})
-        }
-        await sendMail({
-            email: email,
-            subject: subject,
-            randomCode: `
+      const { email, subject, insufficientPayment, actionMoney } = req.body;
+      if (!email) {
+        return res.status(400).json({ message: "Không tìm thấy email" })
+      }
+      await sendMail({
+        email: email,
+        subject: subject,
+        randomCode: `
              <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
           <p style="font-size: 16px; margin-bottom: 20px;">Chào bạn <strong>${email}</strong>,</p>
           <h1 style="font-size: 24px; color: #2563EB; margin-bottom: 10px;">${subject}</h1>
@@ -355,10 +398,10 @@ const OrderController = {
           </p>
         </div>
               `
-        });
-        res.status(200).json({ message: "Gửi thành công" });
+      });
+      res.status(200).json({ message: "Gửi thành công" });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+      res.status(500).json({ message: error.message });
     }
   },
   userCancelOrder: async (req, res) => {

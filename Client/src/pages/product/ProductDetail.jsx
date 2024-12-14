@@ -132,7 +132,7 @@ const ProductDetail = () => {
 
   return (
     <div>
-      <div className='w-[80%] m-auto'>
+      <div className='w-[80%] m-auto max-md:w-full'>
         {product ? (
           <div>
             <div className='flex gap-2 pb-4 items-center'>
@@ -144,7 +144,7 @@ const ProductDetail = () => {
               <AppIcons.ArrowRight />
               <h1 className='text-[#6d6d6d] cursor-pointer'>{product[0]?.name}</h1>
             </div>
-            <div className='flex pt-4 gap-5 bg-[#FFFFFF] shadow p-10 rounded-[5px] mb-5 max-md:flex-col max-md:p-2 '>
+            <div className='flex pt-4 gap-5 bg-[#FFFFFF] shadow p-10 rounded-[5px] mb-5 max-md:flex-col max-md:p-2 max-md:shadow-sm '>
               <div>
                 <div className='w-[500px] max-md:w-full'>
                   <img className='w-full' src={product[0]?.images[0]?.url_img} alt='' />
@@ -189,7 +189,7 @@ const ProductDetail = () => {
                 </div>
                 <div className='flex gap-3 pb-2'>
                   <span className='block font-semibold'>Trạng thái hàng:</span>
-                  {product?.[0]?.stock <=0 ?  <span className='text-red-500 font-semibold'>Hết hàng</span>  : <span className='text-green-600 font-semibold'>Còn hàng</span>}
+                  {product?.[0]?.stock <=0 ?  <span className='text-red-500 font-semibold'>Tạm thời hết hàng</span>  : <span className='text-green-600 font-semibold'>Còn hàng</span>}
                 </div>
                 <div className='flex justify-between w-[350px] max-md:w-full'>
                   <div className='flex gap-2 items-center'>
@@ -238,11 +238,11 @@ const ProductDetail = () => {
                 </div>
               </div>
             </div>
-            <div className=' pt-4 gap-3 bg-[#FFFFFF] shadow p-10 rounded-[5px] mb-5 max-md:p-2'>
+            <div className=' pt-4 gap-3 bg-[#FFFFFF] shadow max-md:shadow-sm p-10 max-md:p-0 rounded-[5px] mb-5 '>
               <h1 className='font-bold text-[25px] pb-4'>Thông tin sản phẩm</h1>
               <span dangerouslySetInnerHTML={{ __html: product[0]?.description }} />
             </div>
-            <div className=' pt-4 gap-3 bg-[#FFFFFF] shadow p-10 rounded-[5px]'>
+            <div className=' pt-4 gap-3 bg-[#FFFFFF] max-md:shadow-none shadow max-md:p-0 p-10 rounded-[5px]'>
               <div className='flex gap-2 items-center'>
                 <h1 className='font-bold text-[25px] items-center text-[#2563EB]'>Bình luận sản phẩm</h1>
                 <AppIcons.ChatIcon addClassNames='text-[#2563EB]' />
@@ -278,7 +278,7 @@ const ProductDetail = () => {
                     .reverse()
                     .map((comment) => (
                       <div className='flex justify-between items-center' key={comment._id}>
-                        <div className='mb-6 bg-white p-4 rounded-lg'>
+                        <div className='mb-6 bg-white p-4 rounded-lg max-md:p-0'>
                           <div className='flex items-center mb-2 gap-3'>
                             <img
                               className='w-[50px] h-[50px] rounded-full object-cover'
