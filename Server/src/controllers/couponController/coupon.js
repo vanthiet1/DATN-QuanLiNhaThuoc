@@ -3,8 +3,17 @@ const CouponModel = require('../../models/couponModel/coupon');
 const CouponController = {
   createCoupon: async (req, res) => {
     const { code, is_active, discount_value, start_date, end_date } = req.body;
-    if (new Date(start_date) > new Date(end_date)) {
-      return res.status(400).json({ message: 'Ngày bắt đầu không thể lớn hơn ngày kết thúc.' });
+    const currentDate = new Date();
+
+  if (new Date(start_date) > new Date(end_date)) {
+    return res.status(400).json({ message: 'Ngày bắt đầu không thể lớn hơn ngày kết thúc.' });
+  }
+  
+  if (new Date(start_date) < currentDate || new Date(end_date) < currentDate) {
+    return res.status(400).json({ message: 'Ngày bắt đầu hoặc ngày kết thúc không thể nhỏ hơn ngày hiện tại.' });
+  }
+  if (discount_value < 500 || discount_value > 50000) {
+    return res.status(400).json({ message: 'Giá trị mã giảm giá phải nằm trong khoảng từ 500 đến 50000.' });
   }
     try {
       const newCoupon = new CouponModel({
