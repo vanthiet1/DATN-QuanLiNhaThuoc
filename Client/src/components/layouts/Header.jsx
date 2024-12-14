@@ -173,7 +173,7 @@ const Header = () => {
                                                     <span className='relative'>
                                                         <AppIcons.OderIcon addClassNames='text-gray-800' />
                                                         <div className="absolute top-[-10px] right-[-5px]">
-                                                            {user && orderProduct && (
+                                                            {user && orderProduct.length > 0 && (
                                                                 <span className="text-[#fff] bg-red-500 flex justify-center items-center rounded-[50%] w-[15px] h-[15px] text-[10px]">
                                                                     {orderProduct?.length}
                                                                 </span>

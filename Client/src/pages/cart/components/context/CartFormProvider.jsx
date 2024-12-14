@@ -28,6 +28,7 @@ const CartFormProvider = ({ children, setShowQrCode }) => {
     handleSubmit,
     register,
     reset,
+    setValue,
     formState: { errors }
   } = useForm({ resolver: yupResolver(formOrderSchema.order) });
 
@@ -38,7 +39,8 @@ const CartFormProvider = ({ children, setShowQrCode }) => {
     register,
     reset,
     errors,
-    isLoadingCreateOrder
+    isLoadingCreateOrder,
+    setValue
   };
 
   const handleSubmitForm = async (data) => {
