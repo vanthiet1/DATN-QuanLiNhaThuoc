@@ -4,6 +4,8 @@ const ProductModel = require('../../models/productModel/product');
 const { handleCreateImageUpload, handleDeleteImageUpload } = require('../../services/mediaCloudinary');
 const formatHelper = require('../../utilities/helper/formatHelper');
 const mongoose = require('mongoose');
+const { addDays } = require('date-fns');
+const OrderModel = require('../../models/ordersModels/order');
 
 const ProductController = {
   getAllDataProducts: async (req, res) => {
@@ -474,6 +476,28 @@ const ProductController = {
   deleteProduct: async (req, res) => {
     try {
       const { id } = req.params;
+
+      const orders = await OrderModel.find({
+        status: { $nin: [4, 5] }
+      });
+
+      const orderIds = orders.map((order) => order._id);
+      console.log(`order  ${orderIds}`);
+
+      const orderDetails = await OrderDetailsModel.find({
+        order_id: { $in: orderIds }
+      });
+      console.log(`order details ${orderDetails}`);
+
+      const findProductInOrder = orderDetails.filter((item) => {
+        return item.product_id == id;
+      });
+
+      if (findProductInOrder.length > 0) {
+        console.log(findProductInOrder);
+        return res.status(403).json({ message: 'sản phẩm đang tồn tại trong đơn hàng , không thể xóa!' });
+      }
+
       const deleteProduct = await ProductModel.findByIdAndDelete(id);
 
       if (deleteProduct) {
@@ -492,6 +516,29 @@ const ProductController = {
       res.status(200).json({ message: 'Sản phẩm đã bị xóa' });
     } catch (error) {
       res.status(500).json({ message: 'Lỗi khi xóa sản phẩm: ' + error.message });
+    }
+  },
+  getProductToExpire: async (req, res) => {
+    try {
+      // const currentDate = new Date();
+      // const sevenDaysFromNow = addDays(currentDate, 7);
+
+      // // Query products where expiration_date is valid and within the next 7 days
+      // const expiringProducts = await Products.find({
+      //   expiration_date: {
+      //     $ne: null, // Ensure expiration_date is not null
+      //     $gte: currentDate,
+      //     $lte: sevenDaysFromNow
+      //   }
+      // });
+      // console.log(expiringProducts);
+
+      return res.status(200).json({
+        message: 'Products expiring within the next 7 days:',
+        data: 'ss'
+      });
+    } catch (error) {
+      res.status(500).json({ message: error });
     }
   }
 };
