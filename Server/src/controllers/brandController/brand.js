@@ -8,9 +8,7 @@ const brandController = {
       if (existingBrand) {
         return res.status(400).json({ message: 'Tên thương hiệu đã tồn tại!' });
       }
-      if (!name || !origin_country || !country_made) {
-        return res.status(400).json({ message: 'name,origin_country,country_made are required.' });
-      }
+     
 
       const newBanner = new BrandModel({ name, origin_country, country_made });
       await newBanner.save();

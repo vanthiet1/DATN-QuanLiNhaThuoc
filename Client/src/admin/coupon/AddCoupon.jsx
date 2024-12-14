@@ -32,15 +32,15 @@ const FormAddCoupon = () => {
     handleSubmit,
     register,
     reset,
+    setValue,
     formState: { errors }
   } = useForm({ resolver: yupResolver(formProductSchema.coupon) });
 
   const handleCreate = async (data) => {
-       console.log(data);
-       if(!data){
-        return;
-       }
-       
+    if (!data) {
+      return;
+    }
+
     await couponServices.createCoupon(data);
     reset();
     setCouponCode('');
@@ -49,6 +49,7 @@ const FormAddCoupon = () => {
   const handleGenerateCodeCoupon = () => {
     const code = generateCode(8, { numeric: true, alphabetic: true, uppercase: true });
     setCouponCode(code);
+    setValue('code', code);
   };
 
   return (
@@ -62,7 +63,7 @@ const FormAddCoupon = () => {
               </label>
               <div className='flex items-center gap-4'>
                 <InputText
-                  value={couponCode}
+                  defaultValue={couponCode}
                   addClassNames='flex-1'
                   size='m'
                   rounded='s'
@@ -73,8 +74,7 @@ const FormAddCoupon = () => {
                   <div
                     onClick={() => copyToClipboard(couponCode)}
                     className={cn(
-                      `font-normal cursor-pointer text-sm border-solid focus:outline-1 border px-[12px] py-[6px] rounded ${
-                        isCopied ? 'text-green-800 border-green-300 font-medium' : 'text-gray-800  border-slate-300'
+                      `font-normal cursor-pointer text-sm border-solid focus:outline-1 border px-[12px] py-[6px] rounded ${isCopied ? 'text-green-800 border-green-300 font-medium' : 'text-gray-800  border-slate-300'
                       }`
                     )}
                   >
@@ -97,25 +97,31 @@ const FormAddCoupon = () => {
               <label htmlFor='' className='font-medium text-sm mb-2'>
                 Coupon start date
               </label>
-              <InputDate size='m' rounded='s' refinput={register('start_date')} />
+              <InputDate size='m' rounded='s' refinput={register('start_date', {
+                setValueAs: (value) => (value ? new Date(value) : null),
+              })} />
               {errors.start_date && <ErrorMessage messsage={errors.start_date.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
                 Coupon end date
               </label>
-              <InputDate size='m' rounded='s' refinput={register('end_date')} />
+              <InputDate size='m' rounded='s' refinput={register('end_date', {
+                setValueAs: (value) => (value ? new Date(value) : null),
+              })} />
               {errors.end_date && <ErrorMessage messsage={errors.end_date.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
                 Coupon discount value
               </label>
-              <InputText
-                size='m'
-                rounded='s'
-                placeholder='Enter coupon discount value here'
-                refinput={register('discount_value')}
+              <input
+                type="number" 
+                placeholder="Enter coupon discount value here"
+                {...register('discount_value', {
+                  setValueAs: (value) => (value ? parseFloat(value) : null), 
+                })}
+                className="font-normal w-full text-sm text-gray-800 border border-slate-300 border-solid focus:outline-1 focus:outline-blue-400 disabled:cursor-not-allowed disabled:opacity-70 disabled:bg-slate-300 px-[12px] py-[6px] rounded"
               />
               {errors.discount_value && <ErrorMessage messsage={errors.discount_value.message}></ErrorMessage>}
             </div>

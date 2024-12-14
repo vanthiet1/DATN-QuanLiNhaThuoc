@@ -49,8 +49,7 @@ const AllCoupon = () => {
       });
       if (result) {
         await couponServices.deleteCoupon(id);
-        window.location.reload();
-        //setCouponData(couponData.filter((coupon) => coupon._id !== id));
+        setCouponData((prevCouponData) => prevCouponData.filter((coupon) => coupon._id !== id));
       }
     } catch (error) {
       console.error('Failed to delete coupon:', error);
