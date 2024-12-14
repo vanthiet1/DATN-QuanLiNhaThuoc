@@ -5,7 +5,7 @@ const formatHelper = require('../../utilities/helper/formatHelper');
 const blogController = {
   getAllBlogs: async (req, res) => {
     try {
-      const allBlogs = await Blog.find().populate('user_id', 'fullname email avatar');
+      const allBlogs = await Blog.find().sort({ createdAt: 1 }).populate('user_id', 'fullname email avatar');
       if (!allBlogs) {
         return res.status(404).json('Không lấy được dữ liệu');
       }

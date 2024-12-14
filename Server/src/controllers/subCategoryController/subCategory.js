@@ -1,6 +1,7 @@
 const SubCategoryModel = require('../../models/subCategoryModel/subCategory');
 const ProductModel = require('../../models/productModel/product');
 const ImageProduct = require('../../models/imageModels/image');
+const Products = require('../../models/productModel/product');
 
 const subCategory = {
   addSubCategory: async (req, res) => {
@@ -33,6 +34,15 @@ const subCategory = {
 
     if (!id) {
       return res.status(400).json({ message: 'Cần phải có ID để xóa.' });
+    }
+
+    const relatedProducts = await Products.find({ sub_category_id: id });
+
+    if (relatedProducts.length > 0) {
+      return res.status(400).json({
+        message: 'Không thể xóa danh mục con vì có sản phẩm liên quan.',
+        products: relatedProducts,
+      });
     }
 
     try {

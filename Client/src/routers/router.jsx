@@ -1,3 +1,4 @@
+
 import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { LayoutAdmin, LayoutDefault } from '../components/layouts';
@@ -22,7 +23,6 @@ const About = lazy(() => import('../pages/about/About'));
 const Contact = lazy(() => import('../pages/contact/Contact'));
 const HistoryOrder = lazy(() => import('../pages/order/HistoryOrderDetail'));
 const Blog = lazy(() => import('../pages/blog/Blog'));
-const BankDemo = lazy(() => import('../pages/bank/BankDemo'));
 const Chat = lazy(() => import('../pages/chat/ChatStream'));
 
 
@@ -98,14 +98,6 @@ const router = createBrowserRouter([
           </SuspenseWrapper>
         )
       },
-      // {
-      //   path:'bank',
-      //   element: (
-      //     <SuspenseWrapper>
-      //       <BankDemo />
-      //     </SuspenseWrapper>
-      //   )
-      // },
       {
         path: PATH_ROUTERS_CLIENT.CHAT,
         element: (

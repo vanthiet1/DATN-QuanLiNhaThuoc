@@ -100,4 +100,5 @@ const cronCofig = {
           }
         })
     }
+}
 module.exports = cronCofig
