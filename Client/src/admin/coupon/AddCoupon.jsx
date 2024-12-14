@@ -62,6 +62,7 @@ const FormAddCoupon = () => {
               </label>
               <div className='flex items-center gap-4'>
                 <InputText
+                  value={couponCode}
                   addClassNames='flex-1'
                   size='m'
                   rounded='s'
