@@ -4,6 +4,10 @@ const brandController = {
   createBrand: async (req, res) => {
     try {
       const { name, origin_country, country_made } = req.body;
+      const hasNumber = /\d/; 
+      if (hasNumber.test(origin_country) || hasNumber.test(country_made)) {
+        return res.status(400).json({ message: 'Tên quốc gia không được chứa số!' });
+      }
       const existingBrand = await BrandModel.findOne({ name });
       if (existingBrand) {
         return res.status(400).json({ message: 'Tên thương hiệu đã tồn tại!' });
