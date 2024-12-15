@@ -43,7 +43,7 @@ const FormEditBlog = () => {
     setValue,
     formState: { errors }
   } = useForm({
-    resolver: yupResolver(formBlogSchema.blog)
+    resolver: yupResolver(formBlogSchema.blogUpdate)
   });
 
   useEffect(() => {

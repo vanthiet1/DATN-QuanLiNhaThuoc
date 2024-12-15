@@ -68,11 +68,15 @@ const AllCategory = () => {
 
       if (result) {
         if (isSubcategory) {
-          await subCategoryServices.deleteSubCategory(id);
-          setSubCategoryData((prevSubcategories) => prevSubcategories.filter((sub) => sub._id !== id));
+          const response = await subCategoryServices.deleteSubCategory(id);
+          if (response ) {
+            setSubCategoryData((prevSubcategories) => prevSubcategories.filter((sub) => sub._id !== id));
+          }
         } else {
-          await categoryServices.deleteCategory(id);
-          setCategoryData((prevCategory) => prevCategory.filter((category) => category._id !== id));
+          const response  = await categoryServices.deleteCategory(id);
+          if (response ) {
+            setCategoryData((prevCategory) => prevCategory.filter((category) => category._id !== id));
+          }
         }
       }
     } catch (error) {
@@ -104,7 +108,9 @@ const AllCategory = () => {
   }
 
   const getSubcategoriesByCategoryId = (categoryId) => {
-    const filteredSubcategories = subCategoryData.filter((sub) => sub.category_id && sub.category_id._id === categoryId);
+    const filteredSubcategories = subCategoryData.filter(
+      (sub) => sub.category_id && sub.category_id._id === categoryId
+    );
     return filteredSubcategories;
   };
 
@@ -121,17 +127,17 @@ const AllCategory = () => {
                   <p className='text-lg font-bold'>{cate.name}</p>
                 </div>
                 <div className='flex items-center gap-2'>
-                <Button
-                onClick={() => handleToggleSubcategory(cate._id)}
+                  <Button
+                    onClick={() => handleToggleSubcategory(cate._id)}
                     size='m'
                     rounded='s'
                     addClassNames='bg-teal-500 text-white hover:bg-teal-600 px-3 py-1 rounded-md'
                   >
-                  {openSubcategories[cate._id] ? (
-                    <AppIcons.X_CloseIcon width='20' height='20' />
-                  ) : (
-                    <AppIcons.EyeIcon width='20' height='20' />
-                  )}
+                    {openSubcategories[cate._id] ? (
+                      <AppIcons.X_CloseIcon width='20' height='20' />
+                    ) : (
+                      <AppIcons.EyeIcon width='20' height='20' />
+                    )}
                   </Button>
                   <Button
                     size='m'

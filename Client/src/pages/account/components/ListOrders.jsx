@@ -10,9 +10,9 @@ const YourOrders = () => {
     const [orderDetailProduct, setOrderDetailProduct] = useState([]);
     const [expandedOrderId, setExpandedOrderId] = useState(null);
     const { user } = useContext(UserContext);
-    const  confirmDialog = useConfirmDialog();
+    const confirmDialog = useConfirmDialog();
     const handleCancelOrder = async (id) => {
-        if(!id){
+        if (!id) {
             return showToastError("Đơn hàng của bạn không có hoặc đã bị hủy trước đó")
         }
         const result = await confirmDialog({
@@ -20,9 +20,9 @@ const YourOrders = () => {
             message: 'Bạn có thực sự muốn hủy đơn hàng này không?',
             confirmLabel: 'Xác Nhận Hủy Đơn Hàng',
             cancelLabel: 'Suy Nghĩ Lại',
-          });
-          if(result){
-            const orderUpdate = await orderServices.updateOrder(id,{status:5})
+        });
+        if (result) {
+            const orderUpdate = await orderServices.updateOrder(id, { status: 5 })
             if (orderUpdate?.status === 5) {
                 const updatedOrders = orderProduct.filter(
                     (productCancel) => productCancel._id !== id
@@ -31,11 +31,12 @@ const YourOrders = () => {
             } else {
                 showToastError("Không thể hủy đơn hàng. Vui lòng thử lại.");
             }
-          }
+            await orderServices.sendMailCancelOrder({ email: user?.email, isPay: orderUpdate?.isPay , total_price:orderUpdate?.total_price,payment_method_id:orderUpdate?.payment_method_id});
+        }
     };
     const getDataOrder = async () => {
         const dataOrder = await orderServices.getOrderByUserId(user?._id);
-        const filteredOrders = dataOrder?.filter(order => [1,2,3].includes(order.status));
+        const filteredOrders = dataOrder?.filter(order => [1, 2, 3].includes(order.status));
         setOrderProduct(filteredOrders || []);
     };
     useEffect(() => {
@@ -52,8 +53,8 @@ const YourOrders = () => {
                 data={orderProduct}
                 orderDetailProduct={orderDetailProduct}
                 addClassNames="my-custom-class w-full table-auto"
-                titleRow={["Số lượng sản phẩm", "Tổng Tiền", "Trạng thái đơn hàng", "Ngày Mua", "Thanh toán","Hủy đơn", "Xem đơn hàng"]}
-                titleRowOrderDetail={["Ảnh","Tên sản phẩm", "giá tiền","Số lượng","Ngày Mua"]}
+                titleRow={["Số lượng sản phẩm", "Tổng Tiền", "Trạng thái đơn hàng", "Ngày Mua", "Thanh toán", "Hủy đơn", "Xem đơn hàng"]}
+                titleRowOrderDetail={["Ảnh", "Tên sản phẩm", "giá tiền", "Số lượng", "Ngày Mua"]}
                 handleCancelOrder={handleCancelOrder}
                 checkOrderDetail={checkOrderDetail}
                 expandedOrderId={expandedOrderId}

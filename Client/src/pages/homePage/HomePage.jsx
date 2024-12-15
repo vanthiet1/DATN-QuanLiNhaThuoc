@@ -37,20 +37,16 @@ const HomePage = () => {
         const subCategories = category.subcategories;
         if (subCategories.length === 0) return null;
         const subCategory = subCategories[0];
-
         const productsForSubCategory = initialProductData.filter(
           (product) => product?.sub_category_id === subCategory?._id
         );
-
         const representativeProduct = productsForSubCategory[0] || null;
-
         return {
           categoryId: category._id,
           subCategoryId: subCategory._id,
           representativeProduct
         };
       });
-
       const validRepresentativeData = representativeData.filter((item) => item !== null);
       setRepresentativeProducts(validRepresentativeData);
     }
@@ -151,7 +147,6 @@ const HomePage = () => {
                   ?.slice(0, 4)
                   .map((comment) => (
                     <FeedbackUser
-                      key={comment._id}
                       avatar={
                         comment?.user_id?.avatar ||
                         'https://res.cloudinary.com/dz93cdipw/image/upload/v1713866997/Book-Store/Avatar/kwuemqemetzsp4jw21mt.webp'
@@ -190,7 +185,7 @@ const HomePage = () => {
               </p>
             </div>
             <div>
-              <img className='w-[400px]' src={ManShip} alt='ManShip' />
+              <img className='w-[400px]' src={ManShip} alt='' />
             </div>
           </div>
         </div>

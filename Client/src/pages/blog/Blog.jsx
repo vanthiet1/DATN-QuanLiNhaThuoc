@@ -45,8 +45,7 @@ const Blog = () => {
                   <div className='p-4 flex flex-col justify-between flex-1'>
                     <h2 className='text-lg md:text-xl font-bold text-gray-800 hover:text-blue-600'>{blog.title}</h2>
                     <div className='text-sm md:text-base text-gray-500 mt-2'>
-                      <span>{formatsHelper.formatDate(blog.updatedAt)} - </span>
-                      <span className='text-green-600'>{blog.user_id.fullname}</span>
+                      <span>Ngày xuất bản: <span className="text-[#39a359]">{formatsHelper.formatDate(blog.updatedAt)} </span></span>
                     </div>
                     <p className='text-gray-600 mt-3 line-clamp-3 text-sm md:text-base'>{blog.description}</p>
                   </div>

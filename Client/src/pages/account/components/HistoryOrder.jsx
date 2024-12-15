@@ -14,7 +14,7 @@ const HistoryOrder = () => {
     const { user } = useContext(UserContext);
     const [hisOrderUser, setHisOrderUser] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const confirmDialog = useConfirmDialog()
+    const confirmDialog = useConfirmDialog();
 
     const getDataHistoryOrder = async () => {
         try {
@@ -40,11 +40,11 @@ const HistoryOrder = () => {
           })
           if(result){
             const dataHisOrder = await historyOrderServices.deleteHistoryOrder(id);
-            const filteredHistoryOrders = dataHisOrder?.data?.filter(
-                (hisOrder) => hisOrder?._id === id
-            );
-            console.log(filteredHistoryOrders);
+            console.log(dataHisOrder);
             
+            const filteredHistoryOrders = hisOrderUser?.filter(
+                (hisOrder) => hisOrder?.order_id?._id === dataHisOrder?.data?._id
+            );
             setHisOrderUser(filteredHistoryOrders);
             showToastSuccess(dataHisOrder?.message)
           }
@@ -53,7 +53,6 @@ const HistoryOrder = () => {
     useEffect(() => {
         getDataHistoryOrder();
     }, []);
-    console.log(hisOrderUser);
 
     return (
         <div>

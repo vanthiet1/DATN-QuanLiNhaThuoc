@@ -106,7 +106,7 @@ const AllBlog = () => {
                     <td className='w-10 px-6 py-4 whitespace-nowrap text-sm text-gray-800 overflow-hidden text-ellipsis'>
                     {blog.title.length > 30 ? `${blog.title.substring(0, 30)}...` : blog.title}</td>
                     <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-800 overflow-hidden text-ellipsis'>
-                      {blog.description.length > 50 ? `${blog.description.substring(0, 50)}...` : blog.description}
+                      {blog.description.length > 35 ? `${blog.description.substring(0, 35)}...` : blog.description}
                     </td>
 
                     <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-800'>{blog.user_id?.fullname}</td>

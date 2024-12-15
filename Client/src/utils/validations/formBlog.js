@@ -17,6 +17,10 @@ const formBlogSchema = {
         );
       })
       .required('Không được để image trống.')
+  }),
+  blogUpdate: Yup.object().shape({
+    title: Yup.string().required('Không được để title trống.'),
+    description: Yup.string().required('Không được để description trống.')
   })
 };
 

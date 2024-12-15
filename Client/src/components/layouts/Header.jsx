@@ -173,7 +173,7 @@ const Header = () => {
                                                     <span className='relative'>
                                                         <AppIcons.OderIcon addClassNames='text-gray-800' />
                                                         <div className="absolute top-[-10px] right-[-5px]">
-                                                            {user && orderProduct && (
+                                                            {user && orderProduct.length > 0 && (
                                                                 <span className="text-[#fff] bg-red-500 flex justify-center items-center rounded-[50%] w-[15px] h-[15px] text-[10px]">
                                                                     {orderProduct?.length}
                                                                 </span>
@@ -208,7 +208,9 @@ const Header = () => {
                                 </>
                             )}
                             <div className='flex gap-4 max-md:gap-2'>
+                                <Link to={PATH_ROUTERS_CLIENT.CHAT}>
                                 <AppIcons.ChatIcon addClassNames='text-[#fff] cursor-pointer' width='20px' height='20px' />
+                                </Link>
                                 <div className='w-[2px] h-[20px] bg-[#fff] rounded-md'></div>
                                 <Link to={'/gio-hang'}>
                                     <div className='relative'>

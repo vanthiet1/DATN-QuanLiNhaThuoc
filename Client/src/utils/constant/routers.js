@@ -20,7 +20,8 @@ const PATH_ROUTERS_CLIENT = {
   HISTORY_ORDER: 'lich-su-dat-hang/:id',
   NOTFOUND: '*',
   ABOUT: 'gioi-thieu',
-  CONTACT:'lien-he'
+  CONTACT:'lien-he',
+  CHAT:'tu-van'
 };
 
 const PATH_ROUTERS_ADMIN = {
