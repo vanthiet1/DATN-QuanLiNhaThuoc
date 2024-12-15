@@ -22,6 +22,10 @@ const CardProduct = ({ products, handleAddToCart }) => {
             <span className='block'>{formatsHelper.currency(products?.price_distcount)}</span>
             <span className='block line-through text-gray-400'>{formatsHelper.currency(products?.price_old)}</span>
           </div>
+          <div className='flex gap-3 pb-2'>
+                  <span className='block font-semibold'>Trạng thái hàng:</span>
+                  {products?.stock <=0 ?  <span className='text-red-500 font-semibold'>Tạm thời hết hàng</span>  : <span className='text-green-600 font-semibold'>Còn hàng</span>}
+                </div>
         </div>
       </Link>
       <div className='flex justify-between items-center px-3 pb-3 h-max'>

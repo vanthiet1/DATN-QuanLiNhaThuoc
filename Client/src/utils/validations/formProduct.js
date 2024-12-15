@@ -37,7 +37,10 @@ const formProductSchema = {
   }),
   coupon: Yup.object().shape({
     code: Yup.string().required('Không được để code trống.').max(10),
-    start_date: Yup.date().required('Không được để start_date trống.'),
+    start_date: Yup.date()
+    .nullable()
+    .typeError('Ngày bắt đầu không hợp lệ.') 
+    .required('Không được để start_date trống.'),
     end_date: Yup.date().required('Không được để end_date trống.'),
     discount_value: Yup.number().required('Không được để discount_value trống.')
   }),

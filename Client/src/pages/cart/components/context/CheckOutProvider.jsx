@@ -42,21 +42,27 @@ const CheckOutProvider = ({ children }) => {
     }
   };
 
-  const handleQuantityChange = (productId, change) => {
-    setQuantities((prev) => {
-      const newQuantity = Math.max(1, (prev[productId] || 0) + change);
-
-      clearTimeout(debounceTimeout.current);
-      debounceTimeout.current = setTimeout(() => {
-        handleUpdateQuantity(productId, newQuantity);
-      }, 500);
-
-      return {
+  const handleQuantityChange = async (productId, change) => {
+    try {
+      const newQuantity = Math.max(0, (quantities[productId] || 0) + change);
+      if (newQuantity <= 0) {
+        await cartServices.deleteProductCartByUserId(user?._id, productId);
+        await getProductCart(user?._id);
+      } else {
+        clearTimeout(debounceTimeout.current);
+        debounceTimeout.current = setTimeout(() => {
+          handleUpdateQuantity(productId, newQuantity);
+        }, 500);
+      }
+      setQuantities((prev) => ({
         ...prev,
-        [productId]: newQuantity
-      };
-    });
+        [productId]: newQuantity,
+      }));
+    } catch (error) {
+      console.log(error);
+    }
   };
+  
 
   const handleDeleteProductCart = async (productId) => {
     const result = await confirmDialog({

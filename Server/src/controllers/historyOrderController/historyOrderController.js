@@ -99,7 +99,7 @@ const deleteHistoryOrder = async (req, res) => {
     }
 
     return res.status(200).json({
-      message: 'History order deleted successfully!',
+      message: 'Xóa thành công lịch sử đơn hàng',
       data: deletedHistoryOrder
     });
   } catch (error) {
