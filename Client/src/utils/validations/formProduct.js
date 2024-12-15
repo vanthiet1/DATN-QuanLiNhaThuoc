@@ -38,22 +38,28 @@ const formProductSchema = {
   coupon: Yup.object().shape({
     code: Yup.string().required('Không được để code trống.').max(10),
     start_date: Yup.date()
-    .nullable()
-    .typeError('Ngày bắt đầu không hợp lệ.') 
-    .required('Không được để start_date trống.'),
+      .nullable()
+      .typeError('Ngày bắt đầu không hợp lệ.')
+      .required('Không được để start_date trống.'),
     end_date: Yup.date().required('Không được để end_date trống.'),
     discount_value: Yup.number().required('Không được để discount_value trống.')
   }),
   category: Yup.object().shape({
     name: Yup.string().required('Không được để name trống.').max(100),
     description: Yup.string().required('Không được để description trống.'),
-    order: Yup.string().required('Không được để order trống.')
+    order: Yup.number()
+      .typeError('Order phải là số.')
+      .required('Không được để order trống.')
+      .min(1, 'Order phải lớn hơn 0.')
   }),
   subCategory: Yup.object().shape({
     name: Yup.string().required('Không được để name trống.').max(100),
     category_id: Yup.string().required('Không được để category_id trống.'),
     description: Yup.string().required('Không được để description trống.'),
-    order: Yup.string().required('Không được để order trống.')
+    order: Yup.number()
+      .typeError('Order phải là số.')
+      .required('Không được để order trống.')
+      .min(1, 'Order phải lớn hơn 0.')
   })
 };
 
