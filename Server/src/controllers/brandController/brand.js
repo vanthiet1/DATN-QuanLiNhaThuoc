@@ -1,4 +1,5 @@
 const BrandModel = require('../../models/brandModel/brand');
+const ProductsModel = require('../../models/productModel/product');
 
 const brandController = {
   createBrand: async (req, res) => {
