@@ -15,7 +15,10 @@ const authServices = {
     },
     login: async (requestBody) => {
         try {
-            const { data } = await http.post(`${END_POIND_API.AUTH}/login`, requestBody)
+            const { data } = await http.post(`${END_POIND_API.AUTH}/login`, requestBody);
+              console.log(data);
+              
+            if(!data) return;
             tokenService.setAccessToken(data.accessToken)
             showToastSuccess(data.message)
             return data
