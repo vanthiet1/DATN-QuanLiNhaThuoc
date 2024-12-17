@@ -9,7 +9,10 @@ const formProductSchema = {
     price_distcount: Yup.number().required('Không được để mật khẩu trống.'),
     price_old: Yup.number().required('Không được để price_old trống.'),
     percent_price: Yup.number().required('Không được để percent_price trống.'),
-    stock: Yup.number().required('Không được để stock trống.'),
+    stock: Yup.number()
+      .required('Không được để stock trống.')
+      .min(0, 'Stock không được là số âm.')
+      .integer('Stock phải là số nguyên.'),
     production_date: Yup.date()
       .nullable()
       .transform((value, originalValue) => (originalValue === '' ? null : value)),
@@ -32,28 +35,34 @@ const formProductSchema = {
   }),
   brand: Yup.object().shape({
     name: Yup.string().required('Không được để name trống.').max(300),
-    origin_country: Yup.string().required('Không được để origin_country trống.'),
-    country_made: Yup.string().required('Không được để country_made trống.')
+    origin_country: Yup.string().required('Không được để xuất xứ quốc gia trống.'),
+    country_made: Yup.string().required('Không được để quốc gia sản xuất trống.')
   }),
   coupon: Yup.object().shape({
     code: Yup.string().required('Không được để code trống.').max(10),
     start_date: Yup.date()
-    .nullable()
-    .typeError('Ngày bắt đầu không hợp lệ.') 
-    .required('Không được để start_date trống.'),
-    end_date: Yup.date().required('Không được để end_date trống.'),
-    discount_value: Yup.number().required('Không được để discount_value trống.')
+      .nullable()
+      .typeError('Ngày bắt đầu không hợp lệ.')
+      .required('Không được để ngày bắt đầu trống.'),
+    end_date: Yup.date().required('Không được để kết thúc trống.'),
+    discount_value: Yup.number().required('Không được để giá trị phiếu giảm giá trống.')
   }),
   category: Yup.object().shape({
     name: Yup.string().required('Không được để name trống.').max(100),
-    description: Yup.string().required('Không được để description trống.'),
-    order: Yup.number().required('Không được để order trống.')
+    description: Yup.string().required('Không được để mô tả trống.'),
+    order: Yup.number()
+      .typeError('Order phải là số.')
+      .required('Không được để order trống.')
+      .min(1, 'Order phải lớn hơn 0.')
   }),
   subCategory: Yup.object().shape({
     name: Yup.string().required('Không được để name trống.').max(100),
-    category_id: Yup.string().required('Không được để category_id trống.'),
-    description: Yup.string().required('Không được để description trống.'),
-    order: Yup.number().required('Không được để order trống.')
+    category_id: Yup.string().required('Không được để id thể loại trống.'),
+    description: Yup.string().required('Không được để mô tả trống.'),
+    order: Yup.number()
+      .typeError('Order phải là số.')
+      .required('Không được để order trống.')
+      .min(1, 'Order phải lớn hơn 0.')
   })
 };
 

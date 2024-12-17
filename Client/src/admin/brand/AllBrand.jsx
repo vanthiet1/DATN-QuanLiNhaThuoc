@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import useFetch from '../../hooks/useFetch';
 import brandServices from '../../services/brandService';
 import { PATH_ROUTERS_ADMIN } from '../../utils/constant/routers';
@@ -21,9 +21,16 @@ const brandBreadCrumb = [
 ];
 
 const AllBrand = () => {
+  const [brandData, setBrandData] = useState([]);
   const confirmDialog = useConfirmDialog();
   const navigate = useNavigate();
-  const { isLoading, isError, responsData: brandData, messsageError } = useFetch(brandServices.getBrand);
+  const { isLoading, isError, responsData: initialBrandData, messsageError } = useFetch(brandServices.getBrand);
+
+  useEffect(() => {
+    if (initialBrandData) {
+      setBrandData(initialBrandData);
+    }
+  }, [initialBrandData]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -47,8 +54,10 @@ const AllBrand = () => {
     });
 
     if (result) {
-      await brandServices.deleteBrand(brand._id);
-      window.location.reload();
+      const brandRestulDelete = await brandServices.deleteBrand(brand._id);
+      if (brandRestulDelete) {
+        setBrandData(brandData.filter((item) => item._id !== brand._id));
+      }
     }
   };
 
@@ -92,7 +101,7 @@ const AllBrand = () => {
                           addClassNames='bg-blue-500 text-white hover:bg-blue-600 px-3 py-1 rounded-md ml-2'
                           onClick={() => handleEdit(_id)}
                         >
-                          <AppIcons.EditIcon width='18' height='18'/>
+                          <AppIcons.EditIcon width='18' height='18' />
                         </Button>
                         <Button
                           size='m'
@@ -100,7 +109,7 @@ const AllBrand = () => {
                           addClassNames='bg-rose-500 text-white hover:bg-rose-600 px-3 py-1 rounded-md ml-2'
                           onClick={() => handleDetele(brand)}
                         >
-                          <AppIcons.TrashBinIcon width='18' height='18'/>
+                          <AppIcons.TrashBinIcon width='18' height='18' />
                         </Button>
                       </td>
                     </tr>
