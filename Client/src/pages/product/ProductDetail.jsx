@@ -189,7 +189,11 @@ const ProductDetail = () => {
                 </div>
                 <div className='flex gap-3 pb-2'>
                   <span className='block font-semibold'>Trạng thái hàng:</span>
-                  {product?.[0]?.stock <=0 ?  <span className='text-red-500 font-semibold'>Tạm thời hết hàng</span>  : <span className='text-green-600 font-semibold'>Còn hàng</span>}
+                  {product?.[0]?.stock <= 0 ? (
+                    <span className='text-red-500 font-semibold'>Tạm thời hết hàng</span>
+                  ) : (
+                    <span className='text-green-600 font-semibold'>Còn hàng</span>
+                  )}
                 </div>
                 <div className='flex justify-between w-[350px] max-md:w-full'>
                   <div className='flex gap-2 items-center'>
@@ -222,14 +226,14 @@ const ProductDetail = () => {
                 </div>
                 <div className='flex gap-4 pt-4 max-md:justify-between max-md:flex-col max-md:m-3'>
                   <Button
-                    onClick={() => handleAddToCart(product[0]?._id, user?._id, product[0]?.stock, true)} 
+                    onClick={() => handleAddToCart(product[0]?._id, user?._id, product[0]?.stock, true)}
                     disabled={quantityProductDetail < 1 ? true : false}
                     addClassNames='text-[16px] uppercase border border-[#C9C9C9] p-2 py-1 px-[30px] rounded-[10px]  font-semibold hover:bg-gray-100 duration-300 max-md:w-[50%] flex justify-center max-md:w-full'
                   >
                     Thêm giỏ hàng
                   </Button>
                   <Button
-                    onClick={() => handleAddToCart(product[0]?._id, user?._id,product[0]?.stock, false)}
+                    onClick={() => handleAddToCart(product[0]?._id, user?._id, product[0]?.stock, false)}
                     disabled={quantityProductDetail < 1 ? true : false}
                     addClassNames='text-[16px] text-[#fff] bg-[#2563EB] p-2 w-[150px] flex justify-center rounded-[10px] uppercase hover:bg-blue-700 duration-300 max-md:w-[50%] max-md:w-full'
                   >
@@ -262,7 +266,7 @@ const ProductDetail = () => {
                   />
                   {errors.content && <p className='text-red-500 text-sm pl-2 pb-4'>{errors.content.message}</p>}
                   <Button
-                   disabled={commentContent ? false : true}
+                    disabled={commentContent ? false : true}
                     className={`w-full duration-200  p-3 rounded-[50px] text-[#333] ${
                       commentContent ? 'bg-green-700 duration-200 text-[#fff]' : 'bg-slate-200'
                     }`}
