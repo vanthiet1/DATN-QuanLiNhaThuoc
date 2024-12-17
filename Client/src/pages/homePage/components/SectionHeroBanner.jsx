@@ -3,6 +3,7 @@ import bannerServices from "../../../services/bannerService";
 import useFetch from '../../../hooks/useFetch';
 import SpinnerLoading from "../../../components/ui/loaders/SpinnerLoading";
 import { sliderConfigBanner } from '../../../configs/sliderConfig';
+import Banner from '../../../assets/images/logo/Banner_1.jpg'
 import 'swiper/css';
 import 'swiper/css/pagination';
 const SectionHeroBanner = () => {
@@ -30,7 +31,7 @@ const SectionHeroBanner = () => {
         <div className="flex-[3] border-2 border-slate-200 rounded-[5px] overflow-hidden">
             <img
                 className="w-full h-[210px] object-cover"
-                src="https://res.cloudinary.com/dddz1buyw/image/upload/v1728103590/banners/Banner_Web_PC_1610x492_78f11f2d35_ga5xpw.webp"
+                src={Banner}
                 alt="Tư vấn"
             />
             <div className="flex justify-between items-center p-4">
