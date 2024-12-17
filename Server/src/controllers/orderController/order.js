@@ -11,6 +11,7 @@ const NotificationModel = require('../../models/notificationModel/notificationMo
 const UserModel = require('../../models/userModel/user');
 const HistoryOrder = require('../../models/historyOrderModel/historyOrder')
 const PaymentMethodModel = require('../../models/paymentMethodModel/paymentMethod');
+const OrderDetailModel = require('../../models/orderDetailsModel/orderDetails');
 const sendMail = require('../../helpers/sendMail');
 const sendReminderEmail = require('../../helpers/notification')
 
@@ -322,34 +323,94 @@ const OrderController = {
       const { email, isPay, total_price, payment_method_id } = req.body;
       const formattedPrice = `${Number(total_price).toLocaleString('vi-VN')}`;
       const htmlContent = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
-          <div style="background-color: #2563EB; padding: 20px; text-align: center;">
-              <h1 style="color: #ffffff; font-size: 24px; margin: 0;">Thông báo hoàn tiền</h1>
+      <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 30px auto; border: 1px solid #e0e0e0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
+          <div style="background-color: #2563EB; padding: 30px; text-align: center;">
+              <h1 style="color: #ffffff; font-size: 28px; margin: 0;">Thông báo hoàn tiền</h1>
           </div>
-          <div style="padding: 20px; text-align: center;">
-              <img src="https://res.cloudinary.com/dz93cdipw/image/upload/v1733052072/DATN_QuanLiNhaThuoc/lfriluyngwydd2ri21ey.png" alt="Logo Bình An Dược" style="width: 100px; margin-bottom: 20px;">
-              <p style="color: #555555; font-size: 16px; line-height: 1.5; margin: 0 0 20px;">
+          <div style="padding: 40px; text-align: center; background-color: #ffffff;">
+              <img src="https://res.cloudinary.com/dz93cdipw/image/upload/v1733052072/DATN_QuanLiNhaThuoc/lfriluyngwydd2ri21ey.png" alt="Logo Bình An Dược" style="width: 120px; margin-bottom: 20px;">
+              <p style="color: #333333; font-size: 18px; line-height: 1.8; margin: 0 0 25px;">
                   Kính gửi quý khách,  
-                  <br>
+                  <br><br>
                   Đơn hàng của quý khách đã được hủy thành công. Với số tiền quý khách đã thanh toán là <strong>${formattedPrice} VND</strong>, chúng tôi sẽ tiến hành hoàn tiền trong vòng <strong>3 ngày làm việc</strong>.  
               </p>
-              <p style="color: #555555; font-size: 16px; line-height: 1.5; margin: 0 0 20px;">
+              <p style="color: #555555; font-size: 16px; line-height: 1.6; margin: 0 0 30px;">
                   Nếu có bất kỳ thắc mắc nào, quý khách vui lòng liên hệ với chúng tôi qua số điện thoại <strong>0349850070</strong> hoặc ghé thăm website để biết thêm chi tiết.  
               </p>
-              <a href="https://nha-thuoc-binh-an-duoc.vercel.app" style="display: inline-block; padding: 10px 20px; background-color: #2563EB; color: #ffffff; text-decoration: none; font-weight: bold; border-radius: 4px;">
+              <a href="https://nha-thuoc-binh-an-duoc.vercel.app" 
+                 style="display: inline-block; padding: 12px 30px; background-color: ##2563EB; color: #ffffff; text-decoration: none; font-weight: bold; border-radius: 6px; font-size: 16px;">
                   Ghé thăm website của chúng tôi
               </a>
           </div>
-          <div style="background-color: #f5f5f5; padding: 15px; text-align: center; color: #777777; font-size: 12px;">
+          <div style="background-color: #F0F4FA; padding: 20px; text-align: center; color: #555555; font-size: 14px; border-top: 1px solid #e0e0e0;">
               <p style="margin: 0;">&copy; 2024 Bình An Dược. Mọi quyền được bảo lưu.</p>
           </div>
       </div>
       `;
+
       const payment = await PaymentMethodModel.findOne({ _id: payment_method_id })
       const subject = "Hoàn tiền đơn bị hủy";
       if (isPay !== true && payment?.code !== "mb") {
-        return 
+        return
       }
+      await sendReminderEmail({ email, subject, htmlContent })
+      res.status(200).json({ message: "Gửi thành công" })
+    } catch (error) {
+      res.status(500).json({ message: "Internal Server Error", error: error.message })
+    }
+  },
+
+  sendMailOrderSuccsess: async (req, res) => {
+    try {
+      const { order, email } = req.body;
+      const formattedPrice = `${Number(order.total_price).toLocaleString('vi-VN')}`;
+      const orderDetail = await OrderDetailModel.find({ order_id: order?._id })
+      const products = [];
+      for (const order of orderDetail) {
+        const product = await ProductModel.find({ _id: order.product_id });
+        products.push(...product);
+      }
+
+      const htmlContent = `
+      <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 30px auto; border: 1px solid #e0e0e0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
+    <div style="background-color: #2563EB; padding: 30px; text-align: center;">
+        <h1 style="color: #ffffff; font-size: 28px; margin: 0;">Thông báo đặt hàng thành công</h1>
+    </div>
+    <div style="padding: 40px 40px 0px 40px; text-align: center; background-color: #ffffff;">
+        <img src="https://res.cloudinary.com/dz93cdipw/image/upload/v1733052072/DATN_QuanLiNhaThuoc/lfriluyngwydd2ri21ey.png" alt="Logo Bình An Dược" style="width: 120px; margin-bottom: 20px;">
+        <p style="color: #333333; font-size: 18px; line-height: 1.8; margin: 0 0 25px;">
+            Kính gửi quý khách,  
+            <br><br>
+            Đơn hàng của quý khách đã được đặt thành công. Tổng số tiền thanh toán là <strong>${formattedPrice} VND</strong> Quý khách sẽ nhận được thông báo khi đơn hàng được xử lý và giao đến địa chỉ của mình trong thời gian sớm nhất.  
+        </p>
+    </div>
+    <div style="padding: 0px 20px 20px 20px; text-align: left; background-color: #ffffff;">
+        <h2 style="font-size: 24px; margin-bottom: 20px; color: #333;">Thông tin sản phẩm</h2>
+        <table style="width: 100%; border-collapse: collapse; border: 1px solid #e0e0e0;">
+            <thead>
+                <tr>
+                    <th style="padding: 10px; background-color: #2563EB; color: white; border: 1px solid #e0e0e0; text-align: left;">Tên sản phẩm</th>
+                    <th style="padding: 10px; background-color: #2563EB; color: white; border: 1px solid #e0e0e0; text-align: left;">Mô tả</th>
+                    <th style="padding: 10px; background-color: #2563EB; color: white; border: 1px solid #e0e0e0; text-align: left;">Giá tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${products.map(product => `
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #e0e0e0;">${product.name}</td>
+                        <td style="padding: 10px; border: 1px solid #e0e0e0;">${product.description_short}</td>
+                        <td style="padding: 10px; border: 1px solid #e0e0e0;">${ Number(product.price_distcount).toLocaleString('vi-VN')} VND</td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    </div>
+    <div style="background-color: #F0F4FA; padding: 20px; text-align: center; color: #555555; font-size: 14px; border-top: 1px solid #e0e0e0;">
+        <p style="margin: 0;">&copy; 2024 Bình An Dược. Mọi quyền được bảo lưu.</p>
+    </div>
+</div>
+    `;
+      const subject = "Đơn hàng của bạn đã đặt thành công";
       await sendReminderEmail({ email, subject, htmlContent })
       res.status(200).json({ message: "Gửi thành công" })
     } catch (error) {
