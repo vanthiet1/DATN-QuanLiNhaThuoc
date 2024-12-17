@@ -1,6 +1,6 @@
 import axios from 'axios'
 const http = axios.create({ 
-    baseURL: 'http://localhost:8080/api/v1',
+    baseURL: 'https://datn-quanlinhathuoc.onrender.com/api/v1',
     headers: {
         'Content-Type': 'application/json'
         // 'Content-Type': 'multipart/form-data' 
