@@ -50,13 +50,19 @@ const formProductSchema = {
   category: Yup.object().shape({
     name: Yup.string().required('Không được để name trống.').max(100),
     description: Yup.string().required('Không được để description trống.'),
-    order: Yup.number().required('Không được để order trống.')
+    order: Yup.number()
+      .typeError('Order phải là số.')
+      .required('Không được để order trống.')
+      .min(1, 'Order phải lớn hơn 0.')
   }),
   subCategory: Yup.object().shape({
     name: Yup.string().required('Không được để name trống.').max(100),
     category_id: Yup.string().required('Không được để category_id trống.'),
     description: Yup.string().required('Không được để description trống.'),
-    order: Yup.number().required('Không được để order trống.')
+    order: Yup.number()
+      .typeError('Order phải là số.')
+      .required('Không được để order trống.')
+      .min(1, 'Order phải lớn hơn 0.')
   })
 };
 

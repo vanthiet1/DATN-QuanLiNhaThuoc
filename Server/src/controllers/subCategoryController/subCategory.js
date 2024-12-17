@@ -12,6 +12,12 @@ const subCategory = {
       return res.status(400).json({ message: 'Tên và category_id , order ,description là bắt buộc.' });
     }
 
+    const nameSubCate = await SubCategoryModel.findOne({name});
+
+    if(nameSubCate){
+      return res.status(400).json({ message: 'Subcategory đã tồn tại' });
+    }
+    
     try {
       const subCategory = new SubCategoryModel({
         name,

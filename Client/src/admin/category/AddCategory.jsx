@@ -63,7 +63,9 @@ const FormAddCategory = () => {
               <label htmlFor='' className='font-medium text-sm mb-2'>
                 Category order
               </label>
-              <InputText size='m' rounded='s' placeholder='Category order here' refinput={register('order')} />
+              <InputText size='m' rounded='s' placeholder='Category order here' {...register('order', {
+                setValueAs: (value) => (value ? parseFloat(value) : null), 
+              })} />
               {errors.order && <ErrorMessage messsage={errors.order.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
@@ -157,7 +159,9 @@ const FormAddSubCategory = () => {
               <label htmlFor='' className='font-medium text-sm mb-2'>
                 Sub category order
               </label>
-              <InputText size='m' rounded='s' placeholder='Sub category order here' refinput={register('order')} />
+              <InputText size='m' rounded='s' placeholder='Sub category order here' {...register('order', {
+                setValueAs: (value) => (value ? parseFloat(value) : null), 
+              })} />
               {errors.order && <ErrorMessage messsage={errors.order.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
