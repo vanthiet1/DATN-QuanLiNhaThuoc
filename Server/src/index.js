@@ -8,7 +8,7 @@ const app = express();
 const connectDB = require('./db/connectDB');
 const { socket } = require('./configs/socket');
 const http = require('http');
-
+const { rateLimit } = require('express-rate-limit');
 // Middleware
 const cronConfig = require('./configs/cron');
 cronConfig.clearOTP();
@@ -63,7 +63,6 @@ const NotificationRouter = require('./routers/notification');
 const HistoryOrderRouter = require('./routers/historyOrder');
 const ChatRouter = require('./routers/chat');
 
-
 app.use('/api/v1/order', OrderRouter);
 app.use('/api/v1/order-details', OrderDetailRouter);
 app.use('/api/v1/image', ImageRouter);
@@ -91,6 +90,15 @@ app.use('/api/v1/report', ReportRouter);
 app.use('/api/v1/notification', NotificationRouter);
 app.use('/api/v1/historyOrder', HistoryOrderRouter);
 app.use('/api/v1/chat', ChatRouter);
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 100,
+  standardHeaders: 'draft-8',
+  legacyHeaders: false
+});
+
+app.use(limiter);
 
 // Start server
 const PORT = process.env.PORT || 5000;

@@ -2,46 +2,46 @@ const cron = require('node-cron');
 const UserModel = require('../models/userModel/user');
 const OrderModel = require('../models/ordersModels/order');
 const CouponModel = require('../models/couponModel/coupon');
-require('dotenv').config()
-const sendReminderEmail = require('../helpers/notification')
-const { reminderEmailSchedule, clearOtpSchedule , clearIsActive} = require('./cronConfig');
+require('dotenv').config();
+const sendReminderEmail = require('../helpers/notification');
+const { reminderEmailSchedule, clearOtpSchedule, clearIsActive } = require('./cronConfig');
 const cronCofig = {
-    clearOTP: () => {
-        cron.schedule(clearOtpSchedule, async () => {
-            try {
-                const expiredUsers = await UserModel.find({
-                    timeOtp: { $lt: Date.now() }
-                });
-                if (expiredUsers.length > 0) {
-                    for (const user of expiredUsers) {
-                        user.otpVerify = undefined;
-                        user.timeOtp = undefined;
-                        user.otpForgotPass = undefined;
-                        user.lastOtpRequestTime = undefined; // check spam
-                        await user.save();
-                        console.log(`Đã xóa OTP của người dùng: ${user.email}`);
-                    }
-                }
-            } catch (error) {
-                console.error('Lỗi khi kiểm tra OTP hết hạn:', error);
-            }
+  clearOTP: () => {
+    cron.schedule(clearOtpSchedule, async () => {
+      try {
+        const expiredUsers = await UserModel.find({
+          timeOtp: { $lt: Date.now() }
         });
-    },
-    sendReminderEmail: () => {
-        cron.schedule(reminderEmailSchedule, async () => {
-            try {
-                const users = await UserModel.find();
-                if (users.length === 0) {
-                    return;
-                }
-                for (const user of users) {
-                   const orders = await OrderModel.find({user_id:user._id});
-                   if (!orders.length) {
-                    continue;
-                     }
-                    const email = user.email;
-                    const subject = 'Nhắc nhở uống thuốc';
-                    const htmlContent = `
+        if (expiredUsers.length > 0) {
+          for (const user of expiredUsers) {
+            user.otpVerify = undefined;
+            user.timeOtp = undefined;
+            user.otpForgotPass = undefined;
+            user.lastOtpRequestTime = undefined; // check spam
+            await user.save();
+            console.log(`Đã xóa OTP của người dùng: ${user.email}`);
+          }
+        }
+      } catch (error) {
+        console.error('Lỗi khi kiểm tra OTP hết hạn:', error);
+      }
+    });
+  },
+  sendReminderEmail: () => {
+    cron.schedule(reminderEmailSchedule, async () => {
+      try {
+        const users = await UserModel.find();
+        if (users.length === 0) {
+          return;
+        }
+        for (const user of users) {
+          const orders = await OrderModel.find({ user_id: user._id });
+          if (!orders.length) {
+            continue;
+          }
+          const email = user.email;
+          const subject = 'Nhắc nhở uống thuốc';
+          const htmlContent = `
                         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
                             <div style="background-color: #2563EB; padding: 20px; text-align: center;">
                                 <h1 style="color: #ffffff; font-size: 24px; margin: 0;">Nhắc nhở uống thuốc</h1>
@@ -61,32 +61,33 @@ const cronCofig = {
                         </div>
                     </div>
                 `;
-                    if (email && orders) {
-                        await sendReminderEmail({ email, subject, htmlContent });
-                    } else {
-                        console.log(`Người dùng ${user.username} không có email hợp lệ.`);
-                    }
-                }
-            } catch (error) {
-                console.log({ message: error.message });
-            }
-        });
-    },
-    clearCouponInactive: () => {
-        cron.schedule(clearIsActive, async () => {
-            try {
-                const coupons = await CouponModel.find();
-                const currentDate = new Date(); 
-                for (const coupon of coupons) {
-                    if ((!coupon.is_active && new Date(coupon.end_date) < currentDate) || (coupon.is_active && new Date(coupon.end_date) < currentDate)) {
-                        const deleteCoupon = await CouponModel.findByIdAndDelete(coupon._id);
-                        console.log('Đã xóa coupon:', deleteCoupon);
-                    }
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        });
-    }
-}
-module.exports = cronCofig
+          if (email && orders) {
+            await sendReminderEmail({ email, subject, htmlContent });
+          } else {
+            console.log(`Người dùng ${user.username} không có email hợp lệ.`);
+          }
+        }
+      } catch (error) {
+        console.log({ message: error.message });
+      }
+    });
+  },
+  clearCouponInactive: () => {
+    cron.schedule(clearIsActive, async () => {
+      try {
+        const coupons = await CouponModel.find();
+        const currentDate = new Date();
+
+        for (const coupon of coupons) {
+          if (new Date(coupon.end_date) < currentDate) {
+            const deleteCoupon = await CouponModel.findByIdAndDelete(coupon._id);
+            console.log('Đã xóa mã giảm giá:', deleteCoupon);
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  }
+};
+module.exports = cronCofig;
