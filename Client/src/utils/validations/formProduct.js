@@ -9,7 +9,10 @@ const formProductSchema = {
     price_distcount: Yup.number().required('Không được để mật khẩu trống.'),
     price_old: Yup.number().required('Không được để price_old trống.'),
     percent_price: Yup.number().required('Không được để percent_price trống.'),
-    stock: Yup.number().required('Không được để stock trống.'),
+    stock: Yup.number()
+      .required('Không được để stock trống.')
+      .min(0, 'Stock không được là số âm.')
+      .integer('Stock phải là số nguyên.'),
     production_date: Yup.date()
       .nullable()
       .transform((value, originalValue) => (originalValue === '' ? null : value)),
@@ -38,9 +41,9 @@ const formProductSchema = {
   coupon: Yup.object().shape({
     code: Yup.string().required('Không được để code trống.').max(10),
     start_date: Yup.date()
-    .nullable()
-    .typeError('Ngày bắt đầu không hợp lệ.') 
-    .required('Không được để start_date trống.'),
+      .nullable()
+      .typeError('Ngày bắt đầu không hợp lệ.')
+      .required('Không được để start_date trống.'),
     end_date: Yup.date().required('Không được để end_date trống.'),
     discount_value: Yup.number().required('Không được để discount_value trống.')
   }),
