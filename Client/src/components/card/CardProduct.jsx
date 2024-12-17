@@ -24,7 +24,7 @@ const CardProduct = ({ products, handleAddToCart }) => {
           </div>
           <div className='flex gap-3 pb-2'>
                   <span className='block font-semibold'>Trạng thái hàng:</span>
-                  {products?.stock <=0 ?  <span className='text-red-500 font-semibold'>Tạm thời hết hàng</span>  : <span className='text-green-600 font-semibold'>Còn hàng</span>}
+                  {products?.stock <=0 ?  <span className='text-red-500 font-semibold'>Hết hàng</span>  : <span className='text-green-600 font-semibold'>Còn hàng</span>}
                 </div>
         </div>
       </Link>

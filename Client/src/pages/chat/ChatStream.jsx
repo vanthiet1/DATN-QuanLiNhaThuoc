@@ -35,7 +35,7 @@ const Chat = () => {
         }
         const getToken = async () => {
             try {
-                const token = await chatServices.getTokenChat({ userId: user._id, name: user.fullname, role: user.role_id.role_Name });
+                const token = await chatServices.getTokenChat({ userId: user?._id, name: user.fullname, role: user?.role_id.role_Name });
                 if (token) {
                     setTokenChat(token.token);
                 } else {
@@ -43,8 +43,6 @@ const Chat = () => {
                 }
             } catch (error) {
                 console.error("Error getting token:", error);
-            } finally {
-                setLoading(false);
             }
         };
         getToken();
@@ -57,18 +55,19 @@ const Chat = () => {
                         { id: user?._id, name: user?.fullname, role: user?.role_id?.role_Name },
                         tokenChat
                     );
-                    const channelId = `user-${user._id}-chat`;
+                    const channelId = `user-${user?._id}-chat`;
                     const existingChannels = await chatClient.queryChannels({
                         id: channelId,
                     });
                     if (existingChannels.length > 0) {
                         setChannel(existingChannels[0]);
                     } else {
-                        const memberIds = [user._id, ...staff.map(emp => emp._id)];
+                        const memberIds = [user?._id, ...staff.map(emp => emp?._id)];
                         const newChannel = chatClient.channel('messaging', 'general', {
                             name: `Chat với nhân viên ${staff[0]?.fullname || ''}`,
                             members: memberIds,
                         });
+                        
                         await newChannel.create();
                         setChannel(newChannel);
                     }
@@ -98,7 +97,7 @@ const Chat = () => {
             <div style={{ display: 'flex', height: '100vh' }}>
                 <ChannelList filters={{
                     type: 'messaging',
-                    members: { $in: [user._id] }
+                    members: { $in: [user?._id] }
                 }} />
                 <Channel channel={channel}>
                     <Window>

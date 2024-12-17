@@ -13,6 +13,7 @@ Router.put('/cancel/:id', OrderController.userCancelOrder);
 Router.delete('/:id', OrderController.deleteOrder);
 Router.post('/difference/payment', OrderController.processPaymentDifference);
 Router.post('/cancel-order/send-mail', OrderController.sendMailCancelOrder);
+Router.post('/order-sucsess/send-mail', OrderController.sendMailOrderSuccsess);
 Router.post('/create-order-off', upload.single('prescriptionImage'), OrderOffController.createOrder);
 
 module.exports = Router;

@@ -48,6 +48,8 @@ const CartFormProvider = ({ children, setShowQrCode }) => {
       if (user?.
         is_active === 0){
           return showToastError("Tài khoản của bạn đang bị hạn chế vui lòng liên hệ admin")
+        }else if(!user?.emailVerify){
+          return  showToastError("Tài khoản của bạn chưa kích hoạt vui lòng liên hệ admin")
         }
         setIsLoadingCreateOrder(true);
       const { receiver, phone, street, prescriptionImage, ...orderDataRest } = data;
