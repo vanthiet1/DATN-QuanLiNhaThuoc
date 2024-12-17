@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import useFetch from '../../hooks/useFetch';
 import brandServices from '../../services/brandService';
 import { PATH_ROUTERS_ADMIN } from '../../utils/constant/routers';
@@ -21,10 +21,17 @@ const brandBreadCrumb = [
 ];
 
 const AllBrand = () => {
+  const [brandData, setBrandData] = useState([]);
   const confirmDialog = useConfirmDialog();
   const navigate = useNavigate();
-  const { isLoading, isError, responsData: brandData, messsageError } = useFetch(brandServices.getBrand);
+  const { isLoading, isError, responsData: initialBrandData, messsageError } = useFetch(brandServices.getBrand);
 
+   useEffect(() => {
+      if (initialBrandData) {
+        setBrandData(initialBrandData);
+      }
+    }, [initialBrandData]);
+  
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -48,7 +55,7 @@ const AllBrand = () => {
 
     if (result) {
       await brandServices.deleteBrand(brand._id);
-      window.location.reload();
+      setBrandData(brandData.filter((item) => item._id !== brand._id));
     }
   };
 
@@ -74,7 +81,7 @@ const AllBrand = () => {
                 </th>
               </tr>
             </thead>
-            <tbody className='bg-white divide-y divide-gray-200 '>
+<tbody className='bg-white divide-y divide-gray-200 '>
               {brandData &&
                 brandData.map((brand, index) => {
                   const { _id, name, origin_country, country_made } = brand;
