@@ -117,6 +117,12 @@ const AccountUser = () => {
             >
               Đơn hàng của bạn
             </li>
+            <li
+              onClick={() => tabIndexUi(4)}
+              className={`pb-2 duration-200  cursor-pointer  hover:text-[#2563EB]`}
+            >
+            Lịch sử đặt hàng 
+            </li>
           </ul>
         </div>
         <div className='w-full mt-5'>

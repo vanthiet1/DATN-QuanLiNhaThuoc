@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import formOrderSchema from '../../../../utils/validations/formOrder';
@@ -9,6 +9,7 @@ import orderServices from '../../../../services/orderService';
 import { PAYMENT_METHODS_CODE } from '../../../../utils/constant/common';
 import cartServices from '../../../../services/cartService';
 import { uesCheckOutContext } from './CheckOutProvider';
+import { useNavigate } from 'react-router-dom';
 
 const CartFormContext = createContext();
 
@@ -16,16 +17,18 @@ export const useCartFormContext = () => {
   return useContext(CartFormContext);
 };
 
-const CartFormProvider = ({ children }) => {
+const CartFormProvider = ({ children, setShowQrCode }) => {
   const [isLoadingCreateOrder, setIsLoadingCreateOrder] = useState(false);
   const { user } = useContext(UserContext);
-  const { cart } = useContext(CartContext);
+  const { cart , setCart } = useContext(CartContext);
   const { address_state, handleOrderWithVnpay } = uesCheckOutContext();
-
+  const [orderSuccsess, setOrderSuccsess] = useState({});
+  const navigate = useNavigate()
   const {
     handleSubmit,
     register,
     reset,
+    setValue,
     formState: { errors }
   } = useForm({ resolver: yupResolver(formOrderSchema.order) });
 
@@ -36,15 +39,22 @@ const CartFormProvider = ({ children }) => {
     register,
     reset,
     errors,
-    isLoadingCreateOrder
+    isLoadingCreateOrder,
+    setValue
   };
 
   const handleSubmitForm = async (data) => {
     try {
-      console.log(data);
-      setIsLoadingCreateOrder(true);
+      if (user?.
+        is_active === 0){
+          return showToastError("Tài khoản của bạn đang bị hạn chế vui lòng liên hệ admin")
+        }else if(!user?.emailVerify){
+          return  showToastError("Tài khoản của bạn chưa kích hoạt vui lòng liên hệ admin")
+        }
+        setIsLoadingCreateOrder(true);
       const { receiver, phone, street, prescriptionImage, ...orderDataRest } = data;
       const formData = new FormData();
+
       if (prescriptionImage) {
         formData.append('prescriptionImage', prescriptionImage[0]);
       }
@@ -57,7 +67,7 @@ const CartFormProvider = ({ children }) => {
 
       if (Array.isArray(cart) && cart.length > 0) {
         productCart.total_price = cart.reduce((init, product) => {
-          return (init += product.quantity * product.totalPriceProduct);
+          return (init += product.quantity * product?.productId?.price_distcount);
         }, 0);
 
         productCart.total_quantity = cart.reduce((init, product) => {
@@ -90,7 +100,6 @@ const CartFormProvider = ({ children }) => {
 
       if (orderDataRest.payment_method_id === PAYMENT_METHODS_CODE.VNPAY_ID) {
         const orderResponse = await orderServices.createOrder(formData);
-
         if (orderResponse && orderResponse.newOrder) {
           const { _id, order_date, total_price } = orderResponse.newOrder;
           await handleOrderWithVnpay({
@@ -103,22 +112,25 @@ const CartFormProvider = ({ children }) => {
           });
           reset();
         }
+        setOrderSuccsess(orderResponse)
+      } else if (orderDataRest.payment_method_id === PAYMENT_METHODS_CODE.BANK_ID && orderSuccsess) {
+        
+        await orderServices.createOrder(formData);
+        setShowQrCode(true)
       } else {
         const orderNew = await orderServices.createOrder(formData);
-        console.log(orderNew);
-
         if (orderNew) {
           for (let productItem of cart) {
             await cartServices.deleteProductCartByUserId(user?._id, productItem.productId._id);
           }
-          showToastSuccess(orderNew.message || 'tạo đơn hàng thành công');
+          setCart([])
+          showToastSuccess('Đơn đã được đặt');
         }
         reset();
-        window.location.reload();
+        navigate('/')
       }
     } catch (error) {
-      console.log(error);
-      showToastError('Đã xảy ra lỗi khi ');
+      showToastError('Đã xảy ra lỗi khi thanh toán ');
     } finally {
       setIsLoadingCreateOrder(false);
     }

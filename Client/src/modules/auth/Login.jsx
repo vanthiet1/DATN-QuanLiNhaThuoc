@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext , useState } from "react";
 import { useForm } from "react-hook-form";
 import authServices from "../../services/authService";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -9,27 +9,27 @@ import { InputText } from "../../components/ui/form";
 import { Button } from "../../components/ui/button";
 import Logo from '../../assets/images/logo/logo.png'
 import { ToggleFormContext } from "../../contexts/ToggleFormContext";
-import tokenService from "../../services/tokenService";
+import AppIcons from '../../components/ui/icon/index'
 const Login = () => {
-  const { fetchUser } = useContext(UserContext)
-  const {handleOpenDialog,setDialogState} = useContext(ToggleFormContext)
+  const { fetchUser } = useContext(UserContext);
+  const [showPassword, setShowPassword] = useState(false);
+  const { handleOpenDialog, setDialogState } = useContext(ToggleFormContext);
   const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(formAuthSchema.login) });
   const onSubmit = async (formData) => {
-   const data = await authServices.login(
+    const data = await authServices.login(
       {
         email: formData.email,
         password: formData.password,
       }
     );
-     
-    if(!data) return;
-     setDialogState({ isOpen: false, type: '' })
-     tokenService.removeDisposableEmail()
+    if (!data) return;
+    setDialogState({ isOpen: false, type: '' })
     await fetchUser()
   };
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
   const login = useGoogleLoginHook()
-  
-
   return (
     <>
       <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-[#FEFEFE] rounded-lg ">
@@ -64,13 +64,18 @@ const Login = () => {
                 <label className="block text-sm text-gray-800 font-semibold  pb-2">
                   Mật khẩu
                 </label>
-                <InputText
-                  refinput={register("password")}
-                  addClassNames="block w-full px-3 py-1 text-sm focus:outline-none  rounded-md   focus:ring  border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent"
-                  type="password"
-                  name="password"
-                  placeholder="***************"
-                />
+                <div className=" relative">
+                  <InputText
+                    refinput={register("password")}
+                    addClassNames="block w-full px-3 py-1 text-sm focus:outline-none  rounded-md   focus:ring  border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent"
+                    type={showPassword ? 'text' : 'password'}
+                    name="password"
+                    placeholder="***************"
+                  />
+                  <div className="absolute top-1/2 right-[10px] transform -translate-y-1/2" onClick={togglePasswordVisibility}>
+                    <AppIcons.EyeIcon />
+                  </div>
+                </div>
                 {errors.password && (
                   <p className="text-red-500 text-sm pt-2">
                     {errors.password.message}
@@ -80,11 +85,11 @@ const Login = () => {
                   addClassNames="w-full mt-4 h-12 px-4 py-2 text-sm text-white bg-blue-500 rounded-lg hover:bg-blue-700 focus:ring focus:ring-purple-300 flex justify-center"
                   type="submit"
                 >
-                 Đăng nhập
+                  Đăng nhập
                 </Button>
                 <hr className="my-6" />
                 <Button
-                type="button"
+                  type="button"
                   onClick={login}
                   className="w-full h-11 md:h-12 text-sm inline-flex items-center justify-center my-2 text-gray-700 bg-gray-100 rounded-md cursor-pointer hover:bg-gray-300 duration-150"
                 >
@@ -96,12 +101,12 @@ const Login = () => {
                   <span className="ml-2">Đăng nhập với google</span>
                 </Button>
               </form>
-                <p onClick={()=>setDialogState({ isOpen: true, type: 'forgotPassword' })} className="mt-4 text-sm cursor-pointer font-medium text-blue-500  hover:underline" >
-                  Quên mật khẩu
-                </p>
-                <p onClick={() => handleOpenDialog('register')} className="mt-1 cursor-pointer text-sm font-medium text-blue-500  hover:underline">
-                  Tạo tài khoản
-                </p>
+              <p onClick={() => setDialogState({ isOpen: true, type: 'forgotPassword' })} className="mt-4 text-sm cursor-pointer font-medium text-blue-500  hover:underline" >
+                Quên mật khẩu
+              </p>
+              <p onClick={() => handleOpenDialog('register')} className="mt-1 cursor-pointer text-sm font-medium text-blue-500  hover:underline">
+                Tạo tài khoản
+              </p>
             </div>
           </main>
         </div>

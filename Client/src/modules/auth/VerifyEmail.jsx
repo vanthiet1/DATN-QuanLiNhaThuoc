@@ -12,7 +12,6 @@ import tokenService from "../../services/tokenService";
 import { showToastError } from "../../configs/toastConfig";
 const VerifyEmail = () => {
     const { setDialogState } = useContext(ToggleFormContext)
-
     const {
         register,
         handleSubmit,
@@ -22,7 +21,6 @@ const VerifyEmail = () => {
     } = useForm({
         resolver: yupResolver(formAuthSchema.verifyEmail),
     });
-
     const inputsRef = useRef([]);
     const [resendEnabled, setResendEnabled] = useState(true);
     const [timeOtp, setTimeOtp] = useState(300);
@@ -34,13 +32,11 @@ const VerifyEmail = () => {
         try {
             const data = await authServices.verifyEmail(payloadVerify);
             if (!data) return
-            tokenService.removeDisposableEmail()
             setDialogState({ isOpen: true, type: "login" });
         } catch (error) {
             console.error("Error from server:", error);
         }
     };
-
     const startResendTimer = (setTimeOtp, setResendEnabled) => {
         setResendEnabled(false);
         const intervalId = setInterval(() => {
@@ -55,12 +51,9 @@ const VerifyEmail = () => {
         }, 1000);
         return intervalId;
     };
-
-
     const ResendClick = (setTimeOtp, setResendEnabled) => {
         startResendTimer(setTimeOtp, setResendEnabled);
     };
-
     const handleResendClick = async () => {
         const email = getValues("email"); 
         if(!email){

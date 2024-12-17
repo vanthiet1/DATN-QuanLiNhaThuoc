@@ -44,12 +44,12 @@ const ReportContoller = {
         {
           title: 'Đang xử lý',
           quantity: orderObj.pending || 0,
-          iconName: 'OderIcon'
+          iconName: 'TimeIcon'
         },
         {
           title: 'Đã xác nhận',
           quantity: orderObj.processing || 0,
-          iconName: 'OderIcon'
+          iconName: 'HeartIcon'
         },
         {
           title: 'Đang giao',
@@ -68,6 +68,13 @@ const ReportContoller = {
         }
       ];
 
+      if (currentOrderDate.length > 0) {
+        const totalPriceCurrentDate = currentOrderDate.reduce((init, currentValue) => {
+          return (init += currentValue.total_price);
+        }, 0);
+        console.log(totalPriceCurrentDate);
+        return res.status(200).json({ currentDateOrder, totalPriceCurrentDate });
+      }
       return res.status(200).json({ currentDateOrder });
     } catch (error) {
       res.status(500).json({ message: error.message });

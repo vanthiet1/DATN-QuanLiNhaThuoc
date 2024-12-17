@@ -7,7 +7,6 @@ const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalQuanity, setTotalQuantity] = useState(0);
-  console.log(cart);
 
   useEffect(() => {
     if (Array.isArray(cart) && cart.length > 0) {
@@ -30,7 +29,7 @@ const CartProvider = ({ children }) => {
   };
 
   return (
-    <CartContext.Provider value={{ cart, getProductCart, totalPrice, totalQuanity }}>{children}</CartContext.Provider>
+    <CartContext.Provider value={{ cart, getProductCart, totalPrice, totalQuanity , setCart }}>{children}</CartContext.Provider>
   );
 };
 

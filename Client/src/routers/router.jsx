@@ -1,3 +1,4 @@
+
 import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { LayoutAdmin, LayoutDefault } from '../components/layouts';
@@ -5,6 +6,7 @@ import { PATH_ROUTERS_ADMIN, PATH_ROUTERS_CLIENT } from '../utils/constant/route
 import SuspenseWrapper from '../components/suspenseWrapper/SuspenseWrapper';
 import PrivateRouter from './privateRouter/PrivateRouter';
 import ProtectedRoute from './ProtectedRoute';
+
 
 const HomePage = lazy(() => import('../pages/homePage/HomePage'));
 const ProductSearch = lazy(() => import('../pages/productSearch/ProductSearch'));
@@ -19,9 +21,10 @@ const BmiCalculator = lazy(() => import('../pages/tools/BmiCalculator'));
 const ListAllProduct = lazy(() => import('../pages/product/ListAllProduct'));
 const About = lazy(() => import('../pages/about/About'));
 const Contact = lazy(() => import('../pages/contact/Contact'));
-const HistoryOrder = lazy(() => import('../pages/order/HistoryOrder'));
+const HistoryOrder = lazy(() => import('../pages/order/HistoryOrderDetail'));
 const Blog = lazy(() => import('../pages/blog/Blog'));
-// const BankDemo = lazy(() => import('../pages/bank/BankDemo'));
+const Chat = lazy(() => import('../pages/chat/ChatStream'));
+
 
 const DashBoard = lazy(() => import('../admin/dashboard/Dashboard'));
 const AddProduct = lazy(() => import('../admin/product/AddProduct'));
@@ -83,7 +86,7 @@ const router = createBrowserRouter([
         path: PATH_ROUTERS_CLIENT.HOMEPAGE,
         element: (
           <SuspenseWrapper>
-            <HomePage />
+              <HomePage />
           </SuspenseWrapper>
         )
       },
@@ -96,8 +99,12 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: 'bank',
-        element: <SuspenseWrapper>{/* <BankDemo /> */}</SuspenseWrapper>
+        path: PATH_ROUTERS_CLIENT.CHAT,
+        element: (
+          <SuspenseWrapper>
+            <Chat />
+          </SuspenseWrapper>
+        )
       },
       {
         path: PATH_ROUTERS_CLIENT.PRODUCT_DETAILS,

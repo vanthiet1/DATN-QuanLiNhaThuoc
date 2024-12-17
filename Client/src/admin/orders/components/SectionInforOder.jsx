@@ -18,7 +18,7 @@ import CartDetailsShow from './CartDetailsShow';
 import { Image } from '../../../components/ui/image';
 import useAddress from '../../../hooks/useAddress';
 import { ProcessLoading } from '../../../components/ui/loaders';
-import { PAYMENT_METHODS_CODE } from '../../../utils/constant/common';
+import { PAYMENT_METHODS_CODE, PRICE_FOR_COUPON } from '../../../utils/constant/common';
 
 const SectionInforOrder = () => {
   const {
@@ -165,6 +165,7 @@ const SectionInforOrder = () => {
                   Tỉnh Thành
                 </label>
                 <select
+                  {...register('province')}
                   onChange={(e) => setSelectedProvince(e.target.value)}
                   id='province'
                   className='border  border-gray-300 text-gray-600 text-base rounded block w-full py-1 px-2 focus:outline-none'
@@ -179,12 +180,14 @@ const SectionInforOrder = () => {
                       );
                     })}
                 </select>
+                {errors.province && <ErrorMessage messsage={errors.province.message}></ErrorMessage>}
               </div>
               <div className='flex flex-col text-gray-700'>
                 <label htmlFor='' className='font-medium text-sm mb-2'>
                   Huyện
                 </label>
                 <select
+                  {...register('district')}
                   onChange={(e) => setSelectedDistrict(e.target.value)}
                   disabled={!selectedProvice}
                   className=' border  border-gray-300 text-gray-600 text-base rounded block w-full py-1 px-2 focus:outline-none'
@@ -199,12 +202,14 @@ const SectionInforOrder = () => {
                       );
                     })}
                 </select>
+                {errors.district && <ErrorMessage messsage={errors.district.message}></ErrorMessage>}
               </div>
               <div className='flex flex-col text-gray-700'>
                 <label htmlFor='' className='font-medium text-sm mb-2'>
                   Thị Xã
                 </label>
                 <select
+                  {...register('ward')}
                   onChange={(e) => handleChangeValueWard(e.target.value)}
                   disabled={!selectedDistrict}
                   className='  border  border-gray-300 text-gray-600 text-base rounded block w-full py-1 px-2 focus:outline-none'
@@ -219,6 +224,7 @@ const SectionInforOrder = () => {
                       );
                     })}
                 </select>
+                {errors.ward && <ErrorMessage messsage={errors.ward.message}></ErrorMessage>}
               </div>
               <div className='flex flex-col text-gray-700 col-span-3'>
                 <label htmlFor='' className='font-medium text-sm mb-2'>
@@ -267,25 +273,27 @@ const SectionInforOrder = () => {
                 {errors.payment_method_id && <ErrorMessage messsage={errors.payment_method_id.message}></ErrorMessage>}
               </div>
             </div>
-            <div>
-              <h2 className='text-lg font-medium text-gray-700 mb-4'>Sử dụng mã giảm giá</h2>
+            {cartTotalPrice > PRICE_FOR_COUPON && (
               <div>
-                {couponsData &&
-                  couponsData.length > 0 &&
-                  couponsData.map((coupon) => {
-                    const { _id, code, discount_value } = coupon;
-                    return (
-                      <label htmlFor={_id} key={_id}>
-                        <div className='flex items-center gap-3 mb-3 '>
-                          <InputRadio refinput={register('coupon_id')} id={_id} defaultValue={_id} />
-                          <p>nhập mã {code}</p>
-                          <span>Giảm {formatsHelper.currency(discount_value)}</span>
-                        </div>
-                      </label>
-                    );
-                  })}
+                <h2 className='text-lg font-medium text-gray-700 mb-4'>Sử dụng mã giảm giá</h2>
+                <div>
+                  {couponsData &&
+                    couponsData.length > 0 &&
+                    couponsData.map((coupon) => {
+                      const { _id, code, discount_value } = coupon;
+                      return (
+                        <label htmlFor={_id} key={_id}>
+                          <div className='flex items-center gap-3 mb-3 '>
+                            <InputRadio refinput={register('coupon_id')} id={_id} defaultValue={_id} />
+                            <p>nhập mã {code}</p>
+                            <span>Giảm {formatsHelper.currency(discount_value)}</span>
+                          </div>
+                        </label>
+                      );
+                    })}
+                </div>
               </div>
-            </div>
+            )}
             <div className='mt-8'>
               <Button
                 type='submit'

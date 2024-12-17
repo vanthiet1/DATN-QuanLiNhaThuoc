@@ -6,11 +6,11 @@ import logoFB from '../../assets/images/logo/logoFb.png'
 import logoYoutobe from '../../assets/images/logo/logoYoutobe.png'
 import logoTiktok from '../../assets/images/logo/logoTiktok.png'
 import logoPhay from '../../assets/images/logo/logo CH Phay.png'
-import logoAppStore from '../../assets/images/logo/logo App store.png'
+import logoAppStore from '../../assets/images/logo/logo_app_store.png'
 import logoCongthuong from '../../assets/images/logo/logo Congthuong.png'
 const Footer = () => {
   return (
-    <footer className="bg-[#f9f9f9] text-[#27272a] p-10">
+    <footer className="bg-[#FFFFFF] text-[#27272a] p-10 max-md:p-2">
       <div className="container mx-auto">
         <div className="text-left mb-8">
           <img

@@ -12,6 +12,8 @@ import useHandleNewOrder from '../../sockets/useHandleNewOrder';
 import { cn } from '../../utils/helpers/mergeClasses';
 import useFetch from '../../hooks/useFetch';
 import notificationServices from '../../services/notificationService';
+import { useUserContext } from '../../contexts/UserContext';
+import useRegisterRoom from '../../sockets/useRegisterRoom';
 
 const HeaderSearch = () => {
   return (
@@ -32,7 +34,6 @@ const HeaderNotificationBellProvider = ({ children }) => {
   const [notificationAction, setNotificationAction] = useState(false);
 
   useHandleNewOrder((responsive) => {
-    console.log(responsive);
     setNotifications((prev) => [...prev, responsive]);
   });
 
@@ -58,7 +59,6 @@ export const useHeaderNotificationBell = () => {
 
 const HeaderNofiticationBell = () => {
   const { notifications, handleUnreadNotification } = useHeaderNotificationBell();
-  console.log(notifications);
   return (
     <MenuDropWrapper ComponentChildren={NotificationBell}>
       <Button
@@ -82,6 +82,8 @@ const HeaderNofiticationBell = () => {
 
 const Header = () => {
   const avatarTestUrl = 'https://i.pravatar.cc/300';
+  const { user } = useUserContext();
+  useRegisterRoom(user?.role_id?.role_Name);
   return (
     <header className='flex-1 bg-white border-b border-gray-300 py-4 shadow-md relative'>
       <div className='container flex items-center justify-between px-6'>
@@ -97,7 +99,14 @@ const Header = () => {
             <HeaderNofiticationBell />
           </HeaderNotificationBellProvider>
           <Button>
-            <Image src={avatarTestUrl} alt='avatar-img' width='36' height='36' addClassNames='rounded-full' />
+            <Image
+              src={user?.avatar}
+              fallbackSrc={avatarTestUrl}
+              alt='avatar-img'
+              width='36'
+              height='36'
+              addClassNames='rounded-full'
+            />
           </Button>
         </div>
       </div>

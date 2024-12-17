@@ -6,7 +6,19 @@ import useFetch from '../../hooks/useFetch.js';
 import { handleDelete, handleIsActiveAccount, handleUpdateRoleAccount } from './handle.js';
 import { useConfirmDialog } from '../../components/dialog/ConfirmDialogContext.jsx';
 import roleServices from '../../services/roleService.js';
+import { PATH_ROUTERS_ADMIN } from '../../utils/constant/routers.js';
+import AppIcons from '../../components/ui/icon';
 
+const managetAccountBreadCrumb = [
+    {
+      path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
+      title: 'Dashboard',
+      icon: <AppIcons.HomeIcon width='16' height='16' />
+    },
+    {
+      title: 'Management account'
+    }
+  ];
 const ManagementUser = () => {
     const confirmDialog = useConfirmDialog();
     const titleRow = [
@@ -42,7 +54,7 @@ const ManagementUser = () => {
     return (
         <div>
             <TableManagerAccount
-                addClassNames={''}
+               roleBreadCrumbs={managetAccountBreadCrumb}
                 roleData={optionsRole}
                 data={userData}
                 titleRow={titleRow}

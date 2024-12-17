@@ -13,7 +13,6 @@ const cartServices = {
   getCartByUserId: async (requestParams) => {
     try {
       const { data } = await http.get(`${END_POIND_API.CART}/${requestParams}`);
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error.message);
@@ -31,7 +30,6 @@ const cartServices = {
   deleteProductCartByUserId: async (userId, productId) => {
     try {
       const { data } = await http.delete(`${END_POIND_API.CART}/product/${userId}/${productId}`);
-      showToastSuccess(data.message);
       return data;
     } catch (error) {
       console.log(error.message);

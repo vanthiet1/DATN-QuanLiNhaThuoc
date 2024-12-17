@@ -10,11 +10,13 @@ import Logo from '../../assets/images/logo/logo.png'
 import { SpinnerLoading } from "../../components/ui/loaders";
 import { ToggleFormContext } from "../../contexts/ToggleFormContext";
 import tokenService from "../../services/tokenService";
+import AppIcons from '../../components/ui/icon/index'
 const Register = () => {
     const { register, handleSubmit, formState: { errors }, watch } = useForm({ resolver: yupResolver(formAuthSchema.register) });
     const { setDialogState } = useContext(ToggleFormContext)
     const [isLoading, setIsLoading] = useState(false);
-    const [disabled, setDisabed] = useState(false)
+    const [disabled, setDisabed] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const onSubmit = async (formData) => {
         setIsLoading(true);
         setDisabed(true)
@@ -37,11 +39,13 @@ const Register = () => {
 
         setIsLoading(false);
         setDisabed(false)
-         tokenService.setDisposableEmail(formData.email)
+        tokenService.setDisposableEmail(formData.email)
         //   
     };
     const login = useGoogleLoginHook()
-
+    const togglePasswordVisibility = () => {
+      setShowPassword((prev) => !prev);
+    };
 
     return (
         <>
@@ -93,13 +97,18 @@ const Register = () => {
                                 <label className="block text-sm text-gray-800 font-semibold pb-2">
                                     Mật khẩu
                                 </label>
-                                <InputText
-                                    refinput={register("password")}
-                                    addClassNames="block w-full px-3 py-1 text-sm focus:outline-none  rounded-md   focus:ring  border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent"
-                                    type="password"
-                                    name="password"
-                                    placeholder="***************"
-                                />
+                                <div className=" relative">
+                                    <InputText
+                                        refinput={register("password")}
+                                        addClassNames="block w-full px-3 py-1 text-sm focus:outline-none  rounded-md   focus:ring  border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent"
+                                        type={showPassword ? 'text' : 'password'}
+                                        name="password"
+                                        placeholder="***************"
+                                    />
+                                    <div className="absolute top-1/2 right-[10px] transform -translate-y-1/2" onClick={togglePasswordVisibility}>
+                                        <AppIcons.EyeIcon />
+                                    </div>
+                                </div>
                                 {errors.password && (
                                     <p className="text-red-500 text-sm">
                                         {errors.password.message}

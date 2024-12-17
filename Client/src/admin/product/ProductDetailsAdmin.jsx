@@ -90,10 +90,11 @@ const SectionProductDetails = () => {
                 <span>Công dụng:</span> <span>{productData[0].description_short}</span>
               </p>
               <p className=''>
-                <span>Số lượng sản phẩm trong kho:</span> <span>{productData[0].stock} sản phẩm</span>
+                <span>Số lượng sản phẩm trong kho:</span>{' '}
+                <span>{productData[0].stock > 0 ? productData[0].stock : 0} sản phẩm</span>
               </p>
               <p className=''>
-                <span>Tình trạng sản phẩm:</span> <span>{productData[0].stock > 0 ? 'còn hàng' : 'hết'}</span>
+                <span>Tình trạng sản phẩm:</span> <span>{productData[0].stock > 0 ? 'còn hàng' : 'hết hàng'}</span>
               </p>
               <p className=''>
                 Hạn sử dụng:{' '}

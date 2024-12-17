@@ -24,7 +24,6 @@ const addressServices = {
   getAddress: async (resquestParrams) => {
     try {
       const { data } = await http.get(`${END_POIND_API.ADDRESS}/${resquestParrams}`);
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error.message);
@@ -41,7 +40,6 @@ const addressServices = {
   getAddressById: async (resquestParrams) => {
     try {
       const { data } = await http.get(`${END_POIND_API.ADDRESS}/${resquestParrams}`);
-      console.log(data);
       return data;
     } catch (error) {
       showToastError(error.response.data.message);

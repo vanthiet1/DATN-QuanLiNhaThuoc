@@ -28,10 +28,15 @@ const HandleCartProvider = ({ children }) => {
     setQuantityProductDetail(value);
   };
 
-  const handleAddToCart = async (productId, userId, modal) => {
+  const handleAddToCart = async (productId, userId, stock, modal) => {
     if (!productId) return;
+     if(stock <= 0){
+      return showToastError('Tạm thời sản phẩm này đã hết hàng');
+     }
     if (!userId) {
-      return showToastError('Vui lòng đăng nhập');
+      showToastError('Vui lòng đăng nhập');
+      handleOpenDialog('login')
+      return;
     }
 
     const cart = {

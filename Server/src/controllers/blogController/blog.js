@@ -5,7 +5,7 @@ const formatHelper = require('../../utilities/helper/formatHelper');
 const blogController = {
   getAllBlogs: async (req, res) => {
     try {
-      const allBlogs = await Blog.find().populate('user_id', 'fullname email avatar');
+      const allBlogs = await Blog.find().sort({ createdAt: 1 }).populate('user_id', 'fullname email avatar');
       if (!allBlogs) {
         return res.status(404).json('Không lấy được dữ liệu');
       }
@@ -31,7 +31,7 @@ const blogController = {
       const { title, description, content, user_id } = req.body;
       const image = req.file;
 
-      if (!title || !image || !description || !user_id) {
+      if (!title || !image || !description || !user_id ||!content) {
         return res.status(400).json({ message: 'Vui lòng điền đầy đủ thông tin' });
       }
 

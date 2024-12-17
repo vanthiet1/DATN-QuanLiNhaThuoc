@@ -15,19 +15,19 @@ const authServices = {
     },
     login: async (requestBody) => {
         try {
-            const { data } = await http.post(`${END_POIND_API.AUTH}/login`, requestBody)
+            const { data } = await http.post(`${END_POIND_API.AUTH}/login`, requestBody);
+            if(!data) return;
             tokenService.setAccessToken(data.accessToken)
             showToastSuccess(data.message)
             return data
         } catch (error) {
-            showToastError(error.response.data.message);
+             showToastError(error.response.data.message);
         }
     },
     getUserData: async (access_token) => {
         if (!access_token) {
             return null;
         }
-
         try {
             const response = await http.get(`${END_POIND_API.AUTH}/access`, {
                 headers: {
@@ -56,7 +56,6 @@ const authServices = {
              showToastSuccess(data.message)
             return data;
         } catch (error) {
-            console.log(error);
             showToastError(error.response.data.message)
         }
     },
@@ -66,7 +65,6 @@ const authServices = {
              showToastSuccess(data.message)
             return data;
         } catch (error) {
-            console.log(error);
             showToastError(error.response.data.message)
         }
     },

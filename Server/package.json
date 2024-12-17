@@ -20,7 +20,7 @@
     "qs": "^6.13.0",
     "server": "file:",
     "socket.io": "^4.8.0",
-    "stream-chat": "^8.45.0",
+    "stream-chat": "^8.46.1",
     "unorm": "^1.6.0"
   },
   "name": "server",

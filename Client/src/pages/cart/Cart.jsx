@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
 import { Button } from '../../components/ui/button';
 import { useCartContext } from '../../contexts/CartContext';
 import CheckoutForm from './components/CheckOutForm';
@@ -11,6 +12,9 @@ import CartFormProvider from './components/context/CartFormProvider';
 import InforOrder from './components/InforOrder';
 import CartCard from './components/CartCard';
 import CheckOutProvider, { uesCheckOutContext } from './components/context/CheckOutProvider';
+import BankCheckout from './components/BankCheckout';
+import SuccessAnimation from '../../components/notification-bell/SuccsessAnimation';
+
 
 const AddLoadingCart = () => {
   const { updateLoading } = uesCheckOutContext();
@@ -30,19 +34,25 @@ const AddLoadingCart = () => {
 const Cart = () => {
   useSrcollTop();
   const { cart } = useCartContext();
+  const [showQrCode, setShowQrCode] = useState(false);
+  const [showSuccessAnimation, setShowSuccessAnimation] = useState(false); 
 
   return (
     <>
+      {showSuccessAnimation && <SuccessAnimation />} 
       <CheckOutProvider>
         <AddLoadingCart />
-        <CartFormProvider>
+        <CartFormProvider setShowQrCode={setShowQrCode}>
           {cart?.length > 0 ? (
             <div className='container mx-auto'>
               <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
                 <div className='lg:col-span-2 space-y-6'>
-                  {cart.map((productCart) => {
-                    return <CartCard key={productCart.productId._id} productCart={productCart} />;
-                  })}
+                  <div className={` ${cart?.length > 1 && 'max-md:h-[600px] max-md:overflow-scroll'} `}>
+                    {cart?.map((productCart) => {
+                      return <CartCard key={productCart?.productId?._id} productCart={productCart} />
+                    })}
+
+                  </div>
                   <CheckoutForm />
                 </div>
                 <div className='lg:col-span-1'>
@@ -68,6 +78,13 @@ const Cart = () => {
                     <Button addClassNames='bg-[#2563eb] p-3 text-[16px] text-[#fff] rounded-lg'>Xem sản phẩm</Button>
                   </Link>
                 </div>
+              </div>
+            </div>
+          )}
+          {showQrCode && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+              <div className="bg-white p-4 rounded-lg shadow-lg">
+                <BankCheckout showSuccessAnimation={showSuccessAnimation} setShowSuccessAnimation={setShowSuccessAnimation} setShowQrCode={setShowQrCode}  />
               </div>
             </div>
           )}

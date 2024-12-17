@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import useFetch from '../../hooks/useFetch';
 import brandServices from '../../services/brandService';
 import { PATH_ROUTERS_ADMIN } from '../../utils/constant/routers';
@@ -21,10 +21,17 @@ const brandBreadCrumb = [
 ];
 
 const AllBrand = () => {
+  const [brandData, setBrandData] = useState([]);
   const confirmDialog = useConfirmDialog();
   const navigate = useNavigate();
-  const { isLoading, isError, responsData: brandData, messsageError } = useFetch(brandServices.getBrand);
+  const { isLoading, isError, responsData: initialBrandData, messsageError } = useFetch(brandServices.getBrand);
 
+   useEffect(() => {
+      if (initialBrandData) {
+        setBrandData(initialBrandData);
+      }
+    }, [initialBrandData]);
+  
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -37,18 +44,18 @@ const AllBrand = () => {
     navigate(`/admin/edit-brand/${id}`);
   };
 
-  const handleDetele = async (name) => {
+  const handleDetele = async (brand) => {
     const result = await confirmDialog({
       title: 'Xóa brand',
       iconLeft: <AppIcons.TrashBinIcon />,
-      message: `Bạn có muốn xóa brand ${name} không ?`,
+      message: `Bạn có muốn xóa brand ${brand.name} không ?`,
       confirmLabel: 'Có, tôi đồng ý',
       cancelLabel: 'Không, giữ lại'
     });
 
     if (result) {
       await brandServices.deleteBrand(brand._id);
-      window.location.reload();
+      setBrandData(brandData.filter((item) => item._id !== brand._id));
     }
   };
 
@@ -74,7 +81,7 @@ const AllBrand = () => {
                 </th>
               </tr>
             </thead>
-            <tbody className='bg-white divide-y divide-gray-200 '>
+<tbody className='bg-white divide-y divide-gray-200 '>
               {brandData &&
                 brandData.map((brand, index) => {
                   const { _id, name, origin_country, country_made } = brand;
@@ -98,7 +105,7 @@ const AllBrand = () => {
                           size='m'
                           rounded='m'
                           addClassNames='bg-rose-500 text-white hover:bg-rose-600 px-3 py-1 rounded-md ml-2'
-                          onClick={() => handleDetele(name)}
+                          onClick={() => handleDetele(brand)}
                         >
                           <AppIcons.TrashBinIcon width='18' height='18'/>
                         </Button>

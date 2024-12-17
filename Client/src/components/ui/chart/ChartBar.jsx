@@ -38,7 +38,7 @@ const ChartBar = ({ labels, dataValues, title }) => {
       y: {
         beginAtZero: true,
         ticks: {
-          stepSize: 1 // Điều chỉnh stepSize tùy theo dữ liệu
+          stepSize: 500000 // Điều chỉnh stepSize tùy theo dữ liệu
         }
       }
     }

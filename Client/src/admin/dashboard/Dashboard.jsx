@@ -4,36 +4,43 @@ import reportServices from '../../services/reportService';
 import AppIcons from '../../components/ui/icon/index';
 import { ChartBar, ChartPie } from '../../components/ui/chart';
 import SectionWrapper from '../../components/sectionWrapper/SectionWrapper';
+import formatsHelper from '../../utils/helpers/formats';
 
 const iconMap = {
-  OderIcon: <AppIcons.OderIcon width='18' height='18' />,
-  ProductIcon: <AppIcons.ProductIcon width='18' height='18' />,
-  CkeckIcon: <AppIcons.CkeckIcon width='18' height='18' />,
-  TrashBinIcon: <AppIcons.TrashBinIcon width='18' height='18' />
+  OderIcon: <AppIcons.OderIcon width='22' height='22' />,
+  ProductIcon: <AppIcons.ProductIcon width='22' height='22' />,
+  CkeckIcon: <AppIcons.CkeckIcon width='22' height='22' />,
+  TrashBinIcon: <AppIcons.TrashBinIcon width='22' height='22' />,
+  HeartIcon: <AppIcons.HeartIcon width='22' height='22' />,
+  TimeIcon: <AppIcons.TimeIcon width='22' height='22' />,
+  CashIcon: <AppIcons.CashIcon width='22' height='22' />
 };
 
-const OrderCard = ({ title, quantity, iconName }) => {
+const OrderCard = ({ title, quantity = 0, iconName, price }) => {
   return (
-    <div className='flex items-center justify-center text-gray-700 flex-col py-6 rounded bg-gray-100'>
-      <div className=''>{iconMap[iconName]}</div>
-      <div className='text-sm text-center mt-2'>
-        <h3>{title}</h3>
-        <p>Số lượng : {quantity}</p>
+    <div className='flex items-center justify-center text-gray-700 flex-col py-6 rounded shadow'>
+      <div>{iconMap[iconName]}</div>
+      <div className='text-sm text-center mt-2 text-[#333]'>
+        <h3 className='text-[18px]'><b>{title}</b></h3>
+        {!price && <p>Số lượng : <span className='text-[#2563ea] font-bold'>{quantity} </span> </p>}
+        {price && <p>Tổng : <span className='text-[#2563ea] font-bold'>{formatsHelper.currency(price)}</span></p>}
       </div>
     </div>
   );
 };
 
 const SectionOrderCurrentDate = () => {
-  const { responsData: reportData } = useFetch(reportServices.getoverallReport);
-  console.log(reportData);
+  const { responsData } = useFetch(reportServices.getoverallReport);
   return (
     <div className='grid gap-4 grid-cols-2 md:grid-cols-3 mt-4'>
-      {reportData &&
-        reportData.length > 0 &&
-        reportData.map((report) => {
+      {responsData &&
+        responsData.currentDateOrder.length > 0 &&
+        responsData.currentDateOrder.map((report) => {
           return <OrderCard {...report} key={report.title} />;
         })}
+      {responsData && responsData.totalPriceCurrentDate && (
+        <OrderCard title={'Tổng tiền hôm nay'} price={responsData.totalPriceCurrentDate} iconName={'CashIcon'} />
+      )}
     </div>
   );
 };
@@ -69,7 +76,7 @@ const SectionOrderChartWrapper = () => {
         <ChartBar labels={labels} dataValues={dataValues} title='Thống kê đơn hàng theo tháng' />
       </div>
       <div>
-        <h2 className='text-lg text-slate-500 font-medium'>Top Sản Phẩm Bán Chạy</h2>
+        <h2 className='text-lg text-slate-500 font-medium'>Top Sản Phẩm Bán Chạy </h2>
         {/* <ChartPie labels={labels} dataValues={dataValues} title='Thống kê đơn hàng theo tháng' /> */}
       </div>
     </div>

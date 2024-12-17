@@ -1,4 +1,5 @@
 const END_POIND_API = {
+  CHAT:'/chat',
   USER: '/user',
   EMAIL: '/email',
   AUTH: '/auth',
@@ -22,6 +23,7 @@ const END_POIND_API = {
   PAYMENT_METHOD: '/payment-method',
   TRANSACTION: '/transactions',
   REPORT: '/report',
-  NOTIFICATION: '/notification'
+  NOTIFICATION: '/notification',
+  HISTORY_ORDER: '/historyOrder'
 };
 export default END_POIND_API;
