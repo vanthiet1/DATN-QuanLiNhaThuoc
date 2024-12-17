@@ -73,16 +73,14 @@ const Auth = {
                 return res.status(400).json({ message: "Tài khoản này  đã đăng nhập bằng google" })
             }
             const isPasswordValid = await bcrypt.compare(password, findUser.password);
-            console.log(isPasswordValid);
             if (!isPasswordValid) {
-                return res.status(401).json({ message: 'Mật khẩu không đúng' });
+                return res.status(403).json({ message: 'Mật khẩu không đúng' });
             }
             const accessToken = jwt.sign(
                 { userId: findUser._id },
                 process.env.ACCESS_TOKEN_SECRET,
                 { expiresIn: '1h' }
             );
-
             const refreshToken = jwt.sign(
                 { userId: findUser._id },
                 process.env.REFRESH_TOKEN_SECRET,
