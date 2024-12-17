@@ -31,7 +31,7 @@ const blogController = {
       const { title, description, content, user_id } = req.body;
       const image = req.file;
 
-      if (!title || !image || !description || !user_id) {
+      if (!title || !image || !description || !user_id ||!content) {
         return res.status(400).json({ message: 'Vui lòng điền đầy đủ thông tin' });
       }
 

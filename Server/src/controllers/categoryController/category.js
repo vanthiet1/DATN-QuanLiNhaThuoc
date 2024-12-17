@@ -10,7 +10,10 @@ const categoryController = {
     if (!name || !description) {
       return res.status(400).json({ message: 'Cần phải nhập tên và mô tả.' });
     }
-
+    const nameCate = await CategoryModel.findOne({ name });
+    if (nameCate) {
+      return res.status(400).json({ message: 'Category đã tồn tại!' });
+    }
     try {
       const category = new CategoryModel({
         name,
