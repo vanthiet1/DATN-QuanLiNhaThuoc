@@ -60,7 +60,7 @@ const ManagementCustomer = () => {
                 data={customerData}
                 titleRow={titleRow}
                 handleDelete={(id) => handleDelete(id, customerData, setCustomerData, userServices.deleteUser ,  confirmDialog)}
-                handleIsActiveAccount={(id) => handleIsActiveAccount(id, userServices.getAllStaff, setCustomerData, authServices.handleIsActiveAccount)}  
+                handleIsActiveAccount={(id) => handleIsActiveAccount(id, userServices.getAllCustomer, setCustomerData, authServices.handleIsActiveAccount)}  
                 handleUpdateRoleAccount={(idUser, idRole) => handleUpdateRoleAccount(idUser, idRole, roleServices.updateRoleUser,setChange)}
             />
         </div>
