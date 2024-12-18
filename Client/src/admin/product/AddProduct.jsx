@@ -281,7 +281,7 @@ const FormAddProduct = () => {
         leftIcon={<AppIcons.PlusIcon width='18' height='18' />}
         addClassNames='bg-gray-800 mt-3 text-white hover:bg-gray-700'
       >
-        Create
+        Tạo sản phẩm
       </Button>
       <ProcessLoading isLoading={isLoadingCreateProduct} message='Đang trong quá trình tạo sản phẩm'></ProcessLoading>
     </form>

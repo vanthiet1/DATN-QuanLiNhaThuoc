@@ -18,15 +18,15 @@ import Editor from '../../components/ui/editor/Editor'; // Import Editor
 const blogEditBreadCrumb = [
   {
     path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width='18' height='18' />
   },
   {
     path: `/${PATH_ROUTERS_ADMIN.ALL_BLOG}`,
-    title: 'All Blogs'
+    title: 'Tất cả bài viết'
   },
   {
-    title: 'Edit Blog'
+    title: 'Cập nhật bài viết'
   }
 ];
 
@@ -69,11 +69,10 @@ const FormEditBlog = () => {
     formData.append('title', title);
 
     if (image && image.length > 0) {
-      formData.append('image', image[0]); 
+      formData.append('image', image[0]);
     } else {
-    
       if (blogData && blogData.image) {
-        formData.append('image', blogData.image); 
+        formData.append('image', blogData.image);
       }
     }
 
@@ -82,7 +81,7 @@ const FormEditBlog = () => {
 
     setIsLoadingUpdateBlog(true);
     try {
-      await blogServices.updateBlog(id, formData); 
+      await blogServices.updateBlog(id, formData);
       setIsLoadingUpdateBlog(false);
       navigate(`/${PATH_ROUTERS_ADMIN.ALL_BLOG}`);
     } catch (error) {
@@ -101,7 +100,7 @@ const FormEditBlog = () => {
         <div className='md:col-span-2 rounded-md w-full border border-gray-300 border-solid shadow-sm p-4'>
           <div className='flex flex-col text-gray-700 mb-4'>
             <label htmlFor='' className='font-medium text-sm mb-2'>
-              Blog Image
+              Ảnh bài viết
             </label>
             <div className='flex gap-4 items-center p-2 border border-solid border-gray-300 bg-gray-100 mb-4 rounded'>
               <div className='p-1 bg-white'>
@@ -113,14 +112,14 @@ const FormEditBlog = () => {
           </div>
           <div className='flex flex-col text-gray-700 mb-4'>
             <label htmlFor='' className='font-medium text-sm mb-2'>
-              Blog Title
+              Tiêu đề bài viết
             </label>
             <InputText size='m' rounded='s' placeholder='Type Blog title here' refinput={register('title')} />
             {errors.title && <ErrorMessage messsage={errors.title.message} />}
           </div>
           <div className='flex flex-col text-gray-700 mb-4'>
             <label htmlFor='' className='font-medium text-sm mb-2'>
-              Blog Description
+              Mô tả bài viết
             </label>
             <InputText
               size='m'
@@ -132,7 +131,7 @@ const FormEditBlog = () => {
           </div>
           <div className='flex flex-col text-gray-700 mb-4'>
             <label htmlFor='' className='font-medium text-sm mb-2'>
-              Blog Content
+              Nội dung bài viết
             </label>
             <Editor
               name='content'
@@ -140,7 +139,7 @@ const FormEditBlog = () => {
               value={contentValue}
               onChange={(value) => setContentValue(value)}
             />
-            
+
             {errors.content && <ErrorMessage messsage={errors.content.message} />}
           </div>
         </div>
@@ -151,7 +150,7 @@ const FormEditBlog = () => {
         leftIcon={<AppIcons.PlusIcon width='18' height='18' />}
         addClassNames='bg-gray-800 mt-3 text-white hover:bg-gray-700'
       >
-        Update
+        Edit bài viết
       </Button>
       <ProcessLoading isLoading={isLoadingUpdateBlog} message='Updating Blog...' />
     </form>
@@ -161,7 +160,7 @@ const FormEditBlog = () => {
 const EditBlog = () => {
   return (
     <div>
-      <SectionWrapper title='Edit Blog' addClassNames={{ wrapper: 'mt-2' }}>
+      <SectionWrapper title='Cập nhật bài viết' addClassNames={{ wrapper: 'mt-2' }}>
         <BreadCrumb crumbsData={blogEditBreadCrumb} />
         <FormEditBlog />
       </SectionWrapper>

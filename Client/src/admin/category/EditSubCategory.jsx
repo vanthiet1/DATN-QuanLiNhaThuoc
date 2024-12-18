@@ -17,11 +17,11 @@ import { PATH_ROUTERS_ADMIN } from '../../utils/constant/routers';
 const SubCategoryBreadCrumb = [
   {
     path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'Edit Subcategory'
+    title: 'Cập nhật danh mục con'
   }
 ];
 
@@ -91,14 +91,13 @@ const FormEditSubCategory = () => {
       <div className='grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
         <div className='md:col-span-2 rounded-md w-full border border-gray-300 shadow-sm p-4'>
           <div className='flex flex-col text-gray-700 mb-4'>
-            <label className='font-medium text-sm mb-2'>Category</label>
+            <label className='font-medium text-sm mb-2'>Danh mục</label>
             <SelectBox optionData={categorySelect} size='m' rounded='s' {...register('category_id')}>
               <option value='' disabled>
                 Select a category
               </option>
               {categorySelect.map((option) => (
                 <option key={option.value} value={option.value}>
-              
                   {option.title}
                 </option>
               ))}
@@ -106,17 +105,17 @@ const FormEditSubCategory = () => {
             {errors.category_id && <ErrorMessage message={errors.category_id.message} />}
           </div>
           <div className='flex flex-col text-gray-700 mb-4'>
-            <label className='font-medium text-sm mb-2'>Subcategory Name</label>
+            <label className='font-medium text-sm mb-2'>Tên danh mục con</label>
             <InputText size='m' rounded='s' placeholder='Subcategory name here' {...register('name')} />
             {errors.name && <ErrorMessage message={errors.name.message} />}
           </div>
           <div className='flex flex-col text-gray-700 mb-4'>
-            <label className='font-medium text-sm mb-2'>Subcategory Order</label>
+            <label className='font-medium text-sm mb-2'>Vị trí danh mục con</label>
             <InputText size='m' rounded='s' placeholder='Subcategory order here' {...register('order')} />
             {errors.order && <ErrorMessage message={errors.order.message} />}
           </div>
           <div className='flex flex-col text-gray-700 mb-4'>
-            <label className='font-medium text-sm mb-2'>Subcategory Description</label>
+            <label className='font-medium text-sm mb-2'>Nhập tên danh mục con</label>
             <TextArea placeholder='Enter Subcategory description here' rounded='s' {...register('description')} />
             {errors.description && <ErrorMessage message={errors.description.message} />}
           </div>
@@ -128,7 +127,7 @@ const FormEditSubCategory = () => {
         leftIcon={<AppIcons.PlusIcon width='18' height='18' />}
         addClassNames='bg-gray-800 mt-3 text-white hover:bg-gray-700'
       >
-        Update
+        Edit danh mục con
       </Button>
     </form>
   );
@@ -136,7 +135,7 @@ const FormEditSubCategory = () => {
 
 const EditSubCategory = () => {
   return (
-    <SectionWrapper title='Edit Subcategory' addClassNames={{ wrapper: 'mt-2', title: 'mb-2' }}>
+    <SectionWrapper title='Cập nhật danh mục con' addClassNames={{ wrapper: 'mt-2', title: 'mb-2' }}>
       <BreadCrumb crumbsData={SubCategoryBreadCrumb} />
       <FormEditSubCategory />
     </SectionWrapper>
