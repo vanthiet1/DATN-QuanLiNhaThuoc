@@ -260,7 +260,6 @@
 
 // export default EditCategory;
 
-
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -280,19 +279,19 @@ import useFetch from '../../hooks/useFetch';
 const CategoryBreadCrumb = [
   {
     path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
-    icon: <AppIcons.HomeIcon width="16" height="16" />,
+    title: 'Thống kê',
+    icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'Edit Category',
-  },
+    title: 'Cập nhật danh mục'
+  }
 ];
 
 const optionCategoryDefault = [
   {
     title: 'Thuốc',
-    value: '66c2a08a860ea2d7f7413476',
-  },
+    value: '66c2a08a860ea2d7f7413476'
+  }
 ];
 
 const FormEditCategory = () => {
@@ -303,9 +302,9 @@ const FormEditCategory = () => {
     handleSubmit,
     register,
     setValue,
-    formState: { errors },
+    formState: { errors }
   } = useForm({
-    resolver: yupResolver(formProductSchema.category),
+    resolver: yupResolver(formProductSchema.category)
   });
 
   useEffect(() => {
@@ -333,60 +332,44 @@ const FormEditCategory = () => {
 
   return (
     <form onSubmit={handleSubmit(handleUpdate)}>
-      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        <div className="md:col-span-2 rounded-md w-full border border-gray-300 shadow-sm p-4">
+      <div className='grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
+        <div className='md:col-span-2 rounded-md w-full border border-gray-300 shadow-sm p-4'>
           <div>
-            <div className="flex flex-col text-gray-700 mb-4">
-              <label htmlFor="name" className="font-medium text-sm mb-2">
-                Category name
+            <div className='flex flex-col text-gray-700 mb-4'>
+              <label htmlFor='name' className='font-medium text-sm mb-2'>
+                Tên danh mục
               </label>
-              <InputText
-                size="m"
-                rounded="s"
-                placeholder="Category name here"
-                refinput={register('name')}
-              />
+              <InputText size='m' rounded='s' placeholder='Category name here' refinput={register('name')} />
               {errors.name && <ErrorMessage message={errors.name.message} />}
             </div>
-            <div className="flex flex-col text-gray-700 mb-4">
-              <label htmlFor="order" className="font-medium text-sm mb-2">
-                Category order
+            <div className='flex flex-col text-gray-700 mb-4'>
+              <label htmlFor='order' className='font-medium text-sm mb-2'>
+                Vị trí
               </label>
-              <InputText
-                size="m"
-                rounded="s"
-                placeholder="Category order here"
-                refinput={register('order')}
-              />
+              <InputText size='m' rounded='s' placeholder='Category order here' refinput={register('order')} />
               {errors.order && <ErrorMessage message={errors.order.message} />}
             </div>
-            <div className="flex flex-col text-gray-700 mb-4">
-              <label htmlFor="description" className="font-medium text-sm mb-2">
-                Category description
+            <div className='flex flex-col text-gray-700 mb-4'>
+              <label htmlFor='description' className='font-medium text-sm mb-2'>
+                Mô tả danh mục
               </label>
-              <TextArea
-                placeholder="Enter category description here"
-                rounded="s"
-                refinput={register('description')}
-              />
+              <TextArea placeholder='Enter category description here' rounded='s' refinput={register('description')} />
               {errors.description && <ErrorMessage message={errors.description.message} />}
             </div>
           </div>
         </div>
       </div>
       <Button
-        size="m"
-        rounded="s"
-        leftIcon={<AppIcons.PlusIcon width="18" height="18" />}
-        addClassNames="bg-gray-800 mt-3 text-white hover:bg-gray-700"
+        size='m'
+        rounded='s'
+        leftIcon={<AppIcons.PlusIcon width='18' height='18' />}
+        addClassNames='bg-gray-800 mt-3 text-white hover:bg-gray-700'
       >
-        Update
+        Edit danh mục
       </Button>
     </form>
   );
 };
-
-
 
 const CategoryFormContext = createContext({});
 
@@ -404,7 +387,7 @@ const EditCategory = () => {
   return (
     <div>
       <CategoryContextProvider>
-        <SectionWrapper title="Edit Category" addClassNames={{ wrapper: 'mt-2' }}>
+        <SectionWrapper title='Cập nhật danh mục' addClassNames={{ wrapper: 'mt-2' }}>
           <BreadCrumb crumbsData={CategoryBreadCrumb} />
           <FormEditCategory />
         </SectionWrapper>

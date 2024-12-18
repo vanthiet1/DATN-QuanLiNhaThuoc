@@ -14,11 +14,11 @@ import SectionWrapper from '../../components/sectionWrapper/SectionWrapper';
 const brandBreadCrumb = [
   {
     path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'Edit Brand'
+    title: 'Cập nhật thương hiệu'
   }
 ];
 
@@ -44,7 +44,7 @@ const FormEditBrand = () => {
     fetchBrand();
   }, [id, setValue]);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleUpdate = async (data) => {
     await brandServices.updateBrand(id, data);
@@ -58,14 +58,14 @@ const FormEditBrand = () => {
             <div>
               <div className='flex flex-col text-gray-700 mb-4'>
                 <label htmlFor='' className='font-medium text-sm mb-2'>
-                  Brand Name
+                  Tên thương hiệu
                 </label>
                 <InputText size='m' rounded='s' placeholder='Type pharmacy name here' refinput={register('name')} />
                 {errors.name && <ErrorMessage messsage={errors.name.message}></ErrorMessage>}
               </div>
               <div className='flex flex-col text-gray-700 mb-4'>
                 <label htmlFor='' className='font-medium text-sm mb-2'>
-                  Brand origin country
+                  Quốc gia xuất xứ
                 </label>
                 <InputText
                   size='m'
@@ -77,7 +77,7 @@ const FormEditBrand = () => {
               </div>
               <div className='flex flex-col text-gray-700 mb-4'>
                 <label htmlFor='' className='font-medium text-sm mb-2'>
-                  Brand country made
+                  Quốc gia sản xuất
                 </label>
                 <InputText
                   size='m'
@@ -96,22 +96,21 @@ const FormEditBrand = () => {
           leftIcon={<AppIcons.PlusIcon width='18' height='18' />}
           addClassNames='bg-gray-800 mt-3 text-white hover:bg-gray-700'
         >
-          Update
+          Edit thương hiệu
         </Button>
       </form>
     </>
   );
 };
 
-
 const EditBrand = () => {
-    return (
-      <div>
-        <SectionWrapper title='Edit Brand' addClassNames={{ wrapper: 'mt-2' }}>
-          <BreadCrumb crumbsData={brandBreadCrumb} />
-          <FormEditBrand />
-        </SectionWrapper>
-      </div>
-    );
-  };
+  return (
+    <div>
+      <SectionWrapper title='Cập nhật thương hiệu' addClassNames={{ wrapper: 'mt-2' }}>
+        <BreadCrumb crumbsData={brandBreadCrumb} />
+        <FormEditBrand />
+      </SectionWrapper>
+    </div>
+  );
+};
 export default EditBrand;

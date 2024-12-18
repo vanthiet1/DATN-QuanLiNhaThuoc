@@ -109,7 +109,7 @@ const FormEditCoupon = () => {
       <Button
         size='m'
         rounded='s'
-        // leftIcon={<AppIcons.EditIcon width="18" height="18" />}
+        leftIcon={<AppIcons.PlusIcon width='18' height='18' />}
         addClassNames='bg-gray-800 mt-3 text-white hover:bg-gray-700'
       >
         Cập nhật
