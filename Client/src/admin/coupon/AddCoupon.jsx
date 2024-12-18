@@ -44,7 +44,7 @@ const FormAddCoupon = () => {
   };
 
   const handleGenerateCodeCoupon = () => {
-    const code = generateCode(8, { numeric: true, alphabetic: true, uppercase: true });
+    const code = generateCode(10, { numeric: true, alphabetic: true, uppercase: true });
     setCouponCode(code);
     setValue('code', code);
   };

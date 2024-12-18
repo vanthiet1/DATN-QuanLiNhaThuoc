@@ -197,7 +197,7 @@ const ProducShowWrapper = () => {
 const AllProduct = () => {
   return (
     <div>
-      <SectionWrapper title='Tất cả sẳn phẩm' addClassNames={{ wrapper: 'mt-2' }}>
+      <SectionWrapper title='Tất cả sản phẩm' addClassNames={{ wrapper: 'mt-2' }}>
         <BreadCrumb crumbsData={productBreadCrumbs}></BreadCrumb>
         <div>
           <ProductAdminContextProvider>

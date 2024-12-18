@@ -2,17 +2,27 @@ import * as Yup from 'yup';
 
 const formProductSchema = {
   product: Yup.object().shape({
-    name: Yup.string().required('Không được để name trống.').max(300),
-    sub_category_id: Yup.string().required('Không được để sub_category_id trống.'),
-    brand_id: Yup.string().required('Không được để brand_id trống.'),
-    description_short: Yup.string().required('Không được để description_short trống.'),
-    price_distcount: Yup.number().required('Không được để mật khẩu trống.'),
-    price_old: Yup.number().required('Không được để price_old trống.'),
-    percent_price: Yup.number().required('Không được để percent_price trống.'),
+    name: Yup.string().required('Không được để tên sản phẩm trống.').max(300),
+    sub_category_id: Yup.string().required('Không được để danh mục trống.'),
+    brand_id: Yup.string().required('Không được để thương hiệu trống.'),
+    description_short: Yup.string().required('Không được để mô tả ngắn trống.'),
+    price_distcount: Yup.number()
+      .min(0, 'số lượng không được là số âm.')
+      .transform((value, originalValue) => (originalValue === '' ? undefined : value))
+      .required('Không được để phần trăm trống.'),
+    price_old: Yup.number()
+      .min(0, 'số lượng không được là số âm.')
+      .transform((value, originalValue) => (originalValue === '' ? undefined : value))
+      .required('Không được để giá củ trống.'),
+    percent_price: Yup.number()
+      .min(0, 'số lượng không được là số âm.')
+      .transform((value, originalValue) => (originalValue === '' ? undefined : value))
+      .required('Không được để giá mới trống.'),
     stock: Yup.number()
-      .required('Không được để stock trống.')
-      .min(0, 'Stock không được là số âm.')
-      .integer('Stock phải là số nguyên.'),
+      .transform((value, originalValue) => (originalValue === '' ? undefined : value))
+      .required('Không được để số lượng trống.')
+      .min(0, 'số lượng không được là số âm.')
+      .integer('số lượng phải là số nguyên.'),
     production_date: Yup.date()
       .nullable()
       .transform((value, originalValue) => (originalValue === '' ? null : value)),
@@ -20,7 +30,7 @@ const formProductSchema = {
       .nullable()
       .transform((value, originalValue) => (originalValue === '' ? null : value)),
     productImg: Yup.mixed()
-      .test('required', 'Không được để productImg trống.', (value) => {
+      .test('required', 'Không được để hình ảnh trống.', (value) => {
         return value && value.length > 0;
       })
       .test('fileType', 'File không hợp lệ, chỉ chấp nhận ảnh.', (value) => {
@@ -34,7 +44,7 @@ const formProductSchema = {
       .required('Không được để productImg trống.')
   }),
   brand: Yup.object().shape({
-    name: Yup.string().required('Không được để name trống.').max(300),
+    name: Yup.string().required('Không được để tên thương hiệu trống.').max(300),
     origin_country: Yup.string().required('Không được để xuất xứ quốc gia trống.'),
     country_made: Yup.string().required('Không được để quốc gia sản xuất trống.')
   }),
@@ -48,21 +58,21 @@ const formProductSchema = {
     discount_value: Yup.number().required('Không được để giá trị phiếu giảm giá trống.')
   }),
   category: Yup.object().shape({
-    name: Yup.string().required('Không được để name trống.').max(100),
+    name: Yup.string().required('Không được để tên danh mục trống.').max(100),
     description: Yup.string().required('Không được để mô tả trống.'),
     order: Yup.number()
-      .typeError('Order phải là số.')
-      .required('Không được để order trống.')
-      .min(1, 'Order phải lớn hơn 0.')
+      .typeError('vị trí phải là số.')
+      .required('Không được để vị trí trống.')
+      .min(1, 'vị trí phải lớn hơn 0.')
   }),
   subCategory: Yup.object().shape({
-    name: Yup.string().required('Không được để name trống.').max(100),
+    name: Yup.string().required('Không được để tên danh mục trống.').max(100),
     category_id: Yup.string().required('Không được để id thể loại trống.'),
     description: Yup.string().required('Không được để mô tả trống.'),
     order: Yup.number()
-      .typeError('Order phải là số.')
-      .required('Không được để order trống.')
-      .min(1, 'Order phải lớn hơn 0.')
+      .typeError('vị trí phải là số.')
+      .required('Không được để vị trí trống.')
+      .min(1, 'vị trí phải lớn hơn 0.')
   })
 };
 
