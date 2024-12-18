@@ -212,6 +212,13 @@ const ProductController = {
       const limitProduct = Number.parseInt(req.query.limit) || 8;
       const listProductNew = await ProductModel.aggregate([
         {
+          $match: {
+            production_date: {
+              $exists: true
+            }
+          }
+        },
+        {
           $lookup: {
             from: 'images',
             localField: '_id',
@@ -225,6 +232,11 @@ const ProductController = {
             localField: 'brand_id',
             foreignField: '_id',
             as: 'brand'
+          }
+        },
+        {
+          $sort: {
+            production_date: -1 
           }
         }
       ]).limit(limitProduct);
@@ -520,25 +532,42 @@ const ProductController = {
   },
   getProductToExpire: async (req, res) => {
     try {
-      // const currentDate = new Date();
-      // const sevenDaysFromNow = addDays(currentDate, 7);
+      const currentDate = new Date();
+      const next7Days = new Date();
+      next7Days.setDate(currentDate.getDate() + 7);
 
-      // // Query products where expiration_date is valid and within the next 7 days
-      // const expiringProducts = await Products.find({
-      //   expiration_date: {
-      //     $ne: null, // Ensure expiration_date is not null
-      //     $gte: currentDate,
-      //     $lte: sevenDaysFromNow
-      //   }
-      // });
-      // console.log(expiringProducts);
+      const expiringProducts = await ProductModel.aggregate([
+        {
+          $match: {
+            expiration_date: {
+              $exists: true, // Phải có ngày hết hạn
+              $gte: currentDate, // Ngày hết hạn >= hôm nay
+              $lte: next7Days // Ngày hết hạn <= 7 ngày tới
+            }
+          }
+        },
+        {
+          $lookup: {
+            from: 'images',
+            localField: '_id',
+            foreignField: 'product_id',
+            as: 'images'
+          }
+        },
+        {
+          $sort: {
+            expiration_date: 1
+          }
+        }
+      ]);
 
-      return res.status(200).json({
-        message: 'Products expiring within the next 7 days:',
-        data: 'ss'
-      });
+      if (expiringProducts.length > 0) {
+        return res.status(200).json({ expiringProducts });
+      } else {
+        return res.status(401).json({ expiringProducts });
+      }
     } catch (error) {
-      res.status(500).json({ message: error });
+      res.status(500).json({ message: error.message });
     }
   }
 };

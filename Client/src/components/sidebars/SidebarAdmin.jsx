@@ -8,7 +8,6 @@ import LogoImage from '../../assets/images/logo/logo1.png';
 import Image from '../ui/image/Image';
 import { UserContext } from '../../contexts/UserContext';
 
-
 const MenuAdminItem = ({ children, isSubMenu = false, addClassNames = '', ...props }) => {
   return (
     <li
@@ -45,6 +44,10 @@ const dataMenu = [
       {
         path: PATH_ROUTERS_ADMIN.ALL_PRODUCT,
         title: 'Tất cả sản phẩm'
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.PRODUCT_EXPIRE,
+        title: 'Sản phẩm quá hạn'
       }
     ]
   },
@@ -222,8 +225,7 @@ const MenuAdmin = ({ data, isSubMenu = false, addClassNames = '' }) => {
         data.map((menu, index) => {
           const { title, subMenu, path, icon } = menu;
           const isOpen = openMenus[title];
-          if (user?.role_id?.role_Name !== 'admin'
-            && title.includes('Role')) {
+          if (user?.role_id?.role_Name !== 'admin' && title.includes('Role')) {
             return null;
           }
           if (!subMenu) {

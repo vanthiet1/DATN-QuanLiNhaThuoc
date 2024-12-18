@@ -13,6 +13,7 @@ import { useConfirmDialog } from '../../components/dialog/ConfirmDialogContext';
 import { handleExportExeclWithTableAdmin } from '../../utils/helpers/handleExportExecl';
 import histroyOrderServices from '../../services/historyOrderServices';
 import { useUserContext } from '../../contexts/UserContext';
+import { showToastError } from '../../configs/toastConfig';
 
 const OrderBreadCrumbs = [
   {
@@ -68,6 +69,13 @@ const OrdersContextProvider = ({ children }) => {
     if (result) {
       setIsLoadingUpDate(true);
       setStatusOrderDetails(orderStatus);
+
+      const orderDetails = await orderServices.getOrderById(orderId);
+      if (orderDetails && orderDetails.status >= statusValue) {
+        showToastError('Đơn hàng chỉ được cập nhật một lần');
+        return;
+      }
+
       const orderUpdateResult = await orderServices.updateOrder(orderId, { status: statusValue });
       console.log(orderUpdateResult);
 
@@ -229,7 +237,7 @@ const HeaderOrder = () => {
             leftIcon={<AppIcons.ArrowDownIcon width='18' height='18' />}
             addClassNames='bg-gray-500 text-white flex items-center hover:bg-gray-600 justify-center w-fit'
           >
-           Xuất đơn hàng excel
+            Xuất đơn hàng excel
           </Button>
         </div>
       </div>

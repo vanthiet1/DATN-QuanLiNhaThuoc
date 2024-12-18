@@ -44,12 +44,12 @@ const formProductSchema = {
       .required('Không được để productImg trống.')
   }),
   brand: Yup.object().shape({
-    name: Yup.string().required('Không được để tên thương hiệu trống.').max(300),
+    name: Yup.string().required('Không được để tên thương hiệu trống.').max(300, 'Không được vượt quá 300 ký tự'),
     origin_country: Yup.string().required('Không được để xuất xứ quốc gia trống.'),
     country_made: Yup.string().required('Không được để quốc gia sản xuất trống.')
   }),
   coupon: Yup.object().shape({
-    code: Yup.string().required('Không được để code trống.').max(10),
+    code: Yup.string().required('Không được để code trống.').max(10, 'không được quá 10 ký tự'),
     start_date: Yup.date()
       .nullable()
       .typeError('Ngày bắt đầu không hợp lệ.')
