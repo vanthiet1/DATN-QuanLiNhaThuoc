@@ -22,7 +22,7 @@ const HeaderSearch = () => {
       className='w-[500px] px-2 py-2 rounded focus-within:outline-1 focus-within:outline focus-within:outline-blue-600 text-blue-600 flex border border-slate-300 border-solid items-center'
     >
       <AppIcons.SearchIcons width='24' height='24' />
-      <InputText addClassNames='border-none flex-1 focus:outline-0' placeholder='Search for projects' />
+      <InputText addClassNames='border-none flex-1 focus:outline-0' placeholder='Tìm kiếm' />
     </div>
   );
 };

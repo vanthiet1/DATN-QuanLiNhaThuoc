@@ -4,25 +4,24 @@ import AppIcons from '../../../components/ui/icon';
 import formatsHelper from '../../../utils/helpers/formats';
 
 const TransactionAllTable = ({ data: transactionData }) => {
-  console.log(transactionData);
   return (
     <div>
       <table className='min-w-full table-auto border-collapse'>
         <thead>
           <tr className='bg-gray-200'>
             <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>
-              Transaction id
+             ID giao dịch
             </th>
             <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>
-              transaction type
+              Kiểu giao dịch
             </th>
-            <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>amount</th>
+            <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>Tổng tiền giao dịch</th>
             <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>
-              response code
+              Mã trả về
             </th>
-            <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>order id</th>
+            <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>ID đơn hàng</th>
             <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>
-              created at
+              Ngày mua
             </th>
           </tr>
         </thead>

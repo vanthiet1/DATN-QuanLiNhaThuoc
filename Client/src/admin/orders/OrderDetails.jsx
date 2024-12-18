@@ -15,15 +15,15 @@ import { generatePDF } from '../PDF/orderPdf';
 const orderDetailsBreadCrumbs = [
   {
     path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
     path: `/${PATH_ROUTERS_ADMIN.ORDERS}`,
-    title: 'Order'
+    title: 'Đơn hàng'
   },
   {
-    title: 'Order details'
+    title: 'Đơn hàng chi tiết'
   }
 ];
 
@@ -153,7 +153,7 @@ const OrderDetailsContextProvider = ({ children }) => {
 const OrderDetails = () => {
   return (
     <div>
-      <SectionWrapper title='Order details' addClassNames={{ wrapper: 'mt-2' }}>
+      <SectionWrapper title='Chi tiết đơn hàng' addClassNames={{ wrapper: 'mt-2' }}>
         <BreadCrumb crumbsData={orderDetailsBreadCrumbs} />
         <OrderDetailsContextProvider>
           <OrderDetailsContent />

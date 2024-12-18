@@ -13,11 +13,11 @@ import roleServices from '../../services/roleService';
 const brandBreadCrumb = [
   {
     path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'Add Role'
+    title: 'Thêm quyền'
   }
 ];
 
@@ -42,9 +42,9 @@ const FormAddBrand = () => {
           <div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Role Name
+                Quyền
               </label>
-              <InputText size='m' rounded='s' placeholder='Type role name here' refinput={register('role_Name')} />
+              <InputText size='m' rounded='s' placeholder='Nhập quyền' refinput={register('role_Name')} />
               {errors.name && <ErrorMessage messsage={errors.name.message}></ErrorMessage>}
             </div>
           </div>

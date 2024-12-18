@@ -16,11 +16,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 const bannerBreadCrumbs = [
   {
     path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width="16" height="16" />,
   },
   {
-    title: 'Edit Banner',
+    title: 'Chỉnh sửa banner',
   },
 ];
 
@@ -82,7 +82,7 @@ const FormEditBanner = () => {
           <div>
             <div className="flex flex-col text-gray-700 mb-4">
               <label htmlFor="" className="font-medium text-sm mb-2">
-                Banner Image
+                Cập nhật lại banner
               </label>
               {bannerData?.url_img && (
                 <div className="flex gap-4 items-center p-2 border border-solid border-gray-300 bg-gray-100 mb-4 rounded">
@@ -100,7 +100,7 @@ const FormEditBanner = () => {
             </div>
             <div className="flex flex-col text-gray-700 mb-4">
               <label htmlFor="" className="font-medium text-sm mb-2">
-                Banner Name
+                Tên banner
               </label>
               <InputText
                 size="m"
@@ -119,7 +119,7 @@ const FormEditBanner = () => {
         leftIcon={<AppIcons.PlusIcon width="18" height="18" />}
         addClassNames="bg-gray-800 mt-3 text-white hover:bg-gray-700"
       >
-        Update
+      Cập nhật 
       </Button>
       <ProcessLoading isLoading={isLoadingEditBanner} message="Updating banner..." />
     </form>
@@ -129,7 +129,7 @@ const FormEditBanner = () => {
 const EditBanner = () => {
   return (
     <div>
-      <SectionWrapper title="Edit Banner" addClassNames={{ wrapper: 'mt-2' }}>
+      <SectionWrapper title="Chỉnh sửa banner" addClassNames={{ wrapper: 'mt-2' }}>
         <BreadCrumb crumbsData={bannerBreadCrumbs} />
         <FormEditBanner />
       </SectionWrapper>

@@ -17,11 +17,11 @@ import Editor from '../../components/ui/editor/Editor'; // Import Editor
 const brandBreadCrumb = [
   {
     path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width='18' height='18' />
   },
   {
-    title: 'Add Blog'
+    title: 'Thêm bài viết'
   }
 ];
 
@@ -59,33 +59,33 @@ const FormAddBlog = () => {
           <div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Blog Image
+                Ảnh bài viết
               </label>
-              <FileInput size='m' rounded='s' placeholder='Type Blog FileInput here' refinput={register('image')} />
+              <FileInput size='m' rounded='s' placeholder='Thêm ảnh' refinput={register('image')} />
               {errors.image && <ErrorMessage messsage={errors.image.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Blog Title
+                Tiêu đề bài viết
               </label>
-              <InputText size='m' rounded='s' placeholder='Type Blog title here' refinput={register('title')} />
+              <InputText size='m' rounded='s' placeholder='Nhập tiêu đề' refinput={register('title')} />
               {errors.title && <ErrorMessage messsage={errors.title.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Blog Description
+                Mô tả bài viết
               </label>
               <InputText
                 size='m'
                 rounded='s'
-                placeholder='Enter blog description here'
+                placeholder='Nhập mô tả bài viết'
                 refinput={register('description')}
               />
               {errors.description && <ErrorMessage messsage={errors.description.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Blog Content
+               Nội dung bài viết
               </label>
               <Editor
                 name='content'
@@ -111,7 +111,7 @@ const FormAddBlog = () => {
         leftIcon={<AppIcons.PlusIcon width='18' height='18' />}
         addClassNames='bg-gray-800 mt-3 text-white hover:bg-gray-700'
       >
-        Create
+        Tạo bài viết
       </Button>
       <ProcessLoading isLoading={isLoadingCreateBlog} message='Đang trong quá trình tải Blog' />
     </form>
@@ -121,7 +121,7 @@ const FormAddBlog = () => {
 const AddBlog = () => {
   return (
     <div>
-      <SectionWrapper title='Add Blog' addClassNames={{ wrapper: 'mt-2' }}>
+      <SectionWrapper title='Thêm bài viết' addClassNames={{ wrapper: 'mt-2' }}>
         <BreadCrumb crumbsData={brandBreadCrumb} />
         <FormAddBlog />
       </SectionWrapper>

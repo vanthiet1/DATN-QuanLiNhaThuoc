@@ -9,11 +9,11 @@ import BreadCrumb from '../../components/breadCrumb/BreadCrumb';
 const pharamcyBreadCrumbs = [
   {
     path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'All pharmacy'
+    title: 'Tất cả nhà thuốc'
   }
 ];
 

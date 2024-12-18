@@ -9,11 +9,11 @@ import { Button } from '../button';
 const roleBreadCrumbs = [
   {
     path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'All Role'
+    title: 'Tất cả quyền'
   }
 ];
 
@@ -22,17 +22,15 @@ const TableRole = ({ data, addClassNames, titleRow, cols, styleRows, handleDetel
     <>
       <BreadCrumb crumbsData={roleBreadCrumbs} addClassNames='my-3' />
       <div className='max-w-7xl mx-auto p-6 bg-white shadow-md rounded-lg'>
-        <h1 className='text-3xl font-bold mb-6 text-center'>All Role</h1>
         <div className='overflow-x-auto'>
           <table className='min-w-full table-auto border-collapse'>
             <thead className='w-full'>
               <tr className='bg-gray-200 w-full'>
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
-                  Role Name
+                  Tên quyền
                 </th>
-
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
-                  action
+                  Hành động
                 </th>
               </tr>
             </thead>
