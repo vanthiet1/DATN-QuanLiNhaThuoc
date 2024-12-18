@@ -124,6 +124,14 @@ const productServices = {
       console.log(error.message);
     }
   },
+  getproductExpire: async () => {
+    try {
+      const { data } = await http.get(`${END_POIND_API.PRODUCT}/expire/list-product`);
+      return data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 };
 
 export default productServices;

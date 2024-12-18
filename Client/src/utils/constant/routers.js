@@ -20,8 +20,8 @@ const PATH_ROUTERS_CLIENT = {
   HISTORY_ORDER: 'lich-su-dat-hang/:id',
   NOTFOUND: '*',
   ABOUT: 'gioi-thieu',
-  CONTACT:'lien-he',
-  CHAT:'tu-van'
+  CONTACT: 'lien-he',
+  CHAT: 'tu-van'
 };
 
 const PATH_ROUTERS_ADMIN = {
@@ -44,7 +44,7 @@ const PATH_ROUTERS_ADMIN = {
   ADD_BLOG: 'admin/add-blog',
   ALL_BLOG: 'admin/all-blog',
   BLOG_DETAIL_ADMIN: 'admin/blog-detail-admin/:id',
-  EDIT_BLOG:'admin/edit-blog/:id',
+  EDIT_BLOG: 'admin/edit-blog/:id',
   ADD_BRAND: 'admin/add-brand',
   ALL_BRAND: 'admin/all-brand',
   EDIT_BRAND: 'admin/edit-brand/:id',
@@ -67,7 +67,8 @@ const PATH_ROUTERS_ADMIN = {
   SETTINGS: 'admin/settings',
   TEMPLATECOMPONENT: 'admin/template-component',
   ORDER_DETAILS: 'admin/orders/:id',
-  ORDER_SALE_OFF: 'admin/order-from-pharmacy'
+  ORDER_SALE_OFF: 'admin/order-from-pharmacy',
+  PRODUCT_EXPIRE: 'admin/product-expire'
 };
 
 export { PATH_ROUTERS_CLIENT, PATH_ROUTERS_ADMIN };
