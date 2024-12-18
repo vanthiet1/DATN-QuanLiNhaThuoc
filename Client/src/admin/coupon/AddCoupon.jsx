@@ -11,23 +11,20 @@ import { Button } from '../../components/ui/button';
 import couponServices from '../../services/couponService';
 import { useState } from 'react';
 import generateCode from '../../utils/helpers/generateCode';
-import useCopyToClipboard from '../../hooks/useCopyToClipboard';
-import { cn } from '../../utils/helpers/mergeClasses';
 
 const couponBreadCrumbs = [
   {
     path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'Add Coupon'
+    title: 'Thêm mã giảm giá'
   }
 ];
 
 const FormAddCoupon = () => {
   const [couponCode, setCouponCode] = useState('');
-  const { isCopied, copyToClipboard } = useCopyToClipboard();
   const {
     handleSubmit,
     register,
@@ -59,7 +56,7 @@ const FormAddCoupon = () => {
           <div>
             <div className='flex flex-col flex-1 text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Coupon code
+               Code mã giảm giá
               </label>
               <div className='flex items-center gap-4'>
                 <InputText
@@ -67,20 +64,9 @@ const FormAddCoupon = () => {
                   addClassNames='flex-1'
                   size='m'
                   rounded='s'
-                  placeholder='Coupon code here'
+                  placeholder='Nhập coupon'
                   refinput={register('code')}
                 />
-                {couponCode && (
-                  <div
-                    onClick={() => copyToClipboard(couponCode)}
-                    className={cn(
-                      `font-normal cursor-pointer text-sm border-solid focus:outline-1 border px-[12px] py-[6px] rounded ${isCopied ? 'text-green-800 border-green-300 font-medium' : 'text-gray-800  border-slate-300'
-                      }`
-                    )}
-                  >
-                    {couponCode}
-                  </div>
-                )}
                 <Button
                   type='button'
                   size='m'
@@ -88,14 +74,14 @@ const FormAddCoupon = () => {
                   addClassNames=' bg-gray-800  text-white hover:bg-gray-700'
                   onClick={() => handleGenerateCodeCoupon()}
                 >
-                  Generate code
+                  Tạo code
                 </Button>
               </div>
               {errors.code && <ErrorMessage messsage={errors.code.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Coupon start date
+                Ngày bắt đầu mã giảm giá
               </label>
               <InputDate size='m' rounded='s' refinput={register('start_date', {
                 setValueAs: (value) => (value ? new Date(value) : null),
@@ -104,7 +90,7 @@ const FormAddCoupon = () => {
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Coupon end date
+                Ngày hết hạn mã giảm giá
               </label>
               <InputDate size='m' rounded='s' refinput={register('end_date', {
                 setValueAs: (value) => (value ? new Date(value) : null),
@@ -113,11 +99,11 @@ const FormAddCoupon = () => {
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Coupon discount value
+                Số tiền giảm giá
               </label>
               <input
                 type="number" 
-                placeholder="Enter coupon discount value here"
+                placeholder="Nhập số tiền giảm giá"
                 {...register('discount_value', {
                   setValueAs: (value) => (value ? parseFloat(value) : null), 
                 })}
@@ -134,7 +120,7 @@ const FormAddCoupon = () => {
         leftIcon={<AppIcons.PlusIcon width='18' height='18' />}
         addClassNames='bg-gray-800 mt-3 text-white hover:bg-gray-700'
       >
-        Create
+        Tạo mã giảm giá
       </Button>
     </form>
   );
@@ -143,7 +129,7 @@ const FormAddCoupon = () => {
 const AddCoupon = () => {
   return (
     <div>
-      <SectionWrapper title='Add Coupon' addClassNames={{ wrapper: 'mt-2' }}>
+      <SectionWrapper title='Thêm mã giảm giá' addClassNames={{ wrapper: 'mt-2' }}>
         <BreadCrumb crumbsData={couponBreadCrumbs} />
         <FormAddCoupon />
       </SectionWrapper>

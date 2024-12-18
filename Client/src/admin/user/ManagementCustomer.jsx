@@ -12,11 +12,11 @@ import AppIcons from '../../components/ui/icon';
 const managetCustomerBreadCrumb = [
   {
     path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
+    title: 'Thống kê ',
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'Management customer'
+    title: 'Quản lí khách hàng'
   }
 ];
 

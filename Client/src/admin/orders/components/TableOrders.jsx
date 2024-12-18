@@ -28,23 +28,23 @@ const TableOrders = ({ data: orderData }) => {
       <table className='min-w-full table-auto border-collapse' ref={tableRef}>
         <thead>
           <tr className='bg-gray-200'>
-            <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>Sr</th>
-            <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>Status</th>
+            <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>STT</th>
+            <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>Trạng thái</th>
             <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>
-              User name
+              Tên
             </th>
             <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>
-              Order time
+              Thời gian
             </th>
             <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>
-              Total price
+              Tổng tiền
             </th>
             <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>
-              Total quantity
+              Tổng SL
             </th>
             <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>Pay</th>
             <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>
-              Sale type
+              Kiểu bán
             </th>
             <th className='px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider'>action</th>
           </tr>

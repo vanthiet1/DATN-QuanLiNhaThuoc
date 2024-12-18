@@ -15,11 +15,11 @@ import { ProcessLoading } from '../../components/ui/loaders';
 const couponBreadCrumbs = [
   {
     path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'Add Banner'
+    title: 'Thêm banner'
   }
 ];
 
@@ -50,14 +50,14 @@ const FormAddBanner = () => {
           <div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Banner name
+                Tên banner
               </label>
-              <InputText size='m' rounded='s' placeholder='Banner name here' refinput={register('name')} />
+              <InputText size='m' rounded='s' placeholder='Nhập tên banner' refinput={register('name')} />
               {errors.name && <ErrorMessage messsage={errors.name.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Banner url img
+               Chọn banner
               </label>
               <FileInput refinput={register('bannerImg')} size='m' rounded='s'></FileInput>
               {errors.bannerImg && <ErrorMessage messsage={errors.bannerImg.message}></ErrorMessage>}
@@ -71,7 +71,7 @@ const FormAddBanner = () => {
         leftIcon={<AppIcons.PlusIcon width='18' height='18' />}
         addClassNames='bg-gray-800 mt-3 text-white hover:bg-gray-700'
       >
-        Create
+        Thêm banner
       </Button>
       <ProcessLoading isLoading={isLoadingCreateBanner} message='Đang trong quá trình tải banner' />
     </form>
@@ -81,7 +81,7 @@ const FormAddBanner = () => {
 const AddBanner = () => {
   return (
     <div>
-      <SectionWrapper title='Add Banner' addClassNames={{ wrapper: 'mt-2' }}>
+      <SectionWrapper title='Thêm banner' addClassNames={{ wrapper: 'mt-2' }}>
         <BreadCrumb crumbsData={couponBreadCrumbs} />
         <FormAddBanner />
       </SectionWrapper>

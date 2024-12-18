@@ -53,7 +53,6 @@ const SectionOrderChartWrapper = () => {
 
   useEffect(() => {
     if (MonthlyRevenue) {
-      console.log(MonthlyRevenue);
       const { labels, revenueData } = MonthlyRevenue;
       setLabels(labels);
       setDataValues(revenueData);
@@ -76,7 +75,6 @@ const SectionOrderChartWrapper = () => {
         <ChartBar labels={labels} dataValues={dataValues} title='Thống kê đơn hàng theo tháng' />
       </div>
       <div>
-        <h2 className='text-lg text-slate-500 font-medium'>Top Sản Phẩm Bán Chạy </h2>
         {/* <ChartPie labels={labels} dataValues={dataValues} title='Thống kê đơn hàng theo tháng' /> */}
       </div>
     </div>
@@ -87,10 +85,10 @@ const Dashboard = () => {
   return (
     <div>
       <div className='container'>
-        <SectionWrapper title='Dashboard Overview' addClassNames={{ wrapper: 'mt-2' }}>
+        <SectionWrapper title='Thống kê' addClassNames={{ wrapper: 'mt-2' }}>
           <SectionOrderCurrentDate />
         </SectionWrapper>
-        <SectionWrapper title='Report Chart' addClassNames={{ wrapper: 'mt-2' }}>
+        <SectionWrapper title='Biểu đồ báo cáo' addClassNames={{ wrapper: 'mt-2' }}>
           <SectionOrderChartWrapper />
         </SectionWrapper>
       </div>

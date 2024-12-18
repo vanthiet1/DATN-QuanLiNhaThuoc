@@ -10,11 +10,11 @@ import transactionServices from '../../services/transactionService';
 const transactionsBreadCrumb = [
   {
     path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'Transaction all'
+    title: 'Tất cả giao dịch'
   }
 ];
 
@@ -47,7 +47,7 @@ const Transaction = () => {
   return (
     <div>
       <TransactionProvider>
-        <SectionWrapper title='Transaction all' addClassNames={{ wrapper: 'mt-2' }}>
+        <SectionWrapper title='Tất cả giao dịch' addClassNames={{ wrapper: 'mt-2' }}>
           <BreadCrumb crumbsData={transactionsBreadCrumb} />
           <SectionWrappTable />
         </SectionWrapper>

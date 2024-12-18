@@ -18,11 +18,11 @@ import { ProcessLoading } from '../../components/ui/loaders';
 const productBreadCrumbs = [
   {
     path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'Add product'
+    title: 'Thêm sản phẩm'
   }
 ];
 
@@ -113,50 +113,50 @@ const FormAddProduct = () => {
           <div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Product Image
+               Ảnh sản phẩm
               </label>
               <FileInput refinput={register('productImg')} size='m' rounded='s' multiple={true}></FileInput>
               {errors.productImg && <ErrorMessage messsage={errors.productImg.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Product Name
+                Tên sản phẩm
               </label>
               <InputText size='m' rounded='s' placeholder='Type product name here' refinput={register('name')} />
               {errors.name && <ErrorMessage messsage={errors.name.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Product Price Old
+              Giá sản phẩm cũ
               </label>
               <InputText
                 size='m'
                 rounded='s'
-                placeholder='Enter product price old here'
+                placeholder='120.000 VND'
                 refinput={register('price_old')}
               />
               {errors.price_old && <ErrorMessage messsage={errors.price_old.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Product Price Distcount
+                Giá sẳn phẩm mới
               </label>
               <InputText
                 size='m'
                 rounded='s'
-                placeholder='Enter product price distcount here'
+                placeholder='150.000 VND'
                 refinput={register('price_distcount')}
               />
               {errors.price_distcount && <ErrorMessage messsage={errors.price_distcount.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Product Price percent
+                Giá phần trăm sản phẩm
               </label>
               <InputText
                 size='m'
                 rounded='s'
-                placeholder='Enter product price here'
+                placeholder='10%'
                 refinput={register('percent_price')}
               />
               {errors.percent_price && <ErrorMessage messsage={errors.percent_price.message}></ErrorMessage>}
@@ -164,14 +164,14 @@ const FormAddProduct = () => {
             <div className='grid grid-cols-2 gap-4'>
               <div className='flex flex-col text-gray-700 mb-4'>
                 <label htmlFor='' className='font-medium text-sm mb-2'>
-                  Production date
+                  Ngày sản xuất
                 </label>
                 <InputDate size='m' rounded='s' refinput={register('production_date')} />
                 {errors.production_date && <ErrorMessage messsage={errors.production_date.message}></ErrorMessage>}
               </div>
               <div className='flex flex-col text-gray-700 mb-4'>
                 <label htmlFor='' className='font-medium text-sm mb-2'>
-                  Expiration date
+                 Ngày hết hạn
                 </label>
                 <InputDate size='m' rounded='s' refinput={register('expiration_date')} />
                 {errors.expiration_date && <ErrorMessage messsage={errors.expiration_date.message}></ErrorMessage>}
@@ -179,11 +179,10 @@ const FormAddProduct = () => {
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Short description
+              Mô tả ngắn
               </label>
-
               <Textarea
-                placeholder='Enter product short description here'
+                placeholder='Nhập mô tả ngắn'
                 rounded='s'
                 refinput={register('description_short')}
               />
@@ -191,19 +190,19 @@ const FormAddProduct = () => {
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Stock Qunatity
+               Số lượng sẳn phẩm 
               </label>
               <InputText
                 size='m'
                 rounded='s'
-                placeholder='Enter product  stock qunatity here'
+                placeholder='Nhập số lượng sản phẩm'
                 refinput={register('stock')}
               />
               {errors.stock && <ErrorMessage messsage={errors.stock.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Full description
+                Mô tả dài
               </label>
               <Editor name='description' editorLoaded={true} onChange={setDescriptionValue}></Editor>
               {descriptionValue && (
@@ -222,7 +221,7 @@ const FormAddProduct = () => {
               <>
                 <div className='flex flex-col text-gray-700 mb-4'>
                   <label htmlFor='' className='font-medium text-sm mb-2'>
-                    Select Product Category
+                    Chọn danh mục sản phẩm
                   </label>
                   <select
                     onChange={handleChangeValueSelectCategory}
@@ -244,11 +243,11 @@ const FormAddProduct = () => {
                 {isChangeCateSelect && (
                   <div className='flex flex-col text-gray-700 mb-4'>
                     <label htmlFor='' className='font-medium text-sm mb-2'>
-                      Select Product Sub Category
+                      Chọn danh mục con
                     </label>
                     <SelectBox
                       optionData={subCategorySelectData}
-                      nameSelected='select here'
+                      nameSelected='Chọn danh mục con'
                       size='m'
                       rounded='s'
                       refinput={register('sub_category_id')}
@@ -258,11 +257,11 @@ const FormAddProduct = () => {
                 )}
                 <div className='flex flex-col text-gray-700 mb-4'>
                   <label htmlFor='' className='font-medium text-sm mb-2'>
-                    Select Product Brand
+                    Chọn thương hiệu sản phẩm 
                   </label>
                   <SelectBox
                     optionData={brandSelectData}
-                    nameSelected='select here'
+                    nameSelected='Chọn thương hiệu'
                     size='m'
                     rounded='s'
                     refinput={register('brand_id')}
@@ -292,7 +291,7 @@ const FormAddProduct = () => {
 const AddProduct = () => {
   return (
     <div>
-      <SectionWrapper title='add product' addClassNames={{ wrapper: 'mt-2' }}>
+      <SectionWrapper title='Thêm sản phẩm' addClassNames={{ wrapper: 'mt-2' }}>
         <BreadCrumb crumbsData={productBreadCrumbs}></BreadCrumb>
         <FormAddProduct />
       </SectionWrapper>

@@ -17,11 +17,11 @@ import subCategoryServices from '../../services/subCategoryService';
 const CategoryBreadCrumb = [
   {
     path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'Add Category'
+    title: 'Thêm danh mục'
   }
 ];
 
@@ -54,26 +54,26 @@ const FormAddCategory = () => {
           <div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Category name
+                Tên danh mục
               </label>
-              <InputText size='m' rounded='s' placeholder='Category name here' refinput={register('name')} />
+              <InputText size='m' rounded='s' placeholder='Thuốc' refinput={register('name')} />
               {errors.name && <ErrorMessage messsage={errors.name.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Category order
+                Vị trí
               </label>
-              <InputText size='m' rounded='s' placeholder='Category order here' {...register('order', {
-                setValueAs: (value) => (value ? parseFloat(value) : null), 
+              <InputText size='m' rounded='s' placeholder='0'{...register('order', {
+                setValueAs: (value) => (value ? parseFloat(value) : null),
               })} />
               {errors.order && <ErrorMessage messsage={errors.order.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Category description
+                Mô tả danh mục
               </label>
 
-              <TextArea placeholder='Enter category desscription here' rounded='s' refinput={register('description')} />
+              <TextArea placeholder='Nhập mô tả danh mục' rounded='s' refinput={register('description')} />
               {errors.description && <ErrorMessage messsage={errors.description.message}></ErrorMessage>}
             </div>
           </div>
@@ -85,7 +85,7 @@ const FormAddCategory = () => {
         leftIcon={<AppIcons.PlusIcon width='18' height='18' />}
         addClassNames='bg-gray-800 mt-3 text-white hover:bg-gray-700'
       >
-        Create
+       Tạo danh mục
       </Button>
     </form>
   );
@@ -143,34 +143,33 @@ const FormAddSubCategory = () => {
           <div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Category
+                Danh mục
               </label>
               <SelectBox optionData={categorySelect} size='m' rounded='s' refinput={register('category_id')} />
               {errors.category_id && <ErrorMessage messsage={errors.category_id.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Sub category name
+                Tên danh mục con
               </label>
-              <InputText size='m' rounded='s' placeholder='Sub category name here' refinput={register('name')} />
+              <InputText size='m' rounded='s' placeholder='Nhập danh mục con' refinput={register('name')} />
               {errors.name && <ErrorMessage messsage={errors.name.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Sub category order
+                Vị trí danh mục con
               </label>
-              <InputText size='m' rounded='s' placeholder='Sub category order here' {...register('order', {
-                setValueAs: (value) => (value ? parseFloat(value) : null), 
+              <InputText size='m' rounded='s' placeholder='' {...register('order', {
+                setValueAs: (value) => (value ? parseFloat(value) : null),
               })} />
               {errors.order && <ErrorMessage messsage={errors.order.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Sub category description
+                Nhập tên danh mục con
               </label>
-
               <TextArea
-                placeholder='Enter Sub category desscription here'
+                placeholder='Nhập tên danh mục con'
                 rounded='s'
                 refinput={register('description')}
               />
@@ -185,7 +184,7 @@ const FormAddSubCategory = () => {
         leftIcon={<AppIcons.PlusIcon width='18' height='18' />}
         addClassNames='bg-gray-800 mt-3 text-white hover:bg-gray-700'
       >
-        Create
+        Tạo danh mục con
       </Button>
     </form>
   );
@@ -207,11 +206,11 @@ const AddCategory = () => {
   return (
     <div>
       <CategoryContextProvider>
-        <SectionWrapper title='Add Category' addClassNames={{ wrapper: 'mt-2' }}>
+        <SectionWrapper title='Thêm danh mục' addClassNames={{ wrapper: 'mt-2' }}>
           <BreadCrumb crumbsData={CategoryBreadCrumb} />
           <FormAddCategory />
         </SectionWrapper>
-        <SectionWrapper title='Add Subcategory' addClassNames={{ wrapper: 'mt-2', title: 'mb-2' }}>
+        <SectionWrapper title='Thêm danh mục con' addClassNames={{ wrapper: 'mt-2', title: 'mb-2' }}>
           <FormAddSubCategory />
         </SectionWrapper>
       </CategoryContextProvider>

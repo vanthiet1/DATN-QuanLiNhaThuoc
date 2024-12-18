@@ -15,18 +15,16 @@ import formatsHelper from '../../utils/helpers/formats';
 const couponBreadCrumbs = [
   {
     path: '/dashboard',
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'Edit Coupon'
+    title: 'Chỉnh sửa mã giảm giá'
   }
 ];
 
 const FormEditCoupon = () => {
   const { id } = useParams();
-  console.log(id);
-
   const {
     handleSubmit,
     register,
@@ -64,28 +62,28 @@ const FormEditCoupon = () => {
           <div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Coupon code
+                Mã giảm giá
               </label>
-              <InputText size='m' rounded='s' placeholder='Coupon code here' refinput={register('code')} />
+              <InputText size='m' rounded='s' placeholder='Chỉnh sửa mã giảm giá' refinput={register('code')} />
               {errors.code && <ErrorMessage message={errors.code.message} />}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Coupon start date
+                Ngày bắt đầu
               </label>
               <InputDate size='m' rounded='s' refinput={register('start_date')} />
               {errors.start_date && <ErrorMessage message={errors.start_date.message} />}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Coupon end date
+                Ngày hết hạn
               </label>
               <InputDate size='m' rounded='s' refinput={register('end_date')} />
               {errors.end_date && <ErrorMessage message={errors.end_date.message} />}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Is Active
+                Kích hoạt
               </label>
               <input
                 type='checkbox'
@@ -95,7 +93,7 @@ const FormEditCoupon = () => {
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Coupon discount value
+                Số tiền giảm giá
               </label>
               <InputText
                 size='m'
@@ -114,7 +112,7 @@ const FormEditCoupon = () => {
         // leftIcon={<AppIcons.EditIcon width="18" height="18" />}
         addClassNames='bg-gray-800 mt-3 text-white hover:bg-gray-700'
       >
-        Update
+        Cập nhật
       </Button>
     </form>
   );
@@ -123,7 +121,7 @@ const FormEditCoupon = () => {
 const EditCoupon = () => {
   return (
     <div>
-      <SectionWrapper title='Edit Coupon' addClassNames={{ wrapper: 'mt-2' }}>
+      <SectionWrapper title='Chỉnh sửa mã giảm giá' addClassNames={{ wrapper: 'mt-2' }}>
         <BreadCrumb crumbsData={couponBreadCrumbs} />
         <FormEditCoupon />
       </SectionWrapper>

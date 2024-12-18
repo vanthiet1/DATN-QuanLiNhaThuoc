@@ -9,11 +9,11 @@ import { useConfirmDialog } from '../../components/dialog/ConfirmDialogContext';
 const couponBreadCrumbs = [
   {
     path: `/dashboard`,
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'All Comment'
+    title: 'Tất cả bình luận'
   }
 ];
 const AllComment = () => {
@@ -67,26 +67,26 @@ const AllComment = () => {
     <>
       <BreadCrumb crumbsData={couponBreadCrumbs} addClassNames='my-3' />
       <div className='max-w-7xl mx-auto p-6 bg-white shadow-md rounded-lg'>
-        <h1 className='text-3xl font-bold mb-6 text-center'>All Comment</h1>
+        <h1 className='text-3xl font-bold mb-6 text-center'>Tất cả bình luận</h1>
         <div className='overflow-x-auto'>
           <table className='min-w-full table-auto border-collapse'>
             <thead>
               <tr className='bg-gray-200'>
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
-                  Content
+                  Nội dung
                 </th>
 
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
-                  User ID
+                  Khách hàng
                 </th>
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
-                  Product Id
+                  Sản phảm
                 </th>
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
-                  Date Create
+                  Ngày bình luận
                 </th>
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
-                  Actions
+                  Hành động
                 </th>
               </tr>
             </thead>

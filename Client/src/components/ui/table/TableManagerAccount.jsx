@@ -20,14 +20,14 @@ const Table = ({ data, addClassNames, handleDelete, handleIsActiveAccount, roleD
           <table className='min-w-full table-auto border-collapse'>
             <thead className='w-full'>
               <tr className='bg-gray-200 w-full'>
-                <th className='w-1/6 px-4 py-3 text-left text-xs font-medium uppercase'>Full Name</th>
+                <th className='w-1/6 px-4 py-3 text-left text-xs font-medium uppercase'>Tên</th>
                 <th className='w-1/6 px-4 py-3 text-left text-xs font-medium uppercase'>Email</th>
-                <th className='w-1/6 px-4 py-3 text-left text-xs font-medium uppercase'>Provider</th>
-                <th className='w-1/6 px-4 py-3 text-left text-xs font-medium uppercase'>Email Verified</th>
-                <th className='w-1/12 px-4 py-3 text-left text-xs font-medium uppercase'>Status</th>
-                <th className='w-1/6 px-4 py-3 text-left text-xs font-medium uppercase'>Created</th>
-                <th className='w-1/6 px-4 py-3 text-left text-xs font-medium uppercase'>Role</th>
-                <th className='w-1/6 px-4 py-3 text-left text-xs font-medium uppercase'>Actions</th>
+                <th className='w-1/6 px-4 py-3 text-left text-xs font-medium uppercase'>Kiểu đăng nhập</th>
+                <th className='w-1/6 px-4 py-3 text-left text-xs font-medium uppercase'>Xác thực</th>
+                <th className='w-1/12 px-4 py-3 text-left text-xs font-medium uppercase'>Trạng thái</th>
+                <th className='w-1/6 px-4 py-3 text-left text-xs font-medium uppercase'>Tạo</th>
+                <th className='w-1/6 px-4 py-3 text-left text-xs font-medium uppercase'>Quyền</th>
+                <th className='w-1/6 px-4 py-3 text-left text-xs font-medium uppercase'>Action</th>
               </tr>
             </thead>
             <tbody className='bg-white divide-y divide-gray-200 '>
@@ -94,7 +94,7 @@ const Table = ({ data, addClassNames, handleDelete, handleIsActiveAccount, roleD
                         }`}
                         onClick={() => handleIsActiveAccount(item._id)}
                       >
-                        {item?.is_active === 1 ? 'Block' : 'Unblock'}
+                        {item?.is_active === 1 ? 'Khóa' : 'Mở'}
                       </Button>
                     )}
                   </td>

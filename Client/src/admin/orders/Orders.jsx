@@ -17,11 +17,11 @@ import { useUserContext } from '../../contexts/UserContext';
 const OrderBreadCrumbs = [
   {
     path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
+    title: 'Thông kê',
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'Order'
+    title: 'Đơn hàng'
   }
 ];
 
@@ -169,7 +169,7 @@ const HeaderOrder = () => {
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
         <div className='flex flex-col'>
           <label htmlFor='' className='mb-1 text-slate-700'>
-            User name
+            Tên người dùng
           </label>
           <InputText
             size='m'
@@ -180,7 +180,7 @@ const HeaderOrder = () => {
         </div>
         <div className='flex flex-col'>
           <label htmlFor='' className='mb-1 text-slate-700'>
-            Select Status
+            Chọn trạng thái
           </label>
 
           <SelectBox
@@ -192,13 +192,13 @@ const HeaderOrder = () => {
         </div>
         <div className='flex flex-col'>
           <label htmlFor='' className='mb-1 text-slate-700'>
-            Start Date
+            Ngày bắt đầu
           </label>
           <InputDate size='m' rounded='s' onChange={(e) => setOrderStartDate(e.target.value)}></InputDate>
         </div>
         <div className='flex flex-col'>
           <label htmlFor='' className='mb-1 text-slate-700'>
-            End Date
+            Ngày kết thúc
           </label>
           <InputDate size='m' rounded='s' onChange={(e) => setOrderEndDate(e.target.value)}></InputDate>
         </div>
@@ -218,7 +218,7 @@ const HeaderOrder = () => {
             leftIcon={<AppIcons.SearchIcons width='18' height='18' />}
             addClassNames='bg-gray-500 text-white flex items-center hover:bg-gray-600 w-full justify-center'
           >
-            Search order
+            Tìm kiếm đơn hàng
           </Button>
         </div>
         <div className='flex items-center justify-end col-span-2'>
@@ -229,7 +229,7 @@ const HeaderOrder = () => {
             leftIcon={<AppIcons.ArrowDownIcon width='18' height='18' />}
             addClassNames='bg-gray-500 text-white flex items-center hover:bg-gray-600 justify-center w-fit'
           >
-            Export to excel
+           Xuất đơn hàng excel
           </Button>
         </div>
       </div>
@@ -259,7 +259,7 @@ const ShowOdersWrapper = () => {
 const Orders = () => {
   return (
     <div>
-      <SectionWrapper title='Order' addClassNames={{ wrapper: 'mt-2' }}>
+      <SectionWrapper title='Đơn hàng' addClassNames={{ wrapper: 'mt-2' }}>
         <BreadCrumb crumbsData={OrderBreadCrumbs}></BreadCrumb>
         <OrdersContextProvider>
           <HeaderOrder />
