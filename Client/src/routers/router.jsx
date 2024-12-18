@@ -1,4 +1,3 @@
-
 import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { LayoutAdmin, LayoutDefault } from '../components/layouts';
@@ -6,7 +5,6 @@ import { PATH_ROUTERS_ADMIN, PATH_ROUTERS_CLIENT } from '../utils/constant/route
 import SuspenseWrapper from '../components/suspenseWrapper/SuspenseWrapper';
 import PrivateRouter from './privateRouter/PrivateRouter';
 import ProtectedRoute from './ProtectedRoute';
-
 
 const HomePage = lazy(() => import('../pages/homePage/HomePage'));
 const ProductSearch = lazy(() => import('../pages/productSearch/ProductSearch'));
@@ -24,7 +22,6 @@ const Contact = lazy(() => import('../pages/contact/Contact'));
 const HistoryOrder = lazy(() => import('../pages/order/HistoryOrderDetail'));
 const Blog = lazy(() => import('../pages/blog/Blog'));
 const Chat = lazy(() => import('../pages/chat/ChatStream'));
-
 
 const DashBoard = lazy(() => import('../admin/dashboard/Dashboard'));
 const AddProduct = lazy(() => import('../admin/product/AddProduct'));
@@ -76,6 +73,7 @@ const OrderSaleOff = lazy(() => import('../admin/orders/OrderSaleOff'));
 
 const TemplateComponent = lazy(() => import('../admin/testComponents/TemplateComponent'));
 const NotFoundPage = lazy(() => import('../pages/notfound/NotFound'));
+const ProductExpire = lazy(() => import('../admin/product/ProductExpire'));
 
 const router = createBrowserRouter([
   {
@@ -86,7 +84,7 @@ const router = createBrowserRouter([
         path: PATH_ROUTERS_CLIENT.HOMEPAGE,
         element: (
           <SuspenseWrapper>
-              <HomePage />
+            <HomePage />
           </SuspenseWrapper>
         )
       },
@@ -522,6 +520,14 @@ const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <OrderSaleOff />
+          </SuspenseWrapper>
+        )
+      },
+      {
+        path: PATH_ROUTERS_ADMIN.PRODUCT_EXPIRE,
+        element: (
+          <SuspenseWrapper>
+            <ProductExpire />
           </SuspenseWrapper>
         )
       }

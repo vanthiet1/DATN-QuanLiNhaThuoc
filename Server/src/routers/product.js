@@ -14,5 +14,6 @@ Router.get('/filter', ProductController.getListProductFilter);
 Router.put('/:id', upload.array('productImg', 6), ProductController.updateProduct);
 Router.delete('/:id', ProductController.deleteProduct);
 Router.get('/:slug', ProductController.getProductWithBySlug);
+Router.get('/expire/list-product', ProductController.getProductToExpire);
 
 module.exports = Router;
