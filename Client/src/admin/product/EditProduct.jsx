@@ -153,7 +153,7 @@ const FormEditProduct = () => {
           <div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Product Image
+                Ảnh sản phẩm
               </label>
               <div className='flex gap-4 items-center p-2 border border-solid border-gray-300 bg-gray-100 mb-4 rounded'>
                 {productData &&
@@ -175,14 +175,14 @@ const FormEditProduct = () => {
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Product Name
+                Tên sản phẩm
               </label>
               <InputText size='m' rounded='s' placeholder='Type product name here' refinput={register('name')} />
               {errors.name && <ErrorMessage messsage={errors.name.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Product Price Old
+                Giá sản phẩm cũ
               </label>
               <InputText
                 size='m'
@@ -194,7 +194,7 @@ const FormEditProduct = () => {
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Product Price Distcount
+                Giá sẳn phẩm mới
               </label>
               <InputText
                 size='m'
@@ -206,7 +206,7 @@ const FormEditProduct = () => {
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Product Price percent
+                Giá phần trăm sản phẩm
               </label>
               <InputText
                 size='m'
@@ -219,14 +219,14 @@ const FormEditProduct = () => {
             <div className='grid grid-cols-2 gap-4'>
               <div className='flex flex-col text-gray-700 mb-4'>
                 <label htmlFor='' className='font-medium text-sm mb-2'>
-                  Production date
+                  Ngày sản xuất
                 </label>
                 <InputDate size='m' rounded='s' refinput={register('production_date', { valueAsDate: true })} />
                 {errors.production_date && <ErrorMessage messsage={errors.production_date.message}></ErrorMessage>}
               </div>
               <div className='flex flex-col text-gray-700 mb-4'>
                 <label htmlFor='' className='font-medium text-sm mb-2'>
-                  Expiration date
+                  Ngày hết hạn
                 </label>
                 <InputDate
                   size='m'
@@ -239,7 +239,7 @@ const FormEditProduct = () => {
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Short description
+                Mô tả ngắn
               </label>
 
               <Textarea
@@ -251,7 +251,7 @@ const FormEditProduct = () => {
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Stock Qunatity
+                Số lượng sẳn phẩm
               </label>
               <InputText
                 size='m'
@@ -263,7 +263,7 @@ const FormEditProduct = () => {
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Full description
+                Mô tả dài
               </label>
               <Editor
                 name='description'
@@ -287,7 +287,7 @@ const FormEditProduct = () => {
               <>
                 <div className='flex flex-col text-gray-700 mb-4'>
                   <label htmlFor='' className='font-medium text-sm mb-2'>
-                    Select Product Category
+                    Chọn danh mục sản phẩm
                   </label>
                   <select
                     onChange={handleChangeValueSelectCategory}
@@ -309,7 +309,7 @@ const FormEditProduct = () => {
                 {isChangeCateSelect && (
                   <div className='flex flex-col text-gray-700 mb-4'>
                     <label htmlFor='' className='font-medium text-sm mb-2'>
-                      Select Product Sub Category
+                      Chọn danh mục con
                     </label>
                     <SelectBox
                       optionData={subCategorySelectData}
@@ -323,7 +323,7 @@ const FormEditProduct = () => {
                 )}
                 <div className='flex flex-col text-gray-700 mb-4'>
                   <label htmlFor='' className='font-medium text-sm mb-2'>
-                    Select Product Brand
+                    Chọn thương hiệu sản phẩm
                   </label>
                   <SelectBox
                     optionData={brandSelectData}
@@ -347,7 +347,7 @@ const FormEditProduct = () => {
         leftIcon={<AppIcons.PlusIcon width='18' height='18' />}
         addClassNames='bg-gray-800 mt-3 text-white hover:bg-gray-700'
       >
-        Create
+        Edit sản phẩm
       </Button>
       <ProcessLoading
         isLoading={isLoadingUpdateProduct}
@@ -369,12 +369,12 @@ const FormEditProductContextProvider = ({ children }) => {
   const productEditBreadCrumbs = [
     {
       path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-      title: 'Dashboard',
+      title: 'Thống kê',
       icon: <AppIcons.HomeIcon width='16' height='16' />
     },
     {
       path: `/${PATH_ROUTERS_ADMIN.ALL_PRODUCT}`,
-      title: 'All product'
+      title: 'Tất cả sản phẩm'
     },
     {
       title: productData ? productData[0].name : ''
@@ -392,7 +392,7 @@ const FormEditProductContextProvider = ({ children }) => {
 const EditProduct = () => {
   return (
     <div>
-      <SectionWrapper title='Edit product' addClassNames={{ wrapper: 'mt-2' }}>
+      <SectionWrapper title='Cập nhật sản phẩm' addClassNames={{ wrapper: 'mt-2' }}>
         <FormEditProductContextProvider>
           <FormEditProduct />
         </FormEditProductContextProvider>

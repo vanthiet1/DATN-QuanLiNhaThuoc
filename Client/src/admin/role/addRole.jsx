@@ -56,7 +56,7 @@ const FormAddBrand = () => {
         leftIcon={<AppIcons.PlusIcon width='18' height='18' />}
         addClassNames='bg-gray-800 mt-3 text-white hover:bg-gray-700'
       >
-        Create
+        Tạo quyền
       </Button>
     </form>
   );
@@ -65,7 +65,7 @@ const FormAddBrand = () => {
 const AddRole = () => {
   return (
     <div>
-      <SectionWrapper title='Add Role' addClassNames={{ wrapper: 'mt-2' }}>
+      <SectionWrapper title='Thêm quyền' addClassNames={{ wrapper: 'mt-2' }}>
         <BreadCrumb crumbsData={brandBreadCrumb} />
         <FormAddBrand />
       </SectionWrapper>

@@ -11,15 +11,15 @@ import formatHelper  from '../../utils/helpers/formats';
 const adminProductDetailsBreadCrums = [
   {
     path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'All blog',
+    title: 'tất cả bài viết',
     path: `/${PATH_ROUTERS_ADMIN.ALL_BLOG}`
   },
   {
-    title: 'Admin blog details'
+    title: 'chi tiết'
   }
 ];
 
@@ -72,7 +72,7 @@ const ShowContentBlog = ({ content }) => {
 const BlogDetailAdmin = () => {
   return (
     <div>
-      <SectionWrapper title='Admin product details' addClassNames={{ wrapper: 'mt-2' }}>
+      <SectionWrapper title='Chi tiết bài viết' addClassNames={{ wrapper: 'mt-2' }}>
         <BreadCrumb crumbsData={adminProductDetailsBreadCrums} />
         <BlogDetailsAdminProiver>
           <SectionBlogDetail />

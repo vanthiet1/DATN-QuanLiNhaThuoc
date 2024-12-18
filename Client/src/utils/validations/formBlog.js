@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 
 const formBlogSchema = {
   blog: Yup.object().shape({
-    title: Yup.string().required('Không được để title trống.'),
+    title: Yup.string().required('Không được để tiêu đề trống.'),
     description: Yup.string().required('Không được để mô tả trống.'),
     image: Yup.mixed()
       .test('required', 'Không được để image trống.', (value) => {
@@ -19,7 +19,7 @@ const formBlogSchema = {
       .required('Không được để image trống.')
   }),
   blogUpdate: Yup.object().shape({
-    title: Yup.string().required('Không được để title trống.'),
+    title: Yup.string().required('Không được để tiêu đề trống.'),
     description: Yup.string().required('Không được để mô tả trống.')
   })
 };
