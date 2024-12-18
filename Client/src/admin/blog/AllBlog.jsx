@@ -12,11 +12,11 @@ import blogServices from '../../services/blogService';
 const blogBreadCrumbs = [
   {
     path: `/dashboard`,
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'All Blog'
+    title: 'Tất cả bài viết'
   }
 ];
 

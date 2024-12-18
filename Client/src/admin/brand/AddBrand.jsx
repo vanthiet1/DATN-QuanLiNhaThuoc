@@ -13,11 +13,11 @@ import brandServices from '../../services/brandService';
 const brandBreadCrumb = [
   {
     path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'Add Brand'
+    title: 'Thêm thương hiệu'
   }
 ];
 
@@ -41,31 +41,31 @@ const FormAddBrand = () => {
           <div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Brand Name
+                Tên thương hiệu
               </label>
-              <InputText size='m' rounded='s' placeholder='Type pharmacy name here' refinput={register('name')} />
+              <InputText size='m' rounded='s' placeholder='Nhập tên thương hiệu' refinput={register('name')} />
               {errors.name && <ErrorMessage messsage={errors.name.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Brand origin country
+                Quốc gia xuất xứ
               </label>
               <InputText
                 size='m'
                 rounded='s'
-                placeholder='Enter brand origin country old here'
+                placeholder='Nhập quốc gia xuất xứ'
                 refinput={register('origin_country')}
               />
               {errors.origin_country && <ErrorMessage messsage={errors.origin_country.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Brand country made
+              Quốc gia sản xuất
               </label>
               <InputText
                 size='m'
                 rounded='s'
-                placeholder='Enter Pharmacy latitude here'
+                placeholder='Nhập quốc gia sản xuất'
                 refinput={register('country_made')}
               />
               {errors.country_made && <ErrorMessage messsage={errors.country_made.message}></ErrorMessage>}
@@ -79,7 +79,7 @@ const FormAddBrand = () => {
         leftIcon={<AppIcons.PlusIcon width='18' height='18' />}
         addClassNames='bg-gray-800 mt-3 text-white hover:bg-gray-700'
       >
-        Create
+        Tạo thương hiệu
       </Button>
     </form>
   );
@@ -88,7 +88,7 @@ const FormAddBrand = () => {
 const AddBrand = () => {
   return (
     <div>
-      <SectionWrapper title='Add Brand' addClassNames={{ wrapper: 'mt-2' }}>
+      <SectionWrapper title='Thêm thương hiệu' addClassNames={{ wrapper: 'mt-2' }}>
         <BreadCrumb crumbsData={brandBreadCrumb} />
         <FormAddBrand />
       </SectionWrapper>

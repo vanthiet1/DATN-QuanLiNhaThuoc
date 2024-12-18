@@ -14,15 +14,15 @@ import commetServices from '../../services/commentService';
 const adminProductDetailsBreadCrums = [
   {
     path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'All product',
+    title: 'Tất cả sản phẩm',
     path: `/${PATH_ROUTERS_ADMIN.ALL_PRODUCT}`
   },
   {
-    title: 'Admin product details'
+    title: 'Chi tiết sẳn phẩm'
   }
 ];
 
@@ -146,7 +146,6 @@ const SectionCommentProduct = () => {
 
   // const { responsData } = useFetch(() => commetServices.getAllComments(productData[0]._id), {}, [productData]);
 
-  return <div className='mt-8'>Chức năng chưa hoàn thành , đang trong quá trình chuẩn bị</div>;
 };
 
 const ProductDetailsContext = createContext();
@@ -166,7 +165,7 @@ const ProductDetailsAdminProiver = ({ children }) => {
 const ProductDetailsAdmin = () => {
   return (
     <div>
-      <SectionWrapper title='Admin product details' addClassNames={{ wrapper: 'mt-2' }}>
+      <SectionWrapper title='Chi tiết sản phẩm' addClassNames={{ wrapper: 'mt-2' }}>
         <BreadCrumb crumbsData={adminProductDetailsBreadCrums}></BreadCrumb>
         <ProductDetailsAdminProiver>
           <SectionProductDetails />

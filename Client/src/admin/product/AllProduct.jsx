@@ -15,11 +15,11 @@ import TableProduct from './components/TableProduct';
 const productBreadCrumbs = [
   {
     path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'All product'
+    title: 'Tất cả sản phẩm'
   }
 ];
 
@@ -114,17 +114,16 @@ const ProductHeaderBar = () => {
       <div className='p-4'>
         <div className='flex items-center justify-between'>
           <div className='flex items-center gap-2'>
-            <p className='text-sm text-gray-600 flex-shrink-0 '>All Products</p>
             <input
               onChange={(e) => setSearchValue(e.target.value)}
-              placeholder='search product'
+              placeholder='Tìm kiếm sản phẩm'
               className='min-w-[300px]  border  border-gray-300 text-gray-600 text-base rounded block w-full py-1 px-2 focus:outline-none'
             ></input>
             <select
               onChange={(e) => setCategoryId(e.target.value)}
               className='min-w-[300px]  border  border-gray-300 text-gray-600 text-base rounded block w-full py-1 px-2 focus:outline-none'
             >
-              <option value=''>Filter by Category</option>
+              <option value=''>Lọc theo danh mục</option>
               {subCagegoryData &&
                 subCagegoryData.map((category) => {
                   return (
@@ -139,7 +138,7 @@ const ProductHeaderBar = () => {
               onChange={(e) => setsortOption(e.target.value)}
               className=' border border-gray-300 text-gray-600 text-base rounded block w-full py-1 px-2 focus:outline-none'
             >
-              <option value=''>Sort by</option>
+              <option value=''>Sắp xếp theo</option>
               {filterOptions.map((filter) => {
                 return (
                   <option value={filter.value} key={filter.value}>
@@ -155,7 +154,6 @@ const ProductHeaderBar = () => {
               size='m'
               rounded='s'
             >
-              Search
             </Button>
           </div>
           <div>
@@ -199,7 +197,7 @@ const ProducShowWrapper = () => {
 const AllProduct = () => {
   return (
     <div>
-      <SectionWrapper title='All product' addClassNames={{ wrapper: 'mt-2' }}>
+      <SectionWrapper title='Tất cả sẳn phẩm' addClassNames={{ wrapper: 'mt-2' }}>
         <BreadCrumb crumbsData={productBreadCrumbs}></BreadCrumb>
         <div>
           <ProductAdminContextProvider>

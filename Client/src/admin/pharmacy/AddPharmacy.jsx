@@ -15,11 +15,11 @@ import provinceServices from '../../services/provinceService';
 const pharamcyBreadCrumbs = [
   {
     path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'Add pharmacy'
+    title: 'Thêm nhà thuốc'
   }
 ];
 
@@ -90,7 +90,7 @@ const FormAddPharmacy = () => {
           <div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Pharmacy Name
+                 Tên nhà thuốc
               </label>
               <InputText size='m' rounded='s' placeholder='Bình An Dược' refinput={register('name')} />
               {errors.name && <ErrorMessage messsage={errors.name.message}></ErrorMessage>}
@@ -159,31 +159,31 @@ const FormAddPharmacy = () => {
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Pharmacy street
+                Đường 
               </label>
               <InputText size='m' rounded='s' placeholder='Enter pharmacy street here' refinput={register('street')} />
               {errors.street && <ErrorMessage messsage={errors.street.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Pharmacy phone number
+                Số điện thoại nhà thuốc
               </label>
               <InputText
                 size='m'
                 rounded='s'
-                placeholder='Enter pharmacy phone number'
+                placeholder='Nhập số điện thoại nhà thuốc'
                 refinput={register('phone_number')}
               />
               {errors.phone_number && <ErrorMessage messsage={errors.phone_number.message}></ErrorMessage>}
             </div>
             <div className='flex flex-col text-gray-700 mb-4'>
               <label htmlFor='' className='font-medium text-sm mb-2'>
-                Pharmacy opening hours
+                Thời gian nhà thuốc mở
               </label>
               <InputText
                 size='m'
                 rounded='s'
-                placeholder='Enter pharmacy opening hours'
+                placeholder='Nhập thời gian nhà thuốc mở'
                 refinput={register('opening_hours')}
               />
               {errors.opening_hours && <ErrorMessage messsage={errors.opening_hours.message}></ErrorMessage>}
@@ -206,7 +206,7 @@ const FormAddPharmacy = () => {
 const AddPharmacy = () => {
   return (
     <div>
-      <SectionWrapper title='add pharmacy' addClassNames={{ wrapper: 'mt-2' }}>
+      <SectionWrapper title='Thêm nhà thuốc' addClassNames={{ wrapper: 'mt-2' }}>
         <BreadCrumb crumbsData={pharamcyBreadCrumbs} />
         <FormAddPharmacy />
       </SectionWrapper>

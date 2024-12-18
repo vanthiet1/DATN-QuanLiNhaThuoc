@@ -25,145 +25,145 @@ const MenuAdminItem = ({ children, isSubMenu = false, addClassNames = '', ...pro
 
 const dataMenu = [
   {
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon />,
     path: PATH_ROUTERS_ADMIN.DASHBOARD
   },
   {
     icon: <AppIcons.OderIcon />,
-    title: 'Order',
+    title: 'Quản lí đơn hàng',
     path: PATH_ROUTERS_ADMIN.ORDERS
   },
   {
-    title: 'Product',
+    title: 'Quản lí sản phẩm',
     icon: <AppIcons.ProductIcon />,
     subMenu: [
       {
         path: PATH_ROUTERS_ADMIN.ADD_PRODUCT,
-        title: 'Add product'
+        title: 'Tạo sản phẩm'
       },
       {
         path: PATH_ROUTERS_ADMIN.ALL_PRODUCT,
-        title: 'All product'
+        title: 'Tất cả sản phẩm'
       }
     ]
   },
   {
-    title: 'Category',
+    title: 'Quản lí danh mục',
     icon: <AppIcons.CategoryIcon />,
     subMenu: [
       {
         path: PATH_ROUTERS_ADMIN.ADD_CATEGORY,
-        title: 'Add Category'
+        title: 'Thêm danh mục'
       },
       {
         path: PATH_ROUTERS_ADMIN.ALL_CATEGORY,
-        title: 'All Category'
+        title: 'Tất cả danh mục'
       }
     ]
   },
   {
-    title: 'Banner',
+    title: 'Quản lí banner',
     icon: <AppIcons.PhotoIcon />,
     subMenu: [
       {
         path: PATH_ROUTERS_ADMIN.ADD_BANNER,
-        title: 'Add Banner'
+        title: 'Thêm Banner'
       },
       {
         path: PATH_ROUTERS_ADMIN.ALL_BANNER,
-        title: 'All Banner'
+        title: 'Tất cả Banner'
       }
     ]
   },
   {
-    title: 'Coupon',
+    title: 'Quản lí mã giảm giá',
     icon: <AppIcons.GiftIcon />,
     subMenu: [
       {
         path: PATH_ROUTERS_ADMIN.ADD_COUPON,
-        title: 'Add Coupon'
+        title: 'Thêm mã giảm giá'
       },
       {
         path: PATH_ROUTERS_ADMIN.ALL_COUPON,
-        title: 'All Coupon'
+        title: 'Tất cả mã giảm giá'
       }
     ]
   },
 
   {
-    title: 'Brand',
+    title: 'Quản lí thương hiệu',
     icon: <AppIcons.BrandIcon />,
     subMenu: [
       {
         path: PATH_ROUTERS_ADMIN.ADD_BRAND,
-        title: 'Add Brand'
+        title: 'Thêm thương hiệu'
       },
       {
         path: PATH_ROUTERS_ADMIN.ALL_BRAND,
-        title: 'All Brand'
+        title: 'Tất cả thương hiệu'
       }
     ]
   },
   {
-    title: 'Pharmacy',
+    title: 'Nhà thuốc',
     icon: <AppIcons.BuildingStorefront />,
     subMenu: [
       {
         path: PATH_ROUTERS_ADMIN.ADD_PHARMARCY,
-        title: 'Add Pharmacy'
+        title: 'Thêm nhà thuốc'
       },
       {
         path: PATH_ROUTERS_ADMIN.ALL_PHARMARCY,
-        title: 'All Pharmacy'
+        title: 'Tất cả nhà thuốc'
       }
     ]
   },
   {
-    title: 'Blog',
+    title: 'Quản lí bài viết',
     icon: <AppIcons.PencilSquare />,
     subMenu: [
       {
         path: PATH_ROUTERS_ADMIN.ADD_BLOG,
-        title: 'Add Blog'
+        title: 'Thêm bài viết'
       },
       {
         path: PATH_ROUTERS_ADMIN.ALL_BLOG,
-        title: 'All Blog'
+        title: 'Tất cả bài viết'
       }
     ]
   },
   {
     icon: <AppIcons.UserGroup />,
-    title: 'User',
+    title: 'Quản lí tài khoản',
     subMenu: [
       {
         path: PATH_ROUTERS_ADMIN.MANAGER_STAFF,
-        title: 'Manager Staff'
+        title: 'Nhân viên'
       },
       {
         path: PATH_ROUTERS_ADMIN.MANAGER_ACCOUNT,
-        title: 'Manager Account'
+        title: 'Tất cả tài khoản'
       },
       {
         path: PATH_ROUTERS_ADMIN.MANAGER_CUSTOMER,
-        title: 'Manager Customer'
+        title: 'Khách hàng'
       }
     ]
   },
 
   {
     icon: <AppIcons.UserIcon />,
-    title: 'Role',
+    title: 'Quản lí vai trò',
     subMenu: [
       {
         icon: <AppIcons.UserGroup />,
-        title: 'All Role',
+        title: 'Tất cả vai trò',
         path: PATH_ROUTERS_ADMIN.ALL_ROLE_USER
       },
       {
         icon: <AppIcons.PencilSquare />,
-        title: 'Add Role',
+        title: 'Thêm vai trò',
         path: PATH_ROUTERS_ADMIN.ADD_ROLE_USER
       }
     ]
@@ -171,23 +171,23 @@ const dataMenu = [
 
   {
     icon: <AppIcons.CommentIcon />,
-    title: 'Comment',
+    title: 'Quản lí bình luận',
     path: PATH_ROUTERS_ADMIN.ALL_COMMENT
   },
 
   {
     icon: <AppIcons.ChatIcon />,
-    title: 'Messages',
+    title: 'Trò chuyện',
     path: PATH_ROUTERS_ADMIN.MESSAGES
   },
   {
     icon: <AppIcons.BanknotesIcon />,
-    title: 'Transaction',
+    title: 'Quản lí giao dịch',
     path: PATH_ROUTERS_ADMIN.TRANSACTION
   },
   {
     icon: <AppIcons.ArrowLeftCircle />,
-    title: 'HomePage',
+    title: 'Quay về trang chủ',
     path: PATH_ROUTERS_CLIENT.HOMEPAGE
   },
   {

@@ -13,11 +13,11 @@ import { PATH_ROUTERS_ADMIN } from '../../utils/constant/routers.js';
 const couponBreadCrumbs = [
   {
     path: PATH_ROUTERS_ADMIN.DASHBOARD,
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'All Coupon'
+    title: 'Tất cả mã giảm giá'
   }
 ];
 
@@ -49,8 +49,7 @@ const AllCoupon = () => {
       });
       if (result) {
         await couponServices.deleteCoupon(id);
-        window.location.reload();
-        //setCouponData(couponData.filter((coupon) => coupon._id !== id));
+        setCouponData(couponData.filter((coupon) => coupon._id !== id));
       }
     } catch (error) {
       console.error('Failed to delete coupon:', error);
@@ -71,7 +70,7 @@ const AllCoupon = () => {
 
   return (
     <>
-      <SectionWrapper title='Coupon all' addClassNames={{ wrapper: 'mt-2' }}>
+      <SectionWrapper title='Tất cả mã giảm giá' addClassNames={{ wrapper: 'mt-2' }}>
         <BreadCrumb crumbsData={couponBreadCrumbs} addClassNames='my-3' />
         <div className=''>
           <div className='overflow-x-auto'>
@@ -79,22 +78,22 @@ const AllCoupon = () => {
               <thead>
                 <tr className='bg-gray-200'>
                   <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
-                    Code
+                    Mã giảm giá
                   </th>
                   <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
-                    Start day
+                    Ngày bắt đầu
                   </th>
                   <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
-                    End day
+                    Ngày kết thúc
+</th>
+                  <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
+                    Trạng thái
                   </th>
                   <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
-                    Status
+                    Số tiền giảm giá
                   </th>
                   <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
-                    Discount Value
-                  </th>
-                  <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider'>
-                    Actions
+                    Hành động
                   </th>
                 </tr>
               </thead>
@@ -145,7 +144,7 @@ const AllCoupon = () => {
             </table>
           </div>
         </div>
-      </SectionWrapper>
+</SectionWrapper>
     </>
   );
 };

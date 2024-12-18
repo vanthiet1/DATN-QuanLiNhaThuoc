@@ -12,11 +12,11 @@ import Button from '../../components/ui/button/Button.jsx';
 const brandBreadCrumb = [
   {
     path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'All Brand'
+    title: 'Tất cả thương hiệu'
   }
 ];
 
@@ -62,7 +62,7 @@ const AllBrand = () => {
   };
 
   return (
-    <SectionWrapper title='Brand all' addClassNames={{ wrapper: 'mt-2' }}>
+    <SectionWrapper title='Tất cả thương hiệu' addClassNames={{ wrapper: 'mt-2' }}>
       <BreadCrumb crumbsData={brandBreadCrumb} addClassNames='my-3' />
       <div className=''>
         <div className='overflow-x-auto'>

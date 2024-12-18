@@ -12,11 +12,11 @@ import { useNavigate } from 'react-router-dom';
 const CategoryBreadCrumb = [
   {
     path: `/${PATH_ROUTERS_ADMIN.DASHBOARD}`,
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'All Category'
+    title: 'Tất cả danh mục'
   }
 ];
 
@@ -117,7 +117,7 @@ const AllCategory = () => {
   return (
     <>
       <BreadCrumb crumbsData={CategoryBreadCrumb} addClassNames='my-3' />
-      <h2 className='text-[22px] font-medium capitalize text-gray-700'>All Category</h2>
+      <h2 className='text-[22px] font-medium capitalize text-gray-700'>Tất cả danh mục</h2>
       <div className='mt-4 w-[80%]'>
         <div>
           {categoryData.map((cate) => (
@@ -162,7 +162,7 @@ const AllCategory = () => {
 
               {openSubcategories[cate._id] && (
                 <div className='ml-4 my-2 '>
-                  <div className='bg-slate-200 px-2 py-1 rounded-md text-center mb-1 text-lg'>Subcategory</div>
+                  <div className='bg-slate-200 px-2 py-1 rounded-md text-center mb-1 text-lg'>Danh mục con</div>
                   {getSubcategoriesByCategoryId(cate._id).length > 0 ? (
                     getSubcategoriesByCategoryId(cate._id).map((sub) => (
                       <div key={sub._id} className='flex bg-slate-100 justify-between py-2 px-2 mb-1 rounded-md'>

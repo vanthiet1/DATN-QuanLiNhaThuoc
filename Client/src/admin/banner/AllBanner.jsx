@@ -11,11 +11,11 @@ import { useConfirmDialog } from '../../components/dialog/ConfirmDialogContext';
 const bannerBreadCrumbs = [
   {
     path: `/dashboard`,
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: <AppIcons.HomeIcon width='16' height='16' />
   },
   {
-    title: 'All Banner'
+    title: 'Tất cả banner'
   }
 ];
 

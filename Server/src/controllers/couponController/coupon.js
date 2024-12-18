@@ -1,5 +1,4 @@
 const CouponModel = require('../../models/couponModel/coupon');
-const OrderModel = require('../../models/ordersModels/order');
 
 const CouponController = {
   createCoupon: async (req, res) => {
