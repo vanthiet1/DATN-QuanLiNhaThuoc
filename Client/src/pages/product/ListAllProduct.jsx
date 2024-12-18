@@ -1,4 +1,4 @@
-import { useState , useContext } from "react";
+import { useState, useContext } from "react";
 import TitleCategory from "../category/components/TitleCategory";
 import useFetch from "../../hooks/useFetch";
 import productServices from "../../services/productService";
@@ -7,10 +7,13 @@ import Paginate from '../../components/paginate/Paginate';
 import useSrcollTop from "../../hooks/useSrcollTop";
 import { HandleCartContext } from "../../contexts/HandleCartContext";
 import { UserContext } from "../../contexts/UserContext";
+import { sliderConfigProduct } from '../../configs/sliderConfig';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
 const AllProduct = () => {
   const [numberPage, setNumberPage] = useState(1);
   const { handleAddToCart } = useContext(HandleCartContext);
-  const {user} = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   useSrcollTop(numberPage)
   const {
@@ -28,14 +31,18 @@ const AllProduct = () => {
         <div className="flex justify-start pb-5">
           <TitleCategory nameCategory={"Tất cả sản phẩm"} />
         </div>
-        <div className="grid grid-cols-4 gap-2 py-6">
-          {products?.productsList?.map((product) => (
-            <CardProduct
-             key={product._id}
-             products={product}
-             handleAddToCart={() => handleAddToCart(product?._id, user?._id,product?.stock, true)}
-             />
-          ))}
+        <div className="flex">
+          <Swiper {...sliderConfigProduct} className='mySwiper rounded-[5px]'>
+            {products?.productsList?.map((product) => (
+              <SwiperSlide key={product._id}>
+                <CardProduct
+                  key={product._id}
+                  products={product}
+                  handleAddToCart={() => handleAddToCart(product?._id, user?._id, product?.stock, true)}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
         <div className="flex justify-center">
           <Paginate
