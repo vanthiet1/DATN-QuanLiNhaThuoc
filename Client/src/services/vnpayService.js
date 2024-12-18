@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const VNPAY_ROUTER = 'http://localhost:8080/api/v1/vnpay';
+const VNPAY_ROUTER = 'https://datn-quanlinhathuoc.onrender.com/api/v1/vnpay';
 
 const vnpayServices = {
   createPayment: async (requestBody) => {
