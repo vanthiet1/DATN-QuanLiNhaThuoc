@@ -10,23 +10,23 @@ import SocketProvider from './SocketContext';
 import DiaLog from '../components/dialog/DiaLog';
 const GlobalContext = createContext();
 
-const DialogRecommend = ({ visited, onVisited }) => {
-  if (visited) {
-    return (
-      <DiaLog isOpen={visited} onClose={() => onVisited(!visited)}>
-        <h3 className='text-gray-700 font-medium'>👋 Chào mừng bạn đến với nhà thuốc Bình An Dược </h3>
-        <div className='mt-2'>
-          <p className='text-base text-blue-500 '>Gợi ý cho bạn!</p>
-          <p className='max-w-[73%] text-gray-700'>
-            Để xem đầy đủ chức năng của admin bạn có thể đăng nhập với tài khoản: admin@gmail.com - mk :123123123
-          </p>
-          <p className='max-w-[73%] text-gray-700'>Sau khi đăng nhập di chuột vào avatar để tới trang quản lý 🩷🩷</p>
-        </div>
-      </DiaLog>
-    );
-  }
-  return <></>;
-};
+// const DialogRecommend = ({ visited, onVisited }) => {
+//   if (visited) {
+//     return (
+//       <DiaLog isOpen={visited} onClose={() => onVisited(!visited)}>
+//         <h3 className='text-gray-700 font-medium'>👋 Chào mừng bạn đến với nhà thuốc Bình An Dược </h3>
+//         <div className='mt-2'>
+//           <p className='text-base text-blue-500 '>Gợi ý cho bạn!</p>
+//           <p className='max-w-[73%] text-gray-700'>
+//             Để xem đầy đủ chức năng của admin bạn có thể đăng nhập với tài khoản: admin@gmail.com - mk :123123123
+//           </p>
+//           <p className='max-w-[73%] text-gray-700'>Sau khi đăng nhập di chuột vào avatar để tới trang quản lý 🩷🩷</p>
+//         </div>
+//       </DiaLog>
+//     );
+//   }
+//   return <></>;
+// };
 const GlobalContextProvider = ({ children }) => {
   const [visited, setVisited] = useState(false);
 
@@ -54,7 +54,7 @@ const GlobalContextProvider = ({ children }) => {
           </GoogleOAuthProvider>
         </ConfirmDialogProvider>
       </SocketProvider>
-      <DialogRecommend visited={visited} onVisited={setVisited} />
+{/*       <DialogRecommend visited={visited} onVisited={setVisited} /> */}
     </GlobalContext.Provider>
   );
 };
