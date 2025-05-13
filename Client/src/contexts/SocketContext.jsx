@@ -6,7 +6,7 @@ const SocketContext = createContext();
 const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
 
-  const SERVER_URL = 'https://binh-an-duoc-production.up.railway.app';
+  const SERVER_URL = 'https://datn-quanlinhathuoc-production.up.railway.app';
   useEffect(() => {
     const socketIntance = io(SERVER_URL);
     setSocket(socketIntance);
